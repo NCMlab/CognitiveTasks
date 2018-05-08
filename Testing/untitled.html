@@ -1,0 +1,197 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <title>u'untitled' [PsychoPy]</title>
+        <meta content="">
+        <link href="js/vendors//jquery-ui-1.11.4.base/jquery-ui.min.css" rel="stylesheet">
+
+        <style>
+            /* project and resource dialogs */
+            label, input { display:block; padding-bottom: .5em; }
+            input.text { margin-bottom:1em; width:95%; padding: .5em; }
+            fieldset { padding:0; border:0; margin-top:25px; }
+
+            /* don't display close button in the top right corner of the box */
+            .no-close .ui-dialog-titlebar-close { display: none; }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- dialog place holder -->
+        <div id="dialogDiv"/>
+
+        <script type="text/javascript" src="js/vendors/Math2.js"></script>
+        <script type="text/javascript" src="js/vendors/jquery-2.2.0.min.js"></script>
+        <script type="text/javascript" src="js/vendors/jquery-ui-1.11.4.base/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/vendors/jquery.blockUI.js" ></script>
+        <script type="text/javascript" src="js/vendors/stats.min.js"></script>
+        <script type="text/javascript" src="js/vendors/pixi.min.js"></script>
+        <script type="text/javascript" src="js/vendors/papaparse.min.js"></script>
+
+        <script type="text/javascript" src="js/psychojs/main.js"></script>
+        <script type="text/javascript" src="js/psychojs/core.js"></script>
+        <script type="text/javascript" src="js/psychojs/data.js"></script>
+        <script type="text/javascript" src="js/psychojs/events.js"></script>
+        <script type="text/javascript" src="js/psychojs/gui.js"></script>
+        <script type="text/javascript" src="js/psychojs/util.js"></script>
+        <script type="text/javascript" src="js/psychojs/scheduler.js"></script>
+        <script type="text/javascript" src="js/psychojs/visual.js"></script>
+        <script type="text/javascript" src="js/psychojs/io.js"></script>
+        <script type="text/javascript" src="js/psychojs/colors.js"></script>
+
+        <script type='text/javascript'>
+            // wait until document is ready:
+            $(document).ready(function() {
+                with (PsychoJs) {
+        
+        function setupExperiment() {
+            debug = false;
+        
+            expInfo['date'] = data.getDateStr();  // add a simple timestamp
+            expInfo['expName'] = u'untitled';
+        
+            filename = u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date']); // XXX
+        
+            // An ExperimentHandler isn't essential but helps with data saving
+            thisExp = new data.ExperimentHandler({name:expName, version:'',
+                extraInfo:expInfo, runtimeInfo:undefined,
+                originPath:undefined,
+                savePickle:true, saveWideText:true,
+                /*dataFileName=filename*/});
+        
+            endExpNow = false; // flag for 'escape' or other condition => quit the exp
+        
+            // store frame rate of monitor if we can measure it successfully
+            expInfo['frameRate']=win.getActualFrameRate();
+            if (expInfo['frameRate']!=undefined) {
+                frameDur = 1.0/Math.round(expInfo['frameRate']);
+            }
+            else {
+                frameDur = 1.0/60.0; // couldn't get a reliable measure so guess
+            }
+        
+            return NEXT;
+        }
+        
+        function setupWin() {
+            // Start Code - component code to be run before the window creation
+            // Setup the Window
+            win = new visual.Window({size:[1920, 1080],
+                fullsc:False, screen:1.0,
+                allowGUI:false, allowStencil:false,
+                monitor:u'testMonitor',
+                color:[0,0,0], colorSpace:'rgb',
+                blendMode:'avg',
+                units:'use prefs'
+                });
+            return NEXT;
+        }
+        
+        function setupResources() {
+          // <<maybe need to load images for trial?>>
+          // then add that scheduler to the resource manager
+          resourceManager.scheduleResources(resourceScheduler);
+          return NEXT;
+        }
+        
+        function experimentInit() {
+          // Initialize resource loading component
+          resourceManagerClock = new core.Clock();
+          resourceManager = new io.ResourceManager( {win:win, target:'OSF', projectName:'stroop',  projectContributor:'Alain Pitiot', projectStatus:'PUBLIC', clock:resourceManagerClock});
+          
+          // Initialize components for Routine "trial"
+          trialClock = new core.Clock();
+          text = visual.TextStim(win=win, name='text',
+              text=u'Any text\n\nincluding line breaks',
+              font=u'Arial',
+              pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
+              color=u'white', colorSpace='rgb', opacity=1,
+              depth=0.0);
+          
+          // Create some handy timers
+          globalClock = new core.Clock();  // to track the time since experiment started
+          routineTimer = new core.CountdownTimer();  // to track time remaining of each (non-slip) routine
+          
+          return NEXT;
+        }
+        
+        function trialBegin() {
+          routineTimer.add(4.000000)
+          // update component parameters for each repeat
+          // keep track of which components have finished
+          trialComponents = [];
+          trialComponents.push(text);
+        }
+        
+        function trialEachFrame() {
+          //------Loop for each frame of Routine 'trial'-------
+          continueRoutine = true;
+           // until we're told otherwise
+          // get current time
+          t = trialClock.getTime();
+          frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
+          // update/draw components on each frame
+          
+          // *text* updates
+          if (t >= 0.0 && text.status == NOT_STARTED) {
+            // keep track of start time/frame for later
+            text.tStart = t  // (not accounting for frame time here)
+            text.frameNStart = frameN  // exact frame index
+            text.setAutoDraw(true);
+          }
+          frameRemains = 0.0 + 4 - win.monitorFramePeriod * 0.75  // most of one frame period left
+          if (text.status == STARTED && t >= frameRemains) {
+            text.setAutoDraw(false);
+          }
+          
+          // check if the Routine should terminate
+          if (!continueRoutine) {  // a component has requested a forced-end of Routine
+            return NEXT;
+          }
+          continueRoutine = false;// reverts to True if at least one component still running
+          for(var i = 0; i < trialComponents.length; ++i) {
+            thisComponent = trialComponents[i];
+            if ('status' in thisComponent && thisComponent.status != FINISHED) {
+              continueRoutine = true;
+              break;
+            }
+          }
+          // check for quit (the Esc key)
+          if (endExpNow || event.getKeys({keyList:['escape']}).length > 0) {
+            core.quit();
+          }
+          
+          // refresh the screen if continuing
+          if (continueRoutine && routineTimer.getTime() > 0) {
+            return FLIP_REPEAT;
+          }
+          else {
+            return NEXT;
+          }
+        }
+        
+        function trialEnd() {
+          //------Ending Routine 'trial'-------
+          for (var i = 0; i < instructComponents.length; ++i) {
+            if ("setAutoDraw" in thisComponent) {
+              thisComponent.setAutoDraw(false);
+            }
+          }
+        }
+        
+        function quitPsychoJS() {
+            win.close()
+            core.quit();
+            return QUIT;
+        }
+
+        run();
+        }
+      });
+    </script>
+
+  </body>
+</html>

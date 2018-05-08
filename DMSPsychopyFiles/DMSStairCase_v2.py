@@ -51,15 +51,27 @@ StimOnTime = 2.5
 RetOnTime = 3.5
 ProbeOnTime= 2.5
 ITITime = 1.0
-
-
+MaxTime = 7 # minutes
+MaxTrials = expInfo['Max Trials'] # End after this many trials
+NumberOfReversals = 20
+'''
+MaxTime = 1
+StimOnTime = 0.25
+RetOnTime = 0.25
+ProbeOnTime= 0.25
+ITITime = 0.25
+win = visual.Window(
+    size=(800, 600), fullscr=False, screen=0,
+    allowGUI=False, allowStencil=False,
+    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
+    blendMode='avg', useFBO=True, units = 'pix')
+ '''  
+    
 #and some handy clocks to keep track of time
 globalClock = core.Clock()
 trialClock = core.Clock()
 
-MaxTime = 7 # minutes
-MaxTrials = expInfo['Max Trials'] # End after this many trials
-NumberOfReversals = 20
+
 
 # Load up the data from the file
 trials1 = data.TrialHandler(nReps=1, method='random',
@@ -442,11 +454,6 @@ for thisStep in staircase:
         dataFile.close()
         staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
-
-
-
-
-
 print EndFlag
 
 Capacity = 10-numpy.mean(staircase.reversalIntensities)

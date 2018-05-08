@@ -90,12 +90,19 @@ StimOnTime = 2.5
 RetOnTime = 3.5
 ProbeOnTime= 2.5
 ITITime = 1.0
-#StimOnTime = .5
-#RetOnTime = .5
-#ProbeOnTime= .5
-#ITITime = .5
+
+'''win = visual.Window(
+    size=(800, 600), fullscr=False, screen=0,
+    allowGUI=False, allowStencil=False,
+    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    blendMode='avg', useFBO=True,
+    units='pix')
+StimOnTime = .25
+RetOnTime = .25
+ProbeOnTime= 0.25
+ITITime = .25'''
 TotalTrialTime = StimOnTime + RetOnTime + ProbeOnTime + ITITime
-InterBlockTime = 9.0
+InterBlockTime = 2.0
 
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
@@ -236,9 +243,6 @@ text1A = visual.TextStim(win=win, name='text1A',
     units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-3.0);
-
-# Initialize components for Routine "trial"
-trialClock = core.Clock()
 
 # Initialize components for Routine "Interblock"
 InterblockClock = core.Clock()
@@ -493,12 +497,12 @@ print "Block = %d"%(Block)
 print LoadList
 CurrentLoad = LoadList[Block-1]
 print "CurrentLoad = %d"%(CurrentLoad)
-SelectionList = np.array(range(1,7,1)) + (CurrentLoad - 1)*10
+SelectionList = np.array(range(0,6,1)) + (CurrentLoad - 1)*6
 print SelectionList
 
 trials1 = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockList.csv', selection=SelectionList),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockListv2.csv', selection=SelectionList),
     seed=None, name='trials1')
     
 thisExp.addLoop(trials1)  # add the loop to the experiment
@@ -823,12 +827,12 @@ print "Block = %d"%(Block)
 print LoadList
 CurrentLoad = LoadList[Block-1]
 print "CurrentLoad = %d"%(CurrentLoad)
-SelectionList = np.array(range(1,7,1)) + (CurrentLoad - 1)*10
+SelectionList = np.array(range(0,6,1)) + (CurrentLoad - 1)*6
 print SelectionList
 
 trials2 = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockList.csv', selection=SelectionList),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockListv2.csv', selection=SelectionList),
     seed=None, name='trials2')
 
 thisExp.addLoop(trials2)  # add the loop to the experiment
@@ -1152,12 +1156,12 @@ print "Block = %d"%(Block)
 print LoadList
 CurrentLoad = LoadList[Block-1]
 print "CurrentLoad = %d"%(CurrentLoad)
-SelectionList = np.array(range(1,7,1)) + (CurrentLoad - 1)*10
+SelectionList = np.array(range(0,6,1)) + (CurrentLoad - 1)*6
 print SelectionList
 
 trials3 = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockList.csv', selection=SelectionList),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockListv2.csv', selection=SelectionList),
     seed=None, name='trials3')
     
 thisExp.addLoop(trials3)  # add the loop to the experiment
@@ -1481,12 +1485,12 @@ print "Block = %d"%(Block)
 print LoadList
 CurrentLoad = LoadList[Block-1]
 print "CurrentLoad = %d"%(CurrentLoad)
-SelectionList = np.array(range(1,7,1)) + (CurrentLoad - 1)*10
+SelectionList = np.array(range(0,6,1)) + (CurrentLoad - 1)*6
 print SelectionList
 
 trials4 = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockList.csv', selection=SelectionList),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockListv2.csv', selection=SelectionList),
     seed=None, name='trials4')
     
 thisExp.addLoop(trials4)  # add the loop to the experiment
@@ -1810,12 +1814,12 @@ print "Block = %d"%(Block)
 print LoadList
 CurrentLoad = LoadList[Block-1]
 print "CurrentLoad = %d"%(CurrentLoad)
-SelectionList = np.array(range(1,7,1)) + (CurrentLoad - 1)*10
+SelectionList = np.array(range(0,6,1)) + (CurrentLoad - 1)*6
 print SelectionList
 
 trials5 = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockList.csv', selection=SelectionList),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockListv2.csv', selection=SelectionList),
     seed=None, name='trials5')
     
 thisExp.addLoop(trials5)  # add the loop to the experiment
@@ -2140,12 +2144,12 @@ print "Block = %d"%(Block)
 print LoadList
 CurrentLoad = LoadList[Block-1]
 print "CurrentLoad = %d"%(CurrentLoad)
-SelectionList = np.array(range(1,7,1)) + (CurrentLoad - 1)*10
+SelectionList = np.array(range(0,6,1)) + (CurrentLoad - 1)*6
 print SelectionList
 
 trials6 = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockList.csv', selection=SelectionList),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockListv2.csv', selection=SelectionList),
     seed=None, name='trials6')
     
 thisExp.addLoop(trials6)  # add the loop to the experiment

@@ -1,0 +1,3 @@
+Load,Trial,Probe,corr,ITI,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,key_resp_2.keys,key_resp_2.rt,date,frameRate,expName,session,participant,
+45,1,1,left,1,0,0,0,0,left,3.795981884,2018_Apr_26_2127,60.0312300071,untitled,001,,
+35,2,0,down,1,0,1,1,1,left,3.93588495255,2018_Apr_26_2127,60.0312300071,untitled,001,,

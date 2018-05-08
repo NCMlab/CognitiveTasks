@@ -1,0 +1,19 @@
+2.9045 	WARNING 	Couldn't measure a consistent frame rate.
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+2.9051 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', color=array([ 0.,  0.,  0.]), colorSpace='rgb', fullscr=UNKNOWN, gamma=None, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7f845041c2d0>, name='window1', pos=[0, 0], screen=0, size=array([1920, 1080]), stereo=False, units=u'norm', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+2.9051 	EXP 	window1: recordFrameIntervals = False
+3.0819 	EXP 	window1: recordFrameIntervals = True
+3.1106 	WARNING 	t of last frame was 21.50ms (=1/46)
+3.2081 	WARNING 	t of last frame was 23.30ms (=1/42)
+3.2756 	WARNING 	t of last frame was 22.66ms (=1/44)
+3.3897 	WARNING 	t of last frame was 21.70ms (=1/46)
+3.4461 	WARNING 	Multiple dropped frames have occurred - I'll stop bothering you about them!
+4.7338 	WARNING 	Couldn't measure a consistent frame rate.
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+4.7794 	EXP 	Created text = TextStim(alignHoriz='center', alignVert='center', antialias=True, autoLog=True, bold=False, color=u'white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font=u'Arial', fontFiles=[], height=0.1, italic=False, name='text', opacity=1.0, ori=0, pos=array([ 0.,  0.]), rgb=array([ 255.,  255.,  255.]), text=u'Any text\n\nincluding line breaks', units=u'norm', win=Window(...), wrapWidth=1)
+4.7885 	EXP 	text: autoDraw = True
+8.7813 	EXP 	window1: mouseVisible = True

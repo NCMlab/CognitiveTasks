@@ -26,7 +26,7 @@ Add button to "lock-in" a subject ID to prevent it from being accidentally chang
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, gui, visual, core, data, event, logging, sound
+from psychopy import locale_setup, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import os  # handy system and path functions
@@ -71,58 +71,75 @@ class Mywin(wx.Frame):
       
 ## FACES BUTTONS
       # Button FRT DEMO
-      self.btn = wx.Button(panel,-1,"Demo", pos = (60,110)) 
+      self.btn = wx.Button(panel,-1,"Demo", pos = (45,110)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTDemo) 
       
       # Checkbox for FRT DEMO
-      self.FRTDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (160,110))
+      self.FRTDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (140,110))
 
       # Button FRT STAIRCASE
-      self.btn = wx.Button(panel,-1,"Staircase", pos = (60,140)) 
-      self.FRTStairCaseCapText = wx.StaticText(panel, -1, label = "Capacity = ", pos = (200,140))
-      self.FRTStairCaseCapText = wx.StaticText(panel, -1, label = "0000000", pos = (280,140))      
+      self.btn = wx.Button(panel,-1,"Staircase", pos = (45,140)) 
+      self.FRTStairCaseCapText = wx.StaticText(panel, -1, label = "Capacity = ", pos = (170,140))
+      self.FRTStairCaseCapText = wx.StaticText(panel, -1, label = "0000000", pos = (250,140))      
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTStair) 
       
+      
+ 
+      
       # Checkbox for FRT staircase
-      self.FRTStairCB = wx.CheckBox(panel, -1, label = "", pos = (160,140))
+      self.FRTStairCB = wx.CheckBox(panel, -1, label = "", pos = (140,140))
+      # Manual entry button for FRT Capacity
+      self.btn = wx.Button(panel,-1,"Enter", pos = (317,132),size = (45,13)) 
+      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTCapEnter) 
+      
+      # self.btn = wx.Button(panel,-1,"Load", pos = (317,150),size = (45,13)) 
+      
+      
       
       # Button FRT BLOCK
-      self.btn = wx.Button(panel,-1,"Block", pos = (60,170)) 
+      self.btn = wx.Button(panel,-1,"Block", pos = (45,170)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTBlock) 
       
       # Checkbox for FRT BLOCK
-      self.FRTBlockCB = wx.CheckBox(panel, -1, label = "", pos = (160,170))
+      self.FRTBlockCB = wx.CheckBox(panel, -1, label = "", pos = (140,170))
 
 
 ## LETTERS BUTTONS
       # Button DMS DEMO
-      self.btn = wx.Button(panel,-1,"Demo", pos = (60,240)) 
+      self.btn = wx.Button(panel,-1,"Demo", pos = (45,240)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSDemo) 
       
-      # Checkbox for DMS staircase
-      self.DMSDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (160,240))
-      
+      # Checkbox for DMS Demo
+      self.DMSDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (140,240))
+
+
       # Button DMS STAIRCASE
-      self.btn = wx.Button(panel,-1,"Staircase", pos = (60,270)) 
+      self.btn = wx.Button(panel,-1,"Staircase", pos = (45,270)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSStair) 
-      self.DMSStairCaseCapText = wx.StaticText(panel, -1, label = "Capacity = ", pos = (200,270))
-      self.DMSStairCaseCapText = wx.StaticText(panel, -1, label = "0000000", pos = (280,270))
+      self.DMSStairCaseCapText = wx.StaticText(panel, -1, label = "Capacity = ", pos = (170,270))
+      self.DMSStairCaseCapText = wx.StaticText(panel, -1, label = "0000000", pos = (250,270))
       
       # Checkbox for DMS staircase
-      self.DMSStairCB = wx.CheckBox(panel, -1, label = "", pos = (160,270))
+      self.DMSStairCB = wx.CheckBox(panel, -1, label = "", pos = (140,270))
+      # Manual entry button for DMS Capacity
+      self.btn = wx.Button(panel,-1,"Enter", pos = (317,270),size = (45,13)) 
+      #self.btn = wx.Button(panel,-1,"Enter", pos = (317,132),size = (45,13)) 
+      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSCapEnter) 
 
       # Button DMS BLOCK
-      self.btn = wx.Button(panel,-1,"Block", pos = (60,300)) 
+      self.btn = wx.Button(panel,-1,"Block", pos = (45,300)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSBlock) 
 
     # Checkbox for DMS staircase
-      self.DMSBlockCB = wx.CheckBox(panel, -1, label = "", pos = (160,300))
+      self.DMSBlockCB = wx.CheckBox(panel, -1, label = "", pos = (140,300))
 
       # Create a Close button to close the GUI
       self.btn = wx.Button(panel,-1,"Close", pos = (140,460)) 
@@ -220,7 +237,8 @@ class Mywin(wx.Frame):
       print "Label of pressed button = ",btn 
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
+      #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v3.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
       self.DMSBlockCB.SetValue(True)
    
    def CreateDMSList(self, DMSCapacity):
@@ -239,13 +257,41 @@ class Mywin(wx.Frame):
         return OutList
 
    def CreateFRTList(self, FRTCapacity):
-        Limit = np.float(FRTCapacity) + 0.1
+        # Made a small change here so that the capacity will be load level 5.
+        Limit = np.float(FRTCapacity)*1.25
         #FRTList = range(0,6,1)Limit,Limit/(6-1))
         FRTList = np.array(range(0,6,1))/(6.0-1)*Limit
         # Convert this array to a string so it can be passed as an argument
         FRTList = ' '.join(str(e) for e in FRTList)
         return FRTList
+                
+   def ManualEntryCapacity(self,Range):
+        myDlg = gui.Dlg(title=u"NCM Lab", labelButtonOK=' OK ', labelButtonCancel=' Cancel ',)
+        myDlg.addField(u'Capacity:')
+        myDlg.show()  # show dialog and wait for OK or Cancel
+        Capacity = -9999
+        if myDlg.OK:  # then the user pressed OK
+            thisInfo = myDlg.data
+    
+            if (float(thisInfo[0]) >= float(Range[0])) and (float(thisInfo[0]) <= float(Range[1])):
+                print "Capacity = " + str(thisInfo)
+                Capacity = float(thisInfo[0])
+            else:
+                print "Out of Range"
+        else:
+            print 'user cancelled'
+        return str(Capacity)
         
+   def OnClickedFRTCapEnter(self,event):
+        self.FRTStairCaseCap = self.ManualEntryCapacity([0.0, 1.0])
+        self.FRTStairCaseCapText.SetLabel(self.FRTStairCaseCap)
+        self.FRTBlockLoadLevels = self.CreateFRTList(self.FRTStairCaseCap)
+
+   def OnClickedDMSCapEnter(self,event):
+        self.DMSStairCaseCap = self.ManualEntryCapacity([0.0, 9.0])
+        self.DMSStairCaseCapText.SetLabel(self.DMSStairCaseCap)
+        self.DMSBlockLoadLevels = self.CreateDMSList(self.DMSStairCaseCap)
+
    def CloseGUI(self,event):
         self.Close()
         

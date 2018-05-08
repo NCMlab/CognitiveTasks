@@ -1,0 +1,52 @@
+AccYoung = [1.000	0.985	0.958;
+            0.957	0.968	1.000;
+            0.918	0.914	0.955];
+
+AccOld = [1.000	1.000	1.000;
+            0.938	0.935	1.000;
+            0.922	0.857	1.000];
+
+NSim = 10000;
+NTrials = 20;
+R = floor(rand(NTrials,1)*9+1)
+[x, y] = ind2sub([3,3],R(1))
+YngOverallAcc = zeros(NSim,1);
+for j = 1:NSim
+    Sim = zeros(NTrials,1);
+    for i = 1:NTrials
+        % What positon is it?
+        R = floor(rand()*9+1);
+        % What is the expected accuracy?
+        [x, y] = ind2sub([3,3],R(1));
+        % Did they get this correct
+        if (rand() < AccYoung(y,x))
+            Sim(i) = 1;
+        end
+    end
+    YngOverallAcc(j) = mean(Sim);
+end
+mean(YngOverallAcc)
+OldOverallAcc = zeros(NSim,1);
+for j = 1:NSim
+    Sim = zeros(NTrials,1);
+    for i = 1:NTrials
+        % What positon is it?
+        R = floor(rand()*9+1);
+        % What is the expected accuracy?
+        [x, y] = ind2sub([3,3],R(1));
+        % Did they get this correct
+        if (rand() < AccOld(y,x))
+            Sim(i) = 1;
+        end
+    end
+    OldOverallAcc(j) = mean(Sim);
+end
+mean(OldOverallAcc)
+
+
+% Use this accuracy to predict a random selection
+
+
+
+figure(1)
+hist(OverallAcc,40)
