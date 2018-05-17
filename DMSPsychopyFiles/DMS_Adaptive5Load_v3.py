@@ -97,7 +97,7 @@ InterBlockTime = 13.0
 # the end before the thank you screen
 ShortDelayTime = 16.0
 NumberOfBlocks = 5
-
+TrialsPerBlock = 6
 ## These are great for testing quickly
 #  StimOnTime = .25
 #RetOnTime = .25
@@ -123,7 +123,7 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Ready to start the main experiment?\nRemember:\nPress [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
+    text='Ready to start the main experiment?\nRemember:\nPress [1] if the letter WAS in the set.\nPress [2] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=None, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
@@ -419,7 +419,7 @@ for thisBlock in Blocks:
     print LoadList
     CurrentLoad = LoadList[BlockCount-1]
     print "CurrentLoad = %d"%(CurrentLoad)
-    SelectionList = np.array(range(0,NumberOfBlocks,1)) + (CurrentLoad - 1)*NumberOfBlocks
+    SelectionList = np.array(range(0,TrialsPerBlock,1)) + (CurrentLoad - 1)*NumberOfBlocks
     
     # ------Prepare to start Routine "Countdown"-------
     t = 0
@@ -677,7 +677,7 @@ for thisBlock in Blocks:
             if resp.status == STARTED and t >= frameRemains:
                 resp.status = STOPPED
             if resp.status == STARTED:
-                theseKeys = event.getKeys(keyList=['left', 'down'])
+                theseKeys = event.getKeys(keyList=['1', '2','left','down'])
                 
                 # check for quit:
                 if "escape" in theseKeys:
@@ -686,10 +686,11 @@ for thisBlock in Blocks:
                     resp.keys = theseKeys[-1]  # just the last key pressed
                     resp.rt = resp.clock.getTime()
                     # was this 'correct'?
-                    if (resp.keys == str(corr)) or (resp.keys == corr):
+                    if ((resp.keys == str(corr)) or (resp.keys == corr)) :
                         resp.corr = 1
                     else:
                         resp.corr = 0
+                    # Also check to see if the other mapping was used
             
             # check if all components have finished
             if not continueRoutine:  # a component has requested a forced-end of Routine

@@ -30,15 +30,15 @@ OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(Circle
 
 # units=FontSizeUnits
 # height=FontSize
-StimOnTime = 0.5 #2.5
-RetOnTime = 0.5 #3.5
-ProbeOnTime= 0.5 #2.5
+StimOnTime = 2.5
+RetOnTime = 3.5
+ProbeOnTime= 2.5
 # This is the intertrial interval. This experimental component is part of the trial.
 ITITime = 0.5 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-InterBlockTime = 3 #13.0
+InterBlockTime = 6 #13.0
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
 ShortDelayTime = 1 #16.0
@@ -139,6 +139,56 @@ Blocks = data.TrialHandler(nReps=NumberOfBlocks, method='sequential',
     seed=None, name='Blocks')    
 # For each block change the selection list 
 
+# Need instructions and wait
+textInstr1.setAutoDraw(True)
+# Put the probe dot on the screen
+win.flip()
+# Start the probe timer
+
+WaitingFlag = True
+while WaitingFlag is True:
+    theseKeys = event.getKeys(keyList=['escape','5'])
+    if 'escape' in theseKeys:
+        core.quit()
+    elif '5' in theseKeys:
+        WaitingFlag = False
+        textInstr1.setAutoDraw(False)
+    else:
+        pass        
+        
+# Need intro Blocks
+# Turn on the cross hair
+WhiteCross.setAutoDraw(True)
+win.flip()
+countDown.reset() 
+WhiteCross.setAutoDraw(True)
+countDown.add(InterBlockTime - 3)
+while countDown.getTime() > 0:
+    pass
+win.flip()
+# Turn on the countdown timer
+WhiteCross.setAutoDraw(False)
+
+text3.setAutoDraw(True)
+countDown.add(1)
+win.flip()
+while countDown.getTime() > 0:
+    pass
+text3.setAutoDraw(False)
+text2.setAutoDraw(True)
+countDown.add(1)
+win.flip()
+while countDown.getTime() > 0:
+    pass    
+text2.setAutoDraw(False)
+text1.setAutoDraw(True)
+countDown.add(1)
+win.flip()
+while countDown.getTime() > 0:
+    pass    
+win.flip()
+text1.setAutoDraw(False)
+
 for thisBlock in Blocks:
     currentLoop = Blocks
     #SelectionList = np.array(range(0,NumberOfBlocks,1)) + (CurrentLoad - 1)*NumberOfBlocks
@@ -237,17 +287,45 @@ for thisBlock in Blocks:
                     resp.corr = 0    
             pass        
         # prepare the cross hair    
-        WhiteCross.setAutoDraw(True)
+        RedCross.setAutoDraw(True)
         # take the dot off the screen
         win.flip()
         countDown.add(ITITime)
         while countDown.getTime() > 0:
             pass
-        WhiteCross.setAutoDraw(False)
-    # At the end of each block turn on the red cross hair
-    RedCross.setAutoDraw(True)
-    countDown.add(InterBlockTime)
+        RedCross.setAutoDraw(False)
+
+    
+    # INTER BLOCK TIME
+    # Turn on the cross hair
+    WhiteCross.setAutoDraw(True)
+    win.flip()
+    countDown.reset() 
+    WhiteCross.setAutoDraw(True)
+    countDown.add(InterBlockTime - 3)
     while countDown.getTime() > 0:
         pass
-    # Turn off the red cross hair
-    RedCross.setAutoDraw(False)
+    win.flip()
+    # Turn on the countdown timer
+    WhiteCross.setAutoDraw(False)
+    
+    text3.setAutoDraw(True)
+    countDown.add(1)
+    win.flip()
+    while countDown.getTime() > 0:
+        pass
+    text3.setAutoDraw(False)
+    text2.setAutoDraw(True)
+    countDown.add(1)
+    win.flip()
+    while countDown.getTime() > 0:
+        pass    
+    text2.setAutoDraw(False)
+    text1.setAutoDraw(True)
+    countDown.add(1)
+    win.flip()
+    while countDown.getTime() > 0:
+        pass    
+    win.flip()
+    text1.setAutoDraw(False)
+    

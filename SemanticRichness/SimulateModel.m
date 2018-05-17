@@ -1,8 +1,8 @@
 NLoads =  5; % Number of load levels
 MaxTime = 60*5.5; % time in seconds
-TrialOnTime = 1.5; % seconds
+TrialOnTime = 1.75; % seconds
 MinITI = 0.5; % seconds
-TR = 0.5;
+TR = 1.;
 HighResTs = 0.01;
 
 % Two Conditions:
@@ -47,8 +47,11 @@ Contrasts.Load2 = [0 1 0 0 0 0 1 0 0 0 ];
 Contrasts.Load3 = [0 0 1 0 0 0 0 1 0 0 ];
 Contrasts.Load4 = [0 0 0 1 0 0 0 0 1 0 ];
 Contrasts.Load5 = [0 0 0 0 1 0 0 0 0 1 ];
+Contrasts.AllWords = [1 1 1 1 1 1 1 1 1 1];
 LinLoad = [1 2 3 4 5 1 2 3 4 5];
 Contrasts.LinLoad = LinLoad - mean(LinLoad);
+Contrasts.HighRich = [1 1 1 1 1 0 0 0 0 0];
+Contrasts.LowRich = [0 0 0 0 0 1 1 1 1 1];
 ConNames = fieldnames(Contrasts);
 
 % Contrasts = struct;
@@ -113,9 +116,9 @@ TrialList(:,1) = 1:NTotalTrials;
 Factors = repmat(fullfact([2,2, NLoads]),NTrials,1);
 % How mch time do the trials take
 
-MaxTimeList = [5:0.5:8];
-MaxTimeList = [7];
-AllBestBE = zeros(3,8,length(MaxTimeList));
+%MaxTimeList = [6:0.5:9];
+MaxTimeList = [14];
+AllBestBE = zeros(3,length(ConNames),length(MaxTimeList));
 
 for tt = 1:length(MaxTimeList)
     TotalNTrials = size(Factors,1);
@@ -123,13 +126,13 @@ for tt = 1:length(MaxTimeList)
     MaxITITime = MaxTimeList(tt)*60 - TrialTime;
     
     
-    NSim = 100;
+    NSim = 10;
     GamASearch = [0.1:0.5:7];
     %GamASearch = 6;
     GamBSearch = [0.1:0.25:3];
     %GamBSearch = 0.1;
     TestGam = zeros(length(GamASearch),length(GamBSearch),NSim);
-    MinITI = 0.25;
+    
     for i = 1:NSim
         fprintf(1,'Sim %d of %d\n',i,NSim);
         for j = 1:length(GamASearch)
@@ -147,12 +150,12 @@ for tt = 1:length(MaxTimeList)
     % Cycle over the gamma values
     
     
-    % figure
-    % title('Values for Gamma Dist that use all Available Scan Time')
-    % surf(GamASearch, GamBSearch,MaxGam')
-    % xlabel('GamA')
-    % ylabel('GamB')
-    % colorbar
+     figure
+     title('Values for Gamma Dist that use all Available Scan Time')
+     surf(GamASearch, GamBSearch,MaxGam')
+     xlabel('GamA')
+     ylabel('GamB')
+     colorbar
     % Find the edge and extract the values
     GamValues = zeros(length(GamASearch),2);
     for i = 1:length(GamASearch)
@@ -167,8 +170,11 @@ for tt = 1:length(MaxTimeList)
     GamValues = [GamValues1 GamValues2];
     %GamValues% = GamValues(1:5,:);
     %GamValues = GamValues(14,:);
-    % GamParam = [2.6 0.6];
-    % figure(134);hist(0.5+gamrnd(ones(1000,1).*GamParam(1), GamParam(2)),40)
+    
+    
+    GamParam = [4.6 0.35];
+    GamParam = [2.6 0.85]
+     figure(134);hist(0.5+gamrnd(ones(1000,1).*GamParam(1), GamParam(2)),40)
     %
     % Create the high res HRF
     H = spm_hrf(TR*HighResTs);
@@ -177,16 +183,19 @@ for tt = 1:length(MaxTimeList)
     onsets = cell(1,NLoads*2);
     durations = cell(1,NLoads*2);
     
-    NSim = 1000;
-    NShuffle = 1000;
+    
+    GamValues = GamParam;
+    NSim = 500;
+    NShuffle = 10;
     SimData = zeros(length(GamValues),length(ConNames), NSim, NShuffle);
     BestOrder = zeros(TotalNTrials,3);
     BestITI = zeros(TotalNTrials,3);
-    BestBE = 10*ones(3,8);
+    BestBE = 10*ones(3,length(ConNames));
     WorstOrder = zeros(TotalNTrials,3);
     WorstITI = zeros(TotalNTrials,3);
-    WorstBE = zeros(3,8);
+    WorstBE = zeros(3,length(ConNames));
     BestGam = zeros(3,2);
+    BestDesign = cell(3,2);
     for g = 1:size(GamValues,1)
         fprintf(1,'Working on parameter %d of %d\n',g,length(GamValues));
         GamParam = GamValues(g,:);
@@ -244,7 +253,8 @@ for tt = 1:length(MaxTimeList)
                     %fprintf(1,'%s\t%0.4f\n',ConNames{cc},BoldEffect)
                 end
                 OverAllBE = sum(SimData(g,:, i, rr));
-                if OverAllBE < sum(BestBE(1,:))
+                %if OverAllBE < sum(BestBE(1,:))
+                if OverAllBE < BestBE(1,8)
                     BestGam(2:3,:) = BestGam(1:2,:);
                     BestBE(2:3,:) = BestBE(1:2,:);
                     BestOrder(:,2:3) = BestOrder(:,1:2);
@@ -253,7 +263,9 @@ for tt = 1:length(MaxTimeList)
                     BestBE(1,:) = SimData(g,:, i, rr);
                     BestOrder(:,1) = r;
                     BestITI(:,1) = tempITI;
-                elseif OverAllBE < sum(BestBE(2,:))
+                    BestDesign{1,1} = lX;
+                %elseif OverAllBE < sum(BestBE(2,:))
+                elseif OverAllBE < BestBE(2,8)
                     BestGam(3,:) = BestGam(2,:);
                     BestBE(3,:) = BestBE(2,:);
                     BestOrder(:,3) = BestOrder(:,2);
@@ -269,6 +281,7 @@ for tt = 1:length(MaxTimeList)
                     WorstBE(3,:) = OverAllBE;
                     WorstOrder(:,3) = r;
                     WorstITI(:,3) = tempITI;
+                    BestDesign{3,2} = lX;
                 elseif OverAllBE > sum(WorstBE(2,:))
                     WorstBE(1,:) = WorstBE(2,:);
                     WorstOrder(:,1) = WorstOrder(:,2);

@@ -28,7 +28,7 @@ import sys  # to get file system encoding
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
-tempFile = open(os.path.join('data','tempFile.csv'), 'w')
+tempFile = open(os.path.join('tempFile.csv'), 'w')
 # Store info about the experiment session
 expName = u'FRT_Block'  # from the Builder filename that created this script
 expInfo = {'Participant ID':'', 'Session':'001'}
@@ -45,7 +45,7 @@ else:
         core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
-tempFile.write('%s\n'%(sys.argv[2]))
+# tempFile.write('%s\n'%(sys.argv[2]))
 
 
 

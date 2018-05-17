@@ -257,7 +257,7 @@ class Mywin(wx.Frame):
         print self.PartID.GetValue()
         print self.FRTBlockLoadLevels
         core.shellCall([sys.executable, "FRTPsychopyFiles/FRT_Adaptive.py", self.PartID.GetValue(), self.FRTBlockLoadLevels])
-        self.FRTBlockCB.SetValue(True)
+        self.FRTBlockCB1.SetValue(True)
 
    def LoadDMSCapacity(self, event):
         self.DMSStairCB.SetValue(True)
@@ -294,7 +294,10 @@ class Mywin(wx.Frame):
       print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
       core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v3.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
-      self.DMSBlockCB.SetValue(True)
+      if btn == 'Block One':
+        self.DMSBlockCB1.SetValue(True)
+      else:  
+        self.DMSBlockCB2.SetValue(True)
    
    def OnClickedWORDEV(self, event): 
       btn = event.GetEventObject().GetLabel() 

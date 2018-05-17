@@ -34,7 +34,7 @@ if len(sys.argv) > 2:
     Tag = sys.argv[2]
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
-    Tag = '1'
+    Tag = '2'
     if dlg.OK == False:
         core.quit()  # user pressed cancel
     #LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
