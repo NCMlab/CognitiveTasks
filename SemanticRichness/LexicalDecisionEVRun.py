@@ -1,6 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-
+# Added a counter balancing flag 
+# Added the ability for the program to work with behavior responses
+# or 1/2 for the MRI
+# It also does not matter whether the setup file is coded with left/down or
+# 1/2 
+#
 
 from __future__ import absolute_import, division
 from psychopy import locale_setup, gui, visual, core, data, event, logging
@@ -32,9 +37,11 @@ if len(sys.argv) > 2:
     #LoadList = LoadList.astype(np.int)
     PartDataFolder = sys.argv[1]
     Tag = sys.argv[2]
+    CounterBalFlag = sys.argv[3]
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     Tag = '2'
+    CounterBalFlag = 'False'
     if dlg.OK == False:
         core.quit()  # user pressed cancel
     #LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
@@ -69,6 +76,11 @@ win = visual.Window(
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
+win = visual.Window(
+    size=(800, 500), fullscr=False, screen=0,
+    allowGUI=False, allowStencil=False,
+    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
 if expInfo['frameRate'] != None:
@@ -78,12 +90,28 @@ else:
 
 # Initialize components for Routine "Wait"
 WaitClock = core.Clock()
-Intruct = visual.TextStim(win=win, name='Intruct',
-    text = 'You will see a series of words.\nYour task is to decide whether each word represents a biological item\n(for example, a plant or an animal)\nor a man-made item\n(for example, a tool or a piece of clothing).\n\n'    'Press the LEFT arrow for biological items.\nPress the DOWN arrow for man-made items.\n\nPress 5 to start.\nPress Escape at any time to interupt and stop the experiment.',
+
+
+
+if CounterBalFlag == 'False':
+    #InstructText = 'You will see a series of words.\nYour task is to decide whether each word represents a biological item\n(for example, a plant or an animal)\nor a man-made item\n(for example, a tool or a piece of clothing).\n\n'    'Press [LEFT] or [1] for biological items.\nPress [DOWN] or [2] for man-made items.\n\nPress [5] to start.\nPress [Escape] at any time to interupt and stop the experiment.',
+    Intruct = visual.TextStim(win=win, name='Intruct',
+    text = 'You will see a series of words.\nYour task is to decide whether each word represents a biological item\n(for example, a plant or an animal)\nor a man-made item\n(for example, a tool or a piece of clothing).\n\nPress [LEFT] or [1] for biological items.\nPress [DOWN] or [2] for man-made items.\n\nPress [5] to start.\nPress [Escape] at any time to interupt and stop the experiment.',
+    #'You will see a series of words.\nYour task is to decide whether each word represents a biological item\n(for example, a plant or an animal)\nor a man-made item\n(for example, a tool or a piece of clothing).\n\n'    'Press the LEFT arrow for biological items.\nPress the DOWN arrow for man-made items.\n\nPress 5 to start.\nPress Escape at any time to interupt and stop the experiment.',
     font='Arial',alignHoriz='center',
     pos=(0, 0), height=0.07, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
+else:
+    #InstructText = 'You will see a series of words.\nYour task is to decide whether each word represents a biological item\n(for example, a plant or an animal)\nor a man-made item\n(for example, a tool or a piece of clothing).\n\n'    'Press [DOWN] or [2] for biological items.\nPress [LEFT] or [1] for man-made items.\n\nPress [5] to start.\nPress [Escape] at any time to interupt and stop the experiment.',
+    Intruct = visual.TextStim(win=win, name='Intruct',
+    text = 'You will see a series of words.\nYour task is to decide whether each word represents a biological item\n(for example, a plant or an animal)\nor a man-made item\n(for example, a tool or a piece of clothing).\n\nPress [LEFT] or [1] for man-made items.\nPress [DOWN] or [2] for biological items.\n\nPress [5] to start.\nPress [Escape] at any time to interupt and stop the experiment.',
+ #'You will see a series of words.\nYour task is to decide whether each word represents a biological item\n(for example, a plant or an animal)\nor a man-made item\n(for example, a tool or a piece of clothing).\n\n'    'Press the LEFT arrow for biological items.\nPress the DOWN arrow for man-made items.\n\nPress 5 to start.\nPress Escape at any time to interupt and stop the experiment.',
+    font='Arial',alignHoriz='center',
+    pos=(0, 0), height=0.07, wrapWidth=None, ori=0, 
+    color='white', colorSpace='rgb', opacity=1,
+    depth=0.0);
+
 
 # Initialize components for Routine "WhiteCrossHair"
 WhiteCrossHairClock = core.Clock()
@@ -349,12 +377,80 @@ for thisTrial in trials:
             if len(theseKeys) > 0:  # at least one key was pressed
                 key_resp_3.keys = theseKeys[-1]  # just the last key pressed
                 key_resp_3.rt = key_resp_3.clock.getTime()
+                
+                # This doesn't work
                 # was this 'correct'?
-                if (key_resp_3.keys == str(Corr)) or (key_resp_3.keys == Corr):
-                    key_resp_3.corr = 1
-                else:
-                    key_resp_3.corr = 0
-        
+                # Add the ability to counterbalance
+                # A response if correct if
+                # corr == left 
+                # response is left OR response is 1
+                # AND counterbalanaceFlag = False
+                #
+                # corr == down 
+                # response is down OR response is 2
+                # 
+                # AND CounterBalFlag = False
+                
+
+                if CounterBalFlag == 'False':
+                    if Corr == 'left':
+                        if ((key_resp_3.keys == Corr) or (key_resp_3.keys == str(Corr))):
+                            key_resp_3.corr = 1
+                        elif ((key_resp_3.keys == '1') or (key_resp_3.keys == '1')):
+                            key_resp_3.corr = 1
+                        else:
+                            key_resp_3.corr = 0
+                    if Corr == 1:
+                        if ((key_resp_3.keys == Corr) or (key_resp_3.keys == str(Corr))):
+                            key_resp_3.corr = 1
+                        elif ((key_resp_3.keys == 'left') or (key_resp_3.keys == 'left')):
+                            key_resp_3.corr = 1
+                        else:
+                            key_resp_3.corr = 0
+                    if Corr == 'down':
+                        if ((key_resp_3.keys == Corr) or (key_resp_3.keys == str(Corr))):
+                            key_resp_3.corr = 1
+                        elif ((key_resp_3.keys == '2') or (key_resp_3.keys == '2')):
+                            key_resp_3.corr = 1
+                        else:
+                            key_resp_3.corr = 0    
+                    if Corr == 2:
+                        if ((key_resp_3.keys == Corr) or (key_resp_3.keys == str(Corr))):
+                            key_resp_3.corr = 1
+                        elif ((key_resp_3.keys == 'down') or (key_resp_3.keys == 'down')):
+                            key_resp_3.corr = 1
+                        else:
+                            key_resp_3.corr = 0
+                elif CounterBalFlag == 'True':
+                    if Corr == 'left':
+                        if ((key_resp_3.keys == Corr) or (key_resp_3.keys == str(Corr))):
+                            key_resp_3.corr = 0
+                        elif ((key_resp_3.keys == '1') or (key_resp_3.keys == '1')):
+                            key_resp_3.corr = 0
+                        else:
+                            key_resp_3.corr = 1
+                    if Corr == 1:
+                        if ((key_resp_3.keys == Corr) or (key_resp_3.keys == str(Corr))):
+                            key_resp_3.corr = 0
+                        elif ((key_resp_3.keys == 'left') or (key_resp_3.keys == 'left')):
+                            key_resp_3.corr = 0
+                        else:
+                            key_resp_3.corr = 1
+                    if Corr == 'down':
+                        if ((key_resp_3.keys == Corr) or (key_resp_3.keys == str(Corr))):
+                            key_resp_3.corr = 0
+                        elif ((key_resp_3.keys == '2') or (key_resp_3.keys == '2')):
+                            key_resp_3.corr = 0
+                        else:
+                            key_resp_3.corr = 1    
+                    if Corr == 2:
+                        if ((key_resp_3.keys == Corr) or (key_resp_3.keys == str(Corr))):
+                            key_resp_3.corr = 0
+                        elif ((key_resp_3.keys == 'down') or (key_resp_3.keys == 'down')):
+                            key_resp_3.corr = 0
+                        else:
+                            key_resp_3.corr = 1
+
         # *text_2* updates
         if t >= StimOnScreenTime and text_2.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -387,13 +483,13 @@ for thisTrial in trials:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     # check responses
-    if key_resp_3.keys in ['', [], None]:  # No response was made
-        key_resp_3.keys=None
-        # was no response the correct answer?!
-        if str(Corr).lower() == 'none':
-           key_resp_3.corr = 1  # correct non-response
-        else:
-           key_resp_3.corr = 0  # failed to respond (incorrectly)
+#    if key_resp_3.keys in ['', [], None]:  # No response was made
+#        key_resp_3.keys=None
+#        # was no response the correct answer?!
+#        if str(Corr).lower() == 'none':
+#           key_resp_3.corr = 1  # correct non-response
+#        else:
+#           key_resp_3.corr = 0  # failed to respond (incorrectly)
     # store data for trials (TrialHandler)
     trials.addData('key_resp_3.keys',key_resp_3.keys)
     trials.addData('key_resp_3.corr', key_resp_3.corr)

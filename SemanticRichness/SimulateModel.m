@@ -81,11 +81,11 @@ ConNames = fieldnames(Contrasts);
 NCond = 4;
 MinNumTrials = 5;
 % Set this up as an array
-% Rows: Loada
+% Rows: Load
 % Columns: Conditions
 % Depth: Number of Trials
 
-NTrials = 5;
+NTrials = 3;
 NTotalTrials = NLoads*NCond*NTrials;
 
 TrialList = zeros(NTotalTrials,4);
@@ -117,64 +117,71 @@ Factors = repmat(fullfact([2,2, NLoads]),NTrials,1);
 % How mch time do the trials take
 
 %MaxTimeList = [6:0.5:9];
-MaxTimeList = [14];
+MaxTimeList = [10]%[6,8,10,12,14];
 AllBestBE = zeros(3,length(ConNames),length(MaxTimeList));
-
+AllBestGam = zeros(3,2,length(MaxTimeList));
 for tt = 1:length(MaxTimeList)
     TotalNTrials = size(Factors,1);
     TrialTime = TotalNTrials*TrialOnTime;
     MaxITITime = MaxTimeList(tt)*60 - TrialTime;
     
     
-    NSim = 10;
-    GamASearch = [0.1:0.5:7];
-    %GamASearch = 6;
-    GamBSearch = [0.1:0.25:3];
-    %GamBSearch = 0.1;
-    TestGam = zeros(length(GamASearch),length(GamBSearch),NSim);
-    
-    for i = 1:NSim
-        fprintf(1,'Sim %d of %d\n',i,NSim);
-        for j = 1:length(GamASearch)
-            for k = 1:length(GamBSearch)
-                SimITI = MinITI + gamrnd(ones(TotalNTrials,1).*GamASearch(j),GamBSearch(k));
-                TestGam(j,k,i) = sum(round(SimITI./HighResTs).*HighResTs);
-            end
-        end
-    end
-    
-    
-    MaxGam = max(TestGam,[],3);
-    MaxGam(find(MaxGam > MaxITITime)) = 0;
-    %MaxGam(find(MaxGam < MaxITITime*0.85)) = 0;
-    % Cycle over the gamma values
-    
-    
-     figure
-     title('Values for Gamma Dist that use all Available Scan Time')
-     surf(GamASearch, GamBSearch,MaxGam')
-     xlabel('GamA')
-     ylabel('GamB')
-     colorbar
-    % Find the edge and extract the values
-    GamValues = zeros(length(GamASearch),2);
-    for i = 1:length(GamASearch)
-        if max(MaxGam(i,:)) > 0
-            GamValues(i,1) = GamASearch(i);
-        
-            GamValues(i,2) = GamBSearch(min(find(MaxGam(i,:) == max(MaxGam(i,:)))));
-        end
-    end
-    GamValues1 = GamValues(find(GamValues(:,1)>0),1);
-    GamValues2 = GamValues(find(GamValues(:,2)>0),2);
-    GamValues = [GamValues1 GamValues2];
+%     NSim = 10;
+%     GamASearch = [0.1:1:7];
+%     %GamASearch = 6;
+%     GamBSearch = [0.1:0.5:3];
+%     %GamBSearch = 0.1;
+%     TestGam = zeros(length(GamASearch),length(GamBSearch),NSim);
+%     
+%     for i = 1:NSim
+%         fprintf(1,'Sim %d of %d\n',i,NSim);
+%         for j = 1:length(GamASearch)
+%             for k = 1:length(GamBSearch)
+%                 SimITI = MinITI + [gamrnd(ones(TotalNTrials-1,1).*GamASearch(j),GamBSearch(k));0];
+%                 TestGam(j,k,i) = sum(round(SimITI./HighResTs).*HighResTs);
+%                 
+%                 %SimITI = [0; gamrnd(ones(TotalNTrials - 1,1).*GamParam(1), GamParam(2))];
+%                 %Round these to the nearest dt
+%                 %tempITI = round(tempITI/HighResTs)*HighResTs + MinITI;
+%                 
+%             end
+%         end
+%     end
+%     
+%     
+%     MaxGam = max(TestGam,[],3);
+%     MaxGam(find(MaxGam > MaxITITime)) = 0;
+%     %MaxGam(find(MaxGam < MaxITITime*0.85)) = 0;
+%     % Cycle over the gamma values
+%     
+%     
+%      %figure
+%      %title('Values for Gamma Dist that use all Available Scan Time')
+%      %surf(GamASearch, GamBSearch,MaxGam')
+%      %xlabel('GamA')
+%      %ylabel('GamB')
+%      %colorbar
+%     % Find the edge and extract the values
+%     GamValues = zeros(length(GamASearch),2);
+%     for i = 1:length(GamASearch)
+%         if max(MaxGam(i,:)) > 0
+%             GamValues(i,1) = GamASearch(i);
+%         
+%             GamValues(i,2) = GamBSearch(min(find(MaxGam(i,:) == max(MaxGam(i,:)))));
+%         end
+%     end
+%     GamValues1 = GamValues(find(GamValues(:,1)>0),1);
+%     GamValues2 = GamValues(find(GamValues(:,2)>0),2);
+%     GamValues = [GamValues1 GamValues2];
     %GamValues% = GamValues(1:5,:);
     %GamValues = GamValues(14,:);
-    
-    
-    GamParam = [4.6 0.35];
-    GamParam = [2.6 0.85]
-     figure(134);hist(0.5+gamrnd(ones(1000,1).*GamParam(1), GamParam(2)),40)
+%     
+%     
+%     %GamParam = [4.6 0.35];
+%     %GamParam = [3.1 1.85]
+    GamParam = [5 1.5]
+     GamValues = GamParam;
+    %figure(134);hist(0.5+gamrnd(ones(1000,1).*GamParam(1), GamParam(2)),40)
     %
     % Create the high res HRF
     H = spm_hrf(TR*HighResTs);
@@ -184,8 +191,8 @@ for tt = 1:length(MaxTimeList)
     durations = cell(1,NLoads*2);
     
     
-    GamValues = GamParam;
-    NSim = 500;
+   
+    NSim = 100;
     NShuffle = 10;
     SimData = zeros(length(GamValues),length(ConNames), NSim, NShuffle);
     BestOrder = zeros(TotalNTrials,3);
@@ -197,21 +204,23 @@ for tt = 1:length(MaxTimeList)
     BestGam = zeros(3,2);
     BestDesign = cell(3,2);
     for g = 1:size(GamValues,1)
-        fprintf(1,'Working on parameter %d of %d\n',g,length(GamValues));
+        fprintf(1,'Working on parameter %d of %d ',g,length(GamValues));
         GamParam = GamValues(g,:);
         %     % Cycle over the values for gamma distribution
         for i = 1:NSim
+            fprintf(1,'%s','.');
             % fprintf(1,'Working on sim %d of %d\n',i,NSim);
             % generate some random numbers from these values
             Flag = 1;
             while Flag == 1
-                tempITI = [0; gamrnd(ones(TotalNTrials - 1,1).*GamParam(1), GamParam(2))];
+                tempITI = MinITI + [gamrnd(ones(TotalNTrials - 1,1).*GamParam(1), GamParam(2)); 0];
                 %Round these to the nearest dt
-                tempITI = round(tempITI/HighResTs)*HighResTs + MinITI;
-                if sum(tempITI) <= MaxITITime
+                tempITI = round(tempITI/HighResTs)*HighResTs;
+                if (sum(tempITI) <= MaxITITime) & (sum(tempITI) > 0.85*MaxITITime)
                     Flag = 0;
                 end
             end
+            %sum(tempITI)
             % These are the start of the ITIs
             tempCumSum = IntroOffTime + cumsum(tempITI  + TrialOnTime);
             tempSumSumTrialStarts = tempCumSum - TrialOnTime - MinITI ;
@@ -250,11 +259,12 @@ for tt = 1:length(MaxTimeList)
                 for cc = 1:length(ConNames)
                     [Eff, VRF, BoldEffect] = subfnCalDesignMetrics(lX,Contrasts.(ConNames{cc})');
                     SimData(g, cc, i, rr) = BoldEffect;
-                    %fprintf(1,'%s\t%0.4f\n',ConNames{cc},BoldEffect)
+                   % fprintf(1,'%s\t%0.4f\n',ConNames{cc},BoldEffect)
                 end
                 OverAllBE = sum(SimData(g,:, i, rr));
-                %if OverAllBE < sum(BestBE(1,:))
-                if OverAllBE < BestBE(1,8)
+                
+                if OverAllBE < sum(BestBE(1,:))
+                %if SimData(g,8, i, rr) < BestBE(1,8)
                     BestGam(2:3,:) = BestGam(1:2,:);
                     BestBE(2:3,:) = BestBE(1:2,:);
                     BestOrder(:,2:3) = BestOrder(:,1:2);
@@ -264,8 +274,8 @@ for tt = 1:length(MaxTimeList)
                     BestOrder(:,1) = r;
                     BestITI(:,1) = tempITI;
                     BestDesign{1,1} = lX;
-                %elseif OverAllBE < sum(BestBE(2,:))
-                elseif OverAllBE < BestBE(2,8)
+                elseif OverAllBE < sum(BestBE(2,:))
+                %elseif SimData(g,8, i, rr) < BestBE(2,8)
                     BestGam(3,:) = BestGam(2,:);
                     BestBE(3,:) = BestBE(2,:);
                     BestOrder(:,3) = BestOrder(:,2);
@@ -274,7 +284,7 @@ for tt = 1:length(MaxTimeList)
                     BestOrder(:,2) = r;
                     BestITI(:,2) = tempITI;
                 end
-                if OverAllBE > sum(WorstBE(3,:))
+                if SimData(g,8, i, rr) > sum(WorstBE(3,:))
                     WorstBE(1:2,:) = WorstBE(2:3,:);
                     WorstOrder(:,1:2) = WorstOrder(:,2:3);
                     WorstITI(:,1:2) = WorstITI(:,2:3);
@@ -282,7 +292,7 @@ for tt = 1:length(MaxTimeList)
                     WorstOrder(:,3) = r;
                     WorstITI(:,3) = tempITI;
                     BestDesign{3,2} = lX;
-                elseif OverAllBE > sum(WorstBE(2,:))
+                elseif SimData(g,8, i, rr) > sum(WorstBE(2,:))
                     WorstBE(1,:) = WorstBE(2,:);
                     WorstOrder(:,1) = WorstOrder(:,2);
                     WorstITI(:,1) = WorstITI(:,2);
@@ -293,9 +303,13 @@ for tt = 1:length(MaxTimeList)
                 
             end
         end
+        fprintf(1,'\n')
     end
     AllBestBE(:,:,tt) = BestBE;
+    AllBestGam(:,:,tt) = BestGam;
 end
+
+
 WorstBE
 BestBE
 BestGam

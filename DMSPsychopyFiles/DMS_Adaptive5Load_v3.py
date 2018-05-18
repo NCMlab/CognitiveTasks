@@ -51,12 +51,14 @@ if len(sys.argv) > 2:
     LoadList = np.array(LoadList)
     LoadList = LoadList.astype(np.int)
     PartDataFolder = sys.argv[1]
+    CounterBalFlag = sys.argv[3]
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
         core.quit()  # user pressed cancel
     LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
     LoadList = LoadList.astype(np.int)
+    CounterBalFlag = 'False'
 #tempFile.write("Loaded inputs\n")
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
@@ -99,7 +101,7 @@ ShortDelayTime = 16.0
 NumberOfBlocks = 5
 TrialsPerBlock = 6
 ## These are great for testing quickly
-#  StimOnTime = .25
+#StimOnTime = .25
 #RetOnTime = .25
 #ProbeOnTime= .25
 #ITITime = .25
@@ -113,6 +115,13 @@ win = visual.Window(
     blendMode='avg', useFBO=True,
     units=FontSizeUnits)
 
+#win = visual.Window(
+#    size=(800, 600), fullscr=False, screen=0,
+#    allowGUI=False, allowStencil=False,
+#    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+#    blendMode='avg', useFBO=True,
+#    units=FontSizeUnits)
+    
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
 if expInfo['frameRate'] != None:
@@ -122,13 +131,20 @@ else:
 
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
-textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Ready to start the main experiment?\nRemember:\nPress [1] if the letter WAS in the set.\nPress [2] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
+if CounterBalFlag == 'False':
+    textInstr1 = visual.TextStim(win=win, name='textInstr1',
+    text='Ready to start the main experiment?\nRemember:\nPress [left] or [1] if the letter WAS in the set.\nPress [down] or [2] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press [5].',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=None, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
-
+else:
+    textInstr1 = visual.TextStim(win=win, name='textInstr1',
+    text='Ready to start the main experiment?\nRemember:\nPress [2] or [down] if the letter WAS in the set.\nPress [1] or [left] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press [5].',
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=None, ori=0, 
+    color='yellow', colorSpace='rgb', opacity=1,
+    depth=0.0);
 # Initialize components for Routine "ShortDelay"
 ShortDelayClock = core.Clock()
 textEndDelay = visual.TextStim(win=win, name='textEndDelay',
@@ -419,8 +435,8 @@ for thisBlock in Blocks:
     print LoadList
     CurrentLoad = LoadList[BlockCount-1]
     print "CurrentLoad = %d"%(CurrentLoad)
-    SelectionList = np.array(range(0,TrialsPerBlock,1)) + (CurrentLoad - 1)*NumberOfBlocks
-    
+    SelectionList = np.array(range(0,TrialsPerBlock,1)) + (CurrentLoad - 1)*TrialsPerBlock
+    print(SelectionList)
     # ------Prepare to start Routine "Countdown"-------
     t = 0
     CountdownClock.reset()  # clock
@@ -685,12 +701,65 @@ for thisBlock in Blocks:
                 if len(theseKeys) > 0:  # at least one key was pressed
                     resp.keys = theseKeys[-1]  # just the last key pressed
                     resp.rt = resp.clock.getTime()
-                    # was this 'correct'?
-                    if ((resp.keys == str(corr)) or (resp.keys == corr)) :
-                        resp.corr = 1
-                    else:
-                        resp.corr = 0
-                    # Also check to see if the other mapping was used
+                    
+                if CounterBalFlag == 'False':
+                    if corr == 'left':
+                        if ((resp.keys == corr) or (resp.keys == str(corr))):
+                            resp.corr = 1
+                        elif ((resp.keys == '1') or (resp.keys == '1')):
+                            resp.corr = 1
+                        else:
+                            resp.corr = 0
+                    if corr == 1:
+                        if ((resp.keys == corr) or (resp.keys == str(corr))):
+                            resp.corr = 1
+                        elif ((resp.keys == 'left') or (resp.keys == 'left')):
+                            resp.corr = 1
+                        else:
+                            resp.corr = 0
+                    if corr == 'down':
+                        if ((resp.keys == corr) or (resp.keys == str(corr))):
+                            resp.corr = 1
+                        elif ((resp.keys == '2') or (resp.keys == '2')):
+                            resp.corr = 1
+                        else:
+                            resp.corr = 0    
+                    if corr == 2:
+                        if ((resp.keys == corr) or (resp.keys == str(corr))):
+                            resp.corr = 1
+                        elif ((resp.keys == 'down') or (resp.keys == 'down')):
+                            resp.corr = 1
+                        else:
+                            resp.corr = 0
+                elif CounterBalFlag == 'True':
+                    if corr == 'left':
+                        if ((resp.keys == corr) or (resp.keys == str(corr))):
+                            resp.corr = 0
+                        elif ((resp.keys == '1') or (resp.keys == '1')):
+                            resp.corr = 0
+                        else:
+                            resp.corr = 1
+                    if corr == 1:
+                        if ((resp.keys == corr) or (resp.keys == str(corr))):
+                            resp.corr = 0
+                        elif ((resp.keys == 'left') or (resp.keys == 'left')):
+                            resp.corr = 0
+                        else:
+                            resp.corr = 1
+                    if corr == 'down':
+                        if ((resp.keys == corr) or (resp.keys == str(corr))):
+                            resp.corr = 0
+                        elif ((resp.keys == '2') or (resp.keys == '2')):
+                            resp.corr = 0
+                        else:
+                            resp.corr = 1    
+                    if corr == 2:
+                        if ((resp.keys == corr) or (resp.keys == str(corr))):
+                            resp.corr = 0
+                        elif ((resp.keys == 'down') or (resp.keys == 'down')):
+                            resp.corr = 0
+                        else:
+                            resp.corr = 1
             
             # check if all components have finished
             if not continueRoutine:  # a component has requested a forced-end of Routine

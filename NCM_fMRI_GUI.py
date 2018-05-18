@@ -58,8 +58,11 @@ class Mywin(wx.Frame):
       TiltleBox2 = wx.StaticBox(panel, -1, size = (360,40), pos = (20, 45))
       # Create an input for the Participant ID
       self.PartIDLabel = wx.StaticText(panel, -1, label = "Participant ID:", pos = (40,55))
-      self.PartID = wx.TextCtrl(panel,-1,'9999999',size=(100,30),pos = (200,48))
-
+      self.PartID = wx.TextCtrl(panel,-1,'9999999',size=(100,30),pos = (140,48))
+      self.PartIDLabel = wx.StaticText(panel, -1, label = "Counterbalance", pos = (250,55))
+      self.CounterBalCB = wx.CheckBox(panel, -1, label = "", pos = (350,55))
+      
+        
       font = wx.Font(18, wx.DEFAULT, wx.NORMAL, wx.BOLD)
     # Create a box for the Face task buttons 
       FacesBox = wx.StaticBox(panel, -1, size = (350,140), pos = (30,80))
@@ -160,27 +163,27 @@ class Mywin(wx.Frame):
       # Button WORD DEMO
       self.btn = wx.Button(panel,-1,"Demo", pos = (45,375)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
-      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSDemo) 
+      self.btn.Bind(wx.EVT_BUTTON, self.OnClickedWORDDemo) 
       
       # Checkbox for WORD Demo
-      self.WORDDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (140,380))
+      # self.WORDDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (140,380))
 
 
       # Button WORD STAIRCASE
-      self.btn = wx.Button(panel,-1,"Staircase", pos = (45,395)) 
-      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+      #self.btn = wx.Button(panel,-1,"Staircase", pos = (45,395)) 
+      #vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       # self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSStair) 
-      self.WORDStairCaseCapText = wx.StaticText(panel, -1, label = "Capacity = ", pos = (170,395))
-      self.WORDStairCaseCapText = wx.StaticText(panel, -1, label = "0000000", pos = (250,395))
+      #self.WORDStairCaseCapText = wx.StaticText(panel, -1, label = "Capacity = ", pos = (170,395))
+      #self.WORDStairCaseCapText = wx.StaticText(panel, -1, label = "0000000", pos = (250,395))
       
       # Checkbox for WORD staircase
-      self.WORDStairCB = wx.CheckBox(panel, -1, label = "", pos = (140,400))
+      # self.WORDStairCB = wx.CheckBox(panel, -1, label = "", pos = (140,400))
       
       # Manual entry button for WORD Capacity
-      self.btn = wx.Button(panel,-1,"Enter", pos = (317,400),size = (45,13)) 
+      #self.btn = wx.Button(panel,-1,"Enter", pos = (317,400),size = (45,13)) 
       #self.btn = wx.Button(panel,-1,"Enter", pos = (317,132),size = (45,13)) 
-      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
-      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSCapEnter) 
+      #vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+      #self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSCapEnter) 
 
       # Button WORD BLOCK ONE
       self.btn = wx.Button(panel,-1,"EV Run One", pos = (45,415)) 
@@ -251,6 +254,10 @@ class Mywin(wx.Frame):
         # Once the capacity is loaded, calculate the load levels
         self.FRTBlockLoadLevels = self.CreateFRTList(self.FRTStairCaseCap)
         
+        
+   def OnClickedWORDDemo(self, event):
+       print(self.CounterBalCB.GetValue())
+    
    def OnClickedFRTBlock(self, event): 
         btn = event.GetEventObject().GetLabel() 
         print "Label of pressed button = ",btn 
@@ -289,11 +296,12 @@ class Mywin(wx.Frame):
       
    def OnClickedDMSBlock(self, event): 
       btn = event.GetEventObject().GetLabel() 
+      CounterBalFlag = str(self.CounterBalCB.GetValue())
       print "Label of pressed button = ",btn 
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v3.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v3.py", self.PartID.GetValue(), self.DMSBlockLoadLevels, CounterBalFlag])
       if btn == 'Block One':
         self.DMSBlockCB1.SetValue(True)
       else:  
@@ -301,6 +309,7 @@ class Mywin(wx.Frame):
    
    def OnClickedWORDEV(self, event): 
       btn = event.GetEventObject().GetLabel() 
+      CounterBalFlag = str(self.CounterBalCB.GetValue())
       print "Label of pressed button = ",btn 
       if btn == 'EV Run One':
         Tag = '1'
@@ -311,7 +320,7 @@ class Mywin(wx.Frame):
       print self.PartID.GetValue()
       # print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
-      core.shellCall([sys.executable, "SemanticRichness/LexicalDecisionEVRun.py", self.PartID.GetValue(),Tag])
+      core.shellCall([sys.executable, "SemanticRichness/LexicalDecisionEVRun.py", self.PartID.GetValue(),Tag, CounterBalFlag])
       #self.WORDBlockCB1.SetValue(True)
 
    def CreateDMSList6(self, DMSCapacity):
