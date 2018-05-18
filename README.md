@@ -4,7 +4,7 @@ This is a set of code for administering a few cognitive tasks.
 The code is all written in Psychopy http://www.psychopy.org/. Psychopy needs ot be installed first. Also note that as of right now Psychopy uses python 2.7.
 
 When the tasks are run data files will be created. These will be placed in a top level folder called data. If this folder does not exist it will be created. Within this data folder one folder will be created for each participant ID. By default the participant ID is 9999999. Every data file is named with the format: 
-[Task Name]_[Participant ID]_[Year]_[Month]_[Day]_[Time].csv
+`[Task Name]_[Participant ID]_[Year]_[Month]_[Day]_[Time].csv`
 
 
 
