@@ -1,19 +1,22 @@
 # CognitiveTasks
 
 This is a set of code for administering a few cognitive tasks. 
-The code is all written in Psychopy http://www.psychopy.org/. Psychopy needs ot be installed first. Also note that as of right now Psychopy uses python 2.7
+The code is all written in Psychopy http://www.psychopy.org/. Psychopy needs ot be installed first. Also note that as of right now Psychopy uses python 2.7.
+
+When the tasks are run data files will be created. These will be placed in a top level folder called data. If this folder does not exist it will be created. Within this data folder one folder will be created for each participant ID. By default the participant ID is 9999999. Every data file is named with the format: 
+[Task Name]_[Participant ID]_[Year]_[Month]_[Day]_[Time].csv
 
 
 
 There are two GUIs for task delivery.
 ## GUIs
 ### NCM_Experiment.py
-This is a GUI which runs the FACE task and the DMS task. There are three versions of these tasks, as represented by the different buttons. The first is the demonstration of the task.
+This is a GUI which runs the FACE task and the DMS task and was used for teh behavioral aspect of this study. There are three versions of these tasks, as represented by the different buttons. The first is the demonstration of the task.
 
 The second is the staircase adaptive difficulty version of the two tasks. The third, is a block based version of the task using the estimated cognitive capacity from the staircase administration of the task. 
 
 ### NCM_fMRI_GUI.py
-This is a GUI which runs the DMS task and the WORD tasks. 
+This is a GUI which runs the DMS task and the WORD tasks and will be used for the MRI aspect of this experiment.
 
 ## Tasks
 ### Degraded Face Matching (FACE) Task
