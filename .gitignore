@@ -6,6 +6,9 @@ __pycache__/
 # Psychopy
 *.pyc
 
+# MatLab
+*.mat
+
 # C extensions
 *.so
 
