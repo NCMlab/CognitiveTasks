@@ -302,12 +302,12 @@ for thisComponent in WhiteCrossHairComponents:
 if Tag == '1':
     trials = data.TrialHandler(nReps=1, method='sequential', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('LexicalRun1.csv'),
+        trialList=data.importConditions('Lexical60Run1.csv'),
         seed=None, name='trials')
 else:
     trials = data.TrialHandler(nReps=1, method='sequential', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('LexicalRun2.csv'),
+        trialList=data.importConditions('Lexical60Run2.csv'),
         seed=None, name='trials')
     
 thisExp.addLoop(trials)  # add the loop to the experiment
