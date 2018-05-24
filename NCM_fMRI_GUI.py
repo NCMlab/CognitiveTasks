@@ -21,8 +21,6 @@ trials per load then this should be straightforward.
 I can create a dictionary of the rows to select for each load level, or be more dynamic.
 Add functionality to the checkboxes
 Add button to "lock-in" a subject ID to prevent it from being accidentally changed"
-
-
 """
 
 from __future__ import absolute_import, division
@@ -283,21 +281,21 @@ class Mywin(wx.Frame):
       
    def OnClickedDMSDemo(self, event): 
       btn = event.GetEventObject().GetLabel() 
-      print("Label of pressed button = "%(btn ))
+      print("Label of pressed button = %s"%(btn ))
       core.shellCall([sys.executable, "DMSPsychopyFiles/DMSDemo_GUI.py", self.PartID.GetValue()])
       self.DMSDEMOCB.SetValue(True)
 
    def OnClickedDMSStair(self, event): 
       self.DMSStairCaseDateStr = data.getDateStr()
       btn = event.GetEventObject().GetLabel() 
-      print("Label of pressed button = "%(btn ))
+      print("Label of pressed button = %s"%(btn ))
       core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v2.py", self.PartID.GetValue()])
       self.LoadDMSCapacity(self)
       
    def OnClickedDMSBlock(self, event): 
       btn = event.GetEventObject().GetLabel() 
       CounterBalFlag = str(self.CounterBalCB.GetValue())
-      print("Label of pressed button = "%(btn ))
+      print("Label of pressed button = %s"%(btn ))
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
@@ -310,7 +308,7 @@ class Mywin(wx.Frame):
    def OnClickedWORDEV(self, event): 
       btn = event.GetEventObject().GetLabel() 
       CounterBalFlag = str(self.CounterBalCB.GetValue())
-      print("Label of pressed button = "%(btn ))
+      print("Label of pressed button = %s"%(btn ))
       if btn == 'EV Run One':
         Tag = '1'
       elif btn == 'EV Run Two':
