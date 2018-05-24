@@ -104,14 +104,14 @@ class Mywin(wx.Frame):
       # self.btn = wx.Button(panel,-1,"Load", pos = (317,150),size = (45,13)) 
       
       # Button FRT BLOCK ONE
-      self.btn = wx.Button(panel,-1,"Block One", pos = (45,150)) 
+      self.btn = wx.Button(panel,-1,"FRT Run 1", pos = (45,150)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTBlock)       
       # Checkbox for FRT BLOCK ONE
       self.FRTBlockCB1 = wx.CheckBox(panel, -1, label = "", pos = (140,155))
       # =========================================================================
       # Button FRT BLOCK TWO
-      self.btn = wx.Button(panel,-1,"Block Two", pos = (45,170)) 
+      self.btn = wx.Button(panel,-1,"FRT Run 2", pos = (45,170)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTBlock)       
       # Checkbox for FRT BLOCK TWO
@@ -144,14 +144,14 @@ class Mywin(wx.Frame):
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSCapEnter) 
 
       # Button DMS BLOCK ONE
-      self.btn = wx.Button(panel,-1,"Block One", pos = (45,280)) 
+      self.btn = wx.Button(panel,-1,"DMS Run 1", pos = (45,280)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSBlock) 
     # Checkbox for DMS BLOCK ONE
       self.DMSBlockCB1 = wx.CheckBox(panel, -1, label = "", pos = (140,285))
 
     # Button DMS BLOCK TWO
-      self.btn = wx.Button(panel,-1,"Block Two", pos = (45,300)) 
+      self.btn = wx.Button(panel,-1,"DMS Run 2", pos = (45,300)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSBlock) 
     # Checkbox for DMS BLOCK TWO
@@ -184,14 +184,14 @@ class Mywin(wx.Frame):
       #self.btn.Bind(wx.EVT_BUTTON,self.OnClickedDMSCapEnter) 
 
       # Button WORD BLOCK ONE
-      self.btn = wx.Button(panel,-1,"EV Run One", pos = (45,415)) 
+      self.btn = wx.Button(panel,-1,"SR Run 1", pos = (45,415)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedWORDEV) 
     # Checkbox for WORD BLOCK ONE
       self.WORDBlockCB1 = wx.CheckBox(panel, -1, label = "", pos = (140,420))
 
     # Button WORD BLOCK TWO
-      self.btn = wx.Button(panel,-1,"EV Run Two", pos = (45,435)) 
+      self.btn = wx.Button(panel,-1,"SR Run 2", pos = (45,435)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedWORDEV) 
     # Checkbox for WORD BLOCK TWO
@@ -296,6 +296,13 @@ class Mywin(wx.Frame):
       btn = event.GetEventObject().GetLabel() 
       CounterBalFlag = str(self.CounterBalCB.GetValue())
       print("Label of pressed button = %s"%(btn ))
+      
+      if btn == 'DMS Run 1':
+        Tag = '1'
+      elif btn == 'DMS Run 2':
+        Tag = '2'
+      else:
+        Tag = '9'
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
@@ -309,9 +316,9 @@ class Mywin(wx.Frame):
       btn = event.GetEventObject().GetLabel() 
       CounterBalFlag = str(self.CounterBalCB.GetValue())
       print("Label of pressed button = %s"%(btn ))
-      if btn == 'EV Run One':
+      if btn == 'SR Run 1':
         Tag = '1'
-      elif btn == 'EV Run Two':
+      elif btn == 'SR Run 2':
         Tag = '2'
       else:
         Tag = '9'
