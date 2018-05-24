@@ -52,6 +52,7 @@ if len(sys.argv) > 2:
     LoadList = LoadList.astype(np.int)
     PartDataFolder = sys.argv[1]
     CounterBalFlag = sys.argv[3]
+    Tag = sys.argv[4]
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
@@ -59,6 +60,7 @@ else:
     LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
     LoadList = LoadList.astype(np.int)
     CounterBalFlag = 'False'
+    Tag = '1'
 #tempFile.write("Loaded inputs\n")
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
@@ -73,7 +75,11 @@ thisExp = data.ExperimentHandler(name=expName, version='',
     originPath=u'/home/jsteffe/Dropbox/SteffenerColumbia/Projects/MyProjects/NeuralCognitiveMapping/DMSPsychopyFiles/DMS_Adaptive.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
-
+# Which input file to use
+if Tag == '1':
+    inputFile = '../DMSPsychopyFiles/DMSBlockListMRIRun1.csv'
+else: 
+    inputFile = '../DMSPsychopyFiles/DMSBlockListMRIRun2.csv'
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
@@ -512,7 +518,7 @@ for thisBlock in Blocks:
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='sequential', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockListv2.csv', selection=SelectionList),
+        trialList=data.importConditions(inputFile, selection=SelectionList),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values

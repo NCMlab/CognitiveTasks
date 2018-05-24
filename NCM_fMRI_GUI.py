@@ -306,8 +306,8 @@ class Mywin(wx.Frame):
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v3.py", self.PartID.GetValue(), self.DMSBlockLoadLevels, CounterBalFlag])
-      if btn == 'Block One':
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v3.py", self.PartID.GetValue(), self.DMSBlockLoadLevels, CounterBalFlag, Tag])
+      if Tag == '1':
         self.DMSBlockCB1.SetValue(True)
       else:  
         self.DMSBlockCB2.SetValue(True)
