@@ -54,6 +54,10 @@ ITITime = 1.0
 MaxTime = 7 # minutes
 MaxTrials = expInfo['Max Trials'] # End after this many trials
 NumberOfReversals = 20
+
+FontSize = 60
+FontSizeUnits = 'pix'
+
 '''
 MaxTime = 1
 StimOnTime = 0.25
@@ -125,80 +129,80 @@ WaitText = visual.TextStim(win=win, name='WaitText',
 CountDownText = visual.TextStim(win=win, name='CountDown',
     text='CountDown',units='pix', 
     font='Times New Roman',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0); 
     
 textITI = visual.TextStim(win=win, name='textITI',
     text='+',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 textTL = visual.TextStim(win=win, name='textTL',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(-50, 50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(-50, 50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
 textTM = visual.TextStim(win=win, name='textTM',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, 50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-2.0);
 textTR = visual.TextStim(win=win, name='textTR',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(50, 50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(50, 50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-3.0);
 textCL = visual.TextStim(win=win, name='textCL',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(-50, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(-50, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-4.0);
 textCM = visual.TextStim(win=win, name='textCM',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-5.0);
 textCR = visual.TextStim(win=win, name='textCR',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(50, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(50, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-6.0);
 textBL = visual.TextStim(win=win, name='textBL',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(-50, -50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(-50, -50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-7.0);
 textBM = visual.TextStim(win=win, name='textBM',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, -50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, -50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-8.0);
 textBR = visual.TextStim(win=win, name='textBR',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(50, -50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(50, -50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-9.0);
 textDelay = visual.TextStim(win=win, name='textDelay',
     text='+',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='green', colorSpace='rgb', opacity=1,
     depth=-10.0);
 textProbe = visual.TextStim(win=win, name='textProbe',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-11.0);
 
@@ -206,14 +210,14 @@ textProbe = visual.TextStim(win=win, name='textProbe',
 whiteITI = visual.TextStim(win=win, name='whiteITI',
     text='+',
     font='Times New Roman',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 # Green ITI
 greenITI = visual.TextStim(win=win, name='greenITI',
     text='+',
     font='Times New Roman',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='green', colorSpace='rgb', opacity=1,
     depth=0.0);
 
