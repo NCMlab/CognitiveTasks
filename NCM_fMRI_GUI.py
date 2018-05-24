@@ -219,14 +219,14 @@ class Mywin(wx.Frame):
    # Run the Faces demo
    def OnClickedFRTDemo(self, event): 
       btn = event.GetEventObject().GetLabel() 
-      print "Label of pressed button = ",btn 
+      print("Label of pressed button = "%(btn ))
       core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
       self.FRTDEMOCB.SetValue(True)
       
     # run the faces staircase
    def OnClickedFRTStair(self, event): 
       btn = event.GetEventObject().GetLabel() 
-      print "Label of pressed button = ",btn 
+      print("Label of pressed button = "%(btn ))
       self.FRTStairCaseDateStr = data.getDateStr()
       core.shellCall([sys.executable, "FRTPsychopyFiles/FRTStairCase_v1.py", self.PartID.GetValue()])
       # after the task is run read the capicity file
@@ -260,7 +260,7 @@ class Mywin(wx.Frame):
     
    def OnClickedFRTBlock(self, event): 
         btn = event.GetEventObject().GetLabel() 
-        print "Label of pressed button = ",btn 
+        print("Label of pressed button = "%(btn ))
         print self.PartID.GetValue()
         print self.FRTBlockLoadLevels
         core.shellCall([sys.executable, "FRTPsychopyFiles/FRT_Adaptive.py", self.PartID.GetValue(), self.FRTBlockLoadLevels])
@@ -283,21 +283,21 @@ class Mywin(wx.Frame):
       
    def OnClickedDMSDemo(self, event): 
       btn = event.GetEventObject().GetLabel() 
-      print "Label of pressed button = ",btn 
+      print("Label of pressed button = "%(btn ))
       core.shellCall([sys.executable, "DMSPsychopyFiles/DMSDemo_GUI.py", self.PartID.GetValue()])
       self.DMSDEMOCB.SetValue(True)
 
    def OnClickedDMSStair(self, event): 
       self.DMSStairCaseDateStr = data.getDateStr()
       btn = event.GetEventObject().GetLabel() 
-      print "Label of pressed button = ",btn 
+      print("Label of pressed button = "%(btn ))
       core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v2.py", self.PartID.GetValue()])
       self.LoadDMSCapacity(self)
       
    def OnClickedDMSBlock(self, event): 
       btn = event.GetEventObject().GetLabel() 
       CounterBalFlag = str(self.CounterBalCB.GetValue())
-      print "Label of pressed button = ",btn 
+      print("Label of pressed button = "%(btn ))
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
@@ -310,7 +310,7 @@ class Mywin(wx.Frame):
    def OnClickedWORDEV(self, event): 
       btn = event.GetEventObject().GetLabel() 
       CounterBalFlag = str(self.CounterBalCB.GetValue())
-      print "Label of pressed button = ",btn 
+      print("Label of pressed button = "%(btn ))
       if btn == 'EV Run One':
         Tag = '1'
       elif btn == 'EV Run Two':
@@ -374,9 +374,9 @@ class Mywin(wx.Frame):
                 print "Capacity = " + str(thisInfo)
                 Capacity = float(thisInfo[0])
             else:
-                print "Out of Range"
+                print("Out of Range")
         else:
-            print 'user cancelled'
+            print("user cancelled")
         return str(Capacity)
         
    def OnClickedFRTCapEnter(self,event):
