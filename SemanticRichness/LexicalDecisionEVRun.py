@@ -90,7 +90,7 @@ else:
 
 # Initialize components for Routine "Wait"
 WaitClock = core.Clock()
-
+RunningClock = core.Clock()
 
 
 if CounterBalFlag == 'False':
@@ -167,6 +167,18 @@ text_3 = visual.TextStim(win=win, name='text_3',
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
+
+# set up handler to look after randomisation of conditions etc
+if Tag == '1':
+    trials = data.TrialHandler(nReps=1, method='sequential', 
+        extraInfo=expInfo, originPath=-1,
+        trialList=data.importConditions('Lexical60Run1.csv'),
+        seed=None, name='trials')
+else:
+    trials = data.TrialHandler(nReps=1, method='sequential', 
+        extraInfo=expInfo, originPath=-1,
+        trialList=data.importConditions('Lexical60Run2.csv'),
+        seed=None, name='trials')
 
 # ------Prepare to start Routine "Wait"-------
 t = 0
@@ -246,6 +258,8 @@ thisExp.nextEntry()
 # the Routine "Wait" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
+
+RunningClock.reset()
 # ------Prepare to start Routine "WhiteCrossHair"-------
 t = 0
 WhiteCrossHairClock.reset()  # clock
@@ -297,18 +311,6 @@ while continueRoutine and routineTimer.getTime() > 0:
 for thisComponent in WhiteCrossHairComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
-
-# set up handler to look after randomisation of conditions etc
-if Tag == '1':
-    trials = data.TrialHandler(nReps=1, method='sequential', 
-        extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('Lexical60Run1.csv'),
-        seed=None, name='trials')
-else:
-    trials = data.TrialHandler(nReps=1, method='sequential', 
-        extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('Lexical60Run2.csv'),
-        seed=None, name='trials')
     
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -330,6 +332,7 @@ for thisTrial in trials:
     frameN = -1
     continueRoutine = True
     routineTimer.add(StimTotalTime)
+    TrialElapsedTime = RunningClock.getTime()
     # update component parameters for each repeat
     text.setText(Word)
     key_resp_3 = event.BuilderKeyResponse()
@@ -343,6 +346,7 @@ for thisTrial in trials:
     while continueRoutine and routineTimer.getTime() > 0:
         # get current time
         t = TrialClock.getTime()
+        
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
@@ -491,6 +495,8 @@ for thisTrial in trials:
 #        else:
 #           key_resp_3.corr = 0  # failed to respond (incorrectly)
     # store data for trials (TrialHandler)
+    trials.addData('TrialStartTime',TrialElapsedTime)
+    trials.addData('TrialEndTime',RunningClock.getTime())
     trials.addData('key_resp_3.keys',key_resp_3.keys)
     trials.addData('key_resp_3.corr', key_resp_3.corr)
     if key_resp_3.keys != None:  # we had a response
