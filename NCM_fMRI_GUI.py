@@ -318,7 +318,7 @@ class Mywin(wx.Frame):
       print self.PartID.GetValue()
       # print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
-      core.shellCall([sys.executable, "SemanticRichness/LexicalDecisionEVRun.py", self.PartID.GetValue(),Tag, CounterBalFlag])
+      core.shellCall([sys.executable, "SemanticRichness/BlockBased/SemanticRichnessBlockBasedv2.py", self.PartID.GetValue(),CounterBalFlag,Tag])
       #self.WORDBlockCB1.SetValue(True)
 
    def CreateDMSList6(self, DMSCapacity):
