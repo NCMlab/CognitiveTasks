@@ -174,6 +174,7 @@ ThankYouText = visual.TextStim(win=win, name='ThankYouText',
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 IntroClock = core.Clock()
+TrialClock = core.Clock()
 # ------Prepare to start Routine "Intro"-------
 t = 0
 IntroClock.reset()  # clock
@@ -255,6 +256,7 @@ routineTimer.reset()
 
 # ------Prepare to start Routine "WhiteCrosshair"-------
 t = 0
+TrialClock.reset()
 WhiteCrosshairClock.reset()  # clock
 frameN = -1
 continueRoutine = True
@@ -437,6 +439,7 @@ for thisBlock in Blocks:
                 thisComponent.status = NOT_STARTED
         
         # -------Start Routine "WordStimulus"-------
+        CurrentTime = TrialClock.getTime()
         while continueRoutine and routineTimer.getTime() > 0:
             # get current time
             t = WordStimulusClock.getTime()
@@ -569,6 +572,7 @@ for thisBlock in Blocks:
             else:
                Response.corr = 0  # failed to respond (incorrectly)
         # store data for trials (TrialHandler)
+        trials.addData('CurrentTime',CurrentTime)
         trials.addData('Response.keys',Response.keys)
         trials.addData('Response.corr', Response.corr)
         if Response.keys != None:  # we had a response
