@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Wed 30 May 2018 12:48:28 PM EDT
+This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
+    on Sun Jun  3 21:18:35 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, sound, gui, visual, core, data, event, logging
+from psychopy import locale_setup, gui, visual, core, data, event, logging, sound
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -37,7 +37,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/home/jsteffen/Documents/GitHubOutsideOfDropbox/CognitiveTasks/SemanticRichness/BlockBased/SemanticRichnessBLockBasedv1.psyexp',
+    originPath=u'/Users/jason/Documents/GITHUBReposOutsideDropBox/CognitiveTasks/SemanticRichness/BlockBased/SemanticRichnessBLockBasedv1.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -50,7 +50,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=[1920, 1080], fullscr=False, screen=0,
+    size=[1200, 800], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
@@ -64,19 +64,19 @@ else:
 # Initialize components for Routine "Intro"
 IntroClock = core.Clock()
 Instructions = visual.TextStim(win=win, name='Instructions',
-    text='Instructions',
+    text='Press [left] if the word is of a living thing.\nPress [down] if the word is of a non-living thing.\n\nPress [5] to start.',
     font='Arial',
-    pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=0.12, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "WhiteCrosshair"
 WhiteCrosshairClock = core.Clock()
 WhiteCrossHairStim = visual.TextStim(win=win, name='WhiteCrossHairStim',
-    text='+',
-    font='Arial',
+    text=u'+',
+    font=u'Arial',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "CountDown"
@@ -121,7 +121,16 @@ RedCrossHairStim = visual.TextStim(win=win, name='RedCrossHairStim',
 # Initialize components for Routine "WhiteCrosshair"
 WhiteCrosshairClock = core.Clock()
 WhiteCrossHairStim = visual.TextStim(win=win, name='WhiteCrossHairStim',
-    text='+',
+    text=u'+',
+    font=u'Arial',
+    pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=0.0);
+
+# Initialize components for Routine "ThankYou"
+ThankYouClock = core.Clock()
+ThankYouText = visual.TextStim(win=win, name='ThankYouText',
+    text='Thank you',
     font='Arial',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
@@ -215,7 +224,7 @@ t = 0
 WhiteCrosshairClock.reset()  # clock
 frameN = -1
 continueRoutine = True
-routineTimer.add(5.000000)
+routineTimer.add(17.000000)
 # update component parameters for each repeat
 # keep track of which components have finished
 WhiteCrosshairComponents = [WhiteCrossHairStim]
@@ -236,7 +245,7 @@ while continueRoutine and routineTimer.getTime() > 0:
         WhiteCrossHairStim.tStart = t
         WhiteCrossHairStim.frameNStart = frameN  # exact frame index
         WhiteCrossHairStim.setAutoDraw(True)
-    frameRemains = 0.0 + 5- win.monitorFramePeriod * 0.75  # most of one frame period left
+    frameRemains = 0.0 + 17- win.monitorFramePeriod * 0.75  # most of one frame period left
     if WhiteCrossHairStim.status == STARTED and t >= frameRemains:
         WhiteCrossHairStim.setAutoDraw(False)
     
@@ -354,9 +363,9 @@ for thisBlock in Blocks:
             thisComponent.setAutoDraw(False)
     
     # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1, method='sequential', 
+    trials = data.TrialHandler(nReps=1, method='random', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('OriginalStimList.csv', selection=rows),
+        trialList=data.importConditions('StimulusListRun1.csv', selection=rows),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -377,6 +386,7 @@ for thisBlock in Blocks:
         WordStimulusClock.reset()  # clock
         frameN = -1
         continueRoutine = True
+        routineTimer.add(1.500000)
         # update component parameters for each repeat
         WordStim.setText(Concept)
         Response = event.BuilderKeyResponse()
@@ -387,7 +397,7 @@ for thisBlock in Blocks:
                 thisComponent.status = NOT_STARTED
         
         # -------Start Routine "WordStimulus"-------
-        while continueRoutine:
+        while continueRoutine and routineTimer.getTime() > 0:
             # get current time
             t = WordStimulusClock.getTime()
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
@@ -399,6 +409,9 @@ for thisBlock in Blocks:
                 WordStim.tStart = t
                 WordStim.frameNStart = frameN  # exact frame index
                 WordStim.setAutoDraw(True)
+            frameRemains = 0.0 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
+            if WordStim.status == STARTED and t >= frameRemains:
+                WordStim.setAutoDraw(False)
             
             # *Response* updates
             if t >= 0.0 and Response.status == NOT_STARTED:
@@ -409,6 +422,9 @@ for thisBlock in Blocks:
                 # keyboard checking is just starting
                 win.callOnFlip(Response.clock.reset)  # t=0 on next screen flip
                 event.clearEvents(eventType='keyboard')
+            frameRemains = 0.0 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
+            if Response.status == STARTED and t >= frameRemains:
+                Response.status = STOPPED
             if Response.status == STARTED:
                 theseKeys = event.getKeys(keyList=['1', '2', 'left', 'down'])
                 
@@ -418,6 +434,11 @@ for thisBlock in Blocks:
                 if len(theseKeys) > 0:  # at least one key was pressed
                     Response.keys = theseKeys[-1]  # just the last key pressed
                     Response.rt = Response.clock.getTime()
+                    # was this 'correct'?
+                    if (Response.keys == str(Corr)) or (Response.keys == Corr):
+                        Response.corr = 1
+                    else:
+                        Response.corr = 0
                     # a response ends the routine
                     continueRoutine = False
             
@@ -445,11 +466,16 @@ for thisBlock in Blocks:
         # check responses
         if Response.keys in ['', [], None]:  # No response was made
             Response.keys=None
+            # was no response the correct answer?!
+            if str(Corr).lower() == 'none':
+               Response.corr = 1  # correct non-response
+            else:
+               Response.corr = 0  # failed to respond (incorrectly)
+        # store data for trials (TrialHandler)
         trials.addData('Response.keys',Response.keys)
+        trials.addData('Response.corr', Response.corr)
         if Response.keys != None:  # we had a response
             trials.addData('Response.rt', Response.rt)
-        # the Routine "WordStimulus" was not non-slip safe, so reset the non-slip timer
-        routineTimer.reset()
         
         # ------Prepare to start Routine "RedCrosshair"-------
         t = 0
@@ -512,7 +538,7 @@ for thisBlock in Blocks:
     WhiteCrosshairClock.reset()  # clock
     frameN = -1
     continueRoutine = True
-    routineTimer.add(5.000000)
+    routineTimer.add(17.000000)
     # update component parameters for each repeat
     # keep track of which components have finished
     WhiteCrosshairComponents = [WhiteCrossHairStim]
@@ -533,7 +559,7 @@ for thisBlock in Blocks:
             WhiteCrossHairStim.tStart = t
             WhiteCrossHairStim.frameNStart = frameN  # exact frame index
             WhiteCrossHairStim.setAutoDraw(True)
-        frameRemains = 0.0 + 5- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.0 + 17- win.monitorFramePeriod * 0.75  # most of one frame period left
         if WhiteCrossHairStim.status == STARTED and t >= frameRemains:
             WhiteCrossHairStim.setAutoDraw(False)
         
@@ -560,6 +586,58 @@ for thisBlock in Blocks:
             thisComponent.setAutoDraw(False)
 # completed 1 repeats of 'Blocks'
 
+
+# ------Prepare to start Routine "ThankYou"-------
+t = 0
+ThankYouClock.reset()  # clock
+frameN = -1
+continueRoutine = True
+routineTimer.add(5.000000)
+# update component parameters for each repeat
+# keep track of which components have finished
+ThankYouComponents = [ThankYouText]
+for thisComponent in ThankYouComponents:
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+
+# -------Start Routine "ThankYou"-------
+while continueRoutine and routineTimer.getTime() > 0:
+    # get current time
+    t = ThankYouClock.getTime()
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    # *ThankYouText* updates
+    if t >= 0.0 and ThankYouText.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        ThankYouText.tStart = t
+        ThankYouText.frameNStart = frameN  # exact frame index
+        ThankYouText.setAutoDraw(True)
+    frameRemains = 0.0 + 5- win.monitorFramePeriod * 0.75  # most of one frame period left
+    if ThankYouText.status == STARTED and t >= frameRemains:
+        ThankYouText.setAutoDraw(False)
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in ThankYouComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # check for quit (the Esc key)
+    if endExpNow or event.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+# -------Ending Routine "ThankYou"-------
+for thisComponent in ThankYouComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
 thisExp.saveAsPickle(filename)
