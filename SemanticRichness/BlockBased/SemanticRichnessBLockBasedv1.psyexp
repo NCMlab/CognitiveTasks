@@ -1,0 +1,291 @@
+<?xml version="1.0" ?>
+<PsychoPy2experiment encoding="utf-8" version="1.85.1">
+  <Settings>
+    <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
+    <Param name="color" updates="None" val="$[0,0,0]" valType="str"/>
+    <Param name="colorSpace" updates="None" val="rgb" valType="str"/>
+    <Param name="Experiment info" updates="None" val="{u'session': u'001', u'participant': u''}" valType="code"/>
+    <Param name="JS libs" updates="None" val="packaged" valType="str"/>
+    <Param name="Units" updates="None" val="use prefs" valType="str"/>
+    <Param name="Save excel file" updates="None" val="False" valType="bool"/>
+    <Param name="Enable Escape" updates="None" val="True" valType="bool"/>
+    <Param name="Save psydat file" updates="None" val="True" valType="bool"/>
+    <Param name="Window size (pixels)" updates="None" val="[1440, 900]" valType="code"/>
+    <Param name="Full-screen window" updates="None" val="True" valType="bool"/>
+    <Param name="blendMode" updates="None" val="avg" valType="str"/>
+    <Param name="Use version" updates="None" val="" valType="str"/>
+    <Param name="HTML path" updates="None" val="html" valType="str"/>
+    <Param name="Save csv file" updates="None" val="False" valType="bool"/>
+    <Param name="OSF Project ID" updates="None" val="" valType="str"/>
+    <Param name="Save log file" updates="None" val="True" valType="bool"/>
+    <Param name="Save wide csv file" updates="None" val="True" valType="bool"/>
+    <Param name="Show mouse" updates="None" val="False" valType="bool"/>
+    <Param name="Data filename" updates="None" val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code"/>
+    <Param name="Show info dlg" updates="None" val="True" valType="bool"/>
+    <Param name="expName" updates="None" val="SemanticRichnessBLockBasedv1" valType="str"/>
+    <Param name="logging level" updates="None" val="exp" valType="code"/>
+    <Param name="Screen" updates="None" val="1" valType="num"/>
+  </Settings>
+  <Routines>
+    <Routine name="WordStimulus">
+      <TextComponent name="WordStim">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="WordStim" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="set every repeat" val="$Concept" valType="str"/>
+        <Param name="stopVal" updates="constant" val="1.5" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.2" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="Response">
+        <Param name="correctAns" updates="constant" val="$Corr" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="True" valType="bool"/>
+        <Param name="name" updates="None" val="Response" valType="code"/>
+        <Param name="stopVal" updates="constant" val="1.5" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="'1','2','left','down'" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="store" updates="constant" val="last key" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="CountDown">
+      <TextComponent name="Three">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Three" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="3" valType="str"/>
+        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.2" valType="code"/>
+      </TextComponent>
+      <TextComponent name="Two">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Two" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="2" valType="str"/>
+        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="1" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.2" valType="code"/>
+      </TextComponent>
+      <TextComponent name="One">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="One" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="1" valType="str"/>
+        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="2" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.2" valType="code"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="ThankYou">
+      <TextComponent name="ThankYouText">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="ThankYouText" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="Thank you" valType="str"/>
+        <Param name="stopVal" updates="constant" val="5" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.2" valType="code"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="Intro">
+      <TextComponent name="Instructions">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Instructions" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="Press [left] if the word is of a living thing.&amp;#10;Press [down] if the word is of a non-living thing.&amp;#10;&amp;#10;Press [5] to start." valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.12" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="StartExperimentResponse">
+        <Param name="correctAns" updates="constant" val="" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="StartExperimentResponse" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="'5'" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="store" updates="constant" val="last key" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="WhiteCrosshair">
+      <TextComponent name="WhiteCrossHairStim">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="WhiteCrossHairStim" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="+" valType="str"/>
+        <Param name="stopVal" updates="constant" val="17" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.2" valType="code"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="ExtraTimeWhiteCH">
+      <TextComponent name="text">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="text" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="+" valType="str"/>
+        <Param name="stopVal" updates="constant" val="3" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.2" valType="code"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="RedCrosshair">
+      <TextComponent name="RedCrossHairStim">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="RedCrossHairStim" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="red" valType="str"/>
+        <Param name="text" updates="constant" val="+" valType="str"/>
+        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.2" valType="code"/>
+      </TextComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <Routine name="Intro"/>
+    <Routine name="WhiteCrosshair"/>
+    <LoopInitiator loopType="TrialHandler" name="Blocks">
+      <Param name="conditionsFile" updates="None" val="Run1Blocks.csv" valType="str"/>
+      <Param name="name" updates="None" val="Blocks" valType="code"/>
+      <Param name="isTrials" updates="None" val="False" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="[{'rows': u'0:5'}, {'rows': u'6:11'}, {'rows': u'12:17'}, {'rows': u'18:23'}, {'rows': u'24:29'}, {'rows': u'30:35'}, {'rows': u'36:41'}, {'rows': u'42:46'}, {'rows': u'48:53'}, {'rows': u'54:59'}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+    </LoopInitiator>
+    <Routine name="CountDown"/>
+    <LoopInitiator loopType="TrialHandler" name="trials">
+      <Param name="conditionsFile" updates="None" val="StimulusListRun1.csv" valType="str"/>
+      <Param name="name" updates="None" val="trials" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="random" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="[{'Count': 1, 'SemanticCategory': u'Living', 'IMG': u'435', 'BG_Freq_By_Pos': u'1,169', 'Length': 5, 'CNC': u'446', 'Block': 1, 'Concept': u'beech', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 1.2790000000000001, 'Ortho_N': 4, 'FAM': u'374', 'Freq': 1}, {'Count': 2, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'859', 'Length': 5, 'CNC': u'-', 'Block': 1, 'Concept': u'beets', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 1.724, 'Ortho_N': 6, 'FAM': u'-', 'Freq': 1}, {'Count': 3, 'SemanticCategory': u'Living', 'IMG': u'567', 'BG_Freq_By_Pos': u'1,820', 'Length': 11, 'CNC': u'642', 'Block': 1, 'Concept': u'cauliflower ', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 1.462, 'Ortho_N': 0, 'FAM': u'462', 'Freq': 1}, {'Count': 4, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'2,280', 'Length': 6, 'CNC': u'-', 'Block': 1, 'Concept': u'celery', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 1.982, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 1}, {'Count': 5, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1282', 'Length': 7, 'CNC': u'-', 'Block': 1, 'Concept': u'cheddar', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 1.964, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 1}, {'Count': 6, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'3,570', 'Length': 9, 'CNC': u'-', 'Block': 1, 'Concept': u'margarine', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 1.5190000000000001, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 1}, {'Count': 7, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'2,212', 'Length': 6, 'CNC': u'-', 'Block': 1, 'Concept': u'mitten', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 1.38, 'Ortho_N': 2, 'FAM': u'-', 'Freq': 1}, {'Count': 8, 'SemanticCategory': u'Non-Living', 'IMG': None, 'BG_Freq_By_Pos': u'2,935', 'Length': 9, 'CNC': None, 'Block': 1, 'Concept': u'polyester', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 1.806, 'Ortho_N': 0, 'FAM': None, 'Freq': 1}, {'Count': 9, 'SemanticCategory': u'Living', 'IMG': u'649', 'BG_Freq_By_Pos': u'2,835', 'Length': 9, 'CNC': u'596', 'Block': 2, 'Concept': u'cranberry', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.0, 'Ortho_N': 0, 'FAM': u'483', 'Freq': 1}, {'Count': 10, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'3,433', 'Length': 8, 'CNC': u'-', 'Block': 2, 'Concept': u'mandarin', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 1.8330000000000002, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 1}, {'Count': 11, 'SemanticCategory': u'Living', 'IMG': u'590', 'BG_Freq_By_Pos': u'1,647', 'Length': 4, 'CNC': u'634', 'Block': 2, 'Concept': u'pear', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 1.839, 'Ortho_N': 16, 'FAM': u'567', 'Freq': 1}, {'Count': 12, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1225', 'Length': 7, 'CNC': u'-', 'Block': 2, 'Concept': u'raccoon', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 1.869, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 1}, {'Count': 13, 'SemanticCategory': u'Non-Living', 'IMG': u'593', 'BG_Freq_By_Pos': u'3,237', 'Length': 8, 'CNC': u'633', 'Block': 2, 'Concept': u'clarinet', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 1.909, 'Ortho_N': 0, 'FAM': u'464', 'Freq': 1}, {'Count': 14, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'3,755', 'Length': 8, 'CNC': u'-', 'Block': 2, 'Concept': u'colander', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 0.845, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 1}, {'Count': 15, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1,670', 'Length': 7, 'CNC': u'-', 'Block': 2, 'Concept': u'crowbar', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 1.8259999999999998, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 1}, {'Count': 16, 'SemanticCategory': u'Non-Living', 'IMG': u'575', 'BG_Freq_By_Pos': u'3,485', 'Length': 7, 'CNC': u'630', 'Block': 2, 'Concept': u'lantern', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.017, 'Ortho_N': 0, 'FAM': u'441', 'Freq': 1}, {'Count': 17, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1,774', 'Length': 8, 'CNC': u'-', 'Block': 3, 'Concept': u'broccoli', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.068, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 2}, {'Count': 18, 'SemanticCategory': u'Living', 'IMG': u'573', 'BG_Freq_By_Pos': u'1,324', 'Length': 7, 'CNC': u'611', 'Block': 3, 'Concept': u'cabbage', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.173, 'Ortho_N': 0, 'FAM': u'504', 'Freq': 2}, {'Count': 19, 'SemanticCategory': u'Living', 'IMG': u'516', 'BG_Freq_By_Pos': u'683', 'Length': 5, 'CNC': u'608', 'Block': 3, 'Concept': u'cedar', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.1069999999999998, 'Ortho_N': 0, 'FAM': u'381', 'Freq': 2}, {'Count': 20, 'SemanticCategory': u'Living', 'IMG': u'608', 'BG_Freq_By_Pos': u'1,231', 'Length': 7, 'CNC': u'579', 'Block': 3, 'Concept': u'lettuce', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.241, 'Ortho_N': 0, 'FAM': u'565', 'Freq': 2}, {'Count': 21, 'SemanticCategory': u'Non-Living', 'IMG': u'607', 'BG_Freq_By_Pos': u'2,849', 'Length': 7, 'CNC': u'593', 'Block': 3, 'Concept': u'cottage', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.4330000000000003, 'Ortho_N': 0, 'FAM': u'543', 'Freq': 2}, {'Count': 22, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1,795', 'Length': 6, 'CNC': u'-', 'Block': 3, 'Concept': u'diesel', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.134, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 2}, {'Count': 23, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1698', 'Length': 6, 'CNC': u'-', 'Block': 3, 'Concept': u'domino', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.314, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 2}, {'Count': 24, 'SemanticCategory': u'Non-Living', 'IMG': u'544', 'BG_Freq_By_Pos': u'1,284', 'Length': 6, 'CNC': u'565', 'Block': 3, 'Concept': u'fabric', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.391, 'Ortho_N': 0, 'FAM': u'477', 'Freq': 2}, {'Count': 25, 'SemanticCategory': u'Living', 'IMG': u'561', 'BG_Freq_By_Pos': u'1,493', 'Length': 5, 'CNC': u'597', 'Block': 4, 'Concept': u'camel', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.41, 'Ortho_N': 1, 'FAM': u'421', 'Freq': 2}, {'Count': 26, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'2,638', 'Length': 7, 'CNC': u'-', 'Block': 4, 'Concept': u'coconut', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.371, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 2}, {'Count': 27, 'SemanticCategory': u'Living', 'IMG': u'591', 'BG_Freq_By_Pos': u'1,674', 'Length': 5, 'CNC': u'611', 'Block': 4, 'Concept': u'grape', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.312, 'Ortho_N': 9, 'FAM': u'532', 'Freq': 2}, {'Count': 28, 'SemanticCategory': u'Living', 'IMG': u'597', 'BG_Freq_By_Pos': u'901', 'Length': 3, 'CNC': u'631', 'Block': 4, 'Concept': u'hen', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.215, 'Ortho_N': 15, 'FAM': u'461', 'Freq': 2}, {'Count': 29, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'964', 'Length': 8, 'CNC': u'-', 'Block': 4, 'Concept': u'aquarium', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.1519999999999997, 'Ortho_N': 1, 'FAM': u'-', 'Freq': 2}, {'Count': 30, 'SemanticCategory': u'Non-Living', 'IMG': u'554', 'BG_Freq_By_Pos': u'1,995', 'Length': 7, 'CNC': u'639', 'Block': 4, 'Concept': u'bandage', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.167, 'Ortho_N': 1, 'FAM': u'546', 'Freq': 2}, {'Count': 31, 'SemanticCategory': u'Non-Living', 'IMG': u'608', 'BG_Freq_By_Pos': u'1,476', 'Length': 5, 'CNC': u'613', 'Block': 4, 'Concept': u'broom', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.387, 'Ortho_N': 4, 'FAM': u'547', 'Freq': 2}, {'Count': 32, 'SemanticCategory': u'Non-Living', 'IMG': u'602', 'BG_Freq_By_Pos': u'1,557', 'Length': 5, 'CNC': u'623', 'Block': 4, 'Concept': u'canoe', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.263, 'Ortho_N': 1, 'FAM': u'441', 'Freq': 2}, {'Count': 33, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'154', 'Length': 3, 'CNC': u'-', 'Block': 5, 'Concept': u'elk', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.487, 'Ortho_N': 3, 'FAM': u'-', 'Freq': 3}, {'Count': 34, 'SemanticCategory': u'Living', 'IMG': u'565', 'BG_Freq_By_Pos': u'2,112', 'Length': 6, 'CNC': u'636', 'Block': 5, 'Concept': u'garlic', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.487, 'Ortho_N': 1, 'FAM': u'509', 'Freq': 3}, {'Count': 35, 'SemanticCategory': u'Living', 'IMG': u'590', 'BG_Freq_By_Pos': u'76', 'Length': 3, 'CNC': u'588', 'Block': 5, 'Concept': u'oak', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.458, 'Ortho_N': 4, 'FAM': u'515', 'Freq': 3}, {'Count': 36, 'SemanticCategory': u'Living', 'IMG': u'578', 'BG_Freq_By_Pos': u'641', 'Length': 5, 'CNC': u'618', 'Block': 5, 'Concept': u'olive', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.575, 'Ortho_N': 1, 'FAM': u'444', 'Freq': 3}, {'Count': 37, 'SemanticCategory': u'Non-Living', 'IMG': u'524', 'BG_Freq_By_Pos': u'1,940', 'Length': 7, 'CNC': u'593', 'Block': 5, 'Concept': u'cabinet', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.6289999999999996, 'Ortho_N': 0, 'FAM': u'472', 'Freq': 3}, {'Count': 38, 'SemanticCategory': u'Non-Living', 'IMG': u'594', 'BG_Freq_By_Pos': u'2,733', 'Length': 6, 'CNC': u'565', 'Block': 5, 'Concept': u'candle', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.613, 'Ortho_N': 1, 'FAM': u'544', 'Freq': 3}, {'Count': 39, 'SemanticCategory': u'Non-Living', 'IMG': u'581', 'BG_Freq_By_Pos': u'2182', 'Length': 4, 'CNC': u'584', 'Block': 5, 'Concept': u'coal', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.526, 'Ortho_N': 7, 'FAM': u'513', 'Freq': 3}, {'Count': 40, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'904', 'Length': 7, 'CNC': u'-', 'Block': 5, 'Concept': u'ketchup', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.4930000000000003, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 3}, {'Count': 41, 'SemanticCategory': u'Living', 'IMG': u'538', 'BG_Freq_By_Pos': u'1,659', 'Length': 4, 'CNC': u'604', 'Block': 6, 'Concept': u'bean', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.544, 'Ortho_N': 14, 'FAM': u'549', 'Freq': 3}, {'Count': 42, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1,469', 'Length': 5, 'CNC': u'-', 'Block': 6, 'Concept': u'groom', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.602, 'Ortho_N': 2, 'FAM': u'-', 'Freq': 3}, {'Count': 43, 'SemanticCategory': u'Living', 'IMG': u'630', 'BG_Freq_By_Pos': u'2399', 'Length': 7, 'CNC': u'590', 'Block': 6, 'Concept': u'lobster', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.574, 'Ortho_N': 1, 'FAM': u'472', 'Freq': 3}, {'Count': 44, 'SemanticCategory': u'Living', 'IMG': u'606', 'BG_Freq_By_Pos': u'1644', 'Length': 4, 'CNC': u'570', 'Block': 6, 'Concept': u'monk', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.576, 'Ortho_N': 5, 'FAM': u'401', 'Freq': 3}, {'Count': 45, 'SemanticCategory': u'Non-Living', 'IMG': u'561', 'BG_Freq_By_Pos': u'1,290', 'Length': 6, 'CNC': u'595', 'Block': 6, 'Concept': u'anchor', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.5789999999999997, 'Ortho_N': 0, 'FAM': u'458', 'Freq': 3}, {'Count': 46, 'SemanticCategory': u'Non-Living', 'IMG': u'583', 'BG_Freq_By_Pos': u'2,168', 'Length': 7, 'CNC': u'623', 'Block': 6, 'Concept': u'balloon', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.6460000000000004, 'Ortho_N': 0, 'FAM': u'520', 'Freq': 3}, {'Count': 47, 'SemanticCategory': u'Non-Living', 'IMG': u'599', 'BG_Freq_By_Pos': u'526', 'Length': 4, 'CNC': u'602', 'Block': 6, 'Concept': u'drum', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.637, 'Ortho_N': 2, 'FAM': u'506', 'Freq': 3}, {'Count': 48, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1,523', 'Length': 9, 'CNC': u'-', 'Block': 6, 'Concept': u'hamburger', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.6, 'Ortho_N': 0, 'FAM': u'-', 'Freq': 3}, {'Count': 49, 'SemanticCategory': u'Living', 'IMG': u'601', 'BG_Freq_By_Pos': u'2,601', 'Length': 4, 'CNC': u'576', 'Block': 7, 'Concept': u'corn', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.861, 'Ortho_N': 11, 'FAM': u'548', 'Freq': 4}, {'Count': 50, 'SemanticCategory': u'Living', 'IMG': u'618', 'BG_Freq_By_Pos': u'2,227', 'Length': 6, 'CNC': u'584', 'Block': 7, 'Concept': u'flower', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 3.065, 'Ortho_N': 4, 'FAM': u'566', 'Freq': 4}, {'Count': 51, 'SemanticCategory': u'Living', 'IMG': u'602', 'BG_Freq_By_Pos': u'1,624', 'Length': 5, 'CNC': u'599', 'Block': 7, 'Concept': u'grass', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.9330000000000003, 'Ortho_N': 8, 'FAM': u'587', 'Freq': 4}, {'Count': 52, 'SemanticCategory': u'Living', 'IMG': u'632', 'BG_Freq_By_Pos': u'1,017', 'Length': 5, 'CNC': u'608', 'Block': 7, 'Concept': u'lemon', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.7880000000000003, 'Ortho_N': 1, 'FAM': u'518', 'Freq': 4}, {'Count': 53, 'SemanticCategory': u'Non-Living', 'IMG': u'555', 'BG_Freq_By_Pos': u'1,553', 'Length': 5, 'CNC': u'614', 'Block': 7, 'Concept': u'bench', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.694, 'Ortho_N': 5, 'FAM': u'488', 'Freq': 4}, {'Count': 54, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1,207', 'Length': 5, 'CNC': u'-', 'Block': 7, 'Concept': u'boots', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.99, 'Ortho_N': 10, 'FAM': u'-', 'Freq': 4}, {'Count': 55, 'SemanticCategory': u'Non-Living', 'IMG': u'536', 'BG_Freq_By_Pos': u'2,683', 'Length': 5, 'CNC': u'578', 'Block': 7, 'Concept': u'couch', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 3.0789999999999997, 'Ortho_N': 6, 'FAM': u'521', 'Freq': 4}, {'Count': 56, 'SemanticCategory': u'Non-Living', 'IMG': u'575', 'BG_Freq_By_Pos': u'923', 'Length': 4, 'CNC': u'615', 'Block': 7, 'Concept': u'lamp', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 2.818, 'Ortho_N': 10, 'FAM': u'578', 'Freq': 4}, {'Count': 57, 'SemanticCategory': u'Living', 'IMG': u'637', 'BG_Freq_By_Pos': u'968', 'Length': 5, 'CNC': u'620', 'Block': 8, 'Concept': u'apple', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.082, 'Ortho_N': 2, 'FAM': u'598', 'Freq': 4}, {'Count': 58, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1,424', 'Length': 5, 'CNC': u'-', 'Block': 8, 'Concept': u'bride', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.092, 'Ortho_N': 3, 'FAM': u'-', 'Freq': 4}, {'Count': 59, 'SemanticCategory': u'Living', 'IMG': u'582', 'BG_Freq_By_Pos': u'1,409', 'Length': 6, 'CNC': u'611', 'Block': 8, 'Concept': u'cherry', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.841, 'Ortho_N': 2, 'FAM': u'514', 'Freq': 4}, {'Count': 60, 'SemanticCategory': u'Living', 'IMG': u'589', 'BG_Freq_By_Pos': u'877', 'Length': 5, 'CNC': u'627', 'Block': 8, 'Concept': u'clown', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.907, 'Ortho_N': 3, 'FAM': u'511', 'Freq': 4}, {'Count': 61, 'SemanticCategory': u'Non-Living', 'IMG': u'627', 'BG_Freq_By_Pos': u'1,359', 'Length': 9, 'CNC': u'595', 'Block': 8, 'Concept': u'ambulance', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.0580000000000003, 'Ortho_N': 0, 'FAM': u'499', 'Freq': 4}, {'Count': 62, 'SemanticCategory': u'Non-Living', 'IMG': u'519', 'BG_Freq_By_Pos': u'1,550', 'Length': 6, 'CNC': u'561', 'Block': 8, 'Concept': u'badge', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.89, 'Ortho_N': 2, 'FAM': u'473', 'Freq': 4}, {'Count': 63, 'SemanticCategory': u'Non-Living', 'IMG': u'600', 'BG_Freq_By_Pos': u'2,616', 'Length': 6, 'CNC': u'634', 'Block': 8, 'Concept': u'cookie', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.931, 'Ortho_N': 2, 'FAM': u'585', 'Freq': 4}, {'Count': 64, 'SemanticCategory': u'Non-Living', 'IMG': u'554', 'BG_Freq_By_Pos': u'1,451', 'Length': 8, 'CNC': u'579', 'Block': 8, 'Concept': u'envelope', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 2.7110000000000003, 'Ortho_N': 0, 'FAM': u'542', 'Freq': 4}, {'Count': 65, 'SemanticCategory': u'Living', 'IMG': u'617', 'BG_Freq_By_Pos': u'1,236', 'Length': 3, 'CNC': u'615', 'Block': 9, 'Concept': u'cat', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 3.529, 'Ortho_N': 18, 'FAM': u'582', 'Freq': 5}, {'Count': 66, 'SemanticCategory': u'Living', 'IMG': u'619', 'BG_Freq_By_Pos': u'1,861', 'Length': 7, 'CNC': u'614', 'Block': 9, 'Concept': u'chicken', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 3.498, 'Ortho_N': 1, 'FAM': u'544', 'Freq': 5}, {'Count': 67, 'SemanticCategory': u'Living', 'IMG': u'636', 'BG_Freq_By_Pos': u'344', 'Length': 3, 'CNC': u'610', 'Block': 9, 'Concept': u'dog', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 3.9930000000000003, 'Ortho_N': 13, 'FAM': u'598', 'Freq': 5}, {'Count': 68, 'SemanticCategory': u'Living', 'IMG': u'587', 'BG_Freq_By_Pos': u'1,696', 'Length': 6, 'CNC': u'450', 'Block': 9, 'Concept': u'friend', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 4.33, 'Ortho_N': 0, 'FAM': u'603', 'Freq': 5}, {'Count': 69, 'SemanticCategory': u'Non-Living', 'IMG': u'635', 'BG_Freq_By_Pos': u'614', 'Length': 3, 'CNC': u'635', 'Block': 9, 'Concept': u'bed', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 3.98, 'Ortho_N': 13, 'FAM': u'636', 'Freq': 5}, {'Count': 70, 'SemanticCategory': u'Non-Living', 'IMG': u'631', 'BG_Freq_By_Pos': u'884', 'Length': 4, 'CNC': u'637', 'Block': 9, 'Concept': u'boat', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 3.6889999999999996, 'Ortho_N': 9, 'FAM': u'584', 'Freq': 5}, {'Count': 71, 'SemanticCategory': u'Non-Living', 'IMG': u'619', 'BG_Freq_By_Pos': u'1,636', 'Length': 5, 'CNC': u'622', 'Block': 9, 'Concept': u'bread', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 3.16, 'Ortho_N': 5, 'FAM': u'611', 'Freq': 5}, {'Count': 72, 'SemanticCategory': u'Non-Living', 'IMG': u'616', 'BG_Freq_By_Pos': u'1,068', 'Length': 6, 'CNC': u'587', 'Block': 9, 'Concept': u'church', 'Run': 1, 'NSNcategory': u'H', 'LgSUBTLWF': 3.551, 'Ortho_N': 0, 'FAM': u'560', 'Freq': 5}, {'Count': 73, 'SemanticCategory': u'Living', 'IMG': u'575', 'BG_Freq_By_Pos': u'1,101', 'Length': 6, 'CNC': u'587', 'Block': 10, 'Concept': u'animal', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.366, 'Ortho_N': 0, 'FAM': u'620', 'Freq': 5}, {'Count': 74, 'SemanticCategory': u'Living', 'IMG': u'443', 'BG_Freq_By_Pos': u'1,499', 'Length': 6, 'CNC': u'-', 'Block': 10, 'Concept': u'client', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.4339999999999997, 'Ortho_N': 0, 'FAM': u'524', 'Freq': 5}, {'Count': 75, 'SemanticCategory': u'Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'1,881', 'Length': 3, 'CNC': u'-', 'Block': 10, 'Concept': u'cop', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.6430000000000002, 'Ortho_N': 17, 'FAM': u'-', 'Freq': 5}, {'Count': 76, 'SemanticCategory': u'Living', 'IMG': u'615', 'BG_Freq_By_Pos': u'1,270', 'Length': 4, 'CNC': u'597', 'Block': 10, 'Concept': u'fish', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.6289999999999996, 'Ortho_N': 4, 'FAM': u'548', 'Freq': 5}, {'Count': 77, 'SemanticCategory': u'Non-Living', 'IMG': u'570', 'BG_Freq_By_Pos': u'600', 'Length': 3, 'CNC': u'603', 'Block': 10, 'Concept': u'bag', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.681, 'Ortho_N': 20, 'FAM': u'634', 'Freq': 5}, {'Count': 78, 'SemanticCategory': u'Non-Living', 'IMG': u'622', 'BG_Freq_By_Pos': u'1,523', 'Length': 4, 'CNC': u'615', 'Block': 10, 'Concept': u'ball', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.7289999999999996, 'Ortho_N': 19, 'FAM': u'575', 'Freq': 5}, {'Count': 79, 'SemanticCategory': u'Non-Living', 'IMG': u'-', 'BG_Freq_By_Pos': u'589', 'Length': 3, 'CNC': u'-', 'Block': 10, 'Concept': u'bus', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.5780000000000003, 'Ortho_N': 8, 'FAM': u'-', 'Freq': 5}, {'Count': 80, 'SemanticCategory': u'Non-Living', 'IMG': u'553', 'BG_Freq_By_Pos': u'213', 'Length': 4, 'CNC': u'533', 'Block': 10, 'Concept': u'gift', 'Run': 1, 'NSNcategory': u'L', 'LgSUBTLWF': 3.517, 'Ortho_N': 5, 'FAM': u'566', 'Freq': 5}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="$rows" valType="str"/>
+    </LoopInitiator>
+    <Routine name="WordStimulus"/>
+    <Routine name="RedCrosshair"/>
+    <LoopTerminator name="trials"/>
+    <Routine name="WhiteCrosshair"/>
+    <LoopTerminator name="Blocks"/>
+    <Routine name="ExtraTimeWhiteCH"/>
+    <Routine name="ThankYou"/>
+  </Flow>
+</PsychoPy2experiment>
