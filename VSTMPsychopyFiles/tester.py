@@ -39,7 +39,7 @@ ITITime = 0.5 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-InterBlockTime = 5 #13.0
+InterBlockTime = 6 #13.0
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
 ShortDelayTime = 5 #16.0
@@ -78,7 +78,7 @@ print(filename)
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-    savePickle=False, saveWideText=True,
+    savePickle=True, saveWideText=True,
     dataFileName=filename)
     
 resp = event.BuilderKeyResponse()
@@ -149,7 +149,7 @@ textThankyou = visual.TextStim(win=win, name='textThankyou',
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);    
     
-RunningClock = core.Clock()
+    
 
 # For each block change the selection list 
 
@@ -169,9 +169,7 @@ while WaitingFlag is True:
         textInstr1.setAutoDraw(False)
     else:
         pass        
-
-RunningClock.reset()
-
+        
 # Need intro Blocks
 # Turn on the cross hair
 WhiteCross.setAutoDraw(True)
@@ -226,176 +224,3 @@ for thisBlock in Blocks:
             
     print(rows)
     
-    trials = data.TrialHandler(nReps=1, method='random', 
-        extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('../VSTMPsychopyFiles/VSTMTrialListv1.csv', selection=rows),
-        seed=None, name='trials')
-        
-    thisExp.addLoop(trials)  # add the loop to the experiment
-    countDown.reset()    
-    for thisTrial in trials:
-        countDown.add(StimOnTime)
-        # What is correct for this trial?
-        corr = thisTrial['corr']
-        print('Load')
-        # Create a list of locations at this load
-        Locations = np.random.randint(0,GridCount**2,thisTrial['Load'])
-        # Make sure the Locations does not include the central location because 
-        # the cross hair is to remain on the screen
-        
-        count = 0
-        for y_offset in OffSet:
-            for x_offset in OffSet:
-               for stim in [circle]:
-                   stim.pos = [x_offset, y_offset]
-                   if (count+1 in Locations):
-                       stim.draw()
-                   count += 1
-        GreenCross.setAutoDraw(True)
-        CurrentTime = RunningClock.getTime()
-        
-        # Prepare the Probe dot
-        # If Probe is 1, select a dot on the screen as the probe Location
-        PosProbeLocation = Locations[np.random.randint(0,thisTrial['Load'],1)]
-        NotLocations = np.arange(0,GridCount**2)
-        NotLocations = [x for x in NotLocations if x not in Locations]
-        NegProbeLocation = np.random.randint(0,len(NotLocations),1)[0]
-        
-        # Put the circles on the screen
-        win.flip()
-        while countDown.getTime() > 0:
-            pass        
-        # Prepare the mask dots
-        count = 0
-        for y_offset in OffSet:
-            for x_offset in OffSet:
-               for stim in [circle]:
-                   stim.pos = [x_offset, y_offset]
-                   if (count+1 in MaskLocations):
-                       stim.draw()
-                   count += 1
-        
-        # Put the mask dots on the screen
-        GreenCross.setAutoDraw(False)
-        win.flip()
-        countDown.add(MaskOnTime)
-        while countDown.getTime() > 0:
-            pass
-        
-        # check for quit (the Esc key)
-        if event.getKeys(keyList=["escape"]):
-            core.quit()
-            
-        print(countDown.getTime())
-        while countDown.getTime() > 0:
-            pass        
-        # Clear any button presses
-        event.clearEvents(eventType='keyboard')
-        
-        # Get the crosshair ready 
-        GreenCross.setAutoDraw(True)
-        # Take the dots off the screen and put the cross hair up 
-        win.flip()       
-        countDown.add(RetOnTime)
-        
-        # Prepare the probe dot during the retention time
-        if thisTrial['Probe'] == 0:
-            count = 0
-            for y_offset in OffSet:
-                for x_offset in OffSet:
-                   for stim in [circle]:
-                       stim.pos = [x_offset, y_offset]
-                       if (count+1 in [NegProbeLocation]):
-                           stim.draw()
-                       count += 1
-        elif thisTrial['Probe'] == 1:
-            count = 0
-            for y_offset in OffSet:
-                for x_offset in OffSet:
-                   for stim in [circle]:
-                       stim.pos = [x_offset, y_offset]
-                       if (count+1 in [PosProbeLocation]):
-                           stim.draw()
-                       count += 1
-                       
-                   
-        while countDown.getTime() > 0:
-            pass
-    # Turn off the cross hair
-        GreenCross.setAutoDraw(True)
-        # Put the probe dot on the screen
-        win.flip()
-        resp.clock.reset()
-        # Start the probe timer
-        countDown.add(ProbeOnTime)
-        event.clearEvents(eventType='keyboard')
-        print(countDown.getTime())
-        while countDown.getTime() > 0:
-            theseKeys = event.getKeys(keyList=['escape','left', 'down'])
-            if 'escape' in theseKeys:
-                core.quit()
-            elif len(theseKeys) > 0:  # at least one key was pressed
-                resp.keys = theseKeys[-1]  # just the last key pressed
-                resp.rt = resp.clock.getTime()
-                # was this 'correct'?
-                if (resp.keys == str(corr)) or (resp.keys == corr):
-                    print('Correct')
-                    resp.corr = 1
-                else:
-                    print('incorrect')
-                    resp.corr = 0    
-            pass        
-        # prepare the cross hair    
-        GreenCross.setAutoDraw(False)
-        RedCross.setAutoDraw(True)
-        # take the dot off the screen
-        win.flip()
-        countDown.add(ITITime)
-        while countDown.getTime() > 0:
-            pass
-        RedCross.setAutoDraw(False)
-        trials.addData('CurrentTime',CurrentTime)
-        trials.addData('Response.keys',resp.keys)
-        trials.addData('Response.corr', resp.corr)
-        if resp.keys != None:  # we had a response
-            trials.addData('Response.rt', resp.rt)
-        thisExp.nextEntry()
-    # INTER BLOCK TIME
-    # Turn on the cross hair
-    WhiteCross.setAutoDraw(True)
-    win.flip()
-    countDown.reset() 
-    WhiteCross.setAutoDraw(True)
-    countDown.add(InterBlockTime - 3)
-    while countDown.getTime() > 0:
-        pass
-    win.flip()
-    # Turn on the countdown timer
-    WhiteCross.setAutoDraw(False)
-    
-    text3.setAutoDraw(True)
-    countDown.add(1)
-    win.flip()
-    while countDown.getTime() > 0:
-        pass
-    text3.setAutoDraw(False)
-    text2.setAutoDraw(True)
-    countDown.add(1)
-    win.flip()
-    while countDown.getTime() > 0:
-        pass    
-    text2.setAutoDraw(False)
-    text1.setAutoDraw(True)
-    countDown.add(1)
-    win.flip()
-    while countDown.getTime() > 0:
-        pass    
-    win.flip()
-    text1.setAutoDraw(False)
-    
-thisExp.saveAsWideText(filename+'.csv')    
-logging.flush()
-# make sure everything is closed down
-thisExp.abort()  # or data files will save again on exit
-win.close()
-core.quit()    

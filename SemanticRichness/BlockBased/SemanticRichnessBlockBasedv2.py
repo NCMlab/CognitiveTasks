@@ -506,7 +506,7 @@ for thisBlock in Blocks:
                         elif ((Response.keys == 'down') or (Response.keys == 'down')):
                             Response.corr = 1
                         else:
-                            resp.corr = 0
+                            Response.corr = 0
                 elif CounterBalFlag == 'True':
                     if Corr == 'left':
                         if ((Response.keys == Corr) or (Response.keys == str(Corr))):
