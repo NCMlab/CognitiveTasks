@@ -27,12 +27,13 @@ GridCount = 7 # Number of circles to have on each row
 GridSize = 160 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/GridCount # The circle size so that they are all just touching
 OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(CircleSize))
-
+MaskLocations = np.arange(0,GridCount**2)
 # units=FontSizeUnits
 # height=FontSize
 StimOnTime = 2.5
 RetOnTime = 3.5
 ProbeOnTime= 2.5
+MaskOnTime = 0.5
 # This is the intertrial interval. This experimental component is part of the trial.
 ITITime = 0.5 #1.0
 # This is the time between blocks. Note that between each block of trials there
@@ -228,27 +229,30 @@ for thisBlock in Blocks:
         
         # Put the circles on the screen
         win.flip()
-        # Clear any button presses
-        event.clearEvents(eventType='keyboard')
+        # Prepare the mask dots
+        for y_offset in OffSet:
+            for x_offset in OffSet:
+               for stim in [circle]:
+                   stim.pos = [x_offset, y_offset]
+                   if (count+1 in MaskLocations):
+                       stim.draw()
+                   count += 1
+        
+        # Put the mask dots on the screen
+        win.flip()
+        while countDown.getTime() > 0:
+            pass
+        countDown.add(MaskOnTime)
+        
         print(countDown.getTime())
         while countDown.getTime() > 0:
-            theseKeys = event.getKeys(keyList=['escape','left', 'down'])
-            if 'escape' in theseKeys:
-                core.quit()
-            elif len(theseKeys) > 0:  # at least one key was pressed
-                resp.keys = theseKeys[-1]  # just the last key pressed
-                resp.rt = resp.clock.getTime()
-                # was this 'correct'?
-                if (resp.keys == str(corr)) or (resp.keys == corr):
-                    print('Correct')
-                    resp.corr = 1
-                else:
-                    print('incorrect')
-                    resp.corr = 0    
-            pass
+            pass        
+        # Clear any button presses
+        event.clearEvents(eventType='keyboard')
+        
         # Get the crosshair ready 
         GreenCross.setAutoDraw(True)
-        # Take the dots off the screen  and put the cross hair up 
+        # Take the dots off the screen and put the cross hair up 
         win.flip()       
         countDown.add(RetOnTime)
         
