@@ -27,13 +27,13 @@ GridCount = 7 # Number of circles to have on each row
 GridSize = 160 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/GridCount # The circle size so that they are all just touching
 OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(CircleSize))
-MaskLocations = np.arange(0,GridCount**2)
+MaskLocations = np.arange(0,1+GridCount**2)
 # units=FontSizeUnits
 # height=FontSize
-StimOnTime = 2.5
-RetOnTime = 3.5
-ProbeOnTime= 2.5
-MaskOnTime = 0.5
+StimOnTime = 1.0
+RetOnTime = 3.0
+ProbeOnTime= 2.7
+MaskOnTime = 0.3
 # This is the intertrial interval. This experimental component is part of the trial.
 ITITime = 0.5 #1.0
 # This is the time between blocks. Note that between each block of trials there
@@ -220,6 +220,7 @@ for thisBlock in Blocks:
                    if (count+1 in Locations):
                        stim.draw()
                    count += 1
+        GreenCross.setAutoDraw(True)
         # Prepare the Probe dot
         # If Probe is 1, select a dot on the screen as the probe Location
         PosProbeLocation = Locations[np.random.randint(0,thisTrial['Load'],1)]
@@ -229,7 +230,10 @@ for thisBlock in Blocks:
         
         # Put the circles on the screen
         win.flip()
+        while countDown.getTime() > 0:
+            pass        
         # Prepare the mask dots
+        count = 0
         for y_offset in OffSet:
             for x_offset in OffSet:
                for stim in [circle]:
@@ -239,10 +243,12 @@ for thisBlock in Blocks:
                    count += 1
         
         # Put the mask dots on the screen
+        GreenCross.setAutoDraw(False)
         win.flip()
+        countDown.add(MaskOnTime)
         while countDown.getTime() > 0:
             pass
-        countDown.add(MaskOnTime)
+        
         
         print(countDown.getTime())
         while countDown.getTime() > 0:
@@ -268,7 +274,7 @@ for thisBlock in Blocks:
         while countDown.getTime() > 0:
             pass
     # Turn off the cross hair
-        GreenCross.setAutoDraw(False)
+        GreenCross.setAutoDraw(True)
         # Put the probe dot on the screen
         win.flip()
         # Start the probe timer
@@ -291,6 +297,7 @@ for thisBlock in Blocks:
                     resp.corr = 0    
             pass        
         # prepare the cross hair    
+        GreenCross.setAutoDraw(False)
         RedCross.setAutoDraw(True)
         # take the dot off the screen
         win.flip()
