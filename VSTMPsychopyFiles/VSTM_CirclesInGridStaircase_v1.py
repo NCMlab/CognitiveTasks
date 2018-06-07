@@ -4,6 +4,10 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 import random
 
+# Nagel IE, Preuschhof C, Li S-C, Nyberg L, Bäckman L, Lindenberger U, Heekeren HR. 
+# Performance level modulates adult age differences in brain activation during spatial working memory. 
+# Proc Natl Acad Sci U S A. 2009;106(52):22552-22557.
+
 # Visual Task components
 # circle
 # countdown 3
@@ -44,7 +48,8 @@ InterBlockTime = 5 #13.0
 # the end before the thank you screen
 ShortDelayTime = 5 #16.0
 NumberOfBlocks = 5
-
+MaxTime = 7
+MaxTrials = 150
 ## These are great for testing quickly
 #  StimOnTime = .25
 #RetOnTime = .25
@@ -61,7 +66,7 @@ Tag = '1'
 
 # Setup the Window
 win = visual.Window(
-    size=(800, 600), fullscr=False, screen=0,
+    size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,
@@ -69,10 +74,15 @@ win = visual.Window(
     
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
+task = 'stair'
 OutDir = '..' + os.sep + '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-filename = OutDir + '%s%s_%s_%s' % (expName, Tag, expInfo['Participant ID'], expInfo['date'])
+filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
 print(filename)
+dataFile = open(filename+'.csv', 'w')
+dataFile1=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, expInfo['Participant ID'], expInfo['date']),'w')
 
+
+dataFile.write('Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList\n')
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
@@ -80,7 +90,9 @@ thisExp = data.ExperimentHandler(name=expName, version='',
     originPath=None,
     savePickle=False, saveWideText=True,
     dataFileName=filename)
-    
+
+globalClock = core.Clock()
+
 resp = event.BuilderKeyResponse()
 # Circle
 # This is a single component that will be displayed on the screen multiple times while
@@ -153,11 +165,14 @@ RunningClock = core.Clock()
 
 Nloads = GridCount**2
 NumberOfReversals = 20
-staircase = data.StairHandler(startVal = 1,
-                          stepType = 'lin', stepSizes=1,
+#staircase = data.StairHandler(startVal = 1,
+#                          stepType = 'lin', stepSizes=1,
+#                          nUp=1, nDown=3,  # will home in on the 80% threshold
+#                          nReversals = NumberOfReversals,minVal = 1,maxVal = 20)
+staircase = data.StairHandler(startVal = Nloads,
+                          stepType = 'lin', stepSizes=[1],
                           nUp=1, nDown=3,  # will home in on the 80% threshold
-                          nReversals = NumberOfReversals,minVal = 1,maxVal = 20)
-
+                          nReversals = NumberOfReversals,minVal = 1,maxVal = Nloads)
 # For each block change the selection list 
 
 # Need instructions and wait
@@ -212,12 +227,13 @@ while countDown.getTime() > 0:
 win.flip()
 text1.setAutoDraw(False)
 
-
+globalClock.reset()
+TrialCount = 1
 for thisStep in staircase:
     print('--------------')
     print('ThisStep: %s'%(str(thisStep)))
     CurrentLoad = Nloads - thisStep + 1
-    CurrentLoad = thisStep
+#    CurrentLoad = thisStep
     print(CurrentLoad)
         
     countDown.reset()    
@@ -286,6 +302,7 @@ for thisStep in staircase:
     countDown.add(RetOnTime)
     
     # Prepare the probe dot during the retention time
+    
     if bool(Probe):
         corr = 'left'
         count = 0
@@ -296,6 +313,7 @@ for thisStep in staircase:
                    if (count+1 in [PosProbeLocation]):
                        stim.draw()
                    count += 1
+        ProbeLoc = PosProbeLocation
     else:
         corr = 'down'
         count = 0
@@ -306,6 +324,7 @@ for thisStep in staircase:
                    if (count+1 in [NegProbeLocation]):
                        stim.draw()
                    count += 1
+        ProbeLoc = NegProbeLocation
                    
                
     while countDown.getTime() > 0:
@@ -319,6 +338,7 @@ for thisStep in staircase:
     countDown.add(ProbeOnTime)
     event.clearEvents(eventType='keyboard')
   #  print(countDown.getTime())
+    thisResp = -1
     while countDown.getTime() > 0:
         theseKeys = event.getKeys(keyList=['escape','left', 'down'])
         if 'escape' in theseKeys:
@@ -331,13 +351,14 @@ for thisStep in staircase:
                 print(resp.keys)
                 print(corr)
                 print('Correct')
+                thisResp = 1
                 resp.corr = 1
-                staircase.addData(1) 
+                
             else:
                 print(resp.keys)
                 print(corr)                
                 print('incorrect')
-                staircase.addData(-1) 
+                thisResp = -1
                 resp.corr = 0    
         pass        
     # prepare the cross hair    
@@ -349,16 +370,99 @@ for thisStep in staircase:
     while countDown.getTime() > 0:
         pass
     RedCross.setAutoDraw(False)
-    staircase.addData('CurrentTime',CurrentTime)
-    staircase.addData('Response.keys',resp.keys)
-    staircase.addData('Response.corr', resp.corr)
-    if resp.keys != None:  # we had a response
-        staircase.addData('Response.rt', resp.rt)
-    thisExp.nextEntry()
-     
-thisExp.saveAsWideText(filename+'.csv')    
-logging.flush()
-# make sure everything is closed down
-thisExp.abort()  # or data files will save again on exit
+    #staircase.addData('CurrentTime',CurrentTime)
+    #staircase.addData('Response.keys',resp.keys)
+    #staircase.addData('Response.corr', resp.corr)
+    
+    #if resp.keys != None:  # we had a response
+        #staircase.addData('Response.rt', resp.rt)
+    staircase.addData(thisResp)    
+    #thisExp.nextEntry()
+    
+    # Change the response to zero and one for later pivot tables
+    CorrectResp = 0
+    RT = resp.rt
+    # If there is no response then the RT is an empty list
+    if type(RT) == list:
+        RT = 0.0
+    if thisResp == 1:
+        CorrectResp = 1
+        CorrectRT = RT
+    else:
+        CorrectRT = 0
+    
+        
+    # Add this respone to the data file
+    print(RT)
+    print(CorrectRT)
+    dataFile.write('%i,%i,%i,%0.3f,%0.4f,%i, %s,%s\n' %(TrialCount,CurrentLoad, CorrectResp,RT,CorrectRT,Probe, str(ProbeLoc), str(list(Locations))))
+    
+    #dataFile.write('%i,%i,%i,%0.3f,%0.4f,%0.4f,%i,%s,%s\n' %(TrialCount,CurrentLoad, CurrentCount, k[-1],CorrectResp,globalClock.getTime(),RT,CorrectRT,PosProbe,LettersInThisTrial[0:-1],LettersInThisTrial[-1]))
+    TrialCount += 1
+
+    if len(staircase.data) > MaxTrials:
+        win.close()
+        EndFlag = 'MaxTrialsExceeded'
+        dataFile.write('%s\n'%(EndFlag))
+        Capacity = NLoads+1-np.mean(staircase.reversalIntensities)
+        dataFile1.write('%0.4f'%(Capacity))
+        print 
+        print "Ending because the maximum number of trials was reached."
+        print
+        print "Capacity is: %0.4f"%(Capacity)        
+        print "Number of reversals: %i"%(len(staircase.reversalPoints))
+        dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
+        dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
+        dataFile.close()
+        staircase.saveAsText(StairCasefileName,delim=',')
+        core.quit()
+    if globalClock.getTime() > MaxTime*60:
+        win.close()
+        EndFlag = 'TimeExceeded'
+        dataFile.write('%s\n'%(EndFlag))
+        Capacity = Nloads+1-np.mean(staircase.reversalIntensities)
+        dataFile1.write('%0.4f'%(Capacity))
+        print 
+        print "Ending because Time was exceeded."
+        print
+        print "Capacity is: %0.4f"%(Capacity)  
+        print "Number of reversals: %i"%(len(staircase.reversalPoints))        
+        dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
+        dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
+        dataFile.close()
+        staircase.saveAsText(StairCasefileName,delim=',')
+        core.quit()
+    if "escape" in theseKeys:
+        win.close()
+        EndFlag = 'UserEscape'
+        dataFile.write('%s\n'%(EndFlag))
+        Capacity = NLoads+1-np.mean(staircase.reversalIntensities)
+        dataFile1.write('%0.4f'%(Capacity))
+        print
+        print "Ending because Escape was pressed."
+        print
+        print "Capacity is: %0.4f"%(Capacity)  
+        print "Number of reversals: %i"%(len(staircase.reversalPoints))
+        dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
+        dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
+        dataFile.close()
+        staircase.saveAsText(StairCasefileName,delim=',')
+        core.quit()
+print EndFlag
+
+Capacity = NLoads + 1-np.mean(staircase.reversalIntensities)
+Capacity = Capacity
+dataFile1.write('%0.4f'%(Capacity))
+print
+print "Capacity is: %0.4f"%(Capacity)     
+print "Number of reversals: %i"%(len(staircase.reversalPoints))
+dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
+dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
+dataFile.close()
+#staircase.saveAsText(StairCasefileName,delim=',')
 win.close()
 core.quit()    
+    
+    
+    
+     
