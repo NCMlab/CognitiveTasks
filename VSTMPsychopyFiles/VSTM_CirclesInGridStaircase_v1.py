@@ -4,9 +4,8 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 import random
 
-# Nagel IE, Preuschhof C, Li S-C, Nyberg L, Bäckman L, Lindenberger U, Heekeren HR. 
-# Performance level modulates adult age differences in brain activation during spatial working memory. 
-# Proc Natl Acad Sci U S A. 2009;106(52):22552-22557.
+# Nagel IE PNAS 2009
+
 
 # Visual Task components
 # circle
@@ -28,18 +27,18 @@ import random
 FontSize = 60
 FontSizeUnits = 'pix'
 GridCount = 7 # Number of circles to have on each row
-GridSize = 160 # The size of the grid for which the circles on on
+GridSize = 7*52+1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/GridCount # The circle size so that they are all just touching
 OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(CircleSize))
 MaskLocations = np.arange(0,1+GridCount**2)
 # units=FontSizeUnits
 # height=FontSize
-StimOnTime = 1.0
+StimOnTime = 1.5
 RetOnTime = 3.0
-ProbeOnTime= 2.7
+ProbeOnTime= 2.0
 MaskOnTime = 0.3
 # This is the intertrial interval. This experimental component is part of the trial.
-ITITime = 0.5 #1.0
+ITITime = 1.0 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
@@ -68,14 +67,14 @@ Tag = '1'
 win = visual.Window(
     size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor='testMonitor', color=[0.8,0.8,0.8], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units=FontSizeUnits)
     
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 task = 'stair'
-OutDir = '..' + os.sep + '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
 filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
 print(filename)
 dataFile = open(filename+'.csv', 'w')
@@ -103,7 +102,7 @@ circle = visual.Polygon(
     edges=128, size=(CircleSize, CircleSize),
     ori=0, pos=(0, 0),
     lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
-    fillColor='white', fillColorSpace='rgb',
+    fillColor='black', fillColorSpace='rgb',
     opacity=1, depth=0.0, interpolate=True)
 
 # Cross hairs
@@ -131,7 +130,7 @@ textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text='Ready to start the main experiment?\nRemember:\nPress [LEFT] if the circle WAS in the set.\nPress [DOWN] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);   
     
 # Initialize components for Routine "Countdown"
@@ -353,13 +352,14 @@ for thisStep in staircase:
                 print('Correct')
                 thisResp = 1
                 resp.corr = 1
-                
+                break
             else:
                 print(resp.keys)
                 print(corr)                
                 print('incorrect')
                 thisResp = -1
-                resp.corr = 0    
+                resp.corr = 0   
+                break
         pass        
     # prepare the cross hair    
     GreenCross.setAutoDraw(False)
@@ -414,7 +414,7 @@ for thisStep in staircase:
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if globalClock.getTime() > MaxTime*60:
         win.close()
@@ -430,7 +430,7 @@ for thisStep in staircase:
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if "escape" in theseKeys:
         win.close()
@@ -446,7 +446,7 @@ for thisStep in staircase:
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
 print EndFlag
 
