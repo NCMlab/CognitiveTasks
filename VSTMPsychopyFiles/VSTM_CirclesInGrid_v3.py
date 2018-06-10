@@ -39,7 +39,7 @@ ITITime = 1.0 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-InterBlockTime = 5 #13.0
+InterBlockTime = 16 #13.0
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
 ShortDelayTime = 5 #16.0
@@ -116,7 +116,7 @@ OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.s
 filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
 print(filename)
 dataFile = open(filename+'.csv', 'w')
-dataFile.write('Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList\n')
+dataFile.write('Trial,Load,TrialStartTime,Resp,Corr,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList\n')
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
@@ -281,7 +281,9 @@ for thisBlock in Blocks:
     extraInfo=expInfo, originPath=-1,trialList=[None],
     seed=None, name='trials')
     TrialCount = 0
+    
     for thisTrial in trials:
+        TrialStartTime = RunningClock.getTime()
         Locations = np.random.randint(0,GridCount**2,CurrentLoad)
         print(thisTrial)
         # Create the probe Locations    
@@ -424,7 +426,7 @@ for thisBlock in Blocks:
         
         print(RT)
         print(CorrectRT)
-        dataFile.write('%i,%i,%s, %i,%0.3f,%0.4f,%i,' %(TrialCount,CurrentLoad, thisResp.keys, CorrectResp,RT,CorrectRT, ProbeLoc))
+        dataFile.write('%i,%i,%s, %s, %i,%0.3f,%0.4f,%i, %i,' %(TrialCount,CurrentLoad, TrialStartTime, thisResp.keys, CorrectResp,RT,CorrectRT, ProbeList[TrialCount], ProbeLoc))
         for ii in Locations:
             dataFile.write('%i,'%(ii))
         dataFile.write('\n')
