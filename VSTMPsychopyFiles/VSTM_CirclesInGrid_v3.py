@@ -5,7 +5,7 @@ import sys  # to get file system encoding
 import random
 
 # Visual Task components
-# circle
+# circle5
 # countdown 3
 # countdown 2
 # countdown 1
@@ -39,7 +39,8 @@ ITITime = 1.0 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-InterBlockTime = 23 #13.0
+InterBlockTime = 4#
+23 #13.0
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
 ShortDelayTime = 5 #16.0
@@ -102,7 +103,7 @@ thisExp = data.ExperimentHandler(name=expName, version='',
 win = visual.Window(
     size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor='testMonitor', color=[0.8,0.8,0.8], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units=FontSizeUnits)
     
@@ -135,7 +136,7 @@ circle = visual.Polygon(
     edges=128, size=(CircleSize, CircleSize),
     ori=0, pos=(0, 0),
     lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
-    fillColor='white', fillColorSpace='rgb',
+    fillColor='black', fillColorSpace='rgb',
     opacity=1, depth=0.0, interpolate=True)
 
 # Cross hairs
@@ -149,7 +150,7 @@ WhiteCross = visual.TextStim(win=win, name='RedCross',
     text='+',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-9.0);
 GreenCross = visual.TextStim(win=win, name='RedCross',
     text='+',
@@ -163,7 +164,7 @@ textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text='Ready to start the main experiment?\nRemember:\nPress [LEFT] if the circle WAS in the set.\nPress [DOWN] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);   
     
 # Initialize components for Routine "Countdown"
@@ -171,26 +172,26 @@ text3 = visual.TextStim(win=win, name='text3',
     text='3',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);
 text2 = visual.TextStim(win=win, name='text2',
     text='2',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-1.0);
 text1 = visual.TextStim(win=win, name='text1',
     text='1',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-2.0);
     
 textThankyou = visual.TextStim(win=win, name='textThankyou',
     text='Thank you for participating!',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);    
     
 RunningClock = core.Clock()
@@ -397,24 +398,98 @@ for thisBlock in Blocks:
             elif len(theseKeys) > 0:  # at least one key was pressed
                 thisResp.keys = theseKeys[-1]  # just the last key pressed
                 thisResp.rt = thisResp.clock.getTime()
+                
                 # was this 'correct'?
-                if (thisResp.keys == str(corr)) or (thisResp.keys == corr):
-                    print('Correct')
-                    thisResp.corr = 1
-                else:
-                    print('incorrect')
-                    thisResp.corr = 0    
-            pass        
-        # prepare the cross hair    
-        GreenCross.setAutoDraw(False)
-        RedCross.setAutoDraw(True)
+                #if (thisResp.keys == str(corr)) or (thisResp.keys == corr):
+                #    print('Correct')
+                #    thisResp.corr = 1
+                #else:
+                #    print('incorrect')
+                #    thisResp.corr = 0    
+                #break
+                if CounterBalFlag == 'False':
+                    if corr == 'left':
+                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
+                            thisResp.corr = 1
+                        elif ((thisResp.keys == '1') or (thisResp.keys == '1')):
+                            thisResp.corr = 1
+                        else:
+                            thisResp.corr = 0
+                    if corr == 1:
+                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
+                            thisResp.corr = 1
+                        elif ((thisResp.keys == 'left') or (thisResp.keys == 'left')):
+                            thisResp.corr = 1
+                        else:
+                            thisResp.corr = 0
+                    if corr == 'down':
+                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
+                            thisResp.corr = 1
+                        elif ((thisResp.keys == '2') or (thisResp.keys == '2')):
+                            thisResp.corr = 1
+                        else:
+                            thisResp.corr = 0    
+                    if corr == 2:
+                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
+                            thisResp.corr = 1
+                        elif ((thisResp.keys == 'down') or (thisResp.keys == 'down')):
+                            thisResp.corr = 1
+                        else:
+                            thisResp.corr = 0
+                    break
+                elif CounterBalFlag == 'True':
+                    if corr == 'left':
+                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
+                            thisResp.corr = 0
+                        elif ((thisResp.keys == '1') or (thisResp.keys == '1')):
+                            thisResp.corr = 0
+                        else:
+                            thisResp.corr = 1
+                    if corr == 1:
+                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
+                            thisResp.corr = 0
+                        elif ((thisResp.keys == 'left') or (thisResp.keys == 'left')):
+                            thisResp.corr = 0
+                        else:
+                            thisResp.corr = 1
+                    if corr == 'down':
+                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
+                            thisResp.corr = 0
+                        elif ((thisResp.keys == '2') or (thisResp.keys == '2')):
+                            thisResp.corr = 0
+                        else:
+                            thisResp.corr = 1    
+                    if corr == 2:
+                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
+                            thisResp.corr = 0
+                        elif ((thisResp.keys == 'down') or (thisResp.keys == 'down')):
+                            thisResp.corr = 0
+                        else:
+                            thisResp.corr = 1                
+                    break
+                
+            pass       
+        # prepare the cross hair
+
+        if thisResp.rt == -99:
+            print("In the IF part")
+            GreenCross.setAutoDraw(False)
+            RedCross.setAutoDraw(True)
+        else:
+            print("In the ELSE part")
+            GreenCross.setAutoDraw(False)
+            RedCross.setAutoDraw(True)
+            countDown.add(ProbeOnTime - thisResp.rt)
         # take the dot off the screen
+        print("Remove dots")
         win.flip()
+        print(countDown.getTime())
         countDown.add(ITITime)
         while countDown.getTime() > 0:
             pass
         RedCross.setAutoDraw(False)
         
+        print("Checking for responses")
             # Change the response to zero and one for later pivot tables
         CorrectResp = 0
         RT = thisResp.rt
@@ -439,7 +514,7 @@ for thisBlock in Blocks:
         if thisResp.keys != None:  # we had a response
             trials.addData('Response.rt', thisResp.rt)
         thisExp.nextEntry()
-        
+        print("Finished Trial")
         TrialCount += 1
     BlockCount += 1
     if BlockCount < NumberOfBlocks:    
@@ -480,13 +555,13 @@ for thisBlock in Blocks:
         while countDown.getTime() > 0:
             pass  
     
-    textThankyou.setAutoDraw(True)
-    countDown.add(5)
-    win.flip()
-    while countDown.getTime() > 0:
-        pass   
-    win.flip()
-    
+textThankyou.setAutoDraw(True)
+countDown.add(5)
+win.flip()
+while countDown.getTime() > 0:
+    pass   
+win.flip()
+
 thisExp.saveAsWideText(filename+'.csv')    
 logging.flush()
 # make sure everything is closed down

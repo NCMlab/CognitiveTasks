@@ -125,7 +125,7 @@ WhiteCross = visual.TextStim(win=win, name='RedCross',
     text='+',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-9.0);
 GreenCross = visual.TextStim(win=win, name='RedCross',
     text='+',
@@ -147,19 +147,19 @@ text3 = visual.TextStim(win=win, name='text3',
     text='3',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);
 text2 = visual.TextStim(win=win, name='text2',
     text='2',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-1.0);
 text1 = visual.TextStim(win=win, name='text1',
     text='1',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-2.0);
     
 textThankyou = visual.TextStim(win=win, name='textThankyou',
@@ -353,6 +353,8 @@ for thisStep in staircase:
     event.clearEvents(eventType='keyboard')
   #  print(countDown.getTime())
     thisResp = -1
+    resp.keys = -99
+    resp.rt = -99
     while countDown.getTime() > 0:
         theseKeys = event.getKeys(keyList=['escape','left', 'down'])
         if 'escape' in theseKeys:
