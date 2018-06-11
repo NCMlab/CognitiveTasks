@@ -26,8 +26,8 @@ import random
 # Timings
 FontSize = 60
 FontSizeUnits = 'pix'
-GridCount = 7 # Number of circles to have on each row
-GridSize = 7*52+1 # The size of the grid for which the circles on on
+GridCount = 6 # Number of circles to have on each row
+GridSize = GridCount*52+1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/GridCount # The circle size so that they are all just touching
 OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(CircleSize))
 MaskLocations = np.arange(0,1+GridCount**2)
@@ -62,7 +62,15 @@ expName = u'VSTM'  # from the Builder filename that created this script
 expInfo = {'Participant ID':'', 'Session':'001'}
 PartDataFolder = 'unorganized'
 Tag = '1'
-
+if len(sys.argv) > 1:
+    expInfo['Participant ID'] = sys.argv[1]
+    PartDataFolder = sys.argv[1]
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+        
+        
 # Setup the Window
 win = visual.Window(
     size=(800, 600), fullscr=True, screen=0,
@@ -78,7 +86,8 @@ OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.s
 filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
 print(filename)
 dataFile = open(filename+'.csv', 'w')
-dataFile1=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, expInfo['Participant ID'], expInfo['date']),'w')
+dataFile1=open(OutDir + 'CAPACITY_%s%s_%s_%s.txt' % (expName,task, expInfo['Participant ID'], expInfo['date']),'w')
+
 
 
 dataFile.write('Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList\n')
@@ -239,7 +248,10 @@ for thisStep in staircase:
     countDown.add(StimOnTime)
     # What is correct for this trial?
     # Create a list of locations at this load
-    Locations = np.random.randint(0,GridCount**2,CurrentLoad)
+    # Permute needs to be used because creating random numbers can sometimes have 
+    # two of the same entry. This makes it look like there are not enough
+    # dots.
+    Locations = np.random.permutation(GridCount**2)[0:CurrentLoad]
     # Make sure the Locations does not include the central location because 
     # the cross hair is to remain on the screen
     
@@ -248,7 +260,7 @@ for thisStep in staircase:
         for x_offset in OffSet:
            for stim in [circle]:
                stim.pos = [x_offset, y_offset]
-               if (count+1 in Locations):
+               if (count in Locations):
                    stim.draw()
                count += 1
     GreenCross.setAutoDraw(True)
@@ -258,10 +270,13 @@ for thisStep in staircase:
     # If Probe is 1, select a dot on the screen as the probe Location
     
     Probe = np.round(np.random.uniform())
-    PosProbeLocation = Locations[np.random.randint(0,CurrentLoad,1)]
+    # Make a list of the same length as the locations list and permute it
+    # Take the first entry of this list 
+    PosProbeLocation = Locations[np.random.permutation(len(Locations))[0]]
     NotLocations = np.arange(0,GridCount**2)
     NotLocations = [x for x in NotLocations if x not in Locations]
-    NegProbeLocation = np.random.randint(0,len(NotLocations),1)[0]
+    NegProbeLocation = NotLocations[np.random.permutation(len(NotLocations))[0]]
+    
     
     # Put the circles on the screen
     win.flip()
@@ -273,7 +288,7 @@ for thisStep in staircase:
         for x_offset in OffSet:
            for stim in [circle]:
                stim.pos = [x_offset, y_offset]
-               if (count+1 in MaskLocations):
+               if (count in MaskLocations):
                    stim.draw()
                count += 1
     
@@ -309,7 +324,7 @@ for thisStep in staircase:
             for x_offset in OffSet:
                for stim in [circle]:
                    stim.pos = [x_offset, y_offset]
-                   if (count+1 in [PosProbeLocation]):
+                   if (count in [PosProbeLocation]): # << Note that all the count were count+1
                        stim.draw()
                    count += 1
         ProbeLoc = PosProbeLocation
@@ -320,7 +335,7 @@ for thisStep in staircase:
             for x_offset in OffSet:
                for stim in [circle]:
                    stim.pos = [x_offset, y_offset]
-                   if (count+1 in [NegProbeLocation]):
+                   if (count in [NegProbeLocation]):
                        stim.draw()
                    count += 1
         ProbeLoc = NegProbeLocation
@@ -395,8 +410,10 @@ for thisStep in staircase:
     # Add this respone to the data file
     print(RT)
     print(CorrectRT)
-    dataFile.write('%i,%i,%i,%0.3f,%0.4f,%i, %s,%s\n' %(TrialCount,CurrentLoad, CorrectResp,RT,CorrectRT,Probe, str(ProbeLoc), str(list(Locations))))
-    
+    dataFile.write('%i,%i,%i,%0.3f,%0.4f,%i, %i,' %(TrialCount,CurrentLoad, CorrectResp,RT,CorrectRT,Probe, ProbeLoc))
+    for i in Locations:
+        dataFile.write('%i,'%(i))
+    dataFile.write('\n')
     #dataFile.write('%i,%i,%i,%0.3f,%0.4f,%0.4f,%i,%s,%s\n' %(TrialCount,CurrentLoad, CurrentCount, k[-1],CorrectResp,globalClock.getTime(),RT,CorrectRT,PosProbe,LettersInThisTrial[0:-1],LettersInThisTrial[-1]))
     TrialCount += 1
 
@@ -453,6 +470,7 @@ print EndFlag
 Capacity = NLoads + 1-np.mean(staircase.reversalIntensities)
 Capacity = Capacity
 dataFile1.write('%0.4f'%(Capacity))
+dataFile1.close()
 print
 print "Capacity is: %0.4f"%(Capacity)     
 print "Number of reversals: %i"%(len(staircase.reversalPoints))

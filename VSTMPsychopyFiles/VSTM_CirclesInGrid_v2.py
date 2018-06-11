@@ -23,26 +23,26 @@ import random
 # Timings
 FontSize = 60
 FontSizeUnits = 'pix'
-GridCount = 7 # Number of circles to have on each row
-GridSize = 160 # The size of the grid for which the circles on on
+GridCount = 6 # Number of circles to have on each row
+GridSize = GridCount*52+1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/GridCount # The circle size so that they are all just touching
 OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(CircleSize))
 MaskLocations = np.arange(0,1+GridCount**2)
 # units=FontSizeUnits
 # height=FontSize
-StimOnTime = 1.0
+StimOnTime = 1.5
 RetOnTime = 3.0
-ProbeOnTime= 2.7
+ProbeOnTime= 2.0
 MaskOnTime = 0.3
 # This is the intertrial interval. This experimental component is part of the trial.
-ITITime = 0.5 #1.0
+ITITime = 1.0 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-InterBlockTime = 5 #13.0
+InterBlockTime = 13 #13.0
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
-ShortDelayTime = 5 #16.0
+ShortDelayTime = 16 #16.0
 NumberOfBlocks = 5
 
 ## These are great for testing quickly
@@ -61,7 +61,7 @@ Tag = '1'
 
 # Setup the Window
 win = visual.Window(
-    size=(800, 600), fullscr=False, screen=0,
+    size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,

@@ -65,7 +65,7 @@ class Mywin(wx.Frame):
     # Create a box for the Face task buttons 
       FacesBox = wx.StaticBox(panel, -1, size = (350,140), pos = (30,80))
       # create a label for the faces box
-      self.title2 = wx.StaticText(panel, -1, label = "Face Tasks", pos = (50,90))
+      self.title2 = wx.StaticText(panel, -1, label = "VisualSTM", pos = (50,90))
       self.title2.SetFont(font) 
       
       # Create a box for the letters buttons 
@@ -81,41 +81,41 @@ class Mywin(wx.Frame):
       self.title4.SetFont(font) 
 
 ## FACES BUTTONS
-      # Button FRT DEMO
-      self.btn = wx.Button(panel,-1,"Demo", pos = (45,110)) 
-      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
-      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTDemo) 
-      # Checkbox for FRT DEMO
-      self.FRTDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (140,115))
+#      # Button FRT DEMO
+#      self.btn = wx.Button(panel,-1,"Demo", pos = (45,110)) 
+#      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+#      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTDemo) 
+#      # Checkbox for FRT DEMO
+#      self.FRTDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (140,115))
 
-      # Button FRT STAIRCASE
+      # Button VSTM STAIRCASE
       self.btn = wx.Button(panel,-1,"Staircase", pos = (45,130)) 
-      self.FRTStairCaseCapText = wx.StaticText(panel, -1, label = "Capacity = ", pos = (170,135))
-      self.FRTStairCaseCapText = wx.StaticText(panel, -1, label = "0000000", pos = (250,135))      
+      self.VSTMStairCaseCapText = wx.StaticText(panel, -1, label = "Capacity = ", pos = (170,135))
+      self.VSTMStairCaseCapText = wx.StaticText(panel, -1, label = "0000000", pos = (250,135))      
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
-      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTStair) 
-    # Checkbox for FRT staircase
-      self.FRTStairCB = wx.CheckBox(panel, -1, label = "", pos = (140,135))
+      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedVSTMStair) 
+    # Checkbox for VSTM staircase
+      self.VSTMStairCB = wx.CheckBox(panel, -1, label = "", pos = (140,135))
       
-      # Manual entry button for FRT Capacity
+      # Manual entry button for VSTM Capacity
       self.btn = wx.Button(panel,-1,"Enter", pos = (317,132),size = (45,13)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
-      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTCapEnter) 
+      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedVSTMCapEnter) 
       # self.btn = wx.Button(panel,-1,"Load", pos = (317,150),size = (45,13)) 
       
-      # Button FRT BLOCK ONE
-      self.btn = wx.Button(panel,-1,"FRT Run 1", pos = (45,150)) 
-      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
-      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTBlock)       
-      # Checkbox for FRT BLOCK ONE
-      self.FRTBlockCB1 = wx.CheckBox(panel, -1, label = "", pos = (140,155))
-      # =========================================================================
-      # Button FRT BLOCK TWO
-      self.btn = wx.Button(panel,-1,"FRT Run 2", pos = (45,170)) 
-      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
-      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTBlock)       
-      # Checkbox for FRT BLOCK TWO
-      self.FRTBlockCB2 = wx.CheckBox(panel, -1, label = "", pos = (140,175))
+#      # Button FRT BLOCK ONE
+#      self.btn = wx.Button(panel,-1,"FRT Run 1", pos = (45,150)) 
+#      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+#      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTBlock)       
+#      # Checkbox for FRT BLOCK ONE
+#      self.FRTBlockCB1 = wx.CheckBox(panel, -1, label = "", pos = (140,155))
+#      # =========================================================================
+#      # Button FRT BLOCK TWO
+#      self.btn = wx.Button(panel,-1,"FRT Run 2", pos = (45,170)) 
+#      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+#      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedFRTBlock)       
+#      # Checkbox for FRT BLOCK TWO
+#      self.FRTBlockCB2 = wx.CheckBox(panel, -1, label = "", pos = (140,175))
 
 
 ## LETTERS BUTTONS
@@ -222,18 +222,18 @@ class Mywin(wx.Frame):
       self.FRTDEMOCB.SetValue(True)
       
     # run the faces staircase
-   def OnClickedFRTStair(self, event): 
+   def OnClickedVSTMStair(self, event): 
       btn = event.GetEventObject().GetLabel() 
-      print("Label of pressed button = "%(btn ))
-      self.FRTStairCaseDateStr = data.getDateStr()
-      core.shellCall([sys.executable, "FRTPsychopyFiles/FRTStairCase_v1.py", self.PartID.GetValue()])
+      print("Label of pressed button = %s"%(btn))
+      self.VSTMStairCaseDateStr = data.getDateStr()
+      core.shellCall([sys.executable, "VSTMPsychopyFiles/VSTM_CirclesInGridStaircase_v1.py", self.PartID.GetValue()])
       # after the task is run read the capicity file
-      self.LoadFRTCapacity(self)
+      #self.LoadVSTMCapacity(self)
       
-   def LoadFRTCapacity(self, event):
-        self.FRTStairCB.SetValue(True)
-        task = 'FRTstair_'
-        dateStr = self.FRTStairCaseDateStr
+   def LoadVSTMCapacity(self, event):
+        self.VSTMStairCB.SetValue(True)
+        task = 'VSTMstair_'
+        dateStr = self.VSTMStairCaseDateStr
         #dateStr = "2017_Jul_27_1536"
         PartID = self.PartID.GetValue()
         #fileName = task + PartID + "_"+ dateStr
@@ -242,15 +242,15 @@ class Mywin(wx.Frame):
         
         #CapFile = open(os.path.join("data","CAPACITY_" + fileName + ".txt"),'r')
         # Read the capcity from the file and make it a local variable
-        self.FRTStairCaseCap = CapFile.read()
+        self.VSTMStairCaseCap = CapFile.read()
         # Set the GUI label for capacity
-        self.FRTStairCaseCapText.SetLabel(self.FRTStairCaseCap)
+        self.VSTMStairCaseCapText.SetLabel(self.VSTMStairCaseCap)
         # close the file
         CapFile.close()
         # remove the file
         # os.Remove(os.path.join("data","CAPACITY_" + fileName + ".txt"))
         # Once the capacity is loaded, calculate the load levels
-        self.FRTBlockLoadLevels = self.CreateFRTList(self.FRTStairCaseCap)
+        self.VSTMBlockLoadLevels = self.CreateDMSList(self.VSTMStairCaseCap)
         
         
    def OnClickedWORDDemo(self, event):
@@ -384,10 +384,10 @@ class Mywin(wx.Frame):
             print("user cancelled")
         return str(Capacity)
         
-   def OnClickedFRTCapEnter(self,event):
-        self.FRTStairCaseCap = self.ManualEntryCapacity([0.0, 1.0])
-        self.FRTStairCaseCapText.SetLabel(self.FRTStairCaseCap)
-        self.FRTBlockLoadLevels = self.CreateFRTList(self.FRTStairCaseCap)
+   def OnClickedVSTMCapEnter(self,event):
+        self.VSTMStairCaseCap = self.ManualEntryCapacity([0.0, 1.0])
+        self.VSTMStairCaseCapText.SetLabel(self.VSTMStairCaseCap)
+        self.VSTMBlockLoadLevels = self.CreateVSTMList(self.VSTMStairCaseCap)
 
    def OnClickedDMSCapEnter(self,event):
         self.DMSStairCaseCap = self.ManualEntryCapacity([0.0, 9.0])
