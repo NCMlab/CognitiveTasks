@@ -39,7 +39,7 @@ ITITime = 1.0 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-InterBlockTime = 16 #13.0
+InterBlockTime = 23 #13.0
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
 ShortDelayTime = 5 #16.0
@@ -116,7 +116,7 @@ OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.s
 filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
 print(filename)
 dataFile = open(filename+'.csv', 'w')
-dataFile.write('Trial,Load,TrialStartTime,Resp,Corr,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList\n')
+dataFile.write('Trial,Load,TrialStartTime,Resp,Corr,RT,CorrectRT,ProbeType,ProbeLoc,StimLoc\n')
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
@@ -283,8 +283,9 @@ for thisBlock in Blocks:
     TrialCount = 0
     
     for thisTrial in trials:
+        theseKeys = event.getKeys()
         TrialStartTime = RunningClock.getTime()
-        Locations = np.random.randint(0,GridCount**2,CurrentLoad)
+        Locations = np.random.permutation(GridCount**2)[0:CurrentLoad]
         print(thisTrial)
         # Create the probe Locations    
         PosProbeLocation = Locations[np.random.permutation(CurrentLoad)[0]]
@@ -308,7 +309,7 @@ for thisBlock in Blocks:
             for x_offset in OffSet:
                for stim in [circle]:
                    stim.pos = [x_offset, y_offset]
-                   if (count+1 in Locations):
+                   if (count in Locations):
                        stim.draw()
                    count += 1
         GreenCross.setAutoDraw(True)
@@ -325,7 +326,7 @@ for thisBlock in Blocks:
             for x_offset in OffSet:
                for stim in [circle]:
                    stim.pos = [x_offset, y_offset]
-                   if (count+1 in MaskLocations):
+                   if (count in MaskLocations):
                        stim.draw()
                    count += 1
         
@@ -361,7 +362,7 @@ for thisBlock in Blocks:
                 for x_offset in OffSet:
                    for stim in [circle]:
                        stim.pos = [x_offset, y_offset]
-                       if (count+1 in [NegProbeLocation]):
+                       if (count in [NegProbeLocation]):
                            stim.draw()
                        count += 1
         elif ProbeList[TrialCount] == 1:
@@ -371,7 +372,7 @@ for thisBlock in Blocks:
                 for x_offset in OffSet:
                    for stim in [circle]:
                        stim.pos = [x_offset, y_offset]
-                       if (count+1 in [PosProbeLocation]):
+                       if (count in [PosProbeLocation]):
                            stim.draw()
                        count += 1
                        
@@ -388,8 +389,9 @@ for thisBlock in Blocks:
         event.clearEvents(eventType='keyboard')
         print(countDown.getTime())
         thisResp.keys = -99
+        thisResp.rt = -99
         while countDown.getTime() > 0:
-            theseKeys = event.getKeys(keyList=['escape','left', 'down'])
+            theseKeys = event.getKeys(keyList=['escape','left', 'down','1','2'])
             if 'escape' in theseKeys:
                 core.quit()
             elif len(theseKeys) > 0:  # at least one key was pressed
