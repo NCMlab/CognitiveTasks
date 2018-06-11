@@ -387,6 +387,7 @@ for thisBlock in Blocks:
         countDown.add(ProbeOnTime)
         event.clearEvents(eventType='keyboard')
         print(countDown.getTime())
+        thisResp.keys = -99
         while countDown.getTime() > 0:
             theseKeys = event.getKeys(keyList=['escape','left', 'down'])
             if 'escape' in theseKeys:
