@@ -441,39 +441,51 @@ for thisBlock in Blocks:
         thisExp.nextEntry()
         
         TrialCount += 1
-    # INTER BLOCK TIME
-    # Turn on the cross hair
-    WhiteCross.setAutoDraw(True)
-    win.flip()
-    countDown.reset() 
-    WhiteCross.setAutoDraw(True)
-    countDown.add(InterBlockTime - 3)
-    while countDown.getTime() > 0:
-        pass
-    win.flip()
-    # Turn on the countdown timer
-    WhiteCross.setAutoDraw(False)
-    
-    text3.setAutoDraw(True)
-    countDown.add(1)
-    win.flip()
-    while countDown.getTime() > 0:
-        pass
-    text3.setAutoDraw(False)
-    text2.setAutoDraw(True)
-    countDown.add(1)
-    win.flip()
-    while countDown.getTime() > 0:
-        pass    
-    text2.setAutoDraw(False)
-    text1.setAutoDraw(True)
-    countDown.add(1)
-    win.flip()
-    while countDown.getTime() > 0:
-        pass    
-    win.flip()
-    text1.setAutoDraw(False)
     BlockCount += 1
+    if BlockCount < NumberOfBlocks:    
+        # INTER BLOCK TIME
+        # Turn on the cross hair
+        WhiteCross.setAutoDraw(True)
+        win.flip()
+        countDown.reset() 
+        WhiteCross.setAutoDraw(True)
+        countDown.add(InterBlockTime - 3)
+        while countDown.getTime() > 0:
+            pass
+        win.flip()
+        # Turn on the countdown timer
+        WhiteCross.setAutoDraw(False)
+        
+        text3.setAutoDraw(True)
+        countDown.add(1)
+        win.flip()
+        while countDown.getTime() > 0:
+            pass
+        text3.setAutoDraw(False)
+        text2.setAutoDraw(True)
+        countDown.add(1)
+        win.flip()
+        while countDown.getTime() > 0:
+            pass    
+        text2.setAutoDraw(False)
+        text1.setAutoDraw(True)
+        countDown.add(1)
+        win.flip()
+        while countDown.getTime() > 0:
+            pass    
+        win.flip()
+        text1.setAutoDraw(False)
+    else:
+        countDown.add(3)
+        while countDown.getTime() > 0:
+            pass  
+    
+    textThankyou.setAutoDraw(True)
+    countDown.add(5)
+    win.flip()
+    while countDown.getTime() > 0:
+        pass   
+    win.flip()
     
 thisExp.saveAsWideText(filename+'.csv')    
 logging.flush()
