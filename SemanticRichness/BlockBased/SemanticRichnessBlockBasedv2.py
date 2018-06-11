@@ -402,12 +402,12 @@ for thisBlock in Blocks:
     if Tag == '1':
         trials = data.TrialHandler(nReps=1, method='random', 
             extraInfo=expInfo, originPath=-1,
-            trialList=data.importConditions('StimulusListRun1.csv', selection=rows),
+            trialList=data.importConditions('../../../SemanticsListFiles/StimulusListRun1.csv', selection=rows),
             seed=None, name='trials')
     else:
         trials = data.TrialHandler(nReps=1, method='random', 
             extraInfo=expInfo, originPath=-1,
-            trialList=data.importConditions('StimulusListRun2.csv', selection=rows),
+            trialList=data.importConditions('../../../SemanticsListFiles/StimulusListRun2.csv', selection=rows),
             seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
