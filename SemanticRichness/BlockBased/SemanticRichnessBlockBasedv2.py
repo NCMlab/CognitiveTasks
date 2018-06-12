@@ -44,7 +44,8 @@ else:
         core.quit()  # user pressed cancel
     CounterBalFlag = 'False'
     Tag = '2'
-    
+
+
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 OutDir = '..' + os.sep + '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
@@ -404,11 +405,17 @@ for thisBlock in Blocks:
             extraInfo=expInfo, originPath=-1,
             trialList=data.importConditions('../../../SemanticsListFiles/StimulusListRun1.csv', selection=rows),
             seed=None, name='trials')
-    else:
+    elif Tag == '2':
         trials = data.TrialHandler(nReps=1, method='random', 
             extraInfo=expInfo, originPath=-1,
             trialList=data.importConditions('../../../SemanticsListFiles/StimulusListRun2.csv', selection=rows),
             seed=None, name='trials')
+    else: 
+        trials = data.TrialHandler(nReps=1, method='random', 
+            extraInfo=expInfo, originPath=-1,
+            trialList=data.importConditions('../../../SemanticsListFiles/WordLoad10.csv', selection=rows),
+            seed=None, name='trials')   
+            
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
@@ -492,7 +499,7 @@ for thisBlock in Blocks:
                         elif ((Response.keys == 'left') or (Response.keys == 'left')):
                             Response.corr = 1
                         else:
-                            resp.corr = 0
+                            Response.corr = 0
                     if Corr == 'down':
                         if ((Response.keys == Corr) or (Response.keys == str(Corr))):
                             Response.corr = 1

@@ -159,7 +159,7 @@ class Mywin(wx.Frame):
 
 ## Words BUTTONS
       # Button WORD DEMO
-      self.btn = wx.Button(panel,-1,"Demo", pos = (45,375)) 
+      self.btn = wx.Button(panel,-1,"WORD Demo", pos = (45,375)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON, self.OnClickedWORDDemo) 
       
@@ -255,6 +255,16 @@ class Mywin(wx.Frame):
         
    def OnClickedWORDDemo(self, event):
        print(self.CounterBalCB.GetValue())
+       btn = event.GetEventObject().GetLabel() 
+       CounterBalFlag = str(self.CounterBalCB.GetValue())
+       print("Label of pressed button = %s"%(btn ))
+       Tag = 'WordDemo'
+       print self.PartID.GetValue()
+       # print self.DMSBlockLoadLevels
+       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
+       core.shellCall([sys.executable, "SemanticRichness/BlockBased/SemanticRichnessBlockBasedv2.py", self.PartID.GetValue(),CounterBalFlag,Tag])
+       #self.WORDBlockCB1.SetValue(True)
+       
     
    def OnClickedFRTBlock(self, event): 
         btn = event.GetEventObject().GetLabel() 
