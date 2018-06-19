@@ -253,7 +253,7 @@ textITI = visual.TextStim(win=win, name='textITI',
     text='+',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='red', colorSpace='rgb', opacity=1,
     depth=-11.0);
 
 # Initialize components for Routine "Interblock"
@@ -262,7 +262,7 @@ textInterblock = visual.TextStim(win=win, name='textInterblock',
     text='+',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='red', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "ShortDelay"
