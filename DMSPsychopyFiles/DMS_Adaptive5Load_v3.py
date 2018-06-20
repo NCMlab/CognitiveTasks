@@ -323,15 +323,17 @@ while continueRoutine:
         # keyboard checking is just starting
         event.clearEvents(eventType='keyboard')
     if OK1.status == STARTED:
-        theseKeys = event.getKeys()
-        
+        #theseKeys = event.getKeys()
+        theseKeys = event.getKeys(keyList=['escape','5'])
         # check for quit:
-        if "escape" in theseKeys:
+        if 'escape' in theseKeys:
             endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
+        elif '5' in theseKeys:  # at least one key was pressed
             # a response ends the routine
             continueRoutine = False
-    
+        else:
+            pass    
+            
     # check if all components have finished
     if not continueRoutine:  # a component has requested a forced-end of Routine
         break
