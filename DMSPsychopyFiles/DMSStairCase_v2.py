@@ -11,8 +11,10 @@ PartDataFolder = 'unorganized'
 if len(sys.argv) > 1:
     expInfo['Participant ID'] = sys.argv[1]
     PartDataFolder = sys.argv[1]
+    FontSize = int(sys.argv[2])
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
+    FontSize = 60
     if dlg.OK == False:
         core.quit()  # user pressed cancel
     
@@ -55,7 +57,7 @@ MaxTime = 7 # minutes
 MaxTrials = expInfo['Max Trials'] # End after this many trials
 NumberOfReversals = 20
 
-FontSize = 60
+
 FontSizeUnits = 'pix'
 # This next value is based off of the units so be careful changing the units
 SpacingOfLettersRelativeToCenter = 80
@@ -122,9 +124,9 @@ for i in range(0,Nloads,1):
 # Prepare the stimuli for display
 WaitText = visual.TextStim(win=win, name='WaitText',
     #text='Remember:\nPress [LEFT] for IN the set\nPress [DOWN] for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press the [LEFT] or [DOWN] key.',
-    text='Remember:\nPress [LEFT] for IN the set.\nPress [DOWN] for NOT in the set.\nThis time, you will NOT receive feedback after your responses.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed, press the [LEFT] or [DOWN] key.',
+    text='Press [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',units=FontSizeUnits, 
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=40, wrapWidth=1200, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 CountDownText = visual.TextStim(win=win, name='CountDown',
@@ -138,7 +140,7 @@ textITI = visual.TextStim(win=win, name='textITI',
     text='+',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='red', colorSpace='rgb', opacity=1,
     depth=0.0);
 textTL = visual.TextStim(win=win, name='textTL',
     text='default text',
@@ -404,7 +406,7 @@ for thisStep in staircase:
         count[CurrentLoad - 1] = 1
 
     # Add an ITI between trials
-    whiteITI.draw()
+    textITI.draw()
     win.flip()
     core.wait(ITITime)
     TrialCount += 1

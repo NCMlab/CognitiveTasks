@@ -96,13 +96,27 @@ class Mywin(wx.Frame):
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedVSTMStair) 
     # Checkbox for VSTM staircase
       self.VSTMStairCB = wx.CheckBox(panel, -1, label = "", pos = (140,135))
-      
+
       # Manual entry button for VSTM Capacity
       self.btn = wx.Button(panel,-1,"Enter", pos = (317,132),size = (45,13)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON,self.OnClickedVSTMCapEnter) 
       # self.btn = wx.Button(panel,-1,"Load", pos = (317,150),size = (45,13)) 
-      
+
+      # Button VSTM Run 1
+      self.btn = wx.Button(panel,-1,"VSTM Run 1", pos = (45,150)) 
+      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedVSTMBlock) 
+    # Checkbox for VSTM staircase
+      self.VSTMBlockCB1 = wx.CheckBox(panel, -1, label = "", pos = (140,155))
+
+      # Button VSTM Run 2
+      self.btn = wx.Button(panel,-1,"VSTM Run 2", pos = (45,170)) 
+      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedVSTMBlock) 
+    # Checkbox for VSTM staircase
+      self.VSTMBlockCB2 = wx.CheckBox(panel, -1, label = "", pos = (140,175))
+
 #      # Button FRT BLOCK ONE
 #      self.btn = wx.Button(panel,-1,"FRT Run 1", pos = (45,150)) 
 #      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
@@ -159,7 +173,7 @@ class Mywin(wx.Frame):
 
 ## Words BUTTONS
       # Button WORD DEMO
-      self.btn = wx.Button(panel,-1,"WORD Demo", pos = (45,375)) 
+      self.btn = wx.Button(panel,-1,"Demo", pos = (45,375)) 
       vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
       self.btn.Bind(wx.EVT_BUTTON, self.OnClickedWORDDemo) 
       
@@ -205,7 +219,7 @@ class Mywin(wx.Frame):
     # Create Default values for the load levels for the two tasks
       self.FRTBlockLoadLevels = '0.0 0.125 0.25 0.375 0.5'
       self.DMSBlockLoadLevels = '1 3 5 6 7'
-           
+      self.VSTMBlockLoadLevels = '1 2 3 4 5'     
       self.Centre() 
       self.Show() 
       self.Fit()  
@@ -290,19 +304,22 @@ class Mywin(wx.Frame):
         self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSStairCaseCap)
       
    def OnClickedDMSDemo(self, event): 
+      FontSize = '60'
       btn = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btn ))
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSDemo_GUI.py", self.PartID.GetValue()])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSDemo_GUI.py", self.PartID.GetValue(),FontSize])
       self.DMSDEMOCB.SetValue(True)
 
    def OnClickedDMSStair(self, event): 
+      FontSize = '60'
       self.DMSStairCaseDateStr = data.getDateStr()
       btn = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btn ))
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v2.py", self.PartID.GetValue()])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v2.py", self.PartID.GetValue(),FontSize])
       self.LoadDMSCapacity(self)
       
    def OnClickedDMSBlock(self, event): 
+      FontSize = '60'
       btn = event.GetEventObject().GetLabel() 
       CounterBalFlag = str(self.CounterBalCB.GetValue())
       print("Label of pressed button = %s"%(btn ))
@@ -316,11 +333,32 @@ class Mywin(wx.Frame):
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v3.py", self.PartID.GetValue(), self.DMSBlockLoadLevels, CounterBalFlag, Tag])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v3.py", self.PartID.GetValue(), self.DMSBlockLoadLevels, CounterBalFlag, Tag, FontSize])
       if Tag == '1':
         self.DMSBlockCB1.SetValue(True)
       else:  
         self.DMSBlockCB2.SetValue(True)
+   
+   def OnClickedVSTMBlock(self, event): 
+      btn = event.GetEventObject().GetLabel() 
+      CounterBalFlag = str(self.CounterBalCB.GetValue())
+      print("Label of pressed button = %s"%(btn ))
+      
+      if btn == 'VSTM Run 1':
+        Tag = '1'
+      elif btn == 'VSTM Run 2':
+        Tag = '2'
+      else:
+        Tag = '9'
+      print self.PartID.GetValue()
+      print self.VSTMBlockLoadLevels
+      #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
+      core.shellCall([sys.executable, "VSTMPsychopyFiles/VSTM_CirclesInGrid_v4.py", self.PartID.GetValue(), self.VSTMBlockLoadLevels, CounterBalFlag, Tag])
+      if Tag == '1':
+        self.VSTMBlockCB1.SetValue(True)
+      else:  
+        self.VSTMBlockCB2.SetValue(True)   
+   
    
    def OnClickedWORDEV(self, event): 
       btn = event.GetEventObject().GetLabel() 

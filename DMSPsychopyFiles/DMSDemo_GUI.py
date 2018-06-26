@@ -32,12 +32,15 @@ PartDataFolder = 'unorganized'
 if len(sys.argv) > 1:
     expInfo['Participant ID'] = sys.argv[1]
     PartDataFolder = sys.argv[1]
+    FontSize= int(sys.argv[2])
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
+    FontSize = 60
     if dlg.OK == False:
         core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
+SpacingOfLettersRelativeToCenter = 80
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 #filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
@@ -75,16 +78,17 @@ practInstruct1Clock = core.Clock()
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text='In this experiment you will be presented with a set of letters. A set may contain anywhere from 1 to 9 letters for you to memorize.\n\nFollowing a short delay you will then be presented with a single letter and you will have to decide whether this new letter was a member of the set.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
-    units='pix', pos=[0, 0], height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=[0, 0], height=FontSize, wrapWidth=2, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "practInstruct2"
 practInstruct2Clock = core.Clock()
 textInstr2 = visual.TextStim(win=win, name='textInstr2',
-    text='Respond with the keys;\n[LEFT] if the letter WAS in the set\n[DOWN] if the letter was NOT in the set\n\nThere will be a number of practice trials in which you will be given feedback.  Try to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
+    #text='Respond with the keys;\n[LEFT] if the letter WAS in the set\n[DOWN] if the letter was NOT in the set\n\nThere will be a number of practice trials in which you will be given feedback.  Try to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
+    text='Press [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=1200, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -93,19 +97,19 @@ countdownClock = core.Clock()
 text3 = visual.TextStim(win=win, name='text3',
     text='3',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 text2 = visual.TextStim(win=win, name='text2',
     text='2',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
 text1 = visual.TextStim(win=win, name='text1',
     text='1',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-2.0);
 
@@ -114,73 +118,73 @@ trialClock = core.Clock()
 textITI = visual.TextStim(win=win, name='textITI',
     text='+',
     font='Times New Roman',
-    units='pix', pos=[0, 0], height=40, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    units='pix', pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
+    color='red', colorSpace='rgb', opacity=1,
     depth=0.0);
 textTL = visual.TextStim(win=win, name='textTL',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=[-50, 50], height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=[-SpacingOfLettersRelativeToCenter, SpacingOfLettersRelativeToCenter], height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
 textTM = visual.TextStim(win=win, name='textTM',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, 50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, SpacingOfLettersRelativeToCenter), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-2.0);
 textTR = visual.TextStim(win=win, name='textTR',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(50, 50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(SpacingOfLettersRelativeToCenter, SpacingOfLettersRelativeToCenter), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-3.0);
 textCL = visual.TextStim(win=win, name='textCL',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(-50, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(-SpacingOfLettersRelativeToCenter, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-4.0);
 textCM = visual.TextStim(win=win, name='textCM',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-5.0);
 textCR = visual.TextStim(win=win, name='textCR',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(50, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(SpacingOfLettersRelativeToCenter, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-6.0);
 textBL = visual.TextStim(win=win, name='textBL',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(-50, -50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(-SpacingOfLettersRelativeToCenter, -SpacingOfLettersRelativeToCenter), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-7.0);
 textBM = visual.TextStim(win=win, name='textBM',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, -50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, -SpacingOfLettersRelativeToCenter), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-8.0);
 textBR = visual.TextStim(win=win, name='textBR',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(50, -50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(SpacingOfLettersRelativeToCenter, -SpacingOfLettersRelativeToCenter), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-9.0);
 textDelay = visual.TextStim(win=win, name='textDelay',
     text='+',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='green', colorSpace='rgb', opacity=1,
     depth=-10.0);
 textProbe = visual.TextStim(win=win, name='textProbe',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=[0, 0], height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-11.0);
 
@@ -191,7 +195,7 @@ msg=''
 textFeedback = visual.TextStim(win=win, name='textFeedback',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=[0, 0], height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
 
@@ -200,7 +204,7 @@ mainInstructClock = core.Clock()
 textInstr3 = visual.TextStim(win=win, name='textInstr3',
     text='OK, ready to start the main experiment?\n\nRemember:\nPress [LEFT] for IN the set\nPress [DOWN] for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
-    units='pix', pos=[0, 0], height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -216,66 +220,66 @@ continueRoutine = True
 # update component parameters for each repeat
 OK1 = event.BuilderKeyResponse()
 # keep track of which components have finished
-practInstruct1Components = [textInstr1, OK1]
-for thisComponent in practInstruct1Components:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
+#practInstruct1Components = [textInstr1, OK1]
+#for thisComponent in practInstruct1Components:
+#    if hasattr(thisComponent, 'status'):
+#        thisComponent.status = NOT_STARTED
+#
 # -------Start Routine "practInstruct1"-------
-while continueRoutine:
-    # get current time
-    t = practInstruct1Clock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *textInstr1* updates
-    if t >= 0.0 and textInstr1.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        textInstr1.tStart = t
-        textInstr1.frameNStart = frameN  # exact frame index
-        textInstr1.setAutoDraw(True)
-    
-    # *OK1* updates
-    if t >= 0.0 and OK1.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        OK1.tStart = t
-        OK1.frameNStart = frameN  # exact frame index
-        OK1.status = STARTED
-        # keyboard checking is just starting
-        event.clearEvents(eventType='keyboard')
-    if OK1.status == STARTED:
-        theseKeys = event.getKeys()
-        
-        # check for quit:
-        if "escape" in theseKeys:
-            endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
-            # a response ends the routine
-            continueRoutine = False
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in practInstruct1Components:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
+#while continueRoutine:
+#    # get current time
+#    t = practInstruct1Clock.getTime()
+#    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+#    # update/draw components on each frame
+#    
+#    # *textInstr1* updates
+#    if t >= 0.0 and textInstr1.status == NOT_STARTED:
+#        # keep track of start time/frame for later
+#        textInstr1.tStart = t
+#        textInstr1.frameNStart = frameN  # exact frame index
+#        textInstr1.setAutoDraw(True)
+#    
+#    # *OK1* updates
+#    if t >= 0.0 and OK1.status == NOT_STARTED:
+#        # keep track of start time/frame for later
+#        OK1.tStart = t
+#        OK1.frameNStart = frameN  # exact frame index
+#        OK1.status = STARTED
+#        # keyboard checking is just starting
+#        event.clearEvents(eventType='keyboard')
+#    if OK1.status == STARTED:
+#        theseKeys = event.getKeys()
+#        
+#        # check for quit:
+#        if "escape" in theseKeys:
+#            endExpNow = True
+#        if len(theseKeys) > 0:  # at least one key was pressed
+#            # a response ends the routine
+#            continueRoutine = False
+#    
+#    # check if all components have finished
+#    if not continueRoutine:  # a component has requested a forced-end of Routine
+#        break
+#    continueRoutine = False  # will revert to True if at least one component still running
+#    for thisComponent in practInstruct1Components:
+#        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+#            continueRoutine = True
+#            break  # at least one component has not yet finished
+#    
+#    # check for quit (the Esc key)
+#    if endExpNow or event.getKeys(keyList=["escape"]):
+#        core.quit()
+#    
+#    # refresh the screen
+#    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+#        win.flip()
+#
 # -------Ending Routine "practInstruct1"-------
-for thisComponent in practInstruct1Components:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
+#for thisComponent in practInstruct1Components:
+#    if hasattr(thisComponent, "setAutoDraw"):
+#        thisComponent.setAutoDraw(False)
 # the Routine "practInstruct1" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
+#routineTimer.reset()
 
 # ------Prepare to start Routine "practInstruct2"-------
 t = 0

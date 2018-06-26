@@ -53,6 +53,7 @@ if len(sys.argv) > 2:
     PartDataFolder = sys.argv[1]
     CounterBalFlag = sys.argv[3]
     Tag = sys.argv[4]
+    FontSize = int(sys.argv[5])
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
@@ -61,6 +62,7 @@ else:
     LoadList = LoadList.astype(np.int)
     CounterBalFlag = 'False'
     Tag = '1'
+    FontSize = 60
 #tempFile.write("Loaded inputs\n")
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
@@ -86,7 +88,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
 
-FontSize = 60
+
 FontSizeUnits = 'pix'
 # This next value is based off of the units so be careful changing the units
 SpacingOfLettersRelativeToCenter = 80
@@ -139,16 +141,16 @@ else:
 InstructionsClock = core.Clock()
 if CounterBalFlag == 'False':
     textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Press [left] or [1] if the letter WAS in the set.\nPress [down] or [2] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
+    text='Press [LEFT] or [1] if the letter WAS in the set.\nPress [DOWN] or [2] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=None, ori=0, 
+    units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 else:
     textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Ready to start the main experiment?\nRemember:\nPress [2] or [down] if the letter WAS in the set.\nPress [1] or [left] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press [5].',
+    text='Press [2] or [DOWN] if the letter WAS in the set.\nPress [1] or [LEFT] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=None, ori=0, 
+    units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 # Initialize components for Routine "ShortDelay"
