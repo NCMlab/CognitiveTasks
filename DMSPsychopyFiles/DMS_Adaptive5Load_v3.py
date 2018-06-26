@@ -139,7 +139,7 @@ else:
 InstructionsClock = core.Clock()
 if CounterBalFlag == 'False':
     textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Ready to start the main experiment?\nRemember:\nPress [left] or [1] if the letter WAS in the set.\nPress [down] or [2] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press [5].',
+    text='Press [left] or [1] if the letter WAS in the set.\nPress [down] or [2] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=None, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,

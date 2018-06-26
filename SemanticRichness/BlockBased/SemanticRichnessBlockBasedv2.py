@@ -83,14 +83,14 @@ else:
 InstructionsClock = core.Clock()
 if CounterBalFlag == 'False':
     Instructions = visual.TextStim(win=win, name='Instructions',
-    text='Press [left] if the word is of a living thing.\nPress [down] if the word is of a non-living thing.\n\nPress [5] to start.',
+    text='Press [left] if the word is of a living thing.\nPress [down] if the word is of a non-living thing.\n\nTry to respond as quickly and as accurately as possible.',
     font='Arial',
     pos=(0, 0), height=0.12, wrapWidth=None, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 else:
     Instructions = visual.TextStim(win=win, name='Instructions',
-    text='Press [down] if the word is of a living thing.\nPress [left] if the word is of a non-living thing.\n\nPress [5] to start.',
+    text='Press [down] if the word is of a living thing.\nPress [left] if the word is of a non-living thing.\n\nTry to respond as quickly and as accurately as possible.',
     font='Arial',
     pos=(0, 0), height=0.12, wrapWidth=None, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
