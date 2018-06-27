@@ -240,9 +240,9 @@ class Mywin(wx.Frame):
       btn = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btn))
       self.VSTMStairCaseDateStr = data.getDateStr()
-      core.shellCall([sys.executable, "VSTMPsychopyFiles/VSTM_CirclesInGridStaircase_v1.py", self.PartID.GetValue()])
+      core.shellCall([sys.executable, "VSTMPsychopyFiles/VSTM_CirclesInGridStaircase_v2.py", self.PartID.GetValue()])
       # after the task is run read the capicity file
-      #self.LoadVSTMCapacity(self)
+      self.LoadVSTMCapacity(self)
       
    def LoadVSTMCapacity(self, event):
         self.VSTMStairCB.SetValue(True)

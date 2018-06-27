@@ -87,7 +87,7 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir =  '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
 filename = OutDir + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
 
 

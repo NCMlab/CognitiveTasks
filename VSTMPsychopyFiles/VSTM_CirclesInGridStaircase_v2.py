@@ -76,10 +76,13 @@ else:
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 task = 'stair'
-OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+if not os.path.exists(OutDir):
+    os.mkdir(OutDir)
 filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
-print('Filename is: %s'%(filename))
+
 dataFile = open(filename+'.csv', 'w')
+
 dataFile1=open(OutDir + 'CAPACITY_%s%s_%s_%s.txt' % (expName,task, expInfo['Participant ID'], expInfo['date']),'w')
 
 # Setup the Window
@@ -171,16 +174,16 @@ textThankyou = visual.TextStim(win=win, name='textThankyou',
     
 RunningClock = core.Clock()
 
-Nloads = GridCount**2
+NLoads = GridCount**2
 NumberOfReversals = 20
 #staircase = data.StairHandler(startVal = 1,
 #                          stepType = 'lin', stepSizes=1,
 #                          nUp=1, nDown=3,  # will home in on the 80% threshold
 #                          nReversals = NumberOfReversals,minVal = 1,maxVal = 20)
-staircase = data.StairHandler(startVal = Nloads,
+staircase = data.StairHandler(startVal = NLoads,
                           stepType = 'lin', stepSizes=[1],
                           nUp=1, nDown=3,  # will home in on the 80% threshold
-                          nReversals = NumberOfReversals,minVal = 1,maxVal = Nloads)
+                          nReversals = NumberOfReversals,minVal = 1,maxVal = NLoads)
 # For each block change the selection list 
 
 # Need instructions and wait
@@ -240,7 +243,7 @@ TrialCount = 1
 for thisStep in staircase:
     print('--------------')
     print('ThisStep: %s'%(str(thisStep)))
-    CurrentLoad = Nloads - thisStep + 1
+    CurrentLoad = NLoads - thisStep + 1
 #    CurrentLoad = thisStep
     print(CurrentLoad)
         
@@ -293,15 +296,15 @@ for thisStep in staircase:
                count += 1
     
     # Put the mask dots on the screen
-    GreenCross.setAutoDraw(False)
+    #GreenCross.setAutoDraw(False)
     win.flip()
     countDown.add(MaskOnTime)
     while countDown.getTime() > 0:
         pass
     
     # check for quit (the Esc key)
-    if event.getKeys(keyList=["escape"]):
-        core.quit()
+    #if event.getKeys(keyList=["escape"]):
+    #    core.quit()
         
     print(countDown.getTime())
     while countDown.getTime() > 0:
@@ -357,9 +360,10 @@ for thisStep in staircase:
     resp.rt = -99
     while countDown.getTime() > 0:
         theseKeys = event.getKeys(keyList=['escape','left', 'down'])
-        if 'escape' in theseKeys:
-            core.quit()
-        elif len(theseKeys) > 0:  # at least one key was pressed
+       # if 'escape' in theseKeys:
+       #     win.close()
+            #core.quit()
+        if len(theseKeys) > 0:  # at least one key was pressed
             resp.keys = theseKeys[-1]  # just the last key pressed
             resp.rt = resp.clock.getTime()
             # was this 'correct'?
@@ -456,6 +460,7 @@ for thisStep in staircase:
         EndFlag = 'UserEscape'
         dataFile.write('%s\n'%(EndFlag))
         Capacity = NLoads+1-np.mean(staircase.reversalIntensities)
+        #Capacity = NLoads+1-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
         print
         print "Ending because Escape was pressed."
