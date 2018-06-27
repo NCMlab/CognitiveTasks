@@ -71,7 +71,7 @@ if len(sys.argv) > 2:
     LoadList = LoadList.astype(np.int)
     PartDataFolder = sys.argv[1]
     CounterBalFlag = sys.argv[3]
-    Tag = sys.argv[3]
+    Tag = sys.argv[4]
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
@@ -87,16 +87,10 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-OutDir =  '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-filename = OutDir + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
+#OutDir =  '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+#filename = OutDir + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
+#
 
-
-# An ExperimentHandler isn't essential but helps with data saving
-thisExp = data.ExperimentHandler(name=expName, version='',
-    extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/home/jsteffe/Dropbox/SteffenerColumbia/Projects/MyProjects/NeuralCognitiveMapping/VSTMPsychopyFiles/VSTM_CirclesInGrid_v3.py',
-    savePickle=True, saveWideText=True,
-    dataFileName=filename)
 
 # Setup the Window
 win = visual.Window(
@@ -108,14 +102,30 @@ win = visual.Window(
     
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-OutDir = '..' + os.sep + '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-filename = OutDir + '%s%s_%s_%s' % (expName, Tag, expInfo['Participant ID'], expInfo['date'])
-print(filename)
+#OutDir = '..' + os.sep + '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+
 task = 'block'
-OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
-print(filename)
+OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+if not os.path.exists(OutDir):
+    os.mkdir(OutDir)
+filename = OutDir + '%s%s%s_%s_%s' % (expName, task, Tag, expInfo['Participant ID'], expInfo['date'])
+
 dataFile = open(filename+'.csv', 'w')
+
+#filename = OutDir + '%s%s_%s_%s' % (expName, Tag, expInfo['Participant ID'], expInfo['date'])
+print(filename)
+# An ExperimentHandler isn't essential but helps with data saving
+thisExp = data.ExperimentHandler(name=expName, version='',
+    extraInfo=expInfo, runtimeInfo=None,
+    originPath=u'/home/jsteffe/Dropbox/SteffenerColumbia/Projects/MyProjects/NeuralCognitiveMapping/VSTMPsychopyFiles/VSTM_CirclesInGrid_v3.py',
+    savePickle=True, saveWideText=True,
+    dataFileName=filename)
+
+
+#OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+#filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
+#print(filename)
+#dataFile = open(filename+'.csv', 'w')
 dataFile.write('Trial,Load,TrialStartTime,Resp,Corr,RT,CorrectRT,ProbeType,ProbeLoc,StimLoc\n')
 
 # An ExperimentHandler isn't essential but helps with data saving
@@ -243,7 +253,7 @@ if thisBlock != None:
     for paramName in thisBlock.keys():
         exec(paramName + '= thisBlock.' + paramName)
 
-BlockCount = 1
+BlockCount = 0
 for thisBlock in Blocks:
     currentLoop = Blocks
     # abbreviate parameter names if possible (e.g. rgb = thisBlock.rgb)
@@ -251,7 +261,7 @@ for thisBlock in Blocks:
         for paramName in thisBlock.keys():
             exec(paramName + '= thisBlock.' + paramName)
             
-    CurrentLoad = BlockCount
+    CurrentLoad = LoadList[BlockCount]
     countDown.reset()   
     
 #   321

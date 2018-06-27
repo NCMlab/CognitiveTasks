@@ -45,12 +45,15 @@ else:
     CounterBalFlag = 'False'
     Tag = '2'
 
-BlockOffTime = 17
+BlockOffTime = 6
 WordOnTime = 1.5
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 OutDir = '..' + os.sep + '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+# If the subject path does not exist, than make it
+if not os.path.exists(OutDir):
+    os.mkdir(OutDir)
 filename = OutDir + '%s%s_%s_%s' % (expName, Tag, expInfo['Participant ID'], expInfo['date'])
 print(filename)
 
@@ -412,12 +415,12 @@ for thisBlock in Blocks:
     if Tag == '1':
         trials = data.TrialHandler(nReps=1, method='random', 
             extraInfo=expInfo, originPath=-1,
-            trialList=data.importConditions('../../../SemanticsListFiles/StimulusListRun1.csv', selection=rows),
+            trialList=data.importConditions('../SemanticsListFiles/StimulusListRun1.csv', selection=rows),
             seed=None, name='trials')
     elif Tag == '2':
         trials = data.TrialHandler(nReps=1, method='random', 
             extraInfo=expInfo, originPath=-1,
-            trialList=data.importConditions('../../../SemanticsListFiles/StimulusListRun2.csv', selection=rows),
+            trialList=data.importConditions('../SemanticsListFiles/StimulusListRun2.csv', selection=rows),
             seed=None, name='trials')
     else: 
         trials = data.TrialHandler(nReps=1, method='random', 

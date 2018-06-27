@@ -443,7 +443,7 @@ for thisStep in staircase:
         win.close()
         EndFlag = 'TimeExceeded'
         dataFile.write('%s\n'%(EndFlag))
-        Capacity = Nloads+1-np.mean(staircase.reversalIntensities)
+        Capacity = NLoads+1-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
         print 
         print "Ending because Time was exceeded."

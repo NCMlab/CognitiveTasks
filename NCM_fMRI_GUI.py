@@ -246,13 +246,13 @@ class Mywin(wx.Frame):
       
    def LoadVSTMCapacity(self, event):
         self.VSTMStairCB.SetValue(True)
-        task = 'VSTMstair_'
+        task = 'VSTMstair'
         dateStr = self.VSTMStairCaseDateStr
         #dateStr = "2017_Jul_27_1536"
         PartID = self.PartID.GetValue()
         #fileName = task + PartID + "_"+ dateStr
         OutDir = '..' + os.sep + 'data' + os.sep + PartID + os.sep
-        CapFile=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, PartID, dateStr),'r')
+        CapFile=open(OutDir + 'CAPACITY_%s_%s_%s.txt' % (task, PartID, dateStr),'r')
         
         #CapFile = open(os.path.join("data","CAPACITY_" + fileName + ".txt"),'r')
         # Read the capcity from the file and make it a local variable
@@ -264,7 +264,7 @@ class Mywin(wx.Frame):
         # remove the file
         # os.Remove(os.path.join("data","CAPACITY_" + fileName + ".txt"))
         # Once the capacity is loaded, calculate the load levels
-        self.VSTMBlockLoadLevels = self.CreateDMSList(self.VSTMStairCaseCap)
+        self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMStairCaseCap)
         
         
    def OnClickedWORDDemo(self, event):
@@ -276,7 +276,7 @@ class Mywin(wx.Frame):
        print self.PartID.GetValue()
        # print self.DMSBlockLoadLevels
        #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
-       core.shellCall([sys.executable, "SemanticRichness/BlockBased/SemanticRichnessBlockBasedv2.py", self.PartID.GetValue(),CounterBalFlag,Tag])
+       core.shellCall([sys.executable, "SemanticRichness/BlockBased/SemanticRichnessBlockBasedDEMOv2.py", self.PartID.GetValue(),CounterBalFlag,Tag])
        #self.WORDBlockCB1.SetValue(True)
        
     
@@ -406,6 +406,28 @@ class Mywin(wx.Frame):
         OutList = ' '.join(str(e) for e in OutList)
         return OutList
 
+   def CreateVSTMList5(self, VSTMCapacity):
+        Limit = int(round(float(VSTMCapacity) + 1))
+        if Limit > 15:
+            Limit = 15
+        elif Limit < 5:
+            Limit = 5
+        VSTMList = {}
+        VSTMList['5']=[1,2,3,4,5]
+        VSTMList['6']=[1,3,4,5,6]
+        VSTMList['7']=[1,3,5,6,7]
+        VSTMList['8']=[1,3,6,7,8]
+        VSTMList['9']=[1,3,6,8,9]    
+        VSTMList['10']=[1,3,6,9,10]    
+        VSTMList['11']=[1,3,6,11,12]    
+        VSTMList['12']=[1,3,6,12,13]    
+        VSTMList['13']=[1,3,6,13,14]    
+        VSTMList['14']=[1,3,6,14,15]    
+        VSTMList['15']=[1,3,6,15,16]    
+        OutList = VSTMList[str(Limit)]
+        OutList = ' '.join(str(e) for e in OutList)
+        return OutList
+
    def CreateFRTList(self, FRTCapacity):
         # Made a small change here so that the capacity will be load level 5.
         Limit = np.float(FRTCapacity)*1.25
@@ -433,9 +455,9 @@ class Mywin(wx.Frame):
         return str(Capacity)
         
    def OnClickedVSTMCapEnter(self,event):
-        self.VSTMStairCaseCap = self.ManualEntryCapacity([0.0, 1.0])
+        self.VSTMStairCaseCap = self.ManualEntryCapacity([0.0, 36])
         self.VSTMStairCaseCapText.SetLabel(self.VSTMStairCaseCap)
-        self.VSTMBlockLoadLevels = self.CreateVSTMList(self.VSTMStairCaseCap)
+        self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMStairCaseCap)
 
    def OnClickedDMSCapEnter(self,event):
         self.DMSStairCaseCap = self.ManualEntryCapacity([0.0, 9.0])
