@@ -45,8 +45,10 @@ else:
     CounterBalFlag = 'False'
     Tag = '2'
 
-BlockOffTime = 6
+BlockOffTime = 5.0
 WordOnTime = 1.5
+ITITime = 1.0
+FeedbackTextOnTime = 3.0
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
@@ -90,7 +92,7 @@ if CounterBalFlag == 'False':
     Instructions = visual.TextStim(win=win, name='Instructions',
     text='Press [left] if the word is of a living thing.\nPress [down] if the word is of a non-living thing.\n\nTry to respond as quickly and as accurately as possible.',
     font='Arial',
-    pos=(0, 0), height=0.12, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=0.12, wrapWidth=1200, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 else:
@@ -134,7 +136,7 @@ One = visual.TextStim(win=win, name='One',
 FeedbackText = visual.TextStim(win=win, name='One',
     text='1',
     font='Arial',
-    pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=0.15, wrapWidth=1200, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-2.0);
 
@@ -188,6 +190,7 @@ globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 IntroClock = core.Clock()
 TrialClock = core.Clock()
+FeedbackClock = core.Clock()
 # ------Prepare to start Routine "Intro"-------
 t = 0
 IntroClock.reset()  # clock
@@ -560,9 +563,6 @@ for thisBlock in Blocks:
 
                     # a response ends the routine
                     continueRoutine = False
-            # PROVIDE FEEDBACK
-            if Response.corr == 1:
-                FeedbackText.text = 'Correct\nResponse time = %0.2f'%(Response.rt)
             # check if all components have finished
             if not continueRoutine:  # a component has requested a forced-end of Routine
                 break
@@ -599,12 +599,72 @@ for thisBlock in Blocks:
         if Response.keys != None:  # we had a response
             trials.addData('Response.rt', Response.rt)
         
+        # ####
+        # PROVIDE FEEDBACK
+        if Response.corr == 1:
+            FeedbackText.text = 'Correct,\nResponse time = %0.0f ms'%(Response.rt*1000)
+        else:    
+            FeedbackText.text = 'Oops, that was not correct'
+        # ------Prepare to start Routine "Feedback"-------
+        t = 0
+        FeedbackClock.reset()  # clock
+        frameN = -1
+        continueRoutine = True
+        routineTimer.add(FeedbackTextOnTime)
+        # update component parameters for each repeat
+        # keep track of which components have finished
+        FeedbackComponents = [FeedbackText]
+        for thisComponent in FeedbackComponents:
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        
+        # -------Start Routine "RedCrosshair"-------
+        while continueRoutine and routineTimer.getTime() > 0:
+            # get current time
+            t = FeedbackClock.getTime()
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *RedCrossHairStim* updates
+            if t >= 0.0 and FeedbackText.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                FeedbackText.tStart = t
+                FeedbackText.frameNStart = frameN  # exact frame index
+                FeedbackText.setAutoDraw(True)
+            frameRemains = 0.0 + FeedbackTextOnTime - win.monitorFramePeriod * 0.75  # most of one frame period left
+            if FeedbackText.status == STARTED and t >= frameRemains:
+                FeedbackText.setAutoDraw(False)
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in FeedbackComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # check for quit (the Esc key)
+            if endExpNow or event.getKeys(keyList=["escape"]):
+                core.quit()
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # -------Ending Routine "Feedback"-------
+        for thisComponent in FeedbackComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        thisExp.nextEntry()
+        
+        # ####
         # ------Prepare to start Routine "RedCrosshair"-------
         t = 0
         RedCrosshairClock.reset()  # clock
         frameN = -1
         continueRoutine = True
-        routineTimer.add(1.000000)
+        routineTimer.add(ITITime)
         # update component parameters for each repeat
         # keep track of which components have finished
         RedCrosshairComponents = [RedCrossHairStim]
@@ -625,7 +685,7 @@ for thisBlock in Blocks:
                 RedCrossHairStim.tStart = t
                 RedCrossHairStim.frameNStart = frameN  # exact frame index
                 RedCrossHairStim.setAutoDraw(True)
-            frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+            frameRemains = 0.0 + ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
             if RedCrossHairStim.status == STARTED and t >= frameRemains:
                 RedCrossHairStim.setAutoDraw(False)
             

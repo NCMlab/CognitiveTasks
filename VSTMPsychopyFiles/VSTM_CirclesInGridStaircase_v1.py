@@ -6,7 +6,7 @@ import random
 
 # Nagel IE PNAS 2009
 
-
+print("Starting VSTM")
 # Visual Task components
 # circle
 # countdown 3
@@ -72,23 +72,28 @@ else:
         
         
 
-    
-expInfo['date'] = data.getDateStr()  # add a simple timestamp
-# Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-task = 'stair'
-OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
-print('Filename is: %s'%(filename))
-dataFile = open(filename+'.csv', 'w')
-dataFile1=open(OutDir + 'CAPACITY_%s%s_%s_%s.txt' % (expName,task, expInfo['Participant ID'], expInfo['date']),'w')
-
 # Setup the Window
+
 win = visual.Window(
     size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=[0.8,0.8,0.8], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units=FontSizeUnits)
+
+    
+expInfo['date'] = data.getDateStr()  # add a simple timestamp
+# Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
+task = 'stair'
+
+OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+
+filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
+
+dataFile = open(filename+'.csv', 'w')
+dataFile1=open(OutDir + 'CAPACITY_%s%s_%s_%s.txt' % (expName,task, expInfo['Participant ID'], expInfo['date']),'w')
+
+
 
 dataFile.write('Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList\n')
 
