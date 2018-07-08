@@ -40,6 +40,8 @@ else:
         core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
+ProbeColor = 'blue'
+
 SpacingOfLettersRelativeToCenter = 80
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
@@ -185,7 +187,7 @@ textProbe = visual.TextStim(win=win, name='textProbe',
     text='default text',
     font='Times New Roman',
     units='pix', pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=ProbeColor, colorSpace='rgb', opacity=1,
     depth=-11.0);
 
 # Initialize components for Routine "feedback"
@@ -724,73 +726,73 @@ pracTrials.saveAsExcel(filename + '.xlsx', sheetName='pracTrials',
     dataOut=['n','all_mean','all_std', 'all_raw'])
 
 # ------Prepare to start Routine "mainInstruct"-------
-t = 0
-mainInstructClock.reset()  # clock
-frameN = -1
-continueRoutine = True
+#t = 0
+#mainInstructClock.reset()  # clock
+#frameN = -1
+#continueRoutine = True
 # update component parameters for each repeat
-OK3 = event.BuilderKeyResponse()
+#OK3 = event.BuilderKeyResponse()
 # keep track of which components have finished
-mainInstructComponents = [textInstr3, OK3]
-for thisComponent in mainInstructComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
+#mainInstructComponents = [textInstr3, OK3]
+#for thisComponent in mainInstructComponents:
+#    if hasattr(thisComponent, 'status'):
+#        thisComponent.status = NOT_STARTED
+#
 # -------Start Routine "mainInstruct"-------
-while continueRoutine:
-    # get current time
-    t = mainInstructClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *textInstr3* updates
-    if t >= 0.0 and textInstr3.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        textInstr3.tStart = t
-        textInstr3.frameNStart = frameN  # exact frame index
-        textInstr3.setAutoDraw(True)
-    
-    # *OK3* updates
-    if t >= 0.0 and OK3.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        OK3.tStart = t
-        OK3.frameNStart = frameN  # exact frame index
-        OK3.status = STARTED
-        # keyboard checking is just starting
-        event.clearEvents(eventType='keyboard')
-    if OK3.status == STARTED:
-        theseKeys = event.getKeys()
-        
-        # check for quit:
-        if "escape" in theseKeys:
-            endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
-            # a response ends the routine
-            continueRoutine = False
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in mainInstructComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
+#while continueRoutine:
+#    # get current time
+#    t = mainInstructClock.getTime()
+#    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+#    # update/draw components on each frame
+#    
+#    # *textInstr3* updates
+#    if t >= 0.0 and textInstr3.status == NOT_STARTED:
+#        # keep track of start time/frame for later
+#        textInstr3.tStart = t
+#        textInstr3.frameNStart = frameN  # exact frame index
+#        textInstr3.setAutoDraw(True)
+#    
+#    # *OK3* updates
+#    if t >= 0.0 and OK3.status == NOT_STARTED:
+#        # keep track of start time/frame for later
+#        OK3.tStart = t
+#        OK3.frameNStart = frameN  # exact frame index
+#        OK3.status = STARTED
+#        # keyboard checking is just starting
+#        event.clearEvents(eventType='keyboard')
+#    if OK3.status == STARTED:
+#        theseKeys = event.getKeys()
+#        
+#        # check for quit:
+#        if "escape" in theseKeys:
+#            endExpNow = True
+#        if len(theseKeys) > 0:  # at least one key was pressed
+#            # a response ends the routine
+#            continueRoutine = False
+#    
+#    # check if all components have finished
+#    if not continueRoutine:  # a component has requested a forced-end of Routine
+#        break
+#    continueRoutine = False  # will revert to True if at least one component still running
+#    for thisComponent in mainInstructComponents:
+#        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+#            continueRoutine = True
+#            break  # at least one component has not yet finished
+#    
+#    # check for quit (the Esc key)
+#    if endExpNow or event.getKeys(keyList=["escape"]):
+#        core.quit()
+#    
+#    # refresh the screen
+#    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+#        win.flip()
+#
 # -------Ending Routine "mainInstruct"-------
-for thisComponent in mainInstructComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
+#for thisComponent in mainInstructComponents:
+#    if hasattr(thisComponent, "setAutoDraw"):
+#        thisComponent.setAutoDraw(False)
 # the Routine "mainInstruct" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
+#routineTimer.reset()
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')

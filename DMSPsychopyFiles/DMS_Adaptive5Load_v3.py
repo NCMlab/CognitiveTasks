@@ -88,6 +88,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
 
+ProbeColor = 'blue'
 
 FontSizeUnits = 'pix'
 # This next value is based off of the units so be careful changing the units
@@ -249,7 +250,7 @@ textProbe = visual.TextStim(win=win, name='textProbe',
     text='default text',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=ProbeColor, colorSpace='rgb', opacity=1,
     depth=-10.0);
 textITI = visual.TextStim(win=win, name='textITI',
     text='+',

@@ -23,6 +23,8 @@ import random
 # overall timer
 # component timer
 
+ProbeColor = 'blue'
+
 # Timings
 FontSize = 60
 FontSizeUnits = 'pix'
@@ -115,6 +117,14 @@ circle = visual.Polygon(
     ori=0, pos=(0, 0),
     lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
     fillColor='black', fillColorSpace='rgb',
+    opacity=1, depth=0.0, interpolate=True)
+
+ProbeCircle = visual.Polygon(
+    win=win, name='polygon',units='pix', 
+    edges=128, size=(CircleSize, CircleSize),
+    ori=0, pos=(0, 0),
+    lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
+    fillColor=ProbeColor, fillColorSpace='rgb',
     opacity=1, depth=0.0, interpolate=True)
 
 # Cross hairs
@@ -325,7 +335,7 @@ for thisStep in staircase:
         count = 0
         for y_offset in OffSet:
             for x_offset in OffSet:
-               for stim in [circle]:
+               for stim in [ProbeCircle]:
                    stim.pos = [x_offset, y_offset]
                    if (count in [PosProbeLocation]): # << Note that all the count were count+1
                        stim.draw()
@@ -336,7 +346,7 @@ for thisStep in staircase:
         count = 0
         for y_offset in OffSet:
             for x_offset in OffSet:
-               for stim in [circle]:
+               for stim in [ProbeCircle]:
                    stim.pos = [x_offset, y_offset]
                    if (count in [NegProbeLocation]):
                        stim.draw()

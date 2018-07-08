@@ -48,6 +48,8 @@ win = visual.Window(
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True, units = 'pix')
 
+ProbeColor = 'blue'
+
 # Timing
 StimOnTime = 2.5
 RetOnTime = 3.5
@@ -206,7 +208,7 @@ textProbe = visual.TextStim(win=win, name='textProbe',
     text='default text',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=ProbeColor, colorSpace='rgb', opacity=1,
     depth=-11.0);
 
 # White ITI
