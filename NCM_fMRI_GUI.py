@@ -88,6 +88,13 @@ class Mywin(wx.Frame):
 #      # Checkbox for FRT DEMO
 #      self.FRTDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (140,115))
 
+#      # Button VSTM DEMO
+      self.btn = wx.Button(panel,-1,"Demo", pos = (45,110)) 
+      vbox.Add(self.btn,0,wx.ALIGN_CENTER) 
+      self.btn.Bind(wx.EVT_BUTTON,self.OnClickedVSTMDemo) 
+      # Checkbox for FRT DEMO
+      self.VSTMDEMOCB = wx.CheckBox(panel, -1, label = "", pos = (140,115))
+
       # Button VSTM STAIRCASE
       self.btn = wx.Button(panel,-1,"Staircase", pos = (45,130)) 
       self.VSTMStairCaseCapText = wx.StaticText(panel, -1, label = "Capacity = ", pos = (170,135))
@@ -231,9 +238,15 @@ class Mywin(wx.Frame):
    # Run the Faces demo
    def OnClickedFRTDemo(self, event): 
       btn = event.GetEventObject().GetLabel() 
-      print("Label of pressed button = "%(btn ))
+      print("Label of pressed button = %s"%(btn))
       core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
       self.FRTDEMOCB.SetValue(True)
+    
+   def OnClickedVSTMDemo(self, event): 
+      btn = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btn))
+      core.shellCall([sys.executable, "VSTMPsychopyFiles/VSTM_CirclesInGrid_DEMOv1.py", self.PartID.GetValue()])
+      self.VSTMDEMOCB.SetValue(True)
       
     # run the faces staircase
    def OnClickedVSTMStair(self, event): 

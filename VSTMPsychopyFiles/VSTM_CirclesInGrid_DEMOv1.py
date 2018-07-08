@@ -41,12 +41,13 @@ ITITime = 1.0 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-InterBlockTime = 20 #13.0
+InterBlockTime = 2 #13.0
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
 ShortDelayTime = 5 #16.0
-NumberOfBlocks = 5
-NTrialsPerBlock = 6
+NumberOfBlocks = 8
+NTrialsPerBlock = 4
+FeedbackTime = 2
 
 ## These are great for testing quickly
 #  StimOnTime = .25
@@ -78,7 +79,7 @@ else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
         core.quit()  # user pressed cancel
-    LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
+    LoadList = np.array(range(1,9,1)) ### <<<<<<<<<<<<<<<<<<<
     LoadList = LoadList.astype(np.int)
     CounterBalFlag = 'False'
     Tag = '1'
@@ -185,7 +186,15 @@ textInstr1 = visual.TextStim(win=win, name='textInstr1',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
     color='black', colorSpace='rgb', opacity=1,
     depth=0.0);   
-    
+
+# Feedback 
+FeedbackText = visual.TextStim(win=win, name='textInstr1',
+    text='Feedback',
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=1200, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+    depth=0.0);   
+
 # Initialize components for Routine "Countdown"
 text3 = visual.TextStim(win=win, name='text3',
     text='3',
@@ -502,10 +511,34 @@ for thisBlock in Blocks:
                 continueRoutine = False
         
         GreenCross.setAutoDraw(False)
-        RedCross.setAutoDraw(True)
+        # Feedback period
+        countDown.add(FeedbackTime)
+        if thisResp.rt > -1:
+            if thisResp.corr == 1:
+                if thisResp.rt > 0.9*ProbeOnTime:
+                    FBText = 'Correct, but try to be a little faster please\nResponse time = %0.2f sec.'%(thisResp.rt)
+                else:
+                    FBText = 'Correct, and on time\nResponse time = %0.2f sec.'%(thisResp.rt)
+            else: 
+                if thisResp.rt > 0.9*ProbeOnTime:
+                    FBText = 'Oops, that was incorrect, but try to be a little faster please\nResponse time = %0.2f sec.'%(thisResp.rt)
+                else:
+                    FBText = 'Oops, that was incorrect, but on time\nResponse time = %0.2f sec.'%(thisResp.rt)
+        else: 
+            FBText = 'Oops, you missed that one'
+            
+        FeedbackText.text = FBText
+        FeedbackText.setAutoDraw(True)
         win.flip()
+        
+        
+        RedCross.setAutoDraw(True)
+        
         while countDown.getTime() > 0:    
             pass
+        FeedbackText.setAutoDraw(False)    
+        win.flip()    
+        
         # prepare the cross hair
 
 #        if thisResp.rt == -99:
