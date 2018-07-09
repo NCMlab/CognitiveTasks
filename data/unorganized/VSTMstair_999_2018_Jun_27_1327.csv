@@ -1,0 +1,8 @@
+Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList
+1,1,0,-99.000,0.0000,1, 1,1,
+2,1,0,-99.000,0.0000,0, 0,31,
+3,1,0,-99.000,0.0000,0, 20,19,
+4,1,0,0.145,0.0000,1, 9,9,
+UserEscape
+NumTrials,NumReversals,Capacity
+4,0,nan

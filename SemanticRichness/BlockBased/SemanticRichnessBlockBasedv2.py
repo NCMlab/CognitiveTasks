@@ -84,14 +84,14 @@ InstructionsClock = core.Clock()
 if CounterBalFlag == 'False':
     Instructions = visual.TextStim(win=win, name='Instructions',
     text='Press [left] if the word is of a living thing.\nPress [down] if the word is of a non-living thing.\n\nTry to respond as quickly and as accurately as possible.',
-    font='Arial',
+    font='Times New Roman',
     pos=(0, 0), height=0.12, wrapWidth=None, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 else:
     Instructions = visual.TextStim(win=win, name='Instructions',
     text='Press [down] if the word is of a living thing.\nPress [left] if the word is of a non-living thing.\n\nTry to respond as quickly and as accurately as possible.',
-    font='Arial',
+    font='Times New Roman',
     pos=(0, 0), height=0.12, wrapWidth=None, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
@@ -100,7 +100,7 @@ else:
 WhiteCrosshairClock = core.Clock()
 WhiteCrossHairStim = visual.TextStim(win=win, name='WhiteCrossHairStim',
     text=u'+',
-    font=u'Arial',
+    font=u'Times New Roman',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
@@ -109,19 +109,19 @@ WhiteCrossHairStim = visual.TextStim(win=win, name='WhiteCrossHairStim',
 CountDownClock = core.Clock()
 Three = visual.TextStim(win=win, name='Three',
     text='3',
-    font='Arial',
+    font='Times New Roman',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 Two = visual.TextStim(win=win, name='Two',
     text='2',
-    font='Arial',
+    font='Times New Roman',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
 One = visual.TextStim(win=win, name='One',
     text='1',
-    font='Arial',
+    font='Times New Roman',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-2.0);
@@ -130,7 +130,7 @@ One = visual.TextStim(win=win, name='One',
 WordStimulusClock = core.Clock()
 WordStim = visual.TextStim(win=win, name='WordStim',
     text='default text',
-    font='Arial',
+    font='Times New Roman',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
@@ -139,7 +139,7 @@ WordStim = visual.TextStim(win=win, name='WordStim',
 RedCrosshairClock = core.Clock()
 RedCrossHairStim = visual.TextStim(win=win, name='RedCrossHairStim',
     text='+',
-    font='Arial',
+    font='Times New Roman',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color='red', colorSpace='rgb', opacity=1,
     depth=0.0);
@@ -148,7 +148,7 @@ RedCrossHairStim = visual.TextStim(win=win, name='RedCrossHairStim',
 WhiteCrosshairClock = core.Clock()
 WhiteCrossHairStim = visual.TextStim(win=win, name='WhiteCrossHairStim',
     text=u'+',
-    font=u'Arial',
+    font=u'Times New Roman',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
@@ -157,7 +157,7 @@ WhiteCrossHairStim = visual.TextStim(win=win, name='WhiteCrossHairStim',
 ExtraTimeWhiteCHClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
     text=u'+',
-    font=u'Arial',
+    font=u'Times New Roman',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
@@ -166,7 +166,7 @@ text = visual.TextStim(win=win, name='text',
 ThankYouClock = core.Clock()
 ThankYouText = visual.TextStim(win=win, name='ThankYouText',
     text='Thank you',
-    font='Arial',
+    font='Times New Roman',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
