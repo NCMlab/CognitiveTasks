@@ -331,6 +331,11 @@ for thisStep in staircase:
             else:
                 count[CurrentLoad - 1] = 1
         WhileLoopCount += 1
+        # The program freezes sometimes. I cant figure out why but it may be due to this while loop
+        # I am putting in a break. So if it cannot make a trial after 1000 tries it makes a bad trial
+        # instead of freezing
+        if WhileLoopCount > 1000:
+            AddTrialFlag = False
     print "While Loop Count: "+str(WhileLoopCount)
     print count
     print LettersInThisTrial       
