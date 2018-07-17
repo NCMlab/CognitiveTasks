@@ -283,7 +283,7 @@ if __name__ == '__main__':
     #E.run(num_trials=20, rule_delta=5)
     #E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
     E.CardInstruct()
-    E.run(num_trials=64, rule_delta=2)
+    E.run(num_trials=64, rule_delta=10)
     E.output.close()
     E.win.close()
 
