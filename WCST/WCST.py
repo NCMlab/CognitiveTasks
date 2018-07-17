@@ -94,7 +94,7 @@ class Experiment():
         vpInfo = myDlg.data
         self.vp = vpInfo[0]
         self.win = visual.Window(size=SZ,units='deg',fullscr=False,monitor=MON)
-        self.mouse = event.Mouse(False,None,self.win)
+        self.mouse = event.Mouse(True,None,self.win)
         self.cards = []
         self.elems = []
         for i in range(4):
@@ -115,11 +115,22 @@ class Experiment():
 
     def runTrial(self,t):
         clock = core.Clock()
-        choice=[]
-        for i in range(3):
-            choice.append(np.random.permutation(4))
-        choice=(np.array(choice).T).tolist()
-        target=np.random.randint(4,size=3)
+        # Randomly create the choice cards
+        # Four cards need to be created, each card has 3 attributes
+        #choice=[]
+        #for i in range(3):
+        #    choice.append(np.random.permutation(4))
+        #choice=(np.array(choice).T).tolist()
+        # Setup the four cards to be fixed
+        choice = [[0,1,0],[1,2,1],[3,3,2],[2,0,3]]
+        
+        
+        # The attributes map onto to these numbers:
+        # CLRS=['red','green','blue','orange']
+        # SHAPES=[CIRCLE,SQUARE,STAR,CROSS]
+        target=np.random.randint(4,size=3) # Create the attributes of the target
+        # These are randomly chosen providing three numbers between 0 and 3 which are:
+        # colorm shape, number of items on the card
         # display problem
         for i in range(4):
             self.cards[i].draw()
@@ -190,22 +201,37 @@ class Experiment():
         self.win.flip()
         core.wait(2)
 
+#    def run(self, num_trials, rule_delta=10):
+#        # Pick a number between 0 and 2: 0,1,2
+#        self.rule=np.random.randint(3)
+#        self.corstreak=0
+#        for t in range(num_trials):
+#            if self.corstreak>=rule_delta:
+#                
+#                sel=range(3)
+#                sel.remove(self.rule)
+#                self.rule=sel[np.random.randint(2)]
+#            self.runTrial(t)
     def run(self, num_trials, rule_delta=10):
-        self.rule=np.random.randint(3)
-        self.corstreak=0
+        self.rule = 0
+        self.corstreak = 0
         for t in range(num_trials):
-            if self.corstreak>=rule_delta:
-                sel=range(3)
-                sel.remove(self.rule)
-                self.rule=sel[np.random.randint(2)]
+            print('Trial num=%d, Streak = %d, Rule = %d'%(t, self.corstreak, self.rule))
+            if self.corstreak == rule_delta:
+                #print('Trial num=%d, Rule = %d'%(t,self.rule))
+                if self.rule == 2 :
+                    self.rule = 0
+                else:
+                    self.rule += 1
             self.runTrial(t)
+        
 
     def instruct(self, inst_text, go_text):
         inst = visual.TextStim(self.win, pos=(0,0), height=1, alignHoriz='center', wrapWidth=22)
         inst.setText(inst_text)
         inst.draw()
         self.win.flip()
-        event.waitKeys(maxWait=10)
+        event.waitKeys(maxWait=100)
         inst.setText(go_text)
         inst.draw()
         self.win.flip()
@@ -214,12 +240,49 @@ class Experiment():
         inst.draw()
         self.win.flip()
         core.wait(1)
+        
+    def CardInstruct(self):
+        inst = visual.TextStim(self.win, pos=(0,0), height=1, alignHoriz='center', wrapWidth=22)
+        # Display the cards on the screen to allow the experimenter to provide 
+        # verbal instructions
+        choice = [[0,1,0],[1,2,1],[3,3,2],[2,0,3]]
+        
+        
+        # The attributes map onto to these numbers:
+        # CLRS=['red','green','blue','orange']
+        # SHAPES=[CIRCLE,SQUARE,STAR,CROSS]
+        target=np.random.randint(4,size=3) # Create the attributes of the target
+        # These are randomly chosen providing three numbers between 0 and 3 which are:
+        # colorm shape, number of items on the card
+        # display problem
+        for i in range(4):
+            self.cards[i].draw()
+            self.elems[i].setColors(CLRS[choice[i][0]])
+            self.elems[i].setMask(SHAPES[choice[i][1]])
+            self.elems[i].setXYs(SPOS[choice[i][2]])
+            self.elems[i].draw()
+        self.win.flip()
+        event.waitKeys(maxWait=10)
+        inst.setText('Starting the test...')
+        inst.draw()
+        self.win.flip()
+        core.wait(2)
+        inst.setText('')
+        inst.draw()
+        self.win.flip()
+        core.wait(1)
+        
+        
+        
+
+
 
 if __name__ == '__main__':
     E = Experiment()
     #E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
     #E.run(num_trials=20, rule_delta=5)
-    E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
+    #E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
+    E.CardInstruct()
     E.run(num_trials=64, rule_delta=10)
     E.output.close()
     E.win.close()
