@@ -45,8 +45,9 @@ InterBlockTime = 2 #13.0
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
 ShortDelayTime = 5 #16.0
-NumberOfBlocks = 8
-NTrialsPerBlock = 4
+
+NumberOfBlocks = 3
+NTrialsPerBlock = 6
 FeedbackTime = 2
 
 ## These are great for testing quickly
@@ -83,6 +84,10 @@ else:
     LoadList = LoadList.astype(np.int)
     CounterBalFlag = 'False'
     Tag = '1'
+
+# Since this is the DEMO override the Load List
+LoadList = [1,3,5]
+
 # I don't think that I want to counterbalance the responses so I will overwrite any flag that is passed
 CounterBalance = False    
 #tempFile.write("Loaded inputs\n")
@@ -516,14 +521,14 @@ for thisBlock in Blocks:
         if thisResp.rt > -1:
             if thisResp.corr == 1:
                 if thisResp.rt > 0.9*ProbeOnTime:
-                    FBText = 'Correct, but try to be a little faster please\nResponse time = %0.2f sec.'%(thisResp.rt)
+                    FBText = 'Correct, but try to be a little faster please\nResponse time = %d ms.'%(thisResp.rt*1000)
                 else:
-                    FBText = 'Correct, and on time\nResponse time = %0.2f sec.'%(thisResp.rt)
+                    FBText = 'Correct, and on time\nResponse time = %d ms.'%(thisResp.rt*1000)
             else: 
                 if thisResp.rt > 0.9*ProbeOnTime:
-                    FBText = 'Oops, that was incorrect, but try to be a little faster please\nResponse time = %0.2f sec.'%(thisResp.rt)
+                    FBText = 'Oops, that was incorrect, but try to be a little faster please\nResponse time = %d ms.'%(thisResp.rt*1000)
                 else:
-                    FBText = 'Oops, that was incorrect, but on time\nResponse time = %0.2f sec.'%(thisResp.rt)
+                    FBText = 'Oops, that was incorrect, but on time\nResponse time = %d ms.'%(thisResp.rt*1000)
         else: 
             FBText = 'Oops, you missed that one'
             
