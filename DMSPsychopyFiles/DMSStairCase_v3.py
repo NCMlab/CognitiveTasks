@@ -382,7 +382,7 @@ for thisStep in staircase:
         win.close()
         EndFlag = 'MaxTrialsExceeded'
         dataFile.write('%s\n'%(EndFlag))
-        Capacity = 10-numpy.mean(staircase.reversalIntensities)
+        Capacity = 10-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
         print 
         print "Ending because the maximum number of trials was reached."
@@ -398,7 +398,7 @@ for thisStep in staircase:
         win.close()
         EndFlag = 'TimeExceeded'
         dataFile.write('%s\n'%(EndFlag))
-        Capacity = 10-numpy.mean(staircase.reversalIntensities)
+        Capacity = 10-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
         print 
         print "Ending because Time was exceeded."
@@ -414,7 +414,7 @@ for thisStep in staircase:
         win.close()
         EndFlag = 'UserEscape'
         dataFile.write('%s\n'%(EndFlag))
-        Capacity = 10-numpy.mean(staircase.reversalIntensities)
+        Capacity = 10-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
         print
         print "Ending because Escape was pressed."
@@ -428,7 +428,7 @@ for thisStep in staircase:
         core.quit()
 print EndFlag
 
-Capacity = 10-numpy.mean(staircase.reversalIntensities)
+Capacity = 10-np.mean(staircase.reversalIntensities)
 Capacity = Capacity
 dataFile1.write('%0.4f'%(Capacity))
 print

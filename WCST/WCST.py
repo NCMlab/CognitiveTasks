@@ -67,6 +67,8 @@ STAR=np.ones((N,N))*-1
 STAR=drawStar(STAR,(mid,mid),5,N/2,N/5)
 SQUARE=np.ones((N,N))
 
+TRIANGLE = drawTriangle(np.ones((N,N))*-1,[[0,0],[N,N/2],[0,N]])
+
 SZ = (1280,1024)
 
 # Settings
@@ -78,7 +80,10 @@ CARDX=1 # horizontal space between choice cards
 CARDW=4 # card width
 CARDH=6 # card height
 CLRS=['red','green','blue','orange']
-SHAPES=[CIRCLE,SQUARE,STAR,CROSS]
+SHAPES=[CIRCLE,TRIANGLE,STAR,CROSS]
+
+#SHAPES=[TRIANGLE,TRIANGLE,TRIANGLE,TRIANGLE]
+
 SPOS = [[[0,0],[np.nan,np.nan],[np.nan,np.nan],[np.nan,np.nan]],
         [[0,CARDH/4.0],[0,-CARDH/4.0],[np.nan,np.nan],[np.nan,np.nan]],
         [[-CARDW/4.0,CARDH/3.0],[-CARDW/4.0,-CARDH/3.0],[CARDW/4.0,0],[np.nan,np.nan]],
