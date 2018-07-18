@@ -236,10 +236,17 @@ class Experiment():
         inst.setText(inst_text)
         inst.draw()
         self.win.flip()
-        event.waitKeys(maxWait=100)
+        
+        k = ['']
+        KeyBoardCount = 0       
+        while k[0] not in ['escape', 'esc'] and KeyBoardCount < 1:
+            k = event.waitKeys()
+            KeyBoardCount += 1
         inst.setText(go_text)
         inst.draw()
         self.win.flip()
+                
+        
         core.wait(2)
         inst.setText('')
         inst.draw()
@@ -267,7 +274,12 @@ class Experiment():
             self.elems[i].setXYs(SPOS[choice[i][2]])
             self.elems[i].draw()
         self.win.flip()
-        event.waitKeys(maxWait=10)
+        k = ['']
+        KeyBoardCount = 0       
+        while k[0] not in ['escape', 'esc'] and KeyBoardCount < 1:
+            k = event.waitKeys()
+            KeyBoardCount += 1
+
         inst.setText('Starting the test...')
         inst.draw()
         self.win.flip()
