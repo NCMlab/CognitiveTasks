@@ -3,6 +3,10 @@ from psychopy import visual,core,monitors,event,gui
 import os
 import time
 
+#V Load up the Card Order
+FileName = 'CardOrder.csv'
+CardOrder = np.genfromtxt(FileName, delimiter=',')
+
 INSTRUCTIONS = ('Select one of the four cards displayed at the top of the screen such '
                               +'that the selected card matches the card displayed at the bottom of the screen. '
                               +'The cards can be matched based on three dimensions - color, number of objects '
@@ -67,7 +71,7 @@ STAR=np.ones((N,N))*-1
 STAR=drawStar(STAR,(mid,mid),5,N/2,N/5)
 SQUARE=np.ones((N,N))
 
-TRIANGLE = drawTriangle(np.ones((N,N))*-1,[[0,0],[N,N/2],[0,N]])
+TRIANGLE = drawTriangle(np.ones((N,N))*-1,[[0,0],[N,N/2-0.5],[0,N]])
 
 SZ = (1280,1024)
 
@@ -98,7 +102,7 @@ class Experiment():
         myDlg.show()#show dialog and wait for OK or Cancel
         vpInfo = myDlg.data
         self.vp = vpInfo[0]
-        self.win = visual.Window(size=SZ,units='deg',fullscr=False,monitor=MON)
+        self.win = visual.Window(size=SZ,units='deg',fullscr=True,monitor=MON)
         self.mouse = event.Mouse(True,None,self.win)
         self.cards = []
         self.elems = []
@@ -118,7 +122,7 @@ class Experiment():
         self.output = open(fname, 'w')
         self.output.write('PartID\tTrialNum\tCard\tRule\tRespTime\tCorrect\n')
 
-    def runTrial(self,t):
+    def runTrial(self, t, target):
         clock = core.Clock()
         # Randomly create the choice cards
         # Four cards need to be created, each card has 3 attributes
@@ -133,7 +137,8 @@ class Experiment():
         # The attributes map onto to these numbers:
         # CLRS=['red','green','blue','orange']
         # SHAPES=[CIRCLE,SQUARE,STAR,CROSS]
-        target=np.random.randint(4,size=3) # Create the attributes of the target
+        #target=np.random.randint(4,size=3) # Create the attributes of the target
+        
         # These are randomly chosen providing three numbers between 0 and 3 which are:
         # colorm shape, number of items on the card
         # display problem
@@ -221,6 +226,8 @@ class Experiment():
         self.rule = 0
         self.corstreak = 0
         for t in range(num_trials):
+            # Get the target card
+            targetCard = [int(CardOrder[t,0]), int(CardOrder[t,1]), int(CardOrder[t,2])]
             print('Trial num=%d, Streak = %d, Rule = %d'%(t, self.corstreak, self.rule))
             if self.corstreak == rule_delta:
                 #print('Trial num=%d, Rule = %d'%(t,self.rule))
@@ -228,7 +235,7 @@ class Experiment():
                     self.rule = 0
                 else:
                     self.rule += 1
-            self.runTrial(t)
+            self.runTrial(t, targetCard)
         
 
     def instruct(self, inst_text, go_text):
