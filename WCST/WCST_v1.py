@@ -310,4 +310,3 @@ if __name__ == '__main__':
     E.run(num_trials=64, rule_delta=10)
     E.output.close()
     E.win.close()
-
