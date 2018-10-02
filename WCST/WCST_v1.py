@@ -77,9 +77,12 @@ SZ = (1280,1024)
 
 # Settings
 MON=monitors.Monitor('dell', width=37.8, distance=50); MON.setSizePix(SZ)
+##
 TPOS=(0,-9)# position of the target card
 FPOS=(0,3.8)# position of the feedback
 CARDY=9# vertical position of choice cards
+PrevCARDY = -1
+
 CARDX=1 # horizontal space between choice cards
 CARDW=4 # card width
 CARDH=6 # card height
@@ -102,7 +105,7 @@ class Experiment():
         myDlg.show()#show dialog and wait for OK or Cancel
         vpInfo = myDlg.data
         self.vp = vpInfo[0]
-        self.win = visual.Window(size=SZ,units='deg',fullscr=True,monitor=MON)
+        self.win = visual.Window(size=SZ,units='deg',fullscr=False,monitor=MON)
         self.mouse = event.Mouse(True,None,self.win)
         self.cards = []
         self.elems = []
@@ -111,10 +114,21 @@ class Experiment():
                         pos = ((i-1.5)*(CARDX+CARDW),CARDY),lineColor='black',interpolate=False))
             self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='black',
                          fieldPos = ((i-1.5)*(CARDX+CARDW),CARDY),elementTex=None))
+        
+        # Add the probe card to the screen
         self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='white',
             pos = TPOS,lineColor='black',interpolate=False))
         self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='black',
-            fieldPos = TPOS,elementTex=None))
+            fieldPos = TPOS,elementTex=None))            
+        
+        # Make the piles
+        for i in range(4):
+            self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='grey',
+                        pos = ((i-1.5)*(CARDX+CARDW),PrevCARDY),lineColor='black',interpolate=False))
+            self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='black',
+                        fieldPos = ((i-1.5)*(CARDX+CARDW),PrevCARDY),elementTex=None))
+            
+
         self.text = visual.TextStim(self.win,pos=FPOS,height=2)
         if not os.path.exists('data'):
             os.makedirs('data')
@@ -122,8 +136,11 @@ class Experiment():
         self.output = open(fname, 'w')
         self.output.write('PartID\tTrialNum\tCard\tRule\tRespTime\tCorrect\n')
 
+
+
     def runTrial(self, t, target):
         clock = core.Clock()
+
         # Randomly create the choice cards
         # Four cards need to be created, each card has 3 attributes
         #choice=[]
@@ -142,12 +159,15 @@ class Experiment():
         # These are randomly chosen providing three numbers between 0 and 3 which are:
         # colorm shape, number of items on the card
         # display problem
+        
+        # Put all cards on the screen
         for i in range(4):
             self.cards[i].draw()
             self.elems[i].setColors(CLRS[choice[i][0]])
             self.elems[i].setMask(SHAPES[choice[i][1]])
             self.elems[i].setXYs(SPOS[choice[i][2]])
             self.elems[i].draw()
+        # Put the test card on the screen (on the bottom)
         self.cards[4].setPos(TPOS)
         self.cards[4].draw()
         self.elems[4].setFieldPos(TPOS)
@@ -155,10 +175,17 @@ class Experiment():
         self.elems[4].setMask(SHAPES[target[1]])
         self.elems[4].setXYs(SPOS[target[2]])
         self.elems[4].draw()
+        # Add piles of previous cards
+        for i in range(5,9):
+            self.cards[i].draw()
+
+            self.elems[i].draw()
         self.win.flip()
+
         # wait for response
         self.mouse.clickReset()
         while True:
+            
             mkey,mtime = self.mouse.getPressed(getTime=True)
             if sum(mkey)>0:
                 card = -1
@@ -169,9 +196,9 @@ class Experiment():
                         mtime = mtime[0]
                 if card>-1: break
                 else: self.mouse.clickReset()
-                
+               
             theseKeys = event.getKeys(keyList=['1', '2','3','4','escape'])
-                
+            # dots still there at this point    
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -181,15 +208,42 @@ class Experiment():
                 mtime = clock.getTime()
                 break
                 
-                
+        
+        
         # display choice
-        self.cards[4].setPos((self.cards[card].pos[X],-1))
-        self.elems[4].setFieldPos((self.cards[card].pos[X],-1))
-        for i in range(5):
+        #self.cards[4].setPos((self.cards[card].pos[X],-1))
+        #self.elems[4].setFieldPos((self.cards[card].pos[X],-1))
+        print("choice was:")
+
+        print(str(card))
+        
+        #self.cards[4+card+1].setPos((self.cards[card].pos[X],-1))
+        #self.elems[4+card+1].setFieldPos((self.cards[card].pos[X],-1))
+        self.cards[4+card+1].fillColor = self.cards[card].fillColor
+        self.cards[4+card+1].setPos((self.cards[card].pos[X],-1))
+        self.elems[4+card+1].setFieldPos(TPOS)
+        self.elems[4+card+1].setColors(CLRS[target[0]])
+        self.elems[4+card+1].setMask(SHAPES[target[1]])
+        self.elems[4+card+1].setXYs(SPOS[target[2]])
+        self.elems[4+card+1].setFieldPos((self.cards[card].pos[X],-1))
+        # Dots are still there
+
+        for i in range(4):
             self.cards[i].draw()
             self.elems[i].draw()
+        
+        
+        for i in range(5,9):
+            self.cards[i].draw()
+            self.elems[i].draw()
+        # Display cards and choice  
+        # Dots are still there
+        
+        
         self.win.flip()
+        
         core.wait(1)
+
         # write self.output and display feedback
         self.output.write('%d\t%d\t%d\t%d\t%0.3f\t' % (self.vp, t+1, card+1, self.rule, mtime))
         if target[self.rule]==choice[card][self.rule]:
@@ -200,14 +254,20 @@ class Experiment():
             self.text.setText('WRONG')
             self.corstreak=0
             self.output.write('0\t')
+        # Dots are gone    
+
 
         for i in range(5):
             self.cards[i].draw()
             self.elems[i].draw()
             if i<4:self.output.write('%d\t%d\t%d\t'%tuple(choice[i]))
+        
         self.output.write('%d\t%d\t%d\n'%tuple(target))
         self.output.flush()
         self.text.draw()
+        for i in range(5,9):
+            self.cards[i].draw()
+            self.elems[i].draw()
         self.win.flip()
         core.wait(2)
 
@@ -223,6 +283,7 @@ class Experiment():
 #                self.rule=sel[np.random.randint(2)]
 #            self.runTrial(t)
     def run(self, num_trials, rule_delta=10):
+        
         self.rule = 0
         self.corstreak = 0
         for t in range(num_trials):
@@ -235,9 +296,9 @@ class Experiment():
                     self.rule = 0
                 else:
                     self.rule += 1
+            
             self.runTrial(t, targetCard)
-        
-
+            
     def instruct(self, inst_text, go_text):
         inst = visual.TextStim(self.win, pos=(0,0), height=1, alignHoriz='center', wrapWidth=22)
         inst.setText(inst_text)
@@ -304,9 +365,10 @@ class Experiment():
 if __name__ == '__main__':
     E = Experiment()
     #E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
-    #E.run(num_trials=20, rule_delta=5)
-    #E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
+    #E.run(num_trials=3, rule_delta=5)
+    E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
     E.CardInstruct()
     E.run(num_trials=64, rule_delta=10)
     E.output.close()
     E.win.close()
+
