@@ -1,6 +1,8 @@
 OriginalStimList.xlsx
 StimulusListRun1.csv
 StimulusListRun2.csv
+Stroop/data/*.*
+WCST/data/*.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

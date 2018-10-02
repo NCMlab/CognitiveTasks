@@ -1,0 +1,11 @@
+Word,TextColor,Congruency,Corr
+Blue,Yellow,Incon,y
+Yellow,Yellow,Con,y
+Blue,Green,Incon,g
+Green,Yellow,Incon,y
+Red,Red,Con,r
+Green,Blue,Incon,b
+Red,Blue,Incon,b
+Green,Green,Con,g
+Green,Red,Incon,r
+Blue,Blue,Con,b
