@@ -362,10 +362,10 @@ class Experiment():
 
 if __name__ == '__main__':
     E = Experiment()
-    #E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
-    #E.run(num_trials=3, rule_delta=5)
-    #E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
-    #E.CardInstruct()
+    E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
+    E.run(num_trials=5, rule_delta=3)
+    E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
+    E.CardInstruct()
     E.run(num_trials=64, rule_delta=10)
     E.output.close()
     E.win.close()

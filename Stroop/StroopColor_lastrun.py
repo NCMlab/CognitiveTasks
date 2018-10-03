@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Tue Oct  2 20:49:55 2018
+    on Wed 03 Oct 2018 01:43:38 PM EDT
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, gui, visual, core, data, event, logging, sound
+from psychopy import locale_setup, sound, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'StroopColor'  # from the Builder filename that created this script
+expName = 'StroopColor'  # from the Builder filename that created this script
 expInfo = {u'session': u'01', u'participant': u''}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False:
@@ -40,7 +40,7 @@ filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s' % (expInfo['participan
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/jason/Documents/GITHUBReposOutsideDropBox/CognitiveTasks/Stroop/StroopColor.psyexp',
+    originPath=u'/home/jsteffen/Documents/GitHubOutsideOfDropbox/CognitiveTasks/Stroop/StroopColor.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -53,9 +53,9 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1440, 900), fullscr=True, screen=0,
+    size=(1920, 1080), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=u'grey', colorSpace='rgb',
+    monitor='testMonitor', color='grey', colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='norm')
 # store frame rate of monitor if we can measure it
@@ -68,10 +68,10 @@ else:
 # Initialize components for Routine "instructPractice"
 instructPracticeClock = core.Clock()
 instr1 = visual.TextStim(win=win, name='instr1',
-    text="Please press;\nLeft for red LETTERS\nDown for green LETTERS\nRight for blue LETTERS\n(Esc will quit)\n\nLet's start with a few practice trials\n\nPress any key to continue",
-    font='Arial',
+    text=u"In this task, color patches will appear in the center of the screen.\n\nYou need to indicate the color of the patch.\n\nPress the R key if the color is Red\nPress the Y key if the color is Yellow\nPress the G key if the color is Green\nPress the B key if the color is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
+    font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -98,8 +98,8 @@ feedback_2 = visual.TextStim(win=win, name='feedback_2',
 # Initialize components for Routine "instruct"
 instructClock = core.Clock()
 instrText = visual.TextStim(win=win, name='instrText',
-    text='OK. Ready for the real thing?\n\nRemember, ignore the word itself; press:\nLeft for red LETTERS\nDown for green LETTERS\nRight for blue LETTERS\n(Esc will quit)\n\nPress any key to continue',
-    font='Arial',
+    text=u"Now you will do the task.\n\nIt will be exactly like the practice except you won't get feedback.\nPress the R key if the color is Red\nPress the Y key if the color is Yellow\nPress the G key if the color is Green\nPress the B key if the color is Blue\n\n(Esc will quit)\nPress any key to continue\n\n",
+    font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=0.0);
@@ -199,7 +199,7 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 practice = data.TrialHandler(nReps=1.0, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions(u'Stroop - Practice1WordColor.csv'),
+    trialList=data.importConditions('Stroop - Practice1WordColor.csv'),
     seed=None, name='practice')
 thisExp.addLoop(practice)  # add the loop to the experiment
 thisPractice = practice.trialList[0]  # so we can initialise stimuli with some values
@@ -453,7 +453,7 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=10.0, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions(u'Stroop - ColorWord.csv'),
+    trialList=data.importConditions('Stroop - ColorWord.csv'),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values

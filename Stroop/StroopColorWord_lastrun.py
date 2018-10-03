@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Wed 03 Oct 2018 01:40:48 PM EDT
+    on Wed 03 Oct 2018 01:46:26 PM EDT
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = 'StroopWord'  # from the Builder filename that created this script
+expName = u'StroopColorWord'  # from the Builder filename that created this script
 expInfo = {u'session': u'01', u'participant': u''}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False:
@@ -40,7 +40,7 @@ filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s' % (expInfo['participan
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/home/jsteffen/Documents/GitHubOutsideOfDropbox/CognitiveTasks/Stroop/StroopWord.psyexp',
+    originPath=u'/home/jsteffen/Documents/GitHubOutsideOfDropbox/CognitiveTasks/Stroop/StroopColorWord.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -55,7 +55,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=(1920, 1080), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color='darkgrey', colorSpace='rgb',
+    monitor=u'testMonitor', color=u'darkgrey', colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='norm')
 # store frame rate of monitor if we can measure it
@@ -68,7 +68,7 @@ else:
 # Initialize components for Routine "instructPractice"
 instructPracticeClock = core.Clock()
 instr1 = visual.TextStim(win=win, name='instr1',
-    text=u"In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate what word is written.\n\nPress the R key if the word is Red\nPress the Y key if the word is Yellow\nPress the G key if the word is Green\nPress the B key if the word is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue",
+    text=u"In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate the color that the word is written in (and ignore what the word says).\n\nPress the R key if the ink is Red\nPress the Y key if the ink is Yellow\nPress the G key if the ink is Green\nPress the B key if the ink is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
     font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
@@ -89,7 +89,7 @@ feedbackClock = core.Clock()
 msg=''
 feedback_2 = visual.TextStim(win=win, name='feedback_2',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
     color=[1,1,1], colorSpace='rgb', opacity=1,
     depth=-1.0);
@@ -97,7 +97,7 @@ feedback_2 = visual.TextStim(win=win, name='feedback_2',
 # Initialize components for Routine "instruct"
 instructClock = core.Clock()
 instrText = visual.TextStim(win=win, name='instrText',
-    text=u"\nNow you will do the task.\nIt will be exacyly like tghe practive expcept you won't get feedback.\nPress the R key if the word is Red\nPress the Y key if the word is Yellow\nPress the G key if the word is Green\nPress the B key if the word is Blue\n\n(Esc will quit)\nPress any key to continue",
+    text=u"Now you will do the task.\nIt will be exactly like the practice except you won't get feedback.\nPress the R key if the ink is Red\nPress the Y key if the ink is Yellow\nPress the G key if the ink is Green\nPress the B key if the ink is Blue\n\n(Esc will quit)\nPress any key to continue\n",
     font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
@@ -219,8 +219,8 @@ for thisPractice in practice:
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
-    word.setColor('black', colorSpace='rgb')
-    word.setText(TextColor)
+    word.setColor(TextColor, colorSpace='rgb')
+    word.setText(Word)
     resp = event.BuilderKeyResponse()
     # keep track of which components have finished
     trialComponents = [word, resp]
@@ -313,7 +313,7 @@ for thisPractice in practice:
     feedbackClock.reset()  # clock
     frameN = -1
     continueRoutine = True
-    routineTimer.add(0.400000)
+    routineTimer.add(1.000000)
     # update component parameters for each repeat
     if resp.corr:#stored on last run routine
       msg="Correct! RT=%.3f" %(resp.rt)
@@ -340,7 +340,7 @@ for thisPractice in practice:
             feedback_2.tStart = t
             feedback_2.frameNStart = frameN  # exact frame index
             feedback_2.setAutoDraw(True)
-        frameRemains = 0.0 + 0.4- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if feedback_2.status == STARTED and t >= frameRemains:
             feedback_2.setAutoDraw(False)
         
@@ -474,8 +474,8 @@ for thisTrial in trials:
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
-    word.setColor('black', colorSpace='rgb')
-    word.setText(TextColor)
+    word.setColor(TextColor, colorSpace='rgb')
+    word.setText(Word)
     resp = event.BuilderKeyResponse()
     # keep track of which components have finished
     trialComponents = [word, resp]
