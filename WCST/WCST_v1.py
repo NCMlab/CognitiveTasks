@@ -125,7 +125,7 @@ class Experiment():
         for i in range(4):
             self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='grey',
                         pos = ((i-1.5)*(CARDX+CARDW),PrevCARDY),lineColor='black',interpolate=False))
-            self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='black',
+            self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='grey',
                         fieldPos = ((i-1.5)*(CARDX+CARDW),PrevCARDY),elementTex=None))
             
 
@@ -243,7 +243,6 @@ class Experiment():
         self.win.flip()
         
         core.wait(1)
-
         # write self.output and display feedback
         self.output.write('%d\t%d\t%d\t%d\t%0.3f\t' % (self.vp, t+1, card+1, self.rule, mtime))
         if target[self.rule]==choice[card][self.rule]:
@@ -254,10 +253,9 @@ class Experiment():
             self.text.setText('WRONG')
             self.corstreak=0
             self.output.write('0\t')
-        # Dots are gone    
 
-
-        for i in range(5):
+       
+        for i in range(4):
             self.cards[i].draw()
             self.elems[i].draw()
             if i<4:self.output.write('%d\t%d\t%d\t'%tuple(choice[i]))
@@ -366,8 +364,8 @@ if __name__ == '__main__':
     E = Experiment()
     #E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
     #E.run(num_trials=3, rule_delta=5)
-    E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
-    E.CardInstruct()
+    #E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
+    #E.CardInstruct()
     E.run(num_trials=64, rule_delta=10)
     E.output.close()
     E.win.close()
