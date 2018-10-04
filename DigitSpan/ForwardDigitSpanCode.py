@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Wed Oct  3 21:51:15 2018
+    on Wed Oct  3 21:48:22 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -37,7 +37,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/jason/Documents/GITHUBReposOutsideDropBox/CognitiveTasks/DigitSpan/ForwardDigitSpan.psyexp',
+    originPath=None,
     savePickle=True, saveWideText=False,
     dataFileName=filename)
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
@@ -63,7 +63,22 @@ else:
 trialClock = core.Clock()
 sound_1 = sound.Sound(u'NumberSounds/1.wav', secs=-1)
 sound_1.setVolume(1)
-
+sound_2 = sound.Sound(u'NumberSounds/2.wav', secs=-1)
+sound_2.setVolume(1)
+sound_3 = sound.Sound(u'NumberSounds/3.wav', secs=-1)
+sound_3.setVolume(1)
+sound_4 = sound.Sound(u'NumberSounds/4.wav', secs=-1)
+sound_4.setVolume(1)
+sound_5 = sound.Sound(u'NumberSounds/5.wav', secs=-1)
+sound_5.setVolume(1)
+sound_6 = sound.Sound(u'NumberSounds/6.wav', secs=-1)
+sound_6.setVolume(1)
+sound_7 = sound.Sound(u'NumberSounds/7.wav', secs=-1)
+sound_7.setVolume(1)
+sound_8 = sound.Sound(u'NumberSounds/8.wav', secs=-1)
+sound_8.setVolume(1)
+sound_9 = sound.Sound(u'NumberSounds/9.wav', secs=-1)
+sound_9.setVolume(1)
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
@@ -92,10 +107,10 @@ for thisTrial in trials:
     trialClock.reset()  # clock
     frameN = -1
     continueRoutine = True
-    routineTimer.add(1.500000)
+    routineTimer.add(2.500000)
     # update component parameters for each repeat
     # keep track of which components have finished
-    trialComponents = [sound_1]
+    trialComponents = [sound_1, sound_2]
     for thisComponent in trialComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -112,7 +127,7 @@ for thisTrial in trials:
             sound_1.tStart = t
             sound_1.frameNStart = frameN  # exact frame index
             sound_1.play()  # start the sound (it finishes automatically)
-        frameRemains = 0.0 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.0 + 1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if sound_1.status == STARTED and t >= frameRemains:
             sound_1.stop()  # stop the sound (if longer than duration)
         
@@ -138,6 +153,7 @@ for thisTrial in trials:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     sound_1.stop()  # ensure sound has stopped at end of routine
+    sound_2.stop()  # ensure sound has stopped at end of routine
     thisExp.nextEntry()
     
 # completed 5 repeats of 'trials'
