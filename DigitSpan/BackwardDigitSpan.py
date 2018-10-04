@@ -172,13 +172,19 @@ for thisStair in Stairs:
         if len(theseKeys) > 0:  # at least one key was pressed
             resp.keys.extend(theseKeys)  # storing all keys
             resp.rt.append(resp.clock.getTime())
+
         if 'return' in theseKeys:
             # remove the return before continuing
+            resp.keys = resp.keys[:-1]
             break
         else:
             pass
         
-
+    if 'x' in resp.keys:
+        print('Found a mistake')
+        # A mistake as made entering the digits
+        # take all values after the x    
+        resp.keys = resp.keys[resp.keys.index('x')+1:]
         
     print('Responses: %s'%(resp.keys))
     Answer.setAutoDraw(False)
