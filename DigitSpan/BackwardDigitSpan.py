@@ -127,8 +127,10 @@ RespDuration = 6
 ITI = 1
 corr = 1
 resp = event.BuilderKeyResponse()
+routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 count = 1
 for thisStair in Stairs:
+    resp.keys = []
     currentLoop = Stairs
     level = thisStair
     print("Trial Number: %d"%(count))
@@ -154,45 +156,58 @@ for thisStair in Stairs:
             pass        
         
         event.clearEvents(eventType='keyboard')
-  #  print(countDown.getTime())
+    # -------Start Routine "trial"-------
     Answer.setAutoDraw(True)
     win.flip()
-    countDown.add(RespDuration)
-    thisResp = -1
-    #resp.keys = -99
-    resp.rt = -99
+    countDown.reset()    
+    countDown.add(5.0)
     while countDown.getTime() > 0:
-        theseKeys = event.getKeys(keyList=['escape','1','2','3','4','5','6','7','8','9','x','X'])
-                
-            
-            
         
-        if 'escape' in theseKeys:
-            win.close()
+
+        theseKeys = event.getKeys()
+            
+        # check for quit:
+        if "escape" in theseKeys:
             core.quit()
         if len(theseKeys) > 0:  # at least one key was pressed
-            resp.keys.extend(theseKeys)  
-        pass
-        print(resp.keys)
-        # was this 'correct'?
-    if (resp.keys[-1] == str(corr)) or (resp.keys[-1] == corr):
-        print(resp.keys)
-        print(corr)
+            resp.keys.extend(theseKeys)  # storing all keys
+            resp.rt.append(resp.clock.getTime())
+        if 'return' in theseKeys:
+            # remove the return before continuing
+            break
+        else:
+            pass
+        
+
+        
+    print('Responses: %s'%(resp.keys))
+    Answer.setAutoDraw(False)
+    win.flip()
+    # Convert responses to an array
+    RespList = []
+    for i in resp.keys:
+        RespList.append(int(i))
+    RespList = np.array(RespList)
+    print(RespList)
+    if np.array_equiv(R,RespList):
         print('Correct')
         CorrectSound.play()
         thisResp = 1
         resp.corr = 1
-        break
     else:
-        print(resp.keys)
-        print(corr)                
-        print('incorrect')
+        print('Incorrect')
         IncorrectSound.play()
         thisResp = -1
-        resp.corr = 0   
-        break
-                
+        resp.corr = 0
         
+    
+    thisExp.addData('resp.keys',resp.keys)
+    if resp.keys != None:  # we had a response
+        thisExp.addData('resp.rt', resp.rt)
+    thisExp.nextEntry()
+    # these shouldn't be strictly necessary (should auto-save)
+    thisExp.saveAsWideText(filename+'.csv')
+    thisExp.saveAsPickle(filename)  
     Stairs.addResponse(thisResp)
     Answer.setAutoDraw(False)
     win.flip()
