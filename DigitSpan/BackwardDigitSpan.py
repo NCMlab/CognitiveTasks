@@ -140,7 +140,7 @@ for thisStair in Stairs:
         R = np.random.randint(1,10,level)
         Flag = any(np.diff(R) == 0)
     print(R)    
-    Answer.text = str(R)
+    Answer.text = 'Forward: %s\n\nBackward: %s'%(R,R[::-1])
     # cycle over the numbers and play them
     for i in range(level):
         countDown.reset()    
@@ -159,34 +159,39 @@ for thisStair in Stairs:
     win.flip()
     countDown.add(RespDuration)
     thisResp = -1
-    resp.keys = -99
+    #resp.keys = -99
     resp.rt = -99
     while countDown.getTime() > 0:
-        theseKeys = event.getKeys(keyList=['escape','1', '0'])
+        theseKeys = event.getKeys(keyList=['escape','1','2','3','4','5','6','7','8','9','x','X'])
+                
+            
+            
+        
         if 'escape' in theseKeys:
             win.close()
             core.quit()
         if len(theseKeys) > 0:  # at least one key was pressed
-            resp.keys = theseKeys[-1]  # just the last key pressed
-            resp.rt = resp.clock.getTime()
-            # was this 'correct'?
-            if (resp.keys == str(corr)) or (resp.keys == corr):
-                print(resp.keys)
-                print(corr)
-                print('Correct')
-                CorrectSound.play()
-                thisResp = 1
-                resp.corr = 1
-                break
-            else:
-                print(resp.keys)
-                print(corr)                
-                print('incorrect')
-                IncorrectSound.play()
-                thisResp = -1
-                resp.corr = 0   
-                break
-        pass        
+            resp.keys.extend(theseKeys)  
+        pass
+        print(resp.keys)
+        # was this 'correct'?
+    if (resp.keys[-1] == str(corr)) or (resp.keys[-1] == corr):
+        print(resp.keys)
+        print(corr)
+        print('Correct')
+        CorrectSound.play()
+        thisResp = 1
+        resp.corr = 1
+        break
+    else:
+        print(resp.keys)
+        print(corr)                
+        print('incorrect')
+        IncorrectSound.play()
+        thisResp = -1
+        resp.corr = 0   
+        break
+                
         
     Stairs.addResponse(thisResp)
     Answer.setAutoDraw(False)
