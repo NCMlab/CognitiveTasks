@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Wed Oct  3 21:51:15 2018
+This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
+    on Thu Oct  4 11:48:24 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'ForwardDigitSpan'  # from the Builder filename that created this script
+expName = 'ForwardDigitSpan'  # from the Builder filename that created this script
 expInfo = {u'session': u'001', u'participant': u''}
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
@@ -37,7 +37,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/jason/Documents/GITHUBReposOutsideDropBox/CognitiveTasks/DigitSpan/ForwardDigitSpan.psyexp',
+    originPath=u'/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/DigitSpan/ForwardDigitSpan.psyexp',
     savePickle=True, saveWideText=False,
     dataFileName=filename)
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
@@ -50,7 +50,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=[800, 600], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
@@ -61,86 +61,144 @@ else:
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
-sound_1 = sound.Sound(u'NumberSounds/1.wav', secs=-1)
+sound_1 = sound.Sound('NumberSounds/1.wav', secs=-1)
 sound_1.setVolume(1)
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
-# set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=5, method='random', 
-    extraInfo=expInfo, originPath=-1,
-    trialList=[None],
-    seed=None, name='trials')
-thisExp.addLoop(trials)  # add the loop to the experiment
-thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
-# abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
-if thisTrial != None:
-    for paramName in thisTrial.keys():
-        exec(paramName + '= thisTrial.' + paramName)
+# --------Prepare to start Staircase "Stairs" --------
+# set up handler to look after next chosen value etc
+Stairs = data.StairHandler(startVal=3, extraInfo=expInfo,
+    stepSizes=-1, stepType='lin',
+    nReversals=0, nTrials=14, 
+    nUp=2, nDown=1,
+    minVal=3, maxVal=20,
+    originPath=-1, name='Stairs')
+thisExp.addLoop(Stairs)  # add the loop to the experiment
+level = thisStair = 3  # initialise some vals
 
-for thisTrial in trials:
-    currentLoop = trials
-    # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
-    if thisTrial != None:
-        for paramName in thisTrial.keys():
-            exec(paramName + '= thisTrial.' + paramName)
+for thisStair in Stairs:
+    currentLoop = Stairs
+    level = thisStair
     
-    # ------Prepare to start Routine "trial"-------
-    t = 0
-    trialClock.reset()  # clock
-    frameN = -1
-    continueRoutine = True
-    routineTimer.add(1.500000)
-    # update component parameters for each repeat
-    # keep track of which components have finished
-    trialComponents = [sound_1]
-    for thisComponent in trialComponents:
-        if hasattr(thisComponent, 'status'):
-            thisComponent.status = NOT_STARTED
+    # set up handler to look after randomisation of conditions etc
+    NumberSounds = data.TrialHandler(nReps=Stairs, method='sequential', 
+        extraInfo=expInfo, originPath=-1,
+        trialList=[None],
+        seed=None, name='NumberSounds')
+    thisExp.addLoop(NumberSounds)  # add the loop to the experiment
+    thisNumberSound = NumberSounds.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb = thisNumberSound.rgb)
+    if thisNumberSound != None:
+        for paramName in thisNumberSound.keys():
+            exec(paramName + '= thisNumberSound.' + paramName)
     
-    # -------Start Routine "trial"-------
-    while continueRoutine and routineTimer.getTime() > 0:
-        # get current time
-        t = trialClock.getTime()
-        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-        # update/draw components on each frame
-        # start/stop sound_1
-        if t >= 0.0 and sound_1.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            sound_1.tStart = t
-            sound_1.frameNStart = frameN  # exact frame index
-            sound_1.play()  # start the sound (it finishes automatically)
-        frameRemains = 0.0 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if sound_1.status == STARTED and t >= frameRemains:
-            sound_1.stop()  # stop the sound (if longer than duration)
+    for thisNumberSound in NumberSounds:
+        currentLoop = NumberSounds
+        # abbreviate parameter names if possible (e.g. rgb = thisNumberSound.rgb)
+        if thisNumberSound != None:
+            for paramName in thisNumberSound.keys():
+                exec(paramName + '= thisNumberSound.' + paramName)
         
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
-            break
-        continueRoutine = False  # will revert to True if at least one component still running
+        # ------Prepare to start Routine "trial"-------
+        t = 0
+        trialClock.reset()  # clock
+        frameN = -1
+        continueRoutine = True
+        # update component parameters for each repeat
+        key_resp_2 = event.BuilderKeyResponse()
+        # keep track of which components have finished
+        trialComponents = [sound_1, key_resp_2]
         for thisComponent in trialComponents:
-            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                continueRoutine = True
-                break  # at least one component has not yet finished
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
         
-        # check for quit (the Esc key)
-        if endExpNow or event.getKeys(keyList=["escape"]):
-            core.quit()
+        # -------Start Routine "trial"-------
+        while continueRoutine:
+            # get current time
+            t = trialClock.getTime()
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            # start/stop sound_1
+            if t >= 0.0 and sound_1.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                sound_1.tStart = t
+                sound_1.frameNStart = frameN  # exact frame index
+                sound_1.play()  # start the sound (it finishes automatically)
+            frameRemains = 0.0 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
+            if sound_1.status == STARTED and t >= frameRemains:
+                sound_1.stop()  # stop the sound (if longer than duration)
+            
+            # *key_resp_2* updates
+            if t >= 0.0 and key_resp_2.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                key_resp_2.tStart = t
+                key_resp_2.frameNStart = frameN  # exact frame index
+                key_resp_2.status = STARTED
+                # keyboard checking is just starting
+                win.callOnFlip(key_resp_2.clock.reset)  # t=0 on next screen flip
+                event.clearEvents(eventType='keyboard')
+            if key_resp_2.status == STARTED:
+                theseKeys = event.getKeys(keyList=['1', '0'])
+                
+                # check for quit:
+                if "escape" in theseKeys:
+                    endExpNow = True
+                if len(theseKeys) > 0:  # at least one key was pressed
+                    key_resp_2.keys = theseKeys[-1]  # just the last key pressed
+                    key_resp_2.rt = key_resp_2.clock.getTime()
+                    # was this 'correct'?
+                    if (key_resp_2.keys == str(u"'1'")) or (key_resp_2.keys == u"'1'"):
+                        key_resp_2.corr = 1
+                    else:
+                        key_resp_2.corr = 0
+                    # a response ends the routine
+                    continueRoutine = False
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in trialComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # check for quit (the Esc key)
+            if endExpNow or event.getKeys(keyList=["escape"]):
+                core.quit()
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
         
-        # refresh the screen
-        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-            win.flip()
+        # -------Ending Routine "trial"-------
+        for thisComponent in trialComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        sound_1.stop()  # ensure sound has stopped at end of routine
+        # check responses
+        if key_resp_2.keys in ['', [], None]:  # No response was made
+            key_resp_2.keys=None
+            # was no response the correct answer?!
+            if str(u"'1'").lower() == 'none':
+               key_resp_2.corr = 1  # correct non-response
+            else:
+               key_resp_2.corr = 0  # failed to respond (incorrectly)
+        # store data for NumberSounds (TrialHandler)
+        NumberSounds.addData('key_resp_2.keys',key_resp_2.keys)
+        NumberSounds.addData('key_resp_2.corr', key_resp_2.corr)
+        if key_resp_2.keys != None:  # we had a response
+            NumberSounds.addData('key_resp_2.rt', key_resp_2.rt)
+        # the Routine "trial" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
+        thisExp.nextEntry()
+        
+    # completed Stairs repeats of 'NumberSounds'
     
-    # -------Ending Routine "trial"-------
-    for thisComponent in trialComponents:
-        if hasattr(thisComponent, "setAutoDraw"):
-            thisComponent.setAutoDraw(False)
-    sound_1.stop()  # ensure sound has stopped at end of routine
-    thisExp.nextEntry()
-    
-# completed 5 repeats of 'trials'
+# staircase completed
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsPickle(filename)

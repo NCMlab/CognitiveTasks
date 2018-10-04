@@ -1,15 +1,15 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Wed Oct  3 20:50:32 2018
+This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
+    on Thu Oct  4 11:53:30 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
     Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy.
         Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
 """
-import pygame
+
 from __future__ import absolute_import, division
 from psychopy import locale_setup, gui, visual, core, data, event, logging, sound
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
@@ -48,7 +48,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=[1920, 1080], fullscr=False, screen=0,
+    size=[800, 600], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
@@ -59,65 +59,119 @@ if expInfo['frameRate'] != None:
 else:
     frameDur = 1.0 / 60.0  # could not measure, so guess
 
+countDown = core.CountdownTimer()
+
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
-sound_1 = sound.Sound('A', secs=-1)
+# Create a list of sound files
+SoundFileList = []
+sound_1 = sound.Sound('NumberSounds/1.wav', secs=-1)
 sound_1.setVolume(1)
-
+SoundFileList.append(sound_1)
+sound_2 = sound.Sound('NumberSounds/2.wav', secs=-1)
+sound_2.setVolume(1)
+SoundFileList.append(sound_2)
+sound_3 = sound.Sound('NumberSounds/3.wav', secs=-1)
+sound_3.setVolume(1)
+SoundFileList.append(sound_3)
+sound_4 = sound.Sound('NumberSounds/4.wav', secs=-1)
+sound_4.setVolume(1)
+SoundFileList.append(sound_4)
+sound_5 = sound.Sound('NumberSounds/5.wav', secs=-1)
+sound_5.setVolume(1)
+SoundFileList.append(sound_5)
+sound_6 = sound.Sound('NumberSounds/6.wav', secs=-1)
+sound_6.setVolume(1)
+SoundFileList.append(sound_6)
+sound_7 = sound.Sound('NumberSounds/7.wav', secs=-1)
+sound_7.setVolume(1)
+SoundFileList.append(sound_7)
+sound_8 = sound.Sound('NumberSounds/8.wav', secs=-1)
+sound_8.setVolume(1)
+SoundFileList.append(sound_8)
+sound_9 = sound.Sound('NumberSounds/9.wav', secs=-1)
+sound_9.setVolume(1)
+SoundFileList.append(sound_9)
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
-# ------Prepare to start Routine "trial"-------
-t = 0
-trialClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-sound_1.setSound(u'NumberSounds/1.wav', secs=-1)
-# keep track of which components have finished
-trialComponents = [sound_1]
-for thisComponent in trialComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
+# --------Prepare to start Staircase "Stairs" --------
+# set up handler to look after next chosen value etc
+Stairs = data.StairHandler(startVal=3, extraInfo=expInfo,
+    stepSizes=-1, stepType='lin',
+    nReversals=10, nTrials=14, 
+    nUp=2, nDown=1,
+    minVal=3, maxVal=20,
+    originPath=-1, name='Stairs')
+thisExp.addLoop(Stairs)  # add the loop to the experiment
+level = thisStair = 3  # initialise some vals
 
-# -------Start Routine "trial"-------
-while continueRoutine:
-    # get current time
-    t = trialClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # start/stop sound_1
-    if t >= 0.0 and sound_1.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        sound_1.tStart = t
-        sound_1.frameNStart = frameN  # exact frame index
-        sound_1.play()  # start the sound (it finishes automatically)
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in trialComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
+TrialDuration = 1.5
+RespDuration = 6
+corr = 1
+resp = event.BuilderKeyResponse()
+for thisStair in Stairs:
 
-# -------Ending Routine "trial"-------
-for thisComponent in trialComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-sound_1.stop()  # ensure sound has stopped at end of routine
-# the Routine "trial" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
+    
+    currentLoop = Stairs
+    level = thisStair
+    print("Stair %d"%(thisStair))
+    # Generate the number list
+    # Generate random numbers and make sure no consecutive numbers are the same
+    Flag = True
+    while Flag:
+        R = np.random.randint(1,10,level)
+        Flag = any(np.diff(R) == 0)
+    print(R)    
+    for i in range(level):
+        countDown.reset()    
+        countDown.add(TrialDuration)
+        print('index: %d, Number: %d'%(i,R[i]))
+        Index = R[i]-1
+        SoundFileList[Index].play()
+        #sound_1.play()  # start the sound (it finishes automatically)
+        # store data for Stairs (StairHandler)
+        while countDown.getTime() > 0:
+            pass        
+        
+        event.clearEvents(eventType='keyboard')
+  #  print(countDown.getTime())
+    countDown.add(RespDuration)
+    thisResp = -1
+    resp.keys = -99
+    resp.rt = -99
+    while countDown.getTime() > 0:
+        theseKeys = event.getKeys(keyList=['escape','1', '0'])
+        if 'escape' in theseKeys:
+            win.close()
+            core.quit()
+        if len(theseKeys) > 0:  # at least one key was pressed
+            resp.keys = theseKeys[-1]  # just the last key pressed
+            resp.rt = resp.clock.getTime()
+            # was this 'correct'?
+            if (resp.keys == str(corr)) or (resp.keys == corr):
+                print(resp.keys)
+                print(corr)
+                print('Correct')
+                thisResp = 1
+                resp.corr = 1
+                break
+            else:
+                print(resp.keys)
+                print(corr)                
+                print('incorrect')
+                thisResp = -1
+                resp.corr = 0   
+                break
+        pass        
+        
+    Stairs.addResponse(thisResp)
+    
+    # the Routine "trial" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    # staircase completed
+
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsPickle(filename)
 # make sure everything is closed down

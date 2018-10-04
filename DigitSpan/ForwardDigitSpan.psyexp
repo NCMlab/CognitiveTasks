@@ -39,21 +39,41 @@
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
       </SoundComponent>
+      <KeyboardComponent name="key_resp_2">
+        <Param name="correctAns" updates="constant" val="'1'" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="True" valType="bool"/>
+        <Param name="name" updates="None" val="key_resp_2" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="'1','0'" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="store" updates="constant" val="last key" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
     </Routine>
   </Routines>
   <Flow>
-    <LoopInitiator loopType="TrialHandler" name="trials">
-      <Param name="conditionsFile" updates="None" val="" valType="str"/>
-      <Param name="name" updates="None" val="trials" valType="code"/>
-      <Param name="isTrials" updates="None" val="True" valType="bool"/>
-      <Param name="random seed" updates="None" val="" valType="code"/>
-      <Param name="loopType" updates="None" val="random" valType="str"/>
-      <Param name="nReps" updates="None" val="5" valType="code"/>
+    <LoopInitiator loopType="StairHandler" name="Stairs">
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
-      <Param name="conditions" updates="None" val="None" valType="str"/>
-      <Param name="Selected rows" updates="None" val="" valType="code"/>
+      <Param name="name" updates="None" val="Stairs" valType="code"/>
+      <Param name="min value" updates="None" val="3" valType="code"/>
+      <Param name="N reversals" updates="None" val="0" valType="code"/>
+      <Param name="loopType" updates="None" val="staircase" valType="str"/>
+      <Param name="nReps" updates="None" val="14" valType="code"/>
+      <Param name="start value" updates="None" val="3" valType="code"/>
+      <Param name="N up" updates="None" val="2" valType="code"/>
+      <Param name="max value" updates="None" val="20" valType="code"/>
+      <Param name="N down" updates="None" val="1" valType="code"/>
+      <Param name="step type" updates="None" val="lin" valType="str"/>
+      <Param name="step sizes" updates="None" val="-1" valType="code"/>
+      <Param name="isTrials" updates="None" val="False" valType="bool"/>
     </LoopInitiator>
     <Routine name="trial"/>
-    <LoopTerminator name="trials"/>
+    <LoopTerminator name="Stairs"/>
   </Flow>
 </PsychoPy2experiment>
