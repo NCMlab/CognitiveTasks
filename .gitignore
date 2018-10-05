@@ -2,6 +2,10 @@ OriginalStimList.xlsx
 StimulusListRun1.csv
 StimulusListRun2.csv
 Stroop/data/*.*
+DigitSpan/data/*.*
+Antonyms/data/*.*
+data/*.*
+data/*
 WCST/data/*.*
 
 # Byte-compiled / optimized / DLL files

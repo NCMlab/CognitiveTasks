@@ -21,7 +21,7 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
 
-FontSize = 60
+FontSize = 30
 FontSizeUnits = 'pix'
 
 # Ensure that relative paths start from the same directory as this script
@@ -29,7 +29,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = 'ForwardDigitSpan'  # from the Builder filename that created this script
+expName = 'BackwardDigitSpan'  # from the Builder filename that created this script
 expInfo = {u'session': u'001', u'participant': u''}
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
@@ -113,12 +113,14 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 
 # --------Prepare to start Staircase "Stairs" --------
 # set up handler to look after next chosen value etc
-Stairs = data.StairHandler(startVal=3, extraInfo=expInfo,
+# This is the BACKWARD Span Task
+Stairs = data.StairHandler(startVal=2, extraInfo=expInfo,
     stepSizes=-1, stepType='lin',
-    nReversals=10, nTrials=3, 
+    nReversals=0, nTrials=14, 
     nUp=2, nDown=1,
-    minVal=3, maxVal=20,
+    minVal=2, maxVal=20,
     originPath=-1, name='Stairs')
+  
 thisExp.addLoop(Stairs)  # add the loop to the experiment
 level = thisStair = 3  # initialise some vals
 
@@ -142,7 +144,7 @@ for thisStair in Stairs:
         R = np.random.randint(1,10,level)
         Flag = any(np.diff(R) == 0)
     print(R)    
-    Answer.text = 'Forward: %s\n\nBackward: %s'%(R,R[::-1])
+    Answer.text = 'Backward: %s'%(R[::-1])
     # cycle over the numbers and play them
     for i in range(level):
         countDown.reset()    
@@ -159,15 +161,17 @@ for thisStair in Stairs:
     # -------Start Routine "trial"-------
     Answer.setAutoDraw(True)
     win.flip()
-    countDown.reset()    
-    countDown.add(5.0)
-    while countDown.getTime() > 0:
+
+    WaitingForResponseFlag = True
+    while WaitingForResponseFlag:
         
 
         theseKeys = event.getKeys()
             
         # check for quit:
         if "escape" in theseKeys:
+            thisExp.abort()  # or data files will save again on exit
+            win.close()
             core.quit()
         if len(theseKeys) > 0:  # at least one key was pressed
             resp.keys.extend(theseKeys)  # storing all keys
@@ -176,6 +180,7 @@ for thisStair in Stairs:
         if 'return' in theseKeys:
             # remove the return before continuing
             resp.keys = resp.keys[:-1]
+            WaitingForResponseFlag = False
             break
         else:
             pass
@@ -195,7 +200,8 @@ for thisStair in Stairs:
         RespList.append(int(i))
     RespList = np.array(RespList)
     print(RespList)
-    if np.array_equiv(R,RespList):
+    # This is the BACKWARD Span Task
+    if np.array_equiv(R[::-1],RespList):
         print('Correct')
         CorrectSound.play()
         thisResp = 1
@@ -206,27 +212,30 @@ for thisStair in Stairs:
         thisResp = -1
         resp.corr = 0
         
-    
+    thisExp.addData('Digits',R)
     thisExp.addData('resp.keys',resp.keys)
     if resp.keys != None:  # we had a response
         thisExp.addData('resp.rt', resp.rt)
     thisExp.nextEntry()
     # these shouldn't be strictly necessary (should auto-save)
     thisExp.saveAsWideText(filename+'.csv')
-    thisExp.saveAsPickle(filename)  
+    #thisExp.saveAsPickle(filename)  
     Stairs.addResponse(thisResp)
     Answer.setAutoDraw(False)
     win.flip()
     # Add a between trial wait time
+    countDown.reset()
     countDown.add(ITI)
     while countDown.getTime() > 0:
             pass     
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
+    
     # staircase completed
 
 # these shouldn't be strictly necessary (should auto-save)
-thisExp.saveAsPickle(filename)
+#thisExp.saveAsPickle(filename)
+thisExp.saveAsWideText(filename+'.csv')
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
 win.close()

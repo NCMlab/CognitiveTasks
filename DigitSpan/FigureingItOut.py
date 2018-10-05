@@ -15,3 +15,4 @@ trials = data.StairHandler(startVal=3, extraInfo=expInfo,
     nUp=2, nDown=1,
     minVal=1.0, maxVal=20.0,
     originPath=-1, name='trials')
+    

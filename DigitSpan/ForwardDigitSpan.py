@@ -21,7 +21,7 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
 
-FontSize = 60
+FontSize = 30
 FontSizeUnits = 'pix'
 
 # Ensure that relative paths start from the same directory as this script
@@ -113,12 +113,14 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 
 # --------Prepare to start Staircase "Stairs" --------
 # set up handler to look after next chosen value etc
+# This is the BACKWARD Span Task
 Stairs = data.StairHandler(startVal=3, extraInfo=expInfo,
     stepSizes=-1, stepType='lin',
-    nReversals=10, nTrials=3, 
+    nReversals=0, nTrials=14, 
     nUp=2, nDown=1,
-    minVal=3, maxVal=20,
+    minVal=2, maxVal=20,
     originPath=-1, name='Stairs')
+  
 thisExp.addLoop(Stairs)  # add the loop to the experiment
 level = thisStair = 3  # initialise some vals
 
@@ -127,8 +129,10 @@ RespDuration = 6
 ITI = 1
 corr = 1
 resp = event.BuilderKeyResponse()
+routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 count = 1
 for thisStair in Stairs:
+    resp.keys = []
     currentLoop = Stairs
     level = thisStair
     print("Trial Number: %d"%(count))
@@ -140,7 +144,7 @@ for thisStair in Stairs:
         R = np.random.randint(1,10,level)
         Flag = any(np.diff(R) == 0)
     print(R)    
-    Answer.text = str(R)
+    Answer.text = 'Forward: %s'%(R)
     # cycle over the numbers and play them
     for i in range(level):
         countDown.reset()    
@@ -154,53 +158,84 @@ for thisStair in Stairs:
             pass        
         
         event.clearEvents(eventType='keyboard')
-  #  print(countDown.getTime())
+    # -------Start Routine "trial"-------
     Answer.setAutoDraw(True)
     win.flip()
-    countDown.add(RespDuration)
-    thisResp = -1
-    resp.keys = -99
-    resp.rt = -99
-    while countDown.getTime() > 0:
-        theseKeys = event.getKeys(keyList=['escape','1', '0'])
-        if 'escape' in theseKeys:
+
+    WaitingForResponseFlag = True
+    while WaitingForResponseFlag:
+        
+
+        theseKeys = event.getKeys()
+            
+        # check for quit:
+        if "escape" in theseKeys:
+            thisExp.abort()  # or data files will save again on exit
             win.close()
             core.quit()
         if len(theseKeys) > 0:  # at least one key was pressed
-            resp.keys = theseKeys[-1]  # just the last key pressed
-            resp.rt = resp.clock.getTime()
-            # was this 'correct'?
-            if (resp.keys == str(corr)) or (resp.keys == corr):
-                print(resp.keys)
-                print(corr)
-                print('Correct')
-                CorrectSound.play()
-                thisResp = 1
-                resp.corr = 1
-                break
-            else:
-                print(resp.keys)
-                print(corr)                
-                print('incorrect')
-                IncorrectSound.play()
-                thisResp = -1
-                resp.corr = 0   
-                break
-        pass        
+            resp.keys.extend(theseKeys)  # storing all keys
+            resp.rt.append(resp.clock.getTime())
+
+        if 'return' in theseKeys:
+            # remove the return before continuing
+            resp.keys = resp.keys[:-1]
+            WaitingForResponseFlag = False
+            break
+        else:
+            pass
         
+    if 'x' in resp.keys:
+        print('Found a mistake')
+        # A mistake as made entering the digits
+        # take all values after the x    
+        resp.keys = resp.keys[resp.keys.index('x')+1:]
+        
+    print('Responses: %s'%(resp.keys))
+    Answer.setAutoDraw(False)
+    win.flip()
+    # Convert responses to an array
+    RespList = []
+    for i in resp.keys:
+        RespList.append(int(i))
+    RespList = np.array(RespList)
+    print(RespList)
+    # This is the FORWARD Span Task
+    if np.array_equiv(R,RespList):
+        print('Correct')
+        CorrectSound.play()
+        thisResp = 1
+        resp.corr = 1
+    else:
+        print('Incorrect')
+        IncorrectSound.play()
+        thisResp = -1
+        resp.corr = 0
+        
+    thisExp.addData('Digits',R)
+    thisExp.addData('resp.keys',resp.keys)
+    if resp.keys != None:  # we had a response
+        thisExp.addData('resp.rt', resp.rt)
+    thisExp.nextEntry()
+    # these shouldn't be strictly necessary (should auto-save)
+    thisExp.saveAsWideText(filename+'.csv')
+    #thisExp.saveAsPickle(filename)  
     Stairs.addResponse(thisResp)
     Answer.setAutoDraw(False)
     win.flip()
     # Add a between trial wait time
+    countDown.reset()
     countDown.add(ITI)
     while countDown.getTime() > 0:
             pass     
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
+    
     # staircase completed
 
 # these shouldn't be strictly necessary (should auto-save)
-thisExp.saveAsPickle(filename)
+#thisExp.saveAsPickle(filename)
+thisExp.saveAsWideText(filename+'.csv')
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
 win.close()

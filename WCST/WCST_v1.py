@@ -3,6 +3,8 @@ from psychopy import visual,core,monitors,event,gui
 import os
 import time
 
+# BUG, praftice discard piles need to be emptied before the real thing
+
 #V Load up the Card Order
 FileName = 'CardOrder.csv'
 CardOrder = np.genfromtxt(FileName, delimiter=',')
