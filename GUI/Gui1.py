@@ -29,69 +29,113 @@ class Mywin(wx.Frame):
     # size = (width, height)
     # Create the GUI window
       super(Mywin, self).__init__(parent, title = title,size = (600,600))  
-      panel = wx.Panel(self) 
+      self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
+      self.DataFolder = "../../data"
+      # Setup the Participant ID entry
+      self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Participant ID:", pos = (Col1,Row1))
+      self.PartID = wx.TextCtrl(self.panel,-1,'9999999',size=(ButtonWidth,-1),pos = (Col2,Row1))
+      self.btnPartEntry = wx.Button(self.panel,-1,label = "Enter", pos = (Col3,Row1), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnPartEntry.Bind(wx.EVT_BUTTON, self.OnCickPartEntry)
       
-      # #### Row 1
-      self.title1 = wx.StaticText(panel, -1, label = "VisualSTM", pos = (Col1+LabelOffset/2,Row1+LabelOffset))
+      # #### Row 
+      CurrentRow = Row2
+      self.title1 = wx.StaticText(self.panel, -1, label = "VisualSTM", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
-      self.btnR1C2 = wx.Button(panel,-1,"Demo", pos = (Col2,Row1), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR1C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR1C2.Bind(wx.EVT_BUTTON,self.OnClickedR1C2) 
-      self.btnR1C3 = wx.Button(panel,-1,"Demo", pos = (Col3,Row1), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR1C3 = wx.Button(self.panel,-1,"Demo", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR1C3.Bind(wx.EVT_BUTTON,self.OnClickedR1C3) 
-      self.btnR1C4 = wx.Button(panel,-1,"Demo", pos = (Col4,Row1), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR1C4 = wx.Button(self.panel,-1,"Demo", pos = (Col4,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR1C4.Bind(wx.EVT_BUTTON,self.OnClickedR1C4) 
       
-      # Box
-      Row1Box = wx.StaticBox(panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,Row1-5))
-      # Checkboxes
-      self.cbR1C2 = wx.CheckBox(panel, -1, label = "", pos = (Col2 + ButtonWidth+5,Row1))
-      self.cbR1C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row1))
-      self.cbR1C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row1))
       
-      # #### Row 2
-      self.titleR2 = wx.StaticText(panel, -1, label = "VisualSTM", pos = (Col1+LabelOffset/2,Row2+LabelOffset))
-      # Buttons
-      self.btnR2C2 = wx.Button(panel,-1,"Demo", pos = (Col2,Row2), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR2C2.Bind(wx.EVT_BUTTON,self.OnClickedR2C2) 
-      self.btnR2C3 = wx.Button(panel,-1,"Demo", pos = (Col3,Row2), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR2C3.Bind(wx.EVT_BUTTON,self.OnClickedR2C3) 
-      self.btnR2C4 = wx.Button(panel,-1,"Demo", pos = (Col4,Row2), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR2C4.Bind(wx.EVT_BUTTON,self.OnClickedR2C4) 
       # Box
-      Row1BoxR2 = wx.StaticBox(panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,Row2-5))
+      Row1Box = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
-      self.cbR2C2 = wx.CheckBox(panel, -1, label = "", pos = (Col2 + ButtonWidth+5,Row2))
-      self.cbR2C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row2))
-      self.cbR2C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row2))
-
-      # #### Row 3
-      self.titleR3 = wx.StaticText(panel, -1, label = "VisualSTM", pos = (Col1+LabelOffset/2,Row3+LabelOffset))
-      # Buttons
-      self.btnR3C2 = wx.Button(panel,-1,"Demo", pos = (Col2,Row3), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2) 
-      self.btnR3C3 = wx.Button(panel,-1,"Demo", pos = (Col3,Row3), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR3C3.Bind(wx.EVT_BUTTON,self.OnClickedR3C3) 
-      self.btnR3C4 = wx.Button(panel,-1,"Demo", pos = (Col4,Row3), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
-      # Box
-      Row1BoxR3 = wx.StaticBox(panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,Row3-5))
-      # Checkboxes
-      self.cbR3C2 = wx.CheckBox(panel, -1, label = "", pos = (Col2 + ButtonWidth+5,Row3))
-      self.cbR3C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row3))
-      self.cbR3C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row3))
+      self.cbR1C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
+      self.cbR1C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
+      self.cbR1C4 = wx.CheckBox(self.panel, -1, label = "", pos = (Col4 + ButtonWidth+5,CurrentRow))
+      
+#      # #### Row 2
+#      self.titleR2 = wx.StaticText(panel, -1, label = "VisualSTM", pos = (Col1+LabelOffset/2,Row2+LabelOffset))
+#      # Buttons
+#      self.btnR2C2 = wx.Button(panel,-1,"Demo", pos = (Col2,Row2), size = ((ButtonWidth, ButtonHeight))) 
+#      self.btnR2C2.Bind(wx.EVT_BUTTON,self.OnClickedR2C2) 
+#      self.btnR2C3 = wx.Button(panel,-1,"Demo", pos = (Col3,Row2), size = ((ButtonWidth, ButtonHeight))) 
+#      self.btnR2C3.Bind(wx.EVT_BUTTON,self.OnClickedR2C3) 
+#      self.btnR2C4 = wx.Button(panel,-1,"Demo", pos = (Col4,Row2), size = ((ButtonWidth, ButtonHeight))) 
+#      self.btnR2C4.Bind(wx.EVT_BUTTON,self.OnClickedR2C4) 
+#      # Box
+#      Row1BoxR2 = wx.StaticBox(panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,Row2-5))
+#      # Checkboxes
+#      self.cbR2C2 = wx.CheckBox(panel, -1, label = "", pos = (Col2 + ButtonWidth+5,Row2))
+#      self.cbR2C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row2))
+#      self.cbR2C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row2))
+#
+#      # #### Row 3
+#      self.titleR3 = wx.StaticText(panel, -1, label = "VisualSTM", pos = (Col1+LabelOffset/2,Row3+LabelOffset))
+#      # Buttons
+#      self.btnR3C2 = wx.Button(panel,-1,"Demo", pos = (Col2,Row3), size = ((ButtonWidth, ButtonHeight))) 
+#      self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2) 
+#      self.btnR3C3 = wx.Button(panel,-1,"Demo", pos = (Col3,Row3), size = ((ButtonWidth, ButtonHeight))) 
+#      self.btnR3C3.Bind(wx.EVT_BUTTON,self.OnClickedR3C3) 
+#      self.btnR3C4 = wx.Button(panel,-1,"Demo", pos = (Col4,Row3), size = ((ButtonWidth, ButtonHeight))) 
+#      self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
+#      # Box
+#      Row1BoxR3 = wx.StaticBox(panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,Row3-5))
+#      # Checkboxes
+#      self.cbR3C2 = wx.CheckBox(panel, -1, label = "", pos = (Col2 + ButtonWidth+5,Row3))
+#      self.cbR3C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row3))
+#      self.cbR3C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row3))
 
       
       self.Centre() 
       self.Show() 
       self.Fit()  
       
-   # Row 1 Functions   
+  
+   def DisableAll(self): 
+      for child in self.panel.GetChildren():
+        # Diable all buttons except the button to enter the participant ID
+        if isinstance(child, wx.Button):
+            if child.Label != "Enter":
+                child.Disable()
+   
+   def EnableAll(self): 
+      for child in self.panel.GetChildren():
+        # Diable all buttons except the button to enter the participant ID
+        if isinstance(child, wx.Button):
+            if child.Label != "Enter":
+                child.Enable()
+                
+   def CheckPartFolder(self):
+      PartFolder = os.path.join(self.DataFolder,self.PartID.GetValue())
+      print(PartFolder)
+      PartFolderFlag = os.path.exists(PartFolder)
+      if PartFolderFlag:
+        self.DataFolder = PartFolder
+      print(PartFolderFlag)
+      
+   def CheckVisitFolder(self):
+      VisitFolder = os.path.join(self.DataFolder,self.PartID.GetValue())
+      print(PartFolder)
+      PartFolderFlag = os.path.exists(PartFolder)
+      if PartFolderFlag:
+        self.DataFolder = PartFolder
+      print(PartFolderFlag)
+      
+   def OnCickPartEntry(self, event):
+      btnName = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnName))
+      self.CheckPartFolder()
+      self.EnableAll()
+    # Row 1 Functions      
+   
    def OnClickedR1C2(self, event): 
       btnR1C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR1C2Label))
       #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
-      self.cbR1C2.SetValue(True)
       
    def OnClickedR1C3(self, event): 
       btnR1C3Label = event.GetEventObject().GetLabel() 
@@ -142,7 +186,13 @@ class Mywin(wx.Frame):
       print("Label of pressed button = %s"%(btnR3C4Label))
       #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
       self.cbR3C4.SetValue(True)  
+   def CreatePartFolder(self, PartID, VisitID, Suffix=""):
+      pass
+      
       
 app = wx.App() 
-Mywin(None,  'NCM Lab') 
+# Create the GUI
+MyGui = Mywin(None,  'NCM Lab') 
+# Disable all the buttons except teh Part ID entry 
+MyGui.DisableAll()
 app.MainLoop()
