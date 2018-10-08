@@ -111,19 +111,32 @@ class Mywin(wx.Frame):
                 
    def CheckPartFolder(self):
       PartFolder = os.path.join(self.DataFolder,self.PartID.GetValue())
-      print(PartFolder)
+      # Does the part folde rfor data exist?
+      PartFolderFlag = False
       PartFolderFlag = os.path.exists(PartFolder)
-      if PartFolderFlag:
-        self.DataFolder = PartFolder
       print(PartFolderFlag)
+      if PartFolderFlag:
+        print('Participant Folder Exisits')
+        self.PartFolder = PartFolder
+      else:
+        self.CreatePartFolder()
       
    def CheckVisitFolder(self):
-      VisitFolder = os.path.join(self.DataFolder,self.PartID.GetValue())
-      print(PartFolder)
-      PartFolderFlag = os.path.exists(PartFolder)
-      if PartFolderFlag:
-        self.DataFolder = PartFolder
-      print(PartFolderFlag)
+        # What folders are in the Part folder?
+        ListOfVisitFolders = [];
+        for root, dirs, files in os.walk(self.PartFolder, topdown=False):
+            for name in dirs:
+                print(name)
+                ListOfVisitFolders.append(int(name[-1]))
+        print(ListOfVisitFolders)
+        if len(ListOfVisitFolders) == 0:
+            # No visit folder yet, make one
+            VisitFolderName = '%s_V00%d'%(data.getDateStr(),1)
+        else:
+            VisitFolderName = '%s_V00%d'%(data.getDateStr(),ListOfVisitFolders[-1]+1)
+        os.mkdir(os.path.join(self.PartFolder,VisitFolderName))
+        self.VisitFolderPath = os.path.join(self.PartFolder,VisitFolderName)
+
       
    def OnCickPartEntry(self, event):
       btnName = event.GetEventObject().GetLabel() 
@@ -132,6 +145,9 @@ class Mywin(wx.Frame):
       self.EnableAll()
     # Row 1 Functions      
    
+   def CreatePartFolder(self):
+      os.mkdir(self.PartFolder)
+      
    def OnClickedR1C2(self, event): 
       btnR1C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR1C2Label))
@@ -140,6 +156,8 @@ class Mywin(wx.Frame):
    def OnClickedR1C3(self, event): 
       btnR1C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR1C3Label))
+      self.CheckPartFolder()
+      self.CheckVisitFolder()
       #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
       self.cbR1C3.SetValue(True)
       
@@ -186,9 +204,10 @@ class Mywin(wx.Frame):
       print("Label of pressed button = %s"%(btnR3C4Label))
       #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
       self.cbR3C4.SetValue(True)  
-   def CreatePartFolder(self, PartID, VisitID, Suffix=""):
-      pass
-      
+  
+   
+   def CloseGUI(self,event):
+        self.Close()
       
 app = wx.App() 
 # Create the GUI
