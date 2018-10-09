@@ -26,16 +26,40 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'StroopColorWord'  # from the Builder filename that created this script
-expInfo = {u'session': u'01', u'participant': u''}
-dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
-if dlg.OK == False:
-    core.quit()  # user pressed cancel
+expName = u'Stroop'  # from the Builder filename that created this script
+task = 'ColorWord'
+expInfo = {u'session': u'01', u'participant': u'9999999'}
+
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
 
+
+if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
+    expInfo['Participant ID'] = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
+
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+
+    Tag = '1'
+DataFolder = "../../data"
+PartDataFolder = 'unorganized'
+OutDir = os.path.join(DataFolder, PartDataFolder)
+if not os.path.exists(OutDir):
+    os.mkdir(OutDir)
+ 
+
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s' % (expInfo['participant'], expInfo['date'])
+filename = PartDataFolder + '%s_%s_%s_%s_%s' % (expInfo['participant'],expName, task, Tag, expInfo['date'])
+
+#filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s' % (expInfo['participant'], expInfo['date'])
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',

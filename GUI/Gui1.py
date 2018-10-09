@@ -37,22 +37,25 @@ class Mywin(wx.Frame):
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
       self.DataFolder = "../../data"
+      self.VisitFolderPath = 'empty'
       # Setup the Participant ID entry
       self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Participant ID:", pos = (Col1,Row1))
       self.PartID = wx.TextCtrl(self.panel,-1,'9999999',size=(ButtonWidth,-1),pos = (Col2,Row1))
       self.btnPartEntry = wx.Button(self.panel,-1,label = "Enter", pos = (Col3,Row1), size = ((ButtonWidth, ButtonHeight))) 
       self.btnPartEntry.Bind(wx.EVT_BUTTON, self.OnCickPartEntry)
       
+      
       # #### Row 
+      # STROOP
       CurrentRow = Row2
-      self.title1 = wx.StaticText(self.panel, -1, label = "VisualSTM", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+      self.title1 = wx.StaticText(self.panel, -1, label = "Stroop", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
-      self.btnR1C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR1C2 = wx.Button(self.panel,-1,"Color", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR1C2.Bind(wx.EVT_BUTTON,self.OnClickedR1C2) 
-      self.btnR1C3 = wx.Button(self.panel,-1,"Demo", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR1C3 = wx.Button(self.panel,-1,"Word", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR1C3.Bind(wx.EVT_BUTTON,self.OnClickedR1C3) 
-      self.btnR1C4 = wx.Button(self.panel,-1,"Demo", pos = (Col4,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR1C4.Bind(wx.EVT_BUTTON,self.OnClickedR1C4) 
+      self.btnR1C4 = wx.Button(self.panel,-1,"ColorWord", pos = (Col4,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR1C4.Bind(wx.EVT_BUTTON,self.OnClickedR1C4)
       
       
       # Box
@@ -121,8 +124,8 @@ class Mywin(wx.Frame):
       PartFolderFlag = os.path.exists(PartFolder)
       print(PartFolderFlag)
       if PartFolderFlag:
-        print('Participant Folder Exists')
         self.PartFolder = PartFolder
+        print('Participant Folder Exists: %s'%(self.PartFolder))
       else:
         self.CreatePartFolder()
       
@@ -135,10 +138,14 @@ class Mywin(wx.Frame):
                 print(name)
                 ListOfVisitFolders.append(int(name[-1]))
                 ListOfVisitFoldersNames.append(name)
+        
         print(ListOfVisitFolders)
         if len(ListOfVisitFolders) == 0:
             # No visit folder yet, make one with a name of V001
-            VisitFolderName = '%s_V00%d'%(data.getDateStr(),1)
+            self.VisitFolderName = '%s_V00%d'%(data.getDateStr(), 1)
+            self.VisitFolderPath = os.path.join(self.PartFolder,self.VisitFolderName)
+            os.mkdir(self.VisitFolderPath)
+            
         else:
             # Visit folder exists. 
             # Would you like to use the same one?
@@ -150,21 +157,27 @@ class Mywin(wx.Frame):
                 dlg.Show()
                 if dlg.ShowModal() == wx.ID_OK:
                     print 'You selected: %s\n' % dlg.GetStringSelection()
-                    self.VisitFolderPath = dlg.GetStringSelection()
+                    VisitFolderName = dlg.GetStringSelection()
+                    self.VisitFolderPath = os.path.join(self.PartFolder, VisitFolderName)
                 dlg.Destroy()
             else:
                 # Make a new visit
                 # New visit folders will increment the visit number V002, V003, etc
                 VisitFolderName = '%s_V00%d'%(data.getDateStr(),ListOfVisitFolders[-1]+1)
-                os.mkdir(os.path.join(self.PartFolder,VisitFolderName))
                 self.VisitFolderPath = os.path.join(self.PartFolder,VisitFolderName)
+                os.mkdir(self.VisitFolderPath)
         print(self.VisitFolderPath)
+        
+        # Add the path name to the GUI
+        self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(VisitFolderName), pos = (Col4,Row1))
+        
       
    def OnCickPartEntry(self, event):
       btnName = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnName))
       # Check to see if there is a participant folder for this person
       self.CheckPartFolder()
+      self.CheckVisitFolder()
       # Enabale the buttons again
       self.EnableAll()
     # Row 1 Functions      
@@ -176,19 +189,18 @@ class Mywin(wx.Frame):
       btnR1C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR1C2Label))
       #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
+      self.cbR1C2.SetValue(True)
       
    def OnClickedR1C3(self, event): 
       btnR1C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR1C3Label))
-      self.CheckPartFolder()
-      self.CheckVisitFolder()
       #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
       self.cbR1C3.SetValue(True)
       
    def OnClickedR1C4(self, event): 
       btnR1C4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR1C4Label))
-      #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
+      core.shellCall([sys.executable, "../Stroop/StroopColorWord_lastrun.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR1C4.SetValue(True)      
 
    # Row 2 Functions   
