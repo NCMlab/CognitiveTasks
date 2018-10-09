@@ -1,6 +1,16 @@
-Word,Choice1,Choice2,Choice3,Choice4
-AAAAAA,aaa,bbb,ccc,ddd
-BBBBBB,aaa,bbb,ccc,ddd
-CCCCC,eee,fff,ggg,hhh
-DDD,iii,jjj,kkk,lll
-EEE,mmm,nnn,ooo,ppp
+Word,Choice1,Choice2,Choice3,Choice4,Corr
+SOMNOLENT,stubborn,sleepy,worthy,wide-awake,1
+APATHETIC,interested,bizarre,slothful,waywardness,1
+CORPULENT,sallow,affiliated,emaciated,entrepreneur,1
+INSCRUTABLE,comprehensive,demanding,peril,factoid,1
+VERBOSE,garrulous,magnificent,grandiloquent,taciturn,1
+SURLY,manly,good-humoured,massive,fickle,1
+SPORADIC,germinal,antiseptic,incessant,summery,1
+GERMANE,teutonic,healthful,irrelevant,massive,1
+REMISSABLE,permissable,unforgivable,renewable,standard,1
+ROTUND,enhance,lean,resurface,waywardness,1
+CALLOW,imbecile,succinct,doff,mature,1
+PENCHANT,repulsion,friendly,kismet,acrid,1
+SCINTILLA,innate,laconic,huge amount,packman,1
+VACUOUS,bankrupt,profound,livid,superficial,1
+ENERVATE,cognitive,eschew,strengthen,progressive,1

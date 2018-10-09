@@ -22,77 +22,11 @@
     <Param name="Show mouse" updates="None" val="False" valType="bool"/>
     <Param name="Data filename" updates="None" val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code"/>
     <Param name="Show info dlg" updates="None" val="False" valType="bool"/>
-    <Param name="expName" updates="None" val="Antonyms" valType="str"/>
+    <Param name="expName" updates="None" val="untitled" valType="str"/>
     <Param name="logging level" updates="None" val="exp" valType="code"/>
     <Param name="Screen" updates="None" val="1" valType="num"/>
   </Settings>
   <Routines>
-    <Routine name="ShortInstr">
-      <TextComponent name="Instruct">
-        <Param name="opacity" updates="constant" val="1" valType="code"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="None" val="Instruct" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="600" valType="code"/>
-        <Param name="color" updates="constant" val="black" valType="str"/>
-        <Param name="text" updates="constant" val="Press the number associated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.&amp;#10;&amp;#10;Press any key to begin." valType="str"/>
-        <Param name="stopVal" updates="constant" val="5" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
-        <Param name="flip" updates="constant" val="" valType="str"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="ori" updates="constant" val="0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="font" updates="constant" val="Arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
-      </TextComponent>
-    </Routine>
-    <Routine name="ThankYou">
-      <TextComponent name="Merci">
-        <Param name="opacity" updates="constant" val="1" valType="code"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="None" val="Merci" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
-        <Param name="color" updates="constant" val="black" valType="str"/>
-        <Param name="text" updates="constant" val="Thank you" valType="str"/>
-        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
-        <Param name="flip" updates="constant" val="" valType="str"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="ori" updates="constant" val="0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="font" updates="constant" val="Arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="50" valType="code"/>
-      </TextComponent>
-    </Routine>
-    <Routine name="ITI">
-      <TextComponent name="text_2">
-        <Param name="opacity" updates="constant" val="1" valType="code"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="None" val="text_2" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
-        <Param name="color" updates="constant" val="black" valType="str"/>
-        <Param name="text" updates="constant" val="+" valType="str"/>
-        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
-        <Param name="flip" updates="constant" val="" valType="str"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="ori" updates="constant" val="0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="font" updates="constant" val="Arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="60" valType="code"/>
-      </TextComponent>
-    </Routine>
     <Routine name="trial">
       <PolygonComponent name="polygon">
         <Param name="opacity" updates="constant" val="1" valType="code"/>
@@ -216,14 +150,36 @@
         <Param name="letterHeight" updates="constant" val="50" valType="code"/>
       </TextComponent>
     </Routine>
-    <Routine name="LongInstr">
-      <TextComponent name="text">
+    <Routine name="Instructions">
+      <TextComponent name="Instruct">
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="None" val="text" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="800" valType="code"/>
+        <Param name="name" updates="None" val="Instruct" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="600" valType="code"/>
         <Param name="color" updates="constant" val="black" valType="str"/>
-        <Param name="text" updates="constant" val="Antonyms Vocabulary&amp;#10;&amp;#10;Each item in this test consistes of a word in capital letters followed by four words. Press the number assoiated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.&amp;#10;&amp;#10;Since some of the items require you to distinguish fine shades of meaning, consider all the choices before deciding which is the best. Please guess if you are unsure since there is no penalty for incorrect responses.&amp;#10;&amp;#10;Press any key to begin." valType="str"/>
+        <Param name="text" updates="constant" val="Press the number associated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.&amp;#10;&amp;#10;Press any key to begin." valType="str"/>
+        <Param name="stopVal" updates="constant" val="5" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="pix" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="ITI">
+      <TextComponent name="text_2">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="text_2" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="text" updates="constant" val="+" valType="str"/>
         <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
@@ -235,13 +191,12 @@
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
         <Param name="font" updates="constant" val="Arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="30" valType="code"/>
+        <Param name="letterHeight" updates="constant" val="60" valType="code"/>
       </TextComponent>
     </Routine>
   </Routines>
   <Flow>
-    <Routine name="LongInstr"/>
-    <Routine name="ShortInstr"/>
+    <Routine name="Instructions"/>
     <Routine name="ITI"/>
     <LoopInitiator loopType="TrialHandler" name="trials">
       <Param name="conditionsFile" updates="None" val="AntonymsTest - Sheet1.csv" valType="str"/>
@@ -257,6 +212,5 @@
     <Routine name="trial"/>
     <Routine name="ITI"/>
     <LoopTerminator name="trials"/>
-    <Routine name="ThankYou"/>
   </Flow>
 </PsychoPy2experiment>
