@@ -33,6 +33,7 @@ if len(sys.argv) > 1:
     expInfo['Participant ID'] = sys.argv[1]
     PartDataFolder = sys.argv[1]
     FontSize= int(sys.argv[2])
+    print('Read all input arguments')
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     FontSize = 60
