@@ -2,6 +2,11 @@ from __future__ import absolute_import, division
 from psychopy import locale_setup, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
+                                
+                                
+# DIALOG BOX RESOURCES
+# http://www.blog.pythonlibrary.org/2010/07/10/the-dialogs-of-wxpython-part-2-of-2/
+
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import wx
@@ -111,37 +116,56 @@ class Mywin(wx.Frame):
                 
    def CheckPartFolder(self):
       PartFolder = os.path.join(self.DataFolder,self.PartID.GetValue())
-      # Does the part folde rfor data exist?
+      # Does the part folder for data exist?
       PartFolderFlag = False
       PartFolderFlag = os.path.exists(PartFolder)
       print(PartFolderFlag)
       if PartFolderFlag:
-        print('Participant Folder Exisits')
+        print('Participant Folder Exists')
         self.PartFolder = PartFolder
       else:
         self.CreatePartFolder()
       
    def CheckVisitFolder(self):
         # What folders are in the Part folder?
-        ListOfVisitFolders = [];
+        ListOfVisitFolders = []
+        ListOfVisitFoldersNames = [];
         for root, dirs, files in os.walk(self.PartFolder, topdown=False):
             for name in dirs:
                 print(name)
                 ListOfVisitFolders.append(int(name[-1]))
+                ListOfVisitFoldersNames.append(name)
         print(ListOfVisitFolders)
         if len(ListOfVisitFolders) == 0:
-            # No visit folder yet, make one
+            # No visit folder yet, make one with a name of V001
             VisitFolderName = '%s_V00%d'%(data.getDateStr(),1)
         else:
-            VisitFolderName = '%s_V00%d'%(data.getDateStr(),ListOfVisitFolders[-1]+1)
-        os.mkdir(os.path.join(self.PartFolder,VisitFolderName))
-        self.VisitFolderPath = os.path.join(self.PartFolder,VisitFolderName)
-
+            # Visit folder exists. 
+            # Would you like to use the same one?
+            dlg = wx.MessageDialog(self, 'A Visit folder(s) already exist for this participant, would you like to use it?','', wx.YES_NO | wx.CANCEL | wx.ICON_ERROR)
+            dlg.Show()
+            if dlg.ShowModal() == wx.ID_YES: # Note, this is how you get the yes responses
+                # If the user wants to restart a visit then have them select the visit to reuse
+                dlg = wx.SingleChoiceDialog(self, 'Select a visit','Select Visit Folder', ListOfVisitFoldersNames,wx.CHOICEDLG_STYLE)
+                dlg.Show()
+                if dlg.ShowModal() == wx.ID_OK:
+                    print 'You selected: %s\n' % dlg.GetStringSelection()
+                    self.VisitFolderPath = dlg.GetStringSelection()
+                dlg.Destroy()
+            else:
+                # Make a new visit
+                # New visit folders will increment the visit number V002, V003, etc
+                VisitFolderName = '%s_V00%d'%(data.getDateStr(),ListOfVisitFolders[-1]+1)
+                os.mkdir(os.path.join(self.PartFolder,VisitFolderName))
+                self.VisitFolderPath = os.path.join(self.PartFolder,VisitFolderName)
+        print(self.VisitFolderPath)
       
    def OnCickPartEntry(self, event):
       btnName = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnName))
+      # Check to see if there is a participant folder for this person
       self.CheckPartFolder()
+      # Enabale the buttons again
       self.EnableAll()
     # Row 1 Functions      
    
