@@ -25,15 +25,14 @@ import sys  # to get file system encoding
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
+# #################
 # Store info about the experiment session
 expName = u'Stroop'  # from the Builder filename that created this script
 task = 'ColorWord'
-expInfo = {u'session': u'01', u'participant': u'9999999'}
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
-
-
 if len(sys.argv) > 1:
     #tempFile.write("Entered if clause\n")
     #tempFile.write('%s\n'%(sys.argv[2]))
@@ -47,17 +46,18 @@ else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
         core.quit()  # user pressed cancel
-
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
     Tag = '1'
-DataFolder = "../../data"
-PartDataFolder = 'unorganized'
-OutDir = os.path.join(DataFolder, PartDataFolder)
-if not os.path.exists(OutDir):
-    os.mkdir(OutDir)
  
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = PartDataFolder + '%s_%s_%s_%s_%s' % (expInfo['participant'],expName, task, Tag, expInfo['date'])
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+
+# #################
 
 #filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s' % (expInfo['participant'], expInfo['date'])
 
@@ -68,8 +68,8 @@ thisExp = data.ExperimentHandler(name=expName, version='',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
-logFile = logging.LogFile(filename+'.log', level=logging.WARNING)
-logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
+#logFile = logging.LogFile(filename+'.log', level=logging.WARNING)
+#logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
@@ -654,7 +654,7 @@ for thisComponent in thanksComponents:
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
-thisExp.saveAsPickle(filename)
+#thisExp.saveAsPickle(filename)
 logging.flush()
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
