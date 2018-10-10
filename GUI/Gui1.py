@@ -70,19 +70,19 @@ class Mywin(wx.Frame):
       self.cbR1C4 = wx.CheckBox(self.panel, -1, label = "", pos = (Col4 + ButtonWidth+5,CurrentRow))
       
       # #### Row 
-      CurrentRow = Row2
-      self.titleR2 = wx.StaticText(panel, -1, label = "WCST", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+      CurrentRow = Row3
+      self.titleR2 = wx.StaticText(self.panel, -1, label = "WCST", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
-      self.btnR2C2 = wx.Button(panel,-1,"WCST", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR2C2 = wx.Button(self.panel,-1,"WCST", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR2C2.Bind(wx.EVT_BUTTON,self.OnClickedR2C2) 
 #      self.btnR2C3 = wx.Button(panel,-1,"Demo", pos = (Col3,Row2), size = ((ButtonWidth, ButtonHeight))) 
 #      self.btnR2C3.Bind(wx.EVT_BUTTON,self.OnClickedR2C3) 
 #      self.btnR2C4 = wx.Button(panel,-1,"Demo", pos = (Col4,Row2), size = ((ButtonWidth, ButtonHeight))) 
 #      self.btnR2C4.Bind(wx.EVT_BUTTON,self.OnClickedR2C4) 
       # Box
-      Row1BoxR2 = wx.StaticBox(panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,CurrentRow-5))
+      Row1BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
-      self.cbR2C2 = wx.CheckBox(panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
+      self.cbR2C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
 #      self.cbR2C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row2))
 #      self.cbR2C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row2))
 #
@@ -217,7 +217,7 @@ class Mywin(wx.Frame):
    def OnClickedR2C2(self, event): 
       btnR2C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR2C2Label))
-      core.shellCall([sys.executable, "../Stroop/StroopColorWord_lastrun.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../WCST/WCST_v2.py"])#, self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR2C2.SetValue(True)
       
    def OnClickedR2C3(self, event): 
