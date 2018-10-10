@@ -1,16 +1,20 @@
 Word,Choice1,Choice2,Choice3,Choice4,Corr
-SOMNOLENT,stubborn,sleepy,worthy,wide-awake,1
+COMPLAISANT,distasteful,recalcitrant,alone,ugly,2
+SATED,famished,finished,finicky,fulfilled,1
+ALOOF,happy,deadly,gregarious,manly,3
+ABOMINATE,adore,despair,abate,deplore,1
+SOMNOLENT,stubborn,sleepy,worthy,wide-awake,4
 APATHETIC,interested,bizarre,slothful,waywardness,1
-CORPULENT,sallow,affiliated,emaciated,entrepreneur,1
+CORPULENT,sallow,affiliated,emaciated,entrepreneur,3
 INSCRUTABLE,comprehensive,demanding,peril,factoid,1
-VERBOSE,garrulous,magnificent,grandiloquent,taciturn,1
-SURLY,manly,good-humoured,massive,fickle,1
-SPORADIC,germinal,antiseptic,incessant,summery,1
-GERMANE,teutonic,healthful,irrelevant,massive,1
-REMISSABLE,permissable,unforgivable,renewable,standard,1
-ROTUND,enhance,lean,resurface,waywardness,1
-CALLOW,imbecile,succinct,doff,mature,1
+VERBOSE,garrulous,magnificent,grandiloquent,taciturn,4
+SURLY,manly,good-humoured,massive,fickle,2
+SPORADIC,germinal,antiseptic,incessant,summery,3
+GERMANE,teutonic,healthful,irrelevant,massive,3
+REMISSABLE,permissable,unforgivable,renewable,standard,2
+ROTUND,enhance,lean,resurface,waywardness,2
+CALLOW,imbecile,succinct,doff,mature,4
 PENCHANT,repulsion,friendly,kismet,acrid,1
-SCINTILLA,innate,laconic,huge amount,packman,1
-VACUOUS,bankrupt,profound,livid,superficial,1
-ENERVATE,cognitive,eschew,strengthen,progressive,1
+SCINTILLA,innate,laconic,huge amount,packman,3
+VACUOUS,bankrupt,profound,livid,superficial,2
+ENERVATE,cognitive,eschew,strengthen,progressive,3
