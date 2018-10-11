@@ -205,8 +205,6 @@ class Experiment():
             self.cards[i].draw()
             self.elems[i].draw()
         # Display cards and choice  
-        # Dots are still there
-        
         
         self.win.flip()
         
@@ -249,7 +247,14 @@ class Experiment():
 #                self.rule=sel[np.random.randint(2)]
 #            self.runTrial(t)
     def run(self, num_trials, rule_delta=10):
-        
+        #At the beginning reset the discard piles
+        for i in range(5,9):
+            self.cards[i].fillColor = 'grey'
+            
+            self.elems[i].color = 'grey'
+            
+            self.cards[i].draw()
+            #self.elems[i].draw()
         self.rule = 0
         self.corstreak = 0
         for t in range(num_trials):
@@ -264,6 +269,7 @@ class Experiment():
                     self.rule += 1
             
             self.runTrial(t, targetCard)
+
             
     def instruct(self, inst_text, go_text):
         inst = visual.TextStim(self.win, pos=(0,0), height=1, alignHoriz='center', wrapWidth=22)
@@ -374,12 +380,12 @@ SPOS = [[[0,0],[np.nan,np.nan],[np.nan,np.nan],[np.nan,np.nan]],
 # Store info about the experiment session
 
             
-#expName = u'WCST'  # from the Builder filename that created this script
-#task = ''
+expName = u'WCST'  # from the Builder filename that created this script
+task = ''
 #expInfo = { u'Participant ID': u'9999999'}
 #
-#expInfo['date'] = data.getDateStr()  # add a simple timestamp
-#expInfo['expName'] = expName
+expInfo['date'] = data.getDateStr()  # add a simple timestamp
+expInfo['expName'] = expName
 #
 #if len(sys.argv) > 1:
 #        #tempFile.write("Entered if clause\n")
@@ -404,15 +410,18 @@ SPOS = [[[0,0],[np.nan,np.nan],[np.nan,np.nan],[np.nan,np.nan]],
 #        Tag = '1'
 #print(PartDataFolder)
 PartDataFolder = '../../data'
-#filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-filename = os.path.join(PartDataFolder,'text.csv')
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+#filename = os.path.join(PartDataFolder,'text.csv')
 
 E = Experiment()
 E.output = open(filename, 'w')
 E.output.write('TrialNum,Card,Rule,RespTime,Correct\n') 
-
 E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
-E.run(num_trials=5, rule_delta=3)
+E.run(num_trials=2, rule_delta=3)
+
+E = Experiment()
+E.output = open(filename, 'a')
+E.output.write('TrialNum,Card,Rule,RespTime,Correct\n') 
 E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
 E.CardInstruct()
 E.run(num_trials=64, rule_delta=10)
