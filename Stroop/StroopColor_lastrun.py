@@ -24,7 +24,7 @@ import sys  # to get file system encoding
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
-
+# #################
 # Store info about the experiment session
 expName = u'Stroop'  # from the Builder filename that created this script
 task = 'Color'
@@ -32,8 +32,6 @@ expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
-
-
 if len(sys.argv) > 1:
     #tempFile.write("Entered if clause\n")
     #tempFile.write('%s\n'%(sys.argv[2]))
@@ -57,6 +55,8 @@ else:
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+
+# #################
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',

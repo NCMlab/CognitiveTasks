@@ -85,23 +85,24 @@ class Mywin(wx.Frame):
       self.cbR2C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
 #      self.cbR2C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row2))
 #      self.cbR2C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row2))
-#
-#      # #### Row 3
-#      self.titleR3 = wx.StaticText(panel, -1, label = "VisualSTM", pos = (Col1+LabelOffset/2,Row3+LabelOffset))
-#      # Buttons
-#      self.btnR3C2 = wx.Button(panel,-1,"Demo", pos = (Col2,Row3), size = ((ButtonWidth, ButtonHeight))) 
-#      self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2) 
-#      self.btnR3C3 = wx.Button(panel,-1,"Demo", pos = (Col3,Row3), size = ((ButtonWidth, ButtonHeight))) 
-#      self.btnR3C3.Bind(wx.EVT_BUTTON,self.OnClickedR3C3) 
-#      self.btnR3C4 = wx.Button(panel,-1,"Demo", pos = (Col4,Row3), size = ((ButtonWidth, ButtonHeight))) 
-#      self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
-#      # Box
-#      Row1BoxR3 = wx.StaticBox(panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,Row3-5))
-#      # Checkboxes
-#      self.cbR3C2 = wx.CheckBox(panel, -1, label = "", pos = (Col2 + ButtonWidth+5,Row3))
-#      self.cbR3C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row3))
-#      self.cbR3C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row3))
 
+      CurrentRow = Row4
+#      # #### Row 3
+      self.titleR3 = wx.StaticText(self.panel, -1, label = "VSTM", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+#      # Buttons
+      self.btnR3C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2) 
+      self.btnR3C3 = wx.Button(self.panel,-1,"Stair", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR3C3.Bind(wx.EVT_BUTTON,self.OnClickedR3C3) 
+      self.btnR3C4 = wx.Button(self.panel,-1,"Block", pos = (Col4,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
+#      # Box
+      Row1BoxR3 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,CurrentRow-5))
+      # Checkboxes
+      self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
+      self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
+      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (Col4 + ButtonWidth+5,CurrentRow))
+# ##########
       self.btnClose = wx.Button(self.panel,-1,"Close", pos = (Col1,Row8), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
       
@@ -236,19 +237,19 @@ class Mywin(wx.Frame):
    def OnClickedR3C2(self, event): 
       btnR3C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C2Label))
-      #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_DEMOv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR3C2.SetValue(True)
       
    def OnClickedR3C3(self, event): 
       btnR3C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C3Label))
-      #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGridStaircase_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR3C3.SetValue(True)
       
    def OnClickedR3C4(self, event): 
       btnR3C4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C4Label))
-      #core.shellCall([sys.executable, "FRTPsychopyFiles/FRTDemo_GUI.py", self.PartID.GetValue()])
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v4.py", self.PartID.GetValue(), self.VisitFolderPath])  
       self.cbR3C4.SetValue(True)  
   
    

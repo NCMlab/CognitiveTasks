@@ -59,30 +59,40 @@ MaxTrials = 150
 TotalTrialTime = StimOnTime + RetOnTime + ProbeOnTime + ITITime
 
 countDown = core.CountdownTimer()
+# #################
 # Store info about the experiment session
 expName = u'VSTM'  # from the Builder filename that created this script
-expInfo = {'Participant ID':'999', 'Session':'001'}
-PartDataFolder = 'unorganized'
-Tag = '1'
+task = 'Stair'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
+expInfo['date'] = data.getDateStr()  # add a simple timestamp
+expInfo['expName'] = expName
 if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
     expInfo['Participant ID'] = sys.argv[1]
-    PartDataFolder = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
+
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
         core.quit()  # user pressed cancel
-        
-        
-
-    
-expInfo['date'] = data.getDateStr()  # add a simple timestamp
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
+    PartDataFolder = OutDir
+ 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-task = 'stair'
-OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-if not os.path.exists(OutDir):
-    os.mkdir(OutDir)
-filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+CounterBalFlag = 'False'
 
+# #################
 dataFile = open(filename+'.csv', 'w')
 
 dataFile1=open(OutDir + 'CAPACITY_%s%s_%s_%s.txt' % (expName,task, expInfo['Participant ID'], expInfo['date']),'w')

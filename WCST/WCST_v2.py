@@ -380,12 +380,12 @@ SPOS = [[[0,0],[np.nan,np.nan],[np.nan,np.nan],[np.nan,np.nan]],
 # Store info about the experiment session
 
             
-expName = u'WCST'  # from the Builder filename that created this script
-task = ''
+#expName = u'WCST'  # from the Builder filename that created this script
+#task = ''
 #expInfo = { u'Participant ID': u'9999999'}
 #
-expInfo['date'] = data.getDateStr()  # add a simple timestamp
-expInfo['expName'] = expName
+#expInfo['date'] = data.getDateStr()  # add a simple timestamp
+#expInfo['expName'] = expName
 #
 #if len(sys.argv) > 1:
 #        #tempFile.write("Entered if clause\n")
@@ -410,8 +410,8 @@ expInfo['expName'] = expName
 #        Tag = '1'
 #print(PartDataFolder)
 PartDataFolder = '../../data'
-filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-#filename = os.path.join(PartDataFolder,'text.csv')
+#filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+filename = os.path.join(PartDataFolder,'text.csv')
 
 E = Experiment()
 E.output = open(filename, 'w')
