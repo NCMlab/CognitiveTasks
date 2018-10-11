@@ -73,7 +73,7 @@ if len(sys.argv) > 1:
     #tempFile.write('%s\n'%(sys.argv[2]))
 
     PartDataFolder = sys.argv[2]
-    LoadList = sys.argv[2].split(' ')
+    LoadList = sys.argv[3].split(' ')
     LoadList = np.array(LoadList)
     LoadList = LoadList.astype(np.int)
 

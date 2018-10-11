@@ -94,8 +94,8 @@ CounterBalFlag = 'False'
 
 # #################
 dataFile = open(filename+'.csv', 'w')
-
-dataFile1=open(OutDir + 'CAPACITY_%s%s_%s_%s.txt' % (expName,task, expInfo['Participant ID'], expInfo['date']),'w')
+# Create the file for the Capacity
+dataFile1=open(os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, 'CAPACITY', Tag, expInfo['date'])),'w')
 
 # Setup the Window
 win = visual.Window(

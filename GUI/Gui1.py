@@ -47,7 +47,10 @@ class Mywin(wx.Frame):
       self.PartID = wx.TextCtrl(self.panel,-1,'9999999',size=(ButtonWidth,-1),pos = (Col2,Row1))
       self.btnPartEntry = wx.Button(self.panel,-1,label = "Enter", pos = (Col3,Row1), size = ((ButtonWidth, ButtonHeight))) 
       self.btnPartEntry.Bind(wx.EVT_BUTTON, self.OnCickPartEntry)
-      
+      # Create Default values for the load levels for the two tasks
+      self.FRTBlockLoadLevels = '0.0 0.125 0.25 0.375 0.5'
+      self.DMSBlockLoadLevels = '1 3 5 6 7'
+      self.VSTMBlockLoadLevels = '1 2 3 4 5'     
       
       # #### Row 
       # STROOP
@@ -125,6 +128,31 @@ class Mywin(wx.Frame):
             if child.Label != "Enter":
                 child.Enable()
                 
+   def LoadVSTMCapacity(self, event):
+      pass
+   
+   def CreateVSTMList5(self, VSTMCapacity):
+        Limit = int(round(float(VSTMCapacity) + 1))
+        if Limit > 15:
+            Limit = 15
+        elif Limit < 5:
+            Limit = 5
+        VSTMList = {}
+        VSTMList['5']=[1,2,3,4,5]
+        VSTMList['6']=[1,3,4,5,6]
+        VSTMList['7']=[1,3,5,6,7]
+        VSTMList['8']=[1,3,6,7,8]
+        VSTMList['9']=[1,3,6,8,9]    
+        VSTMList['10']=[1,3,6,9,10]    
+        VSTMList['11']=[1,3,6,11,12]    
+        VSTMList['12']=[1,3,6,12,13]    
+        VSTMList['13']=[1,3,6,13,14]    
+        VSTMList['14']=[1,3,6,14,15]    
+        VSTMList['15']=[1,3,6,15,16]    
+        OutList = VSTMList[str(Limit)]
+        OutList = ' '.join(str(e) for e in OutList)
+        return OutList   
+   
    def CheckPartFolder(self):
       PartFolder = os.path.join(self.DataFolder,self.PartID.GetValue())
       # Does the part folder for data exist?
@@ -249,7 +277,7 @@ class Mywin(wx.Frame):
    def OnClickedR3C4(self, event): 
       btnR3C4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C4Label))
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v4.py", self.PartID.GetValue(), self.VisitFolderPath])  
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v4.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels])  
       self.cbR3C4.SetValue(True)  
   
    
