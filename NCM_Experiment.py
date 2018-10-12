@@ -222,14 +222,14 @@ class Mywin(wx.Frame):
    def OnClickedDMSDemo(self, event): 
       btn = event.GetEventObject().GetLabel() 
       print "Label of pressed button = ",btn 
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSDemo_GUI.py", self.PartID.GetValue()])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSDemo_GUI.py", self.PartID.GetValue(),'60'])
       self.DMSDEMOCB.SetValue(True)
 
    def OnClickedDMSStair(self, event): 
       self.DMSStairCaseDateStr = data.getDateStr()
       btn = event.GetEventObject().GetLabel() 
       print "Label of pressed button = ",btn 
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v2.py", self.PartID.GetValue()])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v2.py", self.PartID.GetValue(),'60'])
       self.LoadDMSCapacity(self)
       
    def OnClickedDMSBlock(self, event): 
