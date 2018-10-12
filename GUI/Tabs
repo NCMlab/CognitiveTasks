@@ -1,0 +1,106 @@
+import wx
+ 
+ 
+Top = 20
+Left = 20
+RowWidth = 50
+ColWidth = 100
+# Button height cannot be changed
+ButtonHeight = -1
+ButtonWidth = 80
+LabelOffset = 10
+Row1 = Top 
+Row2 = Top + RowWidth
+Row3 = Top + 2*RowWidth
+Row4 = Top + 3*RowWidth
+
+Col1 = Left
+Col2 = Left + ColWidth
+Col3 = Left + 2*ColWidth
+Col4 = Left + 3*ColWidth
+Col5 = Left + 4*ColWidth 
+# Define the tab content as classes:
+class TabOne(wx.Panel):
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent)
+        t = wx.StaticText(self, -1, "This is the first tab", (20,20))
+ 
+class TabTwo(wx.Panel):
+    def __init__(self, parent):
+      pan = wx.Panel.__init__(self, parent)
+    # size = (width, height)
+    # Create the GUI window
+      #super(Mywin, self).__init__(parent, title = title,size = (600,600))  
+      #self.panel = wx.Panel(self) 
+      vbox = wx.BoxSizer(wx.VERTICAL) 
+      self.DataFolder = "../../data"
+      self.VisitFolderPath = 'empty'
+      # Setup the Participant ID entry
+      self.PartIDLabel = wx.StaticText(self, -1, label = "Participant ID:", pos = (Col1,Row1))
+      self.PartID = wx.TextCtrl(self,-1,'9999999',size=(ButtonWidth,-1),pos = (Col2,Row1))
+      self.btnPartEntry = wx.Button(self,-1,label = "Enter", pos = (Col3,Row1), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnPartEntry.Bind(wx.EVT_BUTTON, self.OnCickPartEntry)
+      
+      
+      # #### Row 
+      # STROOP
+      CurrentRow = Row2
+      self.title1 = wx.StaticText(self, -1, label = "Stroop", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+      # Buttons
+      self.btnR1C2 = wx.Button(self,-1,"Color", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR1C2.Bind(wx.EVT_BUTTON,self.OnClickedR1C2) 
+      self.btnR1C3 = wx.Button(self,-1,"Word", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR1C3.Bind(wx.EVT_BUTTON,self.OnClickedR1C3) 
+      self.btnR1C4 = wx.Button(self,-1,"ColorWord", pos = (Col4,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR1C4.Bind(wx.EVT_BUTTON,self.OnClickedR1C4)
+      
+      
+      # Box
+      Row1Box = wx.StaticBox(self, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,CurrentRow-5))
+      # Checkboxes
+      self.cbR1C2 = wx.CheckBox(self, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
+      self.cbR1C3 = wx.CheckBox(self, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
+      self.cbR1C4 = wx.CheckBox(self, -1, label = "", pos = (Col4 + ButtonWidth+5,CurrentRow))
+
+ 
+class TabThree(wx.Panel):
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent)
+        t = wx.StaticText(self, -1, "This is the third tab", (20,20))
+ 
+class TabFour(wx.Panel):
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent)
+        t = wx.StaticText(self, -1, "This is the last tab", (20,20))
+ 
+ 
+class MainFrame(wx.Frame):
+    def __init__(self):
+        wx.Frame.__init__(self, None, size = (600,600),title='NCMLab')
+ 
+        # Create a panel and notebook (tabs holder)
+        p = wx.Panel(self)
+        nb = wx.Notebook(p)
+ 
+        # Create the tab windows
+        tab1 = TabOne(nb)
+        tab2 = TabTwo(nb)
+        tab3 = TabThree(nb)
+        tab4 = TabFour(nb)
+ 
+        # Add the windows to tabs and name them.
+        nb.AddPage(tab1, "Tab 1")
+        nb.AddPage(tab2, "Tab 2")
+        #nb.AddPage(tab3, "Tab 3")
+        #nb.AddPage(tab4, "Tab 4")
+ 
+        # Set noteboook in a sizer to create the layout
+        sizer = wx.BoxSizer()
+        sizer.Add(nb, 1, wx.EXPAND)
+        p.SetSizer(sizer)
+ 
+ 
+if __name__ == "__main__":
+    app = wx.App()
+    MainFrame().Show()
+    app.MainLoop()
