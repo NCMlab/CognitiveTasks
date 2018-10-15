@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Wed Oct 10 10:01:27 2018
+    on Wed Oct 10 10:18:08 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'Antonyms'  # from the Builder filename that created this script
+expName = 'Antonyms'  # from the Builder filename that created this script
 expInfo = {u'session': u'001', u'participant': u''}
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
@@ -37,7 +37,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/Antonyms/Antonyms',
+    originPath=None,
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -64,19 +64,19 @@ else:
 # Initialize components for Routine "LongInstr"
 LongInstrClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
-    text=u'Antonyms Vocabulary\n\nEach item in this test consistes of a word in capital letters followed by four words. Press the number assoiated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nSince some of the items require you to distinguish fine shades of meaning, consider all the choices before deciding which is the best. Please guess if you are unsure since there is no penalty for incorrect responses.\n\nPress any key to begin.',
-    font=u'Arial',
+    text='Antonyms Vocabulary\n\nEach item in this test consistes of a word in capital letters followed by four words. Press the number assoiated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nSince some of the items require you to distinguish fine shades of meaning, consider all the choices before deciding which is the best. Please guess if you are unsure since there is no penalty for incorrect responses.\n\nPress any key to begin.',
+    font='Arial',
     units='pix', pos=(0, 0), height=30, wrapWidth=800, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "GetReady"
 GetReadyClock = core.Clock()
 GetRead = visual.TextStim(win=win, name='GetRead',
-    text=u'Get Ready',
-    font=u'Arial',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    text='Get Ready',
+    font='Arial',
+    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -90,42 +90,52 @@ polygon = visual.Rect(
     opacity=1, depth=0.0, interpolate=True)
 TestWord = visual.TextStim(win=win, name='TestWord',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, 200), height=60, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-1.0);
 Resp1 = visual.TextStim(win=win, name='Resp1',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, 40), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-2.0);
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-2.0, alignHoriz='left');
 Resp2 = visual.TextStim(win=win, name='Resp2',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, -20), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-3.0);
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-3.0, alignHoriz='left');
 Resp3 = visual.TextStim(win=win, name='Resp3',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, -80), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-4.0);
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-4.0,alignHoriz='left');
 Resp4 = visual.TextStim(win=win, name='Resp4',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, -140), height=50, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-5.0,alignHoriz='left');
+
+# Initialize components for Routine "Feedback"
+FeedbackClock = core.Clock()
+msg = ''
+text_3 = visual.TextStim(win=win, name='text_3',
+    text='default text',
+    font=u'Arial',
+    units='pix', pos=(0, 0), height=50, wrapWidth=600, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
-    depth=-5.0);
+    depth=-1.0);
 
 # Initialize components for Routine "ITI"
 ITIClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
-    text=u'+',
-    font=u'Arial',
+    text='+',
+    font='Arial',
     units='pix', pos=(0, 0), height=60, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "ShortInstr"
@@ -140,10 +150,10 @@ Instruct = visual.TextStim(win=win, name='Instruct',
 # Initialize components for Routine "GetReady"
 GetReadyClock = core.Clock()
 GetRead = visual.TextStim(win=win, name='GetRead',
-    text=u'Get Ready',
-    font=u'Arial',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    text='Get Ready',
+    font='Arial',
+    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -157,51 +167,51 @@ polygon = visual.Rect(
     opacity=1, depth=0.0, interpolate=True)
 TestWord = visual.TextStim(win=win, name='TestWord',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, 200), height=60, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-1.0);
 Resp1 = visual.TextStim(win=win, name='Resp1',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, 40), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-2.0);
 Resp2 = visual.TextStim(win=win, name='Resp2',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, -20), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-3.0);
 Resp3 = visual.TextStim(win=win, name='Resp3',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, -80), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-4.0);
 Resp4 = visual.TextStim(win=win, name='Resp4',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, -140), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-5.0);
 
 # Initialize components for Routine "ITI"
 ITIClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
-    text=u'+',
-    font=u'Arial',
+    text='+',
+    font='Arial',
     units='pix', pos=(0, 0), height=60, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "ThankYou"
 ThankYouClock = core.Clock()
 Merci = visual.TextStim(win=win, name='Merci',
-    text=u'Thank you',
-    font=u'Arial',
+    text='Thank you',
+    font='Arial',
     units='pix', pos=(0, 0), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -342,7 +352,7 @@ for thisComponent in GetReadyComponents:
 # set up handler to look after randomisation of conditions etc
 Practice = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions(u'AntonymsTest - Sheet1.csv', selection=[1,2,3,4]),
+    trialList=data.importConditions('AntonymsTest - Sheet1.csv', selection=u'[1,2,3,4]'),
     seed=None, name='Practice')
 thisExp.addLoop(Practice)  # add the loop to the experiment
 thisPractice = Practice.trialList[0]  # so we can initialise stimuli with some values
@@ -365,13 +375,16 @@ for thisPractice in Practice:
     continueRoutine = True
     # update component parameters for each repeat
     TestWord.setText(Word)
-    Resp1.setText(Choice1)
-    Resp2.setText(Choice2)
-    Resp3.setText(Choice3)
-    Resp4.setText(Choice4)
-    key_resp_2 = event.BuilderKeyResponse()
+    Resp1.setText('1) %s'%(Choice1))
+    Resp2.setText('2) %s'%(Choice2))
+    Resp3.setText('3) %s'%(Choice3))
+    Resp4.setText('4) %s'%(Choice4))
+    #Resp2.setText(Choice2)
+    #Resp3.setText(Choice3)
+    #Resp4.setText(Choice4)
+    resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trialComponents = [polygon, TestWord, Resp1, Resp2, Resp3, Resp4, key_resp_2]
+    trialComponents = [polygon, TestWord, Resp1, Resp2, Resp3, Resp4, resp]
     for thisComponent in trialComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -425,29 +438,29 @@ for thisPractice in Practice:
             Resp4.frameNStart = frameN  # exact frame index
             Resp4.setAutoDraw(True)
         
-        # *key_resp_2* updates
-        if t >= 0.0 and key_resp_2.status == NOT_STARTED:
+        # *resp* updates
+        if t >= 0.0 and resp.status == NOT_STARTED:
             # keep track of start time/frame for later
-            key_resp_2.tStart = t
-            key_resp_2.frameNStart = frameN  # exact frame index
-            key_resp_2.status = STARTED
+            resp.tStart = t
+            resp.frameNStart = frameN  # exact frame index
+            resp.status = STARTED
             # keyboard checking is just starting
-            win.callOnFlip(key_resp_2.clock.reset)  # t=0 on next screen flip
+            win.callOnFlip(resp.clock.reset)  # t=0 on next screen flip
             event.clearEvents(eventType='keyboard')
-        if key_resp_2.status == STARTED:
+        if resp.status == STARTED:
             theseKeys = event.getKeys(keyList=['1', '2', '3', '4'])
             
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
             if len(theseKeys) > 0:  # at least one key was pressed
-                key_resp_2.keys = theseKeys[-1]  # just the last key pressed
-                key_resp_2.rt = key_resp_2.clock.getTime()
+                resp.keys = theseKeys[-1]  # just the last key pressed
+                resp.rt = resp.clock.getTime()
                 # was this 'correct'?
-                if (key_resp_2.keys == str(Corr)) or (key_resp_2.keys == Corr):
-                    key_resp_2.corr = 1
+                if (resp.keys == str(Corr)) or (resp.keys == Corr):
+                    resp.corr = 1
                 else:
-                    key_resp_2.corr = 0
+                    resp.corr = 0
                 # a response ends the routine
                 continueRoutine = False
         
@@ -473,20 +486,79 @@ for thisPractice in Practice:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     # check responses
-    if key_resp_2.keys in ['', [], None]:  # No response was made
-        key_resp_2.keys=None
+    if resp.keys in ['', [], None]:  # No response was made
+        resp.keys=None
         # was no response the correct answer?!
         if str(Corr).lower() == 'none':
-           key_resp_2.corr = 1  # correct non-response
+           resp.corr = 1  # correct non-response
         else:
-           key_resp_2.corr = 0  # failed to respond (incorrectly)
+           resp.corr = 0  # failed to respond (incorrectly)
     # store data for Practice (TrialHandler)
-    Practice.addData('key_resp_2.keys',key_resp_2.keys)
-    Practice.addData('key_resp_2.corr', key_resp_2.corr)
-    if key_resp_2.keys != None:  # we had a response
-        Practice.addData('key_resp_2.rt', key_resp_2.rt)
+    Practice.addData('resp.keys',resp.keys)
+    Practice.addData('resp.corr', resp.corr)
+    if resp.keys != None:  # we had a response
+        Practice.addData('resp.rt', resp.rt)
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
+    
+    # ------Prepare to start Routine "Feedback"-------
+    t = 0
+    FeedbackClock.reset()  # clock
+    frameN = -1
+    continueRoutine = True
+    routineTimer.add(1.500000)
+    # update component parameters for each repeat
+    if resp.corr:#stored on last run routine
+      msg="Correct!"
+    else:
+      msg="Oops! That was wrong"
+    text_3.setText(msg)
+    # keep track of which components have finished
+    FeedbackComponents = [text_3]
+    for thisComponent in FeedbackComponents:
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    
+    # -------Start Routine "Feedback"-------
+    while continueRoutine and routineTimer.getTime() > 0:
+        # get current time
+        t = FeedbackClock.getTime()
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        
+        # *text_3* updates
+        if t >= 0.0 and text_3.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            text_3.tStart = t
+            text_3.frameNStart = frameN  # exact frame index
+            text_3.setAutoDraw(True)
+        frameRemains = 0.0 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
+        if text_3.status == STARTED and t >= frameRemains:
+            text_3.setAutoDraw(False)
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in FeedbackComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # check for quit (the Esc key)
+        if endExpNow or event.getKeys(keyList=["escape"]):
+            core.quit()
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # -------Ending Routine "Feedback"-------
+    for thisComponent in FeedbackComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    
     
     # ------Prepare to start Routine "ITI"-------
     t = 0
@@ -549,16 +621,16 @@ t = 0
 ShortInstrClock.reset()  # clock
 frameN = -1
 continueRoutine = True
-routineTimer.add(5.000000)
 # update component parameters for each repeat
+key_resp_2 = event.BuilderKeyResponse()
 # keep track of which components have finished
-ShortInstrComponents = [Instruct]
+ShortInstrComponents = [Instruct, key_resp_2]
 for thisComponent in ShortInstrComponents:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
 
 # -------Start Routine "ShortInstr"-------
-while continueRoutine and routineTimer.getTime() > 0:
+while continueRoutine:
     # get current time
     t = ShortInstrClock.getTime()
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
@@ -570,9 +642,27 @@ while continueRoutine and routineTimer.getTime() > 0:
         Instruct.tStart = t
         Instruct.frameNStart = frameN  # exact frame index
         Instruct.setAutoDraw(True)
-    frameRemains = 0.0 + 5- win.monitorFramePeriod * 0.75  # most of one frame period left
-    if Instruct.status == STARTED and t >= frameRemains:
-        Instruct.setAutoDraw(False)
+    
+    # *key_resp_2* updates
+    if t >= 0.0 and key_resp_2.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        key_resp_2.tStart = t
+        key_resp_2.frameNStart = frameN  # exact frame index
+        key_resp_2.status = STARTED
+        # keyboard checking is just starting
+        win.callOnFlip(key_resp_2.clock.reset)  # t=0 on next screen flip
+        event.clearEvents(eventType='keyboard')
+    if key_resp_2.status == STARTED:
+        theseKeys = event.getKeys()
+        
+        # check for quit:
+        if "escape" in theseKeys:
+            endExpNow = True
+        if len(theseKeys) > 0:  # at least one key was pressed
+            key_resp_2.keys = theseKeys[-1]  # just the last key pressed
+            key_resp_2.rt = key_resp_2.clock.getTime()
+            # a response ends the routine
+            continueRoutine = False
     
     # check if all components have finished
     if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -595,6 +685,15 @@ while continueRoutine and routineTimer.getTime() > 0:
 for thisComponent in ShortInstrComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
+# check responses
+if key_resp_2.keys in ['', [], None]:  # No response was made
+    key_resp_2.keys=None
+thisExp.addData('key_resp_2.keys',key_resp_2.keys)
+if key_resp_2.keys != None:  # we had a response
+    thisExp.addData('key_resp_2.rt', key_resp_2.rt)
+thisExp.nextEntry()
+# the Routine "ShortInstr" was not non-slip safe, so reset the non-slip timer
+routineTimer.reset()
 
 # ------Prepare to start Routine "GetReady"-------
 t = 0
@@ -651,7 +750,7 @@ for thisComponent in GetReadyComponents:
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('AntonymsTest - Sheet1.csv'),
+    trialList=data.importConditions('AntonymsTest - Sheet1.csv', selection=u'[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]'),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -678,9 +777,9 @@ for thisTrial in trials:
     Resp2.setText(Choice2)
     Resp3.setText(Choice3)
     Resp4.setText(Choice4)
-    key_resp_2 = event.BuilderKeyResponse()
+    resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trialComponents = [polygon, TestWord, Resp1, Resp2, Resp3, Resp4, key_resp_2]
+    trialComponents = [polygon, TestWord, Resp1, Resp2, Resp3, Resp4, resp]
     for thisComponent in trialComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -734,29 +833,29 @@ for thisTrial in trials:
             Resp4.frameNStart = frameN  # exact frame index
             Resp4.setAutoDraw(True)
         
-        # *key_resp_2* updates
-        if t >= 0.0 and key_resp_2.status == NOT_STARTED:
+        # *resp* updates
+        if t >= 0.0 and resp.status == NOT_STARTED:
             # keep track of start time/frame for later
-            key_resp_2.tStart = t
-            key_resp_2.frameNStart = frameN  # exact frame index
-            key_resp_2.status = STARTED
+            resp.tStart = t
+            resp.frameNStart = frameN  # exact frame index
+            resp.status = STARTED
             # keyboard checking is just starting
-            win.callOnFlip(key_resp_2.clock.reset)  # t=0 on next screen flip
+            win.callOnFlip(resp.clock.reset)  # t=0 on next screen flip
             event.clearEvents(eventType='keyboard')
-        if key_resp_2.status == STARTED:
+        if resp.status == STARTED:
             theseKeys = event.getKeys(keyList=['1', '2', '3', '4'])
             
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
             if len(theseKeys) > 0:  # at least one key was pressed
-                key_resp_2.keys = theseKeys[-1]  # just the last key pressed
-                key_resp_2.rt = key_resp_2.clock.getTime()
+                resp.keys = theseKeys[-1]  # just the last key pressed
+                resp.rt = resp.clock.getTime()
                 # was this 'correct'?
-                if (key_resp_2.keys == str(Corr)) or (key_resp_2.keys == Corr):
-                    key_resp_2.corr = 1
+                if (resp.keys == str(Corr)) or (resp.keys == Corr):
+                    resp.corr = 1
                 else:
-                    key_resp_2.corr = 0
+                    resp.corr = 0
                 # a response ends the routine
                 continueRoutine = False
         
@@ -782,18 +881,18 @@ for thisTrial in trials:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     # check responses
-    if key_resp_2.keys in ['', [], None]:  # No response was made
-        key_resp_2.keys=None
+    if resp.keys in ['', [], None]:  # No response was made
+        resp.keys=None
         # was no response the correct answer?!
         if str(Corr).lower() == 'none':
-           key_resp_2.corr = 1  # correct non-response
+           resp.corr = 1  # correct non-response
         else:
-           key_resp_2.corr = 0  # failed to respond (incorrectly)
+           resp.corr = 0  # failed to respond (incorrectly)
     # store data for trials (TrialHandler)
-    trials.addData('key_resp_2.keys',key_resp_2.keys)
-    trials.addData('key_resp_2.corr', key_resp_2.corr)
-    if key_resp_2.keys != None:  # we had a response
-        trials.addData('key_resp_2.rt', key_resp_2.rt)
+    trials.addData('resp.keys',resp.keys)
+    trials.addData('resp.corr', resp.corr)
+    if resp.keys != None:  # we had a response
+        trials.addData('resp.rt', resp.rt)
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
@@ -904,6 +1003,7 @@ while continueRoutine and routineTimer.getTime() > 0:
 for thisComponent in ThankYouComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
+
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
 thisExp.saveAsPickle(filename)
