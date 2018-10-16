@@ -5,8 +5,37 @@ import sys
 import time
 import wx
 
-# BUG, praftice discard piles need to be emptied before the real thing
+# #################
+# Store info about the experiment session
+expName = u'WCST'  # from the Builder filename that created this script
+task = ''
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
 
+expInfo['date'] = data.getDateStr()  # add a simple timestamp
+expInfo['expName'] = expName
+if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
+    expInfo['Participant ID'] = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
+
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
+# Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+
+# #################
 #V Load up the Card Order
 FileName = '../WCST/CardOrder.csv'
 CardOrder = np.genfromtxt(FileName, delimiter=',')
@@ -74,7 +103,7 @@ class Experiment():
         #myDlg.show()#show dialog and wait for OK or Cancel
         #vpInfo = myDlg.data
         #self.vp = vpInfo[0]
-        self.win = visual.Window(size=SZ,units='deg',fullscr=False,monitor=MON)
+        self.win = visual.Window(size=SZ,units='deg',fullscr=True,monitor=MON)
         self.mouse = event.Mouse(True,None,self.win)
         self.cards = []
         self.elems = []
@@ -409,15 +438,15 @@ SPOS = [[[0,0],[np.nan,np.nan],[np.nan,np.nan],[np.nan,np.nan]],
 #            os.mkdir(OutDir)
 #        Tag = '1'
 #print(PartDataFolder)
-PartDataFolder = '../../data'
+# PartDataFolder = '../../data'
 #filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-filename = os.path.join(PartDataFolder,'text.csv')
+#filename = os.path.join(PartDataFolder,'text.csv')
 
 E = Experiment()
 E.output = open(filename, 'w')
 E.output.write('TrialNum,Card,Rule,RespTime,Correct\n') 
 E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
-E.run(num_trials=2, rule_delta=3)
+E.run(num_trials=12, rule_delta=3)
 
 E = Experiment()
 E.output = open(filename, 'a')
