@@ -33,11 +33,13 @@ Col2 = Left + ColWidth
 Col3 = Left + 2*ColWidth
 Col4 = Left + 3*ColWidth
 Col5 = Left + 4*ColWidth
+Col6 = Left + 5*ColWidth
+NColForBox = 6
 class Mywin(wx.Frame): 
    def __init__(self, parent, title): 
     # size = (width, height)
     # Create the GUI window
-      super(Mywin, self).__init__(parent, title = title,size = (600,600))  
+      super(Mywin, self).__init__(parent, title = title,size = (800,600))  
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
       self.DataFolder = "../../data"
@@ -66,7 +68,7 @@ class Mywin(wx.Frame):
       
       
       # Box
-      Row1Box = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,CurrentRow-5))
+      Row1Box = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
       self.cbR1C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
       self.cbR1C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
@@ -74,7 +76,7 @@ class Mywin(wx.Frame):
       
       # #### Row 
       CurrentRow = Row3
-      self.titleR2 = wx.StaticText(self.panel, -1, label = "WCST", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+      self.titleR2 = wx.StaticText(self.panel, -1, label = "Card Sort", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
       self.btnR2C2 = wx.Button(self.panel,-1,"WCST", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR2C2.Bind(wx.EVT_BUTTON,self.OnClickedR2C2) 
@@ -83,15 +85,15 @@ class Mywin(wx.Frame):
 #      self.btnR2C4 = wx.Button(panel,-1,"Demo", pos = (Col4,Row2), size = ((ButtonWidth, ButtonHeight))) 
 #      self.btnR2C4.Bind(wx.EVT_BUTTON,self.OnClickedR2C4) 
       # Box
-      Row1BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,CurrentRow-5))
+      Row1BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
       self.cbR2C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
 #      self.cbR2C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row2))
 #      self.cbR2C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row2))
-
+# ###################
       CurrentRow = Row4
 #      # #### Row 3
-      self.titleR3 = wx.StaticText(self.panel, -1, label = "VSTM", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+      self.titleR3 = wx.StaticText(self.panel, -1, label = "Spatial/Dots", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
       self.btnR3C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2) 
@@ -100,11 +102,35 @@ class Mywin(wx.Frame):
       self.btnR3C4 = wx.Button(self.panel,-1,"Block", pos = (Col4,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
 #      # Box
-      Row1BoxR3 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*5,RowWidth-5), pos = (Col1,CurrentRow-5))
+      Row1BoxR3 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
       self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
       self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
       self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (Col4 + ButtonWidth+5,CurrentRow))
+# ###################
+      CurrentRow = Row5
+#      # #### Row 3
+      self.titleR5 = wx.StaticText(self.panel, -1, label = "DMS/Letters", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+#      # Buttons
+      self.btnR5C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR5C2.Bind(wx.EVT_BUTTON,self.OnClickedR5C2) 
+      self.btnR5C3 = wx.Button(self.panel,-1,"Stair", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR5C3.Bind(wx.EVT_BUTTON,self.OnClickedR5C3) 
+      # Text box for the capacity value
+      self.txtR5C4 = wx.StaticText(self.panel, -1, label = "Cap =", pos = (Col4+10,CurrentRow+LabelOffset))
+      self.txtR5C5 = wx.StaticText(self.panel, -1, label = "0000000", pos = (Col5-ColWidth/2+5,CurrentRow+LabelOffset))  
+      self.btnR5C5 = wx.Button(self.panel,-1,"Load", pos = (Col5+20,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      Row5BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (Col4,CurrentRow-5))
+      
+      self.btnR5C6 = wx.Button(self.panel,-1,"Block", pos = (Col6,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR5C6.Bind(wx.EVT_BUTTON,self.OnClickedR5C6) 
+#      # Box
+      Row1BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
+      # Checkboxes
+      self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
+      self.cbR5C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
+      self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (Col6 + ButtonWidth+5,CurrentRow))
+
 # ##########
       self.btnClose = wx.Button(self.panel,-1,"Close", pos = (Col1,Row8), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
@@ -152,6 +178,21 @@ class Mywin(wx.Frame):
         OutList = VSTMList[str(Limit)]
         OutList = ' '.join(str(e) for e in OutList)
         return OutList   
+   
+   def CreateDMSList6(self, DMSCapacity):
+        Limit = int(round(float(DMSCapacity) + 1))
+        if Limit > 9:
+            Limit = 9
+        elif Limit < 6:
+            Limit = 6
+        DMSList = {}
+        DMSList['6']=[1,2,3,4,5,6]
+        DMSList['7']=[1,2,3,5,6,7]
+        DMSList['8']=[1,2,4,5,7,8]
+        DMSList['9']=[1,2,4,6,8,9]    
+        OutList = DMSList[str(Limit)]
+        OutList = ' '.join(str(e) for e in OutList)
+        return OutList
    
    def CheckPartFolder(self):
       PartFolder = os.path.join(self.DataFolder,self.PartID.GetValue())
@@ -277,9 +318,31 @@ class Mywin(wx.Frame):
    def OnClickedR3C4(self, event): 
       btnR3C4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C4Label))
+      VSTMCapacity = 7
+      self.VSTMBlockLoadLevels = self.CreateVSTMList5(VSTMCapacity)
+      print('With a capacity of %0.1f, the load levels will be:'%(VSTMCapacity))
+      print( self.VSTMBlockLoadLevels)
       core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v4.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels])  
       self.cbR3C4.SetValue(True)  
-  
+
+   # Row 5 Functions   
+   def OnClickedR5C2(self, event): 
+      btnR5C2Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR5C2Label))
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSDemo_GUI.py", self.PartID.GetValue(), self.VisitFolderPath])
+      self.cbR5C2.SetValue(True)
+      
+   def OnClickedR5C3(self, event): 
+      btnR5C3Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR5C3Label))
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSStairCase_v3.py", self.PartID.GetValue(), self.VisitFolderPath])
+      self.cbR5C3.SetValue(True)
+      
+   def OnClickedR5C6(self, event): 
+      btnR5C4Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR5C4Label))
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v3.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels])  
+      self.cbR5C4.SetValue(True)  
    
    def CloseGUI(self,event):
         self.Close()
