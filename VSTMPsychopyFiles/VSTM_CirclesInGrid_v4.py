@@ -57,35 +57,46 @@ TotalTrialTime = StimOnTime + RetOnTime + ProbeOnTime + ITITime
 
 countDown = core.CountdownTimer()
 # Store info about the experiment session
-
+# #################
 # Store info about the experiment session
 expName = u'VSTM'  # from the Builder filename that created this script
-expInfo = {'Participant ID':'', 'Session':'001'}
-PartDataFolder = 'unorganized'
-if len(sys.argv) > 2:
+task = 'Block'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
+expInfo['date'] = data.getDateStr()  # add a simple timestamp
+expInfo['expName'] = expName
+if len(sys.argv) > 1:
     #tempFile.write("Entered if clause\n")
     #tempFile.write('%s\n'%(sys.argv[2]))
     expInfo['Participant ID'] = sys.argv[1]
     #tempFile.write('%s\n'%(sys.argv[1]))
     #tempFile.write('%s\n'%(sys.argv[2]))
-    LoadList = sys.argv[2].split(' ')
+
+    PartDataFolder = sys.argv[2]
+    LoadList = sys.argv[3].split(' ')
     LoadList = np.array(LoadList)
     LoadList = LoadList.astype(np.int)
-    PartDataFolder = sys.argv[1]
-    CounterBalFlag = sys.argv[3]
-    Tag = sys.argv[4]
+
+    Tag = '1'
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
         core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
     LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
     LoadList = LoadList.astype(np.int)
-    CounterBalFlag = 'False'
+    
     Tag = '1'
-# I don't think that I want to counterbalance the responses so I will overwrite any flag that is passed
-CounterBalance = False    
-#tempFile.write("Loaded inputs\n")
-expInfo['date'] = data.getDateStr()  # add a simple timestamp
+    PartDataFolder = OutDir
+ 
+# Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+CounterBalFlag = 'False'
+# #################
 
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
@@ -105,12 +116,6 @@ win = visual.Window(
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 #OutDir = '..' + os.sep + '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-
-task = 'block'
-OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-if not os.path.exists(OutDir):
-    os.mkdir(OutDir)
-filename = OutDir + '%s%s%s_%s_%s' % (expName, task, Tag, expInfo['Participant ID'], expInfo['date'])
 
 dataFile = open(filename+'.csv', 'w')
 
