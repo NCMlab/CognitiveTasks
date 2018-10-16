@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Mon Oct 15 15:27:15 2018
+    on Mon Oct 15 15:30:56 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -24,8 +24,6 @@ import sys  # to get file system encoding
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
-
-BaseDir = "../../PatternComparisonImages"
 
 # Store info about the experiment session
 expName = u'PatternComparison'  # from the Builder filename that created this script
