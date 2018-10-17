@@ -99,14 +99,22 @@ class Mywin(wx.Frame):
       self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2) 
       self.btnR3C3 = wx.Button(self.panel,-1,"Stair", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR3C3.Bind(wx.EVT_BUTTON,self.OnClickedR3C3) 
-      self.btnR3C4 = wx.Button(self.panel,-1,"Block", pos = (Col4,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR3C4 = wx.Button(self.panel,-1,"Block", pos = (Col6,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
+      # Text box for the capacity value
+      self.txtR3C4 = wx.StaticText(self.panel, -1, label = "Cap =", pos = (Col4+10,CurrentRow+LabelOffset))
+      self.txtR3C5 = wx.StaticText(self.panel, -1, label = "0000000", pos = (Col5-ColWidth/2+5,CurrentRow+LabelOffset))  
+      self.btnR3C5 = wx.Button(self.panel,-1,"Enter", pos = (Col5+20,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      self.btnR3C5.Bind(wx.EVT_BUTTON, self.OnClickedVSTMCapEnter)
+      # Make a box around the Capacity text and entry buttons
+      Row3BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (Col4,CurrentRow-5))
+
 #      # Box
       Row1BoxR3 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
       self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
       self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
-      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (Col4 + ButtonWidth+5,CurrentRow))
+      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (Col6 + ButtonWidth+5,CurrentRow))
 # ###################
       CurrentRow = Row5
 #      # #### Row 3
@@ -119,7 +127,9 @@ class Mywin(wx.Frame):
       # Text box for the capacity value
       self.txtR5C4 = wx.StaticText(self.panel, -1, label = "Cap =", pos = (Col4+10,CurrentRow+LabelOffset))
       self.txtR5C5 = wx.StaticText(self.panel, -1, label = "0000000", pos = (Col5-ColWidth/2+5,CurrentRow+LabelOffset))  
-      self.btnR5C5 = wx.Button(self.panel,-1,"Load", pos = (Col5+20,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      self.btnR5C5 = wx.Button(self.panel,-1,"Enter", pos = (Col5+20,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      self.btnR5C5.Bind(wx.EVT_BUTTON, self.OnClickedDMSCapEnter)
+      # Make a box around the Capacity text and entry buttons
       Row5BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (Col4,CurrentRow-5))
       
       self.btnR5C6 = wx.Button(self.panel,-1,"Block", pos = (Col6,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -139,7 +149,6 @@ class Mywin(wx.Frame):
       self.Show() 
       self.Fit()  
       
-  
    def DisableAll(self): 
       for child in self.panel.GetChildren():
         # Diable all buttons except the button to enter the participant ID
@@ -156,7 +165,53 @@ class Mywin(wx.Frame):
                 
    def LoadVSTMCapacity(self, event):
       pass
-   
+
+   def ManualEntryCapacity(self,Range):
+        myDlg = gui.Dlg(title=u"NCM Lab", labelButtonOK=' OK ', labelButtonCancel=' Cancel ',)
+        myDlg.addField(u'Capacity:')
+        myDlg.show()  # show dialog and wait for OK or Cancel
+        Capacity = -9999
+        if myDlg.OK:  # then the user pressed OK
+            thisInfo = myDlg.data
+    
+            if (float(thisInfo[0]) >= float(Range[0])) and (float(thisInfo[0]) <= float(Range[1])):
+                print "Capacity = " + str(thisInfo)
+                Capacity = float(thisInfo[0])
+            else:
+                print("Out of Range")
+        else:
+            print("user cancelled")
+        return str(Capacity)
+        
+   def OnClickedVSTMCapEnter(self,event):
+        self.VSTMStairCaseCap = self.ManualEntryCapacity([0.0, 36])
+        self.txtR3C5.SetLabel(self.VSTMStairCaseCap)
+        self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMStairCaseCap)
+
+   def OnClickedDMSCapEnter(self,event):
+        self.DMSStairCaseCap = self.ManualEntryCapacity([0.0, 9])
+        self.txtR5C5.SetLabel(self.DMSStairCaseCap)
+        self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSStairCaseCap)
+
+   def LoadDMSCapacity(self, event):
+        self.DMSStairCB.SetValue(True)
+        expName = 'DMS'
+        task = 'Capacity'
+        Tag = ''
+        dateStr = self.DMSStairCaseDateStr
+        #dateStr = "2017_Jul_27_1536"
+        PartID = self.PartID.GetValue()
+        #fileName = task + PartID + "_"+ dateStr
+        filename = os.path.join(self.VisitFolderPath, '%s_%s_%s_%s_%s.csv' % (PartID,expName, task, Tag, expInfo['date']))
+
+        OutDir = '..' + os.sep + 'data' + os.sep + PartID + os.sep # <<<<<<<<<<<<<
+        CapFile=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, PartID, dateStr),'r') # <<<<<<<<<<<<<
+        self.DMSStairCaseCap = CapFile.read()
+        self.DMSStairCaseCapText.SetLabel(self.DMSStairCaseCap)
+        CapFile.close()
+        #os.Remove(os.path.join("data","CAPACITY_" + fileName + ".txt"))
+        self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSStairCaseCap)
+
    def CreateVSTMList5(self, VSTMCapacity):
         Limit = int(round(float(VSTMCapacity) + 1))
         if Limit > 15:
@@ -251,7 +306,6 @@ class Mywin(wx.Frame):
         # Add the path name to the GUI
         self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (Col4,Row1))
         
-      
    def OnCickPartEntry(self, event):
       btnName = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnName))
@@ -259,8 +313,7 @@ class Mywin(wx.Frame):
       self.CheckPartFolder()
       self.CheckVisitFolder()
       # Enabale the buttons again
-      self.EnableAll()
-    # Row 1 Functions      
+      self.EnableAll()   
    
    def CreatePartFolder(self):
       os.mkdir(self.PartFolder)
@@ -313,6 +366,7 @@ class Mywin(wx.Frame):
       btnR3C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C3Label))
       core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGridStaircase_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      
       self.cbR3C3.SetValue(True)
       
    def OnClickedR3C4(self, event): 
@@ -337,7 +391,10 @@ class Mywin(wx.Frame):
       print("Label of pressed button = %s"%(btnR5C3Label))
       core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSStairCase_v3.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR5C3.SetValue(True)
-      
+   
+   
+   
+   
    def OnClickedR5C6(self, event): 
       btnR5C4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C4Label))
