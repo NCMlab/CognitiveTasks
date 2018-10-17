@@ -25,15 +25,37 @@ import sys  # to get file system encoding
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
+# #################
 # Store info about the experiment session
-expName = 'PatternComparison'  # from the Builder filename that created this script
-expInfo = {u'session': u'001', u'participant': u''}
+expName = u'Speed'  # from the Builder filename that created this script
+task = 'PatternComp'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
+if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
+    expInfo['Participant ID'] = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
 
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 
+# #################
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
@@ -50,7 +72,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=[1440, 900], fullscr=False, screen=0,
+    size=[1440, 900], fullscr=True, screen=0,
     allowGUI=True, allowStencil=False,
     monitor='testMonitor', color=[1,1,1], colorSpace='rgb',
     blendMode='avg', useFBO=True,
