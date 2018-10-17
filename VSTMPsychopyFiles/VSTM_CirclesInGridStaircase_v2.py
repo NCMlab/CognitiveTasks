@@ -95,7 +95,8 @@ CounterBalFlag = 'False'
 # #################
 dataFile = open(filename+'.csv', 'w')
 # Create the file for the Capacity
-dataFile1=open(os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, 'CAPACITY', Tag, expInfo['date'])),'w')
+CapacityFileName = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, 'CAPACITY', Tag, expInfo['date']))
+dataFile1=open(CapacityFileName+'.csv', 'w')
 
 # Setup the Window
 win = visual.Window(
@@ -504,6 +505,8 @@ print "Number of reversals: %i"%(len(staircase.reversalPoints))
 dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
 dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
 dataFile.close()
+
+
 #staircase.saveAsText(StairCasefileName,delim=',')
 win.close()
 core.quit()    
