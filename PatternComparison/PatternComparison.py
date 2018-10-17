@@ -2,7 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
+<<<<<<< HEAD
     on Mon Oct 15 15:30:56 2018
+=======
+    on Wed Oct 17 15:20:37 2018
+>>>>>>> PutTasksIntoGUI
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -25,6 +29,7 @@ import sys  # to get file system encoding
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
+<<<<<<< HEAD
 # Store info about the experiment session
 expName = u'PatternComparison'  # from the Builder filename that created this script
 expInfo = {u'session': u'001', u'participant': u''}
@@ -34,6 +39,39 @@ expInfo['expName'] = expName
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
 
+=======
+# #################
+# Store info about the experiment session
+expName = u'Speed'  # from the Builder filename that created this script
+task = 'PatternComp'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
+expInfo['date'] = data.getDateStr()  # add a simple timestamp
+expInfo['expName'] = expName
+if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
+    expInfo['Participant ID'] = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
+
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
+# Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+
+# #################
+>>>>>>> PutTasksIntoGUI
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
@@ -50,9 +88,15 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
+<<<<<<< HEAD
     size=[1440, 900], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
     monitor=u'testMonitor', color=[1,1,1], colorSpace='rgb',
+=======
+    size=[1440, 900], fullscr=True, screen=0,
+    allowGUI=True, allowStencil=False,
+    monitor='testMonitor', color=[1,1,1], colorSpace='rgb',
+>>>>>>> PutTasksIntoGUI
     blendMode='avg', useFBO=True,
     units='pix')
 # store frame rate of monitor if we can measure it
@@ -65,19 +109,33 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
+<<<<<<< HEAD
     text=u'You will be presented with two figures. \nIf the figures are the same, press "1". \nIf they are different, press "2".\n\nPress any key to begin.',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=800, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
+=======
+    text='You will be presented with two figures. \nIf the figures are the same, press "1". \nIf they are different, press "2".\n\nPress any key to begin.',
+    font='Arial',
+    pos=(0, 0), height=40, wrapWidth=800, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+>>>>>>> PutTasksIntoGUI
     depth=0.0);
 
 # Initialize components for Routine "PracticeText"
 PracticeTextClock = core.Clock()
 text_4 = visual.TextStim(win=win, name='text_4',
+<<<<<<< HEAD
     text=u'First, will be a few trials with feedback for practice.',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
+=======
+    text='First, will be a few trials with feedback for practice.',
+    font='Arial',
+    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+>>>>>>> PutTasksIntoGUI
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -97,6 +155,7 @@ imageR = visual.ImageStim(
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-1.0)
 Same = visual.TextStim(win=win, name='Same',
+<<<<<<< HEAD
     text=u'"Same"\n 1',
     font=u'Arial',
     pos=(-200, -200), height=40, wrapWidth=None, ori=0, 
@@ -107,6 +166,18 @@ DIfferent = visual.TextStim(win=win, name='DIfferent',
     font=u'Arial',
     pos=(200, -200), height=40, wrapWidth=None, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
+=======
+    text='"Same"\n 1',
+    font='Arial',
+    pos=(-200, -200), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-3.0);
+DIfferent = visual.TextStim(win=win, name='DIfferent',
+    text='"Different"\n 2',
+    font='Arial',
+    pos=(200, -200), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+>>>>>>> PutTasksIntoGUI
     depth=-4.0);
 
 # Initialize components for Routine "Feedback"
@@ -114,9 +185,15 @@ FeedbackClock = core.Clock()
 msg=''
 text_3 = visual.TextStim(win=win, name='text_3',
     text='default text',
+<<<<<<< HEAD
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
+=======
+    font='Arial',
+    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+>>>>>>> PutTasksIntoGUI
     depth=-1.0);
 
 # Initialize components for Routine "CrossHair"
@@ -131,19 +208,33 @@ text = visual.TextStim(win=win, name='text',
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
+<<<<<<< HEAD
     text=u'You will be presented with two figures. \nIf the figures are the same, press "1". \nIf they are different, press "2".\n\nPress any key to begin.',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=800, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
+=======
+    text='You will be presented with two figures. \nIf the figures are the same, press "1". \nIf they are different, press "2".\n\nPress any key to begin.',
+    font='Arial',
+    pos=(0, 0), height=40, wrapWidth=800, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+>>>>>>> PutTasksIntoGUI
     depth=0.0);
 
 # Initialize components for Routine "StartRun"
 StartRunClock = core.Clock()
 text_5 = visual.TextStim(win=win, name='text_5',
+<<<<<<< HEAD
     text=u'You will now begine the real experiment with no feedback.\n\nPress any key to begin.',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
+=======
+    text='You will now begine the real experiment with no feedback.\n\nPress any key to begin.',
+    font='Arial',
+    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+>>>>>>> PutTasksIntoGUI
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -163,6 +254,7 @@ imageR = visual.ImageStim(
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-1.0)
 Same = visual.TextStim(win=win, name='Same',
+<<<<<<< HEAD
     text=u'"Same"\n 1',
     font=u'Arial',
     pos=(-200, -200), height=40, wrapWidth=None, ori=0, 
@@ -173,6 +265,18 @@ DIfferent = visual.TextStim(win=win, name='DIfferent',
     font=u'Arial',
     pos=(200, -200), height=40, wrapWidth=None, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
+=======
+    text='"Same"\n 1',
+    font='Arial',
+    pos=(-200, -200), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-3.0);
+DIfferent = visual.TextStim(win=win, name='DIfferent',
+    text='"Different"\n 2',
+    font='Arial',
+    pos=(200, -200), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+>>>>>>> PutTasksIntoGUI
     depth=-4.0);
 
 # Initialize components for Routine "CrossHair"
@@ -187,10 +291,17 @@ text = visual.TextStim(win=win, name='text',
 # Initialize components for Routine "ThankYou"
 ThankYouClock = core.Clock()
 text_6 = visual.TextStim(win=win, name='text_6',
+<<<<<<< HEAD
     text=u'Thank you',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
+=======
+    text='Thank you',
+    font='Arial',
+    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+>>>>>>> PutTasksIntoGUI
     depth=0.0);
 
 # Create some handy timers
@@ -750,7 +861,11 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 Run = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=-1,
+<<<<<<< HEAD
     trialList=data.importConditions('CognitiveTaskSetupFiles - PCtest.csv', selection=u"['1','2','3']"),
+=======
+    trialList=data.importConditions('CognitiveTaskSetupFiles - PCtest.csv', selection="['1','2','3']"),
+>>>>>>> PutTasksIntoGUI
     seed=None, name='Run')
 thisExp.addLoop(Run)  # add the loop to the experiment
 thisRun = Run.trialList[0]  # so we can initialise stimuli with some values
