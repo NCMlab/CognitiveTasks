@@ -27,16 +27,40 @@ os.chdir(_thisDir)
 
 BaseDir = "../../PatternComparisonImages"
 
+# #################
 # Store info about the experiment session
-expName = u'PatternComparison'  # from the Builder filename that created this script
-expInfo = {u'session': u'001', u'participant': u''}
+expName = u'Speed'  # from the Builder filename that created this script
+task = 'PatternComp'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
+if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
+    expInfo['Participant ID'] = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
 
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
+    PartDataFolder = OutDir
+ 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+CounterBalFlag = 'False'
 
-# An ExperimentHandler isn't essential but helps with data saving
+# ################## An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
@@ -52,7 +76,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=[1440, 900], fullscr=False, screen=0,
+    size=[1440, 900], fullscr=True, screen=0,
     allowGUI=True, allowStencil=False,
     monitor=u'testMonitor', color=[1,1,1], colorSpace='rgb',
     blendMode='avg', useFBO=True,
@@ -104,7 +128,7 @@ Same = visual.TextStim(win=win, name='Same',
     pos=(-200, -200), height=40, wrapWidth=None, ori=0, 
     color=u'black', colorSpace='rgb', opacity=1,
     depth=-3.0);
-DIfferent = visual.TextStim(win=win, name='DIfferent',
+Different = visual.TextStim(win=win, name='Different',
     text=u'"Different"\n 2',
     font=u'Arial',
     pos=(200, -200), height=40, wrapWidth=None, ori=0, 
@@ -776,8 +800,8 @@ for thisRun in Run:
     continueRoutine = True
     routineTimer.add(3.000000)
     # update component parameters for each repeat
-    imageL.setImage(Figure1)
-    imageR.setImage(Figure2)
+    imageL.setImage(os.path.join(BaseDir,Figure1))
+    imageR.setImage(os.path.join(BaseDir,Figure2))
     resp = event.BuilderKeyResponse()
     # keep track of which components have finished
     trialComponents = [imageL, imageR, resp, Same, DIfferent]

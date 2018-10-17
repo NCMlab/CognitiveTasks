@@ -507,7 +507,7 @@ class Mywin(wx.Frame):
    def OnClickedR8C2(self, event):
       btnR8C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR8C2Label))
-      core.shellCall([sys.executable, "../PatternComparison/PatternComparison.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../PatternComparison/PatternComparison_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR8C2.SetValue(True)
    
    
