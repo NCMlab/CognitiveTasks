@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+<PsychoPy2experiment encoding="utf-8" version="1.85.1">
+  <Settings>
+    <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
+    <Param name="color" updates="None" val="$[0,0,0]" valType="str"/>
+    <Param name="colorSpace" updates="None" val="rgb" valType="str"/>
+    <Param name="Experiment info" updates="None" val="{u'session': u'001', u'participant': u''}" valType="code"/>
+    <Param name="JS libs" updates="None" val="packaged" valType="str"/>
+    <Param name="Units" updates="None" val="pix" valType="str"/>
+    <Param name="Save excel file" updates="None" val="False" valType="bool"/>
+    <Param name="Enable Escape" updates="None" val="True" valType="bool"/>
+    <Param name="Save psydat file" updates="None" val="True" valType="bool"/>
+    <Param name="Window size (pixels)" updates="None" val="[1440, 900]" valType="code"/>
+    <Param name="Full-screen window" updates="None" val="False" valType="bool"/>
+    <Param name="blendMode" updates="None" val="avg" valType="str"/>
+    <Param name="Use version" updates="None" val="" valType="str"/>
+    <Param name="HTML path" updates="None" val="html" valType="str"/>
+    <Param name="Save csv file" updates="None" val="False" valType="bool"/>
+    <Param name="OSF Project ID" updates="None" val="" valType="str"/>
+    <Param name="Save log file" updates="None" val="True" valType="bool"/>
+    <Param name="Save wide csv file" updates="None" val="True" valType="bool"/>
+    <Param name="Show mouse" updates="None" val="False" valType="bool"/>
+    <Param name="Data filename" updates="None" val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code"/>
+    <Param name="Show info dlg" updates="None" val="False" valType="bool"/>
+    <Param name="expName" updates="None" val="PaperFolding" valType="str"/>
+    <Param name="logging level" updates="None" val="exp" valType="code"/>
+    <Param name="Screen" updates="None" val="1" valType="num"/>
+  </Settings>
+  <Routines>
+    <Routine name="trial">
+      <ImageComponent name="image">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="image" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(0, 200)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="image" updates="set every repeat" val="$Stimulus" valType="str"/>
+        <Param name="size" updates="set every repeat" val="(-1,-1)" valType="code"/>
+      </ImageComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <LoopInitiator loopType="TrialHandler" name="trials">
+      <Param name="conditionsFile" updates="None" val="../PaperFolding/CognitiveTaskSetupFiles - PaperFold.csv" valType="str"/>
+      <Param name="name" updates="None" val="trials" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="random" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="[{'Stimulus': u'altAfold3.bmp', 'Choice5': u'altAchoice35.bmp', 'Choice1': u'altAchoice31.bmp', 'Choice2': u'altAchoice32.bmp', 'Choice3': u'altAchoice33.bmp', 'Choice4': u'altAchoice34.bmp', 'Corr': 1}, {'Stimulus': u'altAfold8.bmp', 'Choice5': u'altAchoice85.bmp', 'Choice1': u'altAchoice81.bmp', 'Choice2': u'altAchoice82.bmp', 'Choice3': u'altAchoice83.bmp', 'Choice4': u'altAchoice84.bmp', 'Corr': 1}, {'Stimulus': u'altBfold1.bmp', 'Choice5': u'altBchoice15.bmp', 'Choice1': u'altBchoice11.bmp', 'Choice2': u'altBchoice12.bmp', 'Choice3': u'altBchoice13.bmp', 'Choice4': u'altBchoice14.bmp', 'Corr': 1}, {'Stimulus': u'altBfold2.bmp', 'Choice5': u'altBchoice25.bmp', 'Choice1': u'altBchoice21.bmp', 'Choice2': u'altBchoice22.bmp', 'Choice3': u'altBchoice23.bmp', 'Choice4': u'altBchoice24.bmp', 'Corr': 1}, {'Stimulus': u'altBfold3.bmp', 'Choice5': u'altBchoice35.bmp', 'Choice1': u'altBchoice31.bmp', 'Choice2': u'altBchoice32.bmp', 'Choice3': u'altBchoice33.bmp', 'Choice4': u'altBchoice34.bmp', 'Corr': 1}, {'Stimulus': u'altBfold4.bmp', 'Choice5': u'altBchoice45.bmp', 'Choice1': u'altBchoice41.bmp', 'Choice2': u'altBchoice42.bmp', 'Choice3': u'altBchoice43.bmp', 'Choice4': u'altBchoice44.bmp', 'Corr': 1}, {'Stimulus': u'altBfold5.bmp', 'Choice5': u'altBchoice55.bmp', 'Choice1': u'altBchoice51.bmp', 'Choice2': u'altBchoice52.bmp', 'Choice3': u'altBchoice53.bmp', 'Choice4': u'altBchoice54.bmp', 'Corr': 1}, {'Stimulus': u'altBfold6.bmp', 'Choice5': u'altBchoice65.bmp', 'Choice1': u'altBchoice61.bmp', 'Choice2': u'altBchoice62.bmp', 'Choice3': u'altBchoice63.bmp', 'Choice4': u'altBchoice64.bmp', 'Corr': 1}, {'Stimulus': u'altBfold7.bmp', 'Choice5': u'altBchoice75.bmp', 'Choice1': u'altBchoice71.bmp', 'Choice2': u'altBchoice72.bmp', 'Choice3': u'altBchoice73.bmp', 'Choice4': u'altBchoice74.bmp', 'Corr': 1}, {'Stimulus': u'altBfold8.bmp', 'Choice5': u'altBchoice85.bmp', 'Choice1': u'altBchoice81.bmp', 'Choice2': u'altBchoice82.bmp', 'Choice3': u'altBchoice83.bmp', 'Choice4': u'altBchoice84.bmp', 'Corr': 1}, {'Stimulus': u'altBfold9.bmp', 'Choice5': u'altBchoice95.bmp', 'Choice1': u'altBchoice91.bmp', 'Choice2': u'altBchoice92.bmp', 'Choice3': u'altBchoice93.bmp', 'Choice4': u'altBchoice94.bmp', 'Corr': 1}, {'Stimulus': u'altBfold10.bmp', 'Choice5': u'altBchoice105.bmp', 'Choice1': u'altBchoice101.bmp', 'Choice2': u'altBchoice102.bmp', 'Choice3': u'altBchoice103.bmp', 'Choice4': u'altBchoice104.bmp', 'Corr': 1}, {'Stimulus': u'altBfold11.bmp', 'Choice5': u'altBchoice115.bmp', 'Choice1': u'altBchoice111.bmp', 'Choice2': u'altBchoice112.bmp', 'Choice3': u'altBchoice113.bmp', 'Choice4': u'altBchoice114.bmp', 'Corr': 1}, {'Stimulus': u'altBfold12.bmp', 'Choice5': u'altBchoice125.bmp', 'Choice1': u'altBchoice121.bmp', 'Choice2': u'altBchoice122.bmp', 'Choice3': u'altBchoice123.bmp', 'Choice4': u'altBchoice124.bmp', 'Corr': 1}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="trial"/>
+    <LoopTerminator name="trials"/>
+  </Flow>
+</PsychoPy2experiment>
