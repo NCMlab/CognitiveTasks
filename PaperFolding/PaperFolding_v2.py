@@ -178,7 +178,7 @@ Prac1Feedback = visual.TextStim(win=win, name='Prac1Feedback',
     depth=0.0);
 Prac1Fold = visual.ImageStim(
     win=win, name='Prac1Fold',
-    image=u'altAfold3.bmp', mask=None,
+    image=os.path.join(PaperFoldFolder,'altAfold3.bmp'), mask=None,
     ori=0, pos=(0, 200), size=(556, 144),
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
@@ -201,14 +201,14 @@ Prac2Feedback = visual.TextStim(win=win, name='Prac2Feedback',
     depth=0.0);
 Prac2Fold = visual.ImageStim(
     win=win, name='Prac2Fold',
-    image=u'altAfold8.bmp', mask=None,
+    image=os.path.join(PaperFoldFolder,'altAfold8.bmp'), mask=None,
     ori=0, pos=(0, 200), size=(556, 144),
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-1.0)
 Prac2Choice = visual.ImageStim(
     win=win, name='Prac2Choice',
-    image=u'altAchoice82.bmp', mask=None,
+    image=os.path.join(PaperFoldFolder,'altAchoice82.bmp'), mask=None,
     ori=0, pos=(-175, -75), size=(150, 150),
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
@@ -417,8 +417,6 @@ for thisTrial in trials:
             CFig5.tStart = t
             CFig5.frameNStart = frameN  # exact frame index
             CFig5.setAutoDraw(True)
-        if CFig5.status == STARTED:  # only update if drawing
-            CFig5.setImage(Choice5, log=False)
         
         # *Opt1* updates
         if t >= 0.0 and Opt1.status == NOT_STARTED:
@@ -524,7 +522,7 @@ for thisTrial in trials:
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
-    Prac1Choice.setImage(u'altAchoice32.bmp')
+    Prac1Choice.setImage(os.path.join(PaperFoldFolder,'altAchoice32.bmp'))
     Prac1End = event.BuilderKeyResponse()
     # keep track of which components have finished
     Feedback1Components = [Prac1Feedback, Prac1Fold, Prac1Choice, Prac1End]
@@ -759,8 +757,6 @@ for thisTrial_3 in trials_3:
             CFig5.tStart = t
             CFig5.frameNStart = frameN  # exact frame index
             CFig5.setAutoDraw(True)
-        if CFig5.status == STARTED:  # only update if drawing
-            CFig5.setImage(Choice5, log=False)
         
         # *Opt1* updates
         if t >= 0.0 and Opt1.status == NOT_STARTED:
@@ -1232,8 +1228,6 @@ for thisTrial_2 in trials_2:
             CFig5.tStart = t
             CFig5.frameNStart = frameN  # exact frame index
             CFig5.setAutoDraw(True)
-        if CFig5.status == STARTED:  # only update if drawing
-            CFig5.setImage(Choice5, log=False)
         
         # *Opt1* updates
         if t >= 0.0 and Opt1.status == NOT_STARTED:

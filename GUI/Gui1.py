@@ -46,6 +46,7 @@ class Mywin(wx.Frame):
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
       self.DataFolder = "../../data"
+      self.DataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
       self.VisitFolderPath = 'empty'
       # Setup the Participant ID entry
       self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Participant ID:", pos = (Col1,Row1))
