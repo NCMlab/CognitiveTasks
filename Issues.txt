@@ -1,0 +1,15 @@
+Stroop word does not run.
+Stroop instruction need better formatting
+Can I decrease the number of trials for color and word Stroop?
+
+Add thank you screen to end of the WCST
+
+Digit span does not finish properly and it Hangs the whole program
+It also writes one output file per trial
+
+Paper folding does not run
+
+DMS all do not run
+
+VSTM output file format is wrong
+
