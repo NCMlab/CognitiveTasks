@@ -56,7 +56,8 @@ class Mywin(wx.Frame):
       self.FRTBlockLoadLevels = '0.0 0.125 0.25 0.375 0.5'
       self.DMSBlockLoadLevels = '1 3 5 6 7'
       self.VSTMBlockLoadLevels = '1 2 3 4 5'     
-      
+      self.DMSFontSize = '60'
+      self.DMSTag = 0
       # #### Row 
       # STROOP
       CurrentRow = Row2
@@ -474,20 +475,22 @@ class Mywin(wx.Frame):
    def OnClickedR5C2(self, event): 
       btnR5C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C2Label))
-      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSDemo_GUI.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSDemo_GUI_v2.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSFontSize])
       self.cbR5C2.SetValue(True)
       
    def OnClickedR5C3(self, event): 
       btnR5C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C3Label))
-      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSStairCase_v3.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSStairCase_v4.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSFontSize])
       self.cbR5C3.SetValue(True)
    
    def OnClickedR5C6(self, event): 
-      btnR5C4Label = event.GetEventObject().GetLabel() 
-      print("Label of pressed button = %s"%(btnR5C4Label))
-      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v3.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels])  
-      self.cbR5C4.SetValue(True)  
+      # Use the tag to keep track of the run number
+      self.DMSTag = self.DMSTag + 1
+      btnR5C6Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR5C6Label))
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'Run%d'%(self.DMSTag)])  
+      self.cbR5C6.SetValue(True)  
    
    def OnClickedR6C2(self, event):
       btnR6C2Label = event.GetEventObject().GetLabel() 

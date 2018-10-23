@@ -30,22 +30,48 @@ def MapLettersToScreen(Stim):
     return(Output)
         
 
-expInfo = {'Max Trials':150, 'Participant ID':'', 'Session':'001'}
-PartDataFolder = 'unorganized'
+# #################
+# Store info about the experiment session
+expName = u'DMS'  # from the Builder filename that created this script
+task = 'Stair'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
+expInfo['date'] = data.getDateStr()  # add a simple timestamp
+expInfo['expName'] = expName
 if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
     expInfo['Participant ID'] = sys.argv[1]
-    PartDataFolder = sys.argv[1]
-    FontSize = int(sys.argv[2])
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
+
+    PartDataFolder = sys.argv[2]
+    FontSize= int(sys.argv[3])
+    Tag = '1'
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
-    FontSize = 60
     if dlg.OK == False:
         core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
+    FontSize = 60
+    PartDataFolder = OutDir
+ 
+# Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+CounterBalFlag = 'False'
+
+# #################    
+    
     
 task = 'DMSstair_'
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = task
-
+expInfo['Max Trials'] = 150
 
 #make a text file to save data
 #fileName = expInfo['expName'] + expInfo['Participant ID'] + "_"+ expInfo['date']
