@@ -2,11 +2,9 @@
 # -*- coding: utf-8 -*-
 """ 
 I need to add instructions and a pause at the beginning of this task along with some practive trials
-"""
 
 
 
-"""
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
     on Thu Oct  4 11:53:30 2018
 If you publish work using this script please cite the PsychoPy publications:
@@ -80,9 +78,16 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
 
+TrialDuration = 1.0
+RespDuration = 6
+ITI = 1
+corr = 1
+resp = event.BuilderKeyResponse()
+routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
+
 # Setup the Window
 win = visual.Window(
-    size=[800, 600], fullscr=True, screen=0,
+    size=[1200, 800], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
@@ -131,12 +136,77 @@ CorrectSound.setVolume(1)
 IncorrectSound = sound.Sound('NumberSounds/incorrect.wav', secs = -1)
 IncorrectSound.setVolume(1)
 
+Instruct1text = 'You are going to hear some numbers, when the list ends, I want you to say them backward.\n\nPress any key to play the practice numbers.'
+
+Instruct1 = visual.TextStim(win=win, name='Instruct1',
+    text=Instruct1text,
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-9.0);
 Answer = visual.TextStim(win=win, name='Answer',
     text='+',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='black', colorSpace='rgb', opacity=1,
     depth=-9.0);
+Instruct1.setAutoDraw(True)
+win.flip()
+
+WaitingForResponseFlag = True
+while WaitingForResponseFlag:
+    theseKeys = event.getKeys()
+            
+        # check for quit:
+    if "escape" in theseKeys:
+        thisExp.abort()  # or data files will save again on exit
+        win.close()
+        core.quit()
+    if len(theseKeys) > 0:  # at least one key was pressed
+        WaitingForResponseFlag = False
+        break
+    else:
+        pass
+Instruct1.setAutoDraw(False)        
+win.flip()
+# Create a list of three numbers
+R = np.random.permutation(3) + 1
+Answer.text = 'Ask the person to repeat the three digits backwards.\nThe person should repeat: %s\n\nPress any key to start the actual experiment.'%(R[::-1])
+# cycle over the numbers and play them
+for i in range(3):
+    countDown.reset()    
+    countDown.add(TrialDuration)
+    #print('index: %d, Number: %d'%(i,R[i]))
+    Index = R[i]-1
+    SoundFileList[Index].play()
+    #sound_1.play()  # start the sound (it finishes automatically)
+    # store data for Stairs (StairHandler)
+    while countDown.getTime() > 0:
+        pass        
+    
+    event.clearEvents(eventType='keyboard')
+# -------Start Routine "trial"-------
+Answer.setAutoDraw(True)
+win.flip()
+WaitingForResponseFlag = True
+while WaitingForResponseFlag:
+    theseKeys = event.getKeys()
+            
+        # check for quit:
+    if "escape" in theseKeys:
+        thisExp.abort()  # or data files will save again on exit
+        win.close()
+        core.quit()
+    if len(theseKeys) > 0:  # at least one key was pressed
+        WaitingForResponseFlag = False
+        break
+    else:
+        pass
+Answer.setAutoDraw(False)        
+win.flip()
+
+
+
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
@@ -155,12 +225,6 @@ Stairs = data.StairHandler(startVal=2, extraInfo=expInfo,
 thisExp.addLoop(Stairs)  # add the loop to the experiment
 level = thisStair = 3  # initialise some vals
 
-TrialDuration = 1.5
-RespDuration = 6
-ITI = 1
-corr = 1
-resp = event.BuilderKeyResponse()
-routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 count = 1
 for thisStair in Stairs:
     resp.keys = []
@@ -171,9 +235,11 @@ for thisStair in Stairs:
     # Generate the number list
     # Generate random numbers and make sure no consecutive numbers are the same
     Flag = True
-    while Flag:
-        R = np.random.randint(1,10,level)
-        Flag = any(np.diff(R) == 0)
+    # Change the random numbers to all be different
+    R = np.random.permutation(level) + 1
+    #while Flag:
+    #    R = np.random.randint(1,10,level)
+    #    Flag = any(np.diff(R) == 0)
     print(R)    
     Answer.text = 'Backward: %s'%(R[::-1])
     # cycle over the numbers and play them
@@ -195,8 +261,6 @@ for thisStair in Stairs:
 
     WaitingForResponseFlag = True
     while WaitingForResponseFlag:
-        
-
         theseKeys = event.getKeys()
             
         # check for quit:

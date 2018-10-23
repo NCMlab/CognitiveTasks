@@ -1,6 +1,10 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-"""
+""" 
+I need to add instructions and a pause at the beginning of this task along with some practive trials
+
+
+
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
     on Thu Oct  4 11:53:30 2018
 If you publish work using this script please cite the PsychoPy publications:
@@ -28,15 +32,40 @@ FontSizeUnits = 'pix'
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
+# #################
 # Store info about the experiment session
-expName = 'ForwardDigitSpan'  # from the Builder filename that created this script
-expInfo = {u'session': u'001', u'participant': u''}
+expName = u'DigitSpan'  # from the Builder filename that created this script
+task = 'Forward'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
+if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
+    expInfo['Participant ID'] = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
 
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
+    PartDataFolder = OutDir
+ 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+CounterBalFlag = 'False'
 
+# #################
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
@@ -49,9 +78,16 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
 
+TrialDuration = 1.0
+RespDuration = 6
+ITI = 1
+corr = 1
+resp = event.BuilderKeyResponse()
+routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
+
 # Setup the Window
 win = visual.Window(
-    size=[800, 600], fullscr=False, screen=0,
+    size=[1200, 800], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
@@ -100,12 +136,77 @@ CorrectSound.setVolume(1)
 IncorrectSound = sound.Sound('NumberSounds/incorrect.wav', secs = -1)
 IncorrectSound.setVolume(1)
 
+Instruct1text = 'You are going to hear some numbers, when the list ends, I want you to say them as your heard them.\n\nPress any key to play the practice numbers.'
+
+Instruct1 = visual.TextStim(win=win, name='Instruct1',
+    text=Instruct1text,
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-9.0);
 Answer = visual.TextStim(win=win, name='Answer',
     text='+',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='black', colorSpace='rgb', opacity=1,
     depth=-9.0);
+Instruct1.setAutoDraw(True)
+win.flip()
+
+WaitingForResponseFlag = True
+while WaitingForResponseFlag:
+    theseKeys = event.getKeys()
+            
+        # check for quit:
+    if "escape" in theseKeys:
+        thisExp.abort()  # or data files will save again on exit
+        win.close()
+        core.quit()
+    if len(theseKeys) > 0:  # at least one key was pressed
+        WaitingForResponseFlag = False
+        break
+    else:
+        pass
+Instruct1.setAutoDraw(False)        
+win.flip()
+# Create a list of three numbers
+R = np.random.permutation(3) + 1
+Answer.text = 'Ask the person to repeat the three digits back as they heard them.\nThe person should repeat: %s\n\nPress any key to start the actual experiment.'%(R)
+# cycle over the numbers and play them
+for i in range(3):
+    countDown.reset()    
+    countDown.add(TrialDuration)
+    #print('index: %d, Number: %d'%(i,R[i]))
+    Index = R[i]-1
+    SoundFileList[Index].play()
+    #sound_1.play()  # start the sound (it finishes automatically)
+    # store data for Stairs (StairHandler)
+    while countDown.getTime() > 0:
+        pass        
+    
+    event.clearEvents(eventType='keyboard')
+# -------Start Routine "trial"-------
+Answer.setAutoDraw(True)
+win.flip()
+WaitingForResponseFlag = True
+while WaitingForResponseFlag:
+    theseKeys = event.getKeys()
+            
+        # check for quit:
+    if "escape" in theseKeys:
+        thisExp.abort()  # or data files will save again on exit
+        win.close()
+        core.quit()
+    if len(theseKeys) > 0:  # at least one key was pressed
+        WaitingForResponseFlag = False
+        break
+    else:
+        pass
+Answer.setAutoDraw(False)        
+win.flip()
+
+
+
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
@@ -124,12 +225,6 @@ Stairs = data.StairHandler(startVal=3, extraInfo=expInfo,
 thisExp.addLoop(Stairs)  # add the loop to the experiment
 level = thisStair = 3  # initialise some vals
 
-TrialDuration = 1.5
-RespDuration = 6
-ITI = 1
-corr = 1
-resp = event.BuilderKeyResponse()
-routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 count = 1
 for thisStair in Stairs:
     resp.keys = []
@@ -140,9 +235,11 @@ for thisStair in Stairs:
     # Generate the number list
     # Generate random numbers and make sure no consecutive numbers are the same
     Flag = True
-    while Flag:
-        R = np.random.randint(1,10,level)
-        Flag = any(np.diff(R) == 0)
+    # Change the random numbers to all be different
+    R = np.random.permutation(level) + 1
+    #while Flag:
+    #    R = np.random.randint(1,10,level)
+    #    Flag = any(np.diff(R) == 0)
     print(R)    
     Answer.text = 'Forward: %s'%(R)
     # cycle over the numbers and play them
@@ -164,8 +261,6 @@ for thisStair in Stairs:
 
     WaitingForResponseFlag = True
     while WaitingForResponseFlag:
-        
-
         theseKeys = event.getKeys()
             
         # check for quit:
