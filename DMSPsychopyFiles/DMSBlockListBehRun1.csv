@@ -1,9 +1,9 @@
 *,*,*,*,G,*,*,*,*,g,left
-*,*,*,*,L,*,*,*,*,l,left
+*,*,*,*,H,*,*,*,*,h,left
 *,*,*,*,X,*,*,*,*,d,down
 *,*,*,*,R,*,*,*,*,r,left
 *,*,*,*,M,*,*,*,*,h,down
-*,*,*,*,X,*,*,*,*,y,down
+*,*,*,*,Y,*,*,*,*,z,down
 *,*,*,M,*,K,*,*,*,v,down
 *,*,*,H,*,R,*,*,*,p,down
 *,*,*,D,*,T,*,*,*,d,left
@@ -26,7 +26,7 @@ Z,*,N,*,R,*,K,*,Y,y,left
 Q,*,G,*,V,*,B,*,M,g,left
 J,*,H,*,N,*,C,*,T,s,down
 K,*,B,*,P,*,G,*,M,r,down
-X,*,Z,*,N,*,L,*,J,l,left
+X,*,Z,*,N,*,L,*,J,n,left
 P,*,M,*,G,*,F,*,K,h,down
 B,Z,M,*,*,*,N,S,J,c,down
 D,F,H,*,*,*,R,P,Q,h,left
@@ -47,7 +47,7 @@ F,K,T,Q,*,Y,Z,N,M,n,left
 B,P,J,G,*,K,H,X,D,v,down
 Z,Y,C,F,*,S,L,K,M,n,down
 P,M,S,Y,L,C,X,K,H,b,down
-J,C,N,Q,V,K,Z,G,T,n,left
+J,C,N,Q,V,K,Z,G,T,c,left
 H,R,M,Y,B,V,P,Q,L,m,left
 D,Y,N,B,X,K,F,Z,T,t,left
 J,R,G,H,M,N,S,Y,V,p,down
