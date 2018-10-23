@@ -515,7 +515,10 @@ class Mywin(wx.Frame):
       pass
    
    def OnClickedR9C2(self, event):
-      pass
+      btnR9C2Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR9C2Label))
+      core.shellCall([sys.executable, "../PaperFolding/PaperFolding_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      self.cbR9C2.SetValue(True)
    
    def CloseGUI(self,event):
         self.Close()

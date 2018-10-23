@@ -7,6 +7,7 @@ Antonyms/data/*.*
 data/*.*
 data/*
 WCST/data/*.*
+*.bmp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

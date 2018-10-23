@@ -11,7 +11,7 @@
     <Param name="Enable Escape" updates="None" val="True" valType="bool"/>
     <Param name="Save psydat file" updates="None" val="True" valType="bool"/>
     <Param name="Window size (pixels)" updates="None" val="[1440, 900]" valType="code"/>
-    <Param name="Full-screen window" updates="None" val="False" valType="bool"/>
+    <Param name="Full-screen window" updates="None" val="True" valType="bool"/>
     <Param name="blendMode" updates="None" val="avg" valType="str"/>
     <Param name="Use version" updates="None" val="" valType="str"/>
     <Param name="HTML path" updates="None" val="html" valType="str"/>
@@ -27,44 +27,589 @@
     <Param name="Screen" updates="None" val="1" valType="num"/>
   </Settings>
   <Routines>
+    <Routine name="GetReady">
+      <TextComponent name="GetReady2">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="GetReady2" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="text" updates="constant" val="Get ready to perform the task with no feedback.&amp;#10;Please try to respond as quickly and accurately as possible.&amp;#10;&amp;#10;Press any key to begin." valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="GetReadyResp">
+        <Param name="correctAns" updates="constant" val="" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="GetReadyResp" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="store" updates="constant" val="last key" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="ThankYou">
+      <TextComponent name="text_2">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="text_2" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="text" updates="constant" val="Thank You" valType="str"/>
+        <Param name="stopVal" updates="constant" val="3" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+    </Routine>
     <Routine name="trial">
       <ImageComponent name="image">
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="flipVert" updates="constant" val="False" valType="bool"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
         <Param name="name" updates="None" val="image" valType="code"/>
         <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
-        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="mask" updates="constant" val="None" valType="str"/>
         <Param name="pos" updates="constant" val="(0, 200)" valType="code"/>
         <Param name="interpolate" updates="constant" val="linear" valType="str"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
         <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="set every repeat" val="$Stimulus" valType="str"/>
+        <Param name="size" updates="set every repeat" val="(556,144)" valType="code"/>
+      </ImageComponent>
+      <ImageComponent name="CFig1">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="CFig1" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(-350, -75)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="set every repeat" val="$Choice1" valType="str"/>
+        <Param name="size" updates="constant" val="(150, 150)" valType="code"/>
+      </ImageComponent>
+      <ImageComponent name="CFig2">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="CFig2" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(-175, -75)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="set every repeat" val="$Choice2" valType="str"/>
+        <Param name="size" updates="constant" val="(150, 150)" valType="code"/>
+      </ImageComponent>
+      <ImageComponent name="CFig3">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="CFig3" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(0, -75)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="set every repeat" val="$Choice3" valType="str"/>
+        <Param name="size" updates="constant" val="(150, 150)" valType="code"/>
+      </ImageComponent>
+      <ImageComponent name="CFig4">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="CFig4" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(175, -75)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="set every repeat" val="$Choice4" valType="str"/>
+        <Param name="size" updates="constant" val="(150, 150)" valType="code"/>
+      </ImageComponent>
+      <ImageComponent name="CFig5">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="CFig5" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(350, -75)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="set every frame" val="$Choice5" valType="str"/>
+        <Param name="size" updates="constant" val="(150,150)" valType="code"/>
+      </ImageComponent>
+      <TextComponent name="Opt1">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Opt1" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(-365, -175)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="text" updates="constant" val="1" valType="str"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="ori" updates="constant" val="0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="image" updates="set every repeat" val="$Stimulus" valType="str"/>
-        <Param name="size" updates="set every repeat" val="(-1,-1)" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+      <TextComponent name="Opt2">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Opt2" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(-190, -175)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="text" updates="constant" val="2" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+      <TextComponent name="Opt3">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Opt3" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, -175)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="text" updates="constant" val="3" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+      <TextComponent name="Opt4">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Opt4" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(190, -175)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="text" updates="constant" val="4" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+      <TextComponent name="OPt5">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="OPt5" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(365, -175)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="text" updates="constant" val="5" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_2">
+        <Param name="correctAns" updates="constant" val="$Corr" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="True" valType="bool"/>
+        <Param name="name" updates="None" val="key_resp_2" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="'1','2','3','4','5'" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="store" updates="constant" val="last key" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="crosshair">
+      <TextComponent name="text">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="text" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="stopVal" updates="constant" val="0.5" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="text" updates="constant" val="+" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="Feedback1">
+      <TextComponent name="Prac1Feedback">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Prac1Feedback" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="600" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(300, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="text" updates="constant" val="Here the correct answer is 2. &amp;#10;The paper is folded over once at a diagonal, starting from the upper right. Then the upper left corner is folded down. Therefore, the  hole punch gores through 4 total sheets symmetrically on each side of the diagonal.&amp;#10;&amp;#10;Press any key to continue." valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="30" valType="code"/>
+      </TextComponent>
+      <ImageComponent name="Prac1Fold">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Prac1Fold" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(0, 200)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="constant" val="altAfold3.bmp" valType="str"/>
+        <Param name="size" updates="constant" val="(556, 144)" valType="code"/>
       </ImageComponent>
+      <ImageComponent name="Prac1Choice">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Prac1Choice" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(-175, -75)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="set every repeat" val="altAchoice32.bmp" valType="str"/>
+        <Param name="size" updates="constant" val="(150,150)" valType="code"/>
+      </ImageComponent>
+      <KeyboardComponent name="Prac1End">
+        <Param name="correctAns" updates="constant" val="" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="Prac1End" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="store" updates="constant" val="last key" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="Feedback2">
+      <TextComponent name="Prac2Feedback">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Prac2Feedback" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="600" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(300, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="text" updates="constant" val="Here the correct answer is 2. The paper is folded from the bottom right corner once, then folded again from the tapered right side. However, the hold punch misses the second fold.&amp;#10;&amp;#10;Press any key to continue." valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="30" valType="code"/>
+      </TextComponent>
+      <ImageComponent name="Prac2Fold">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Prac2Fold" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(0, 200)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="constant" val="altAfold8.bmp" valType="str"/>
+        <Param name="size" updates="constant" val="(556, 144)" valType="code"/>
+      </ImageComponent>
+      <ImageComponent name="Prac2Choice">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Prac2Choice" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(-175, -75)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="image" updates="constant" val="altAchoice82.bmp" valType="str"/>
+        <Param name="size" updates="constant" val="(150, 150)" valType="code"/>
+      </ImageComponent>
+      <KeyboardComponent name="Prac2End">
+        <Param name="correctAns" updates="constant" val="" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="Prac2End" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="store" updates="constant" val="last key" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="Instructions">
+      <TextComponent name="Instruct">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="Instruct" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="wrapWidth" updates="constant" val="1000" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="text" updates="constant" val="Paper Folding&amp;#10;&amp;#10;For this task you will see a drawing of a piece of paper that gets folded multiple times. &amp;#10;After folding, a hole is punched through the paper. &amp;#10;&amp;#10;Decide which of the five options at the bottom of the screen reflects the pattern of holes in the paper once it has been unfolded.&amp;#10;&amp;#10;Press any key to perform practice trials." valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="StartPractice">
+        <Param name="correctAns" updates="constant" val="" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="StartPractice" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="store" updates="constant" val="last key" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
     </Routine>
   </Routines>
   <Flow>
+    <Routine name="Instructions"/>
     <LoopInitiator loopType="TrialHandler" name="trials">
-      <Param name="conditionsFile" updates="None" val="../PaperFolding/CognitiveTaskSetupFiles - PaperFold.csv" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="CognitiveTaskSetupFiles - PaperFold.csv" valType="str"/>
       <Param name="name" updates="None" val="trials" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="[{'Stimulus': u'altAfold3.bmp', 'Choice5': u'altAchoice35.bmp', 'Choice1': u'altAchoice31.bmp', 'Choice2': u'altAchoice32.bmp', 'Choice3': u'altAchoice33.bmp', 'Choice4': u'altAchoice34.bmp', 'Corr': 1}, {'Stimulus': u'altAfold8.bmp', 'Choice5': u'altAchoice85.bmp', 'Choice1': u'altAchoice81.bmp', 'Choice2': u'altAchoice82.bmp', 'Choice3': u'altAchoice83.bmp', 'Choice4': u'altAchoice84.bmp', 'Corr': 1}, {'Stimulus': u'altBfold1.bmp', 'Choice5': u'altBchoice15.bmp', 'Choice1': u'altBchoice11.bmp', 'Choice2': u'altBchoice12.bmp', 'Choice3': u'altBchoice13.bmp', 'Choice4': u'altBchoice14.bmp', 'Corr': 1}, {'Stimulus': u'altBfold2.bmp', 'Choice5': u'altBchoice25.bmp', 'Choice1': u'altBchoice21.bmp', 'Choice2': u'altBchoice22.bmp', 'Choice3': u'altBchoice23.bmp', 'Choice4': u'altBchoice24.bmp', 'Corr': 1}, {'Stimulus': u'altBfold3.bmp', 'Choice5': u'altBchoice35.bmp', 'Choice1': u'altBchoice31.bmp', 'Choice2': u'altBchoice32.bmp', 'Choice3': u'altBchoice33.bmp', 'Choice4': u'altBchoice34.bmp', 'Corr': 1}, {'Stimulus': u'altBfold4.bmp', 'Choice5': u'altBchoice45.bmp', 'Choice1': u'altBchoice41.bmp', 'Choice2': u'altBchoice42.bmp', 'Choice3': u'altBchoice43.bmp', 'Choice4': u'altBchoice44.bmp', 'Corr': 1}, {'Stimulus': u'altBfold5.bmp', 'Choice5': u'altBchoice55.bmp', 'Choice1': u'altBchoice51.bmp', 'Choice2': u'altBchoice52.bmp', 'Choice3': u'altBchoice53.bmp', 'Choice4': u'altBchoice54.bmp', 'Corr': 1}, {'Stimulus': u'altBfold6.bmp', 'Choice5': u'altBchoice65.bmp', 'Choice1': u'altBchoice61.bmp', 'Choice2': u'altBchoice62.bmp', 'Choice3': u'altBchoice63.bmp', 'Choice4': u'altBchoice64.bmp', 'Corr': 1}, {'Stimulus': u'altBfold7.bmp', 'Choice5': u'altBchoice75.bmp', 'Choice1': u'altBchoice71.bmp', 'Choice2': u'altBchoice72.bmp', 'Choice3': u'altBchoice73.bmp', 'Choice4': u'altBchoice74.bmp', 'Corr': 1}, {'Stimulus': u'altBfold8.bmp', 'Choice5': u'altBchoice85.bmp', 'Choice1': u'altBchoice81.bmp', 'Choice2': u'altBchoice82.bmp', 'Choice3': u'altBchoice83.bmp', 'Choice4': u'altBchoice84.bmp', 'Corr': 1}, {'Stimulus': u'altBfold9.bmp', 'Choice5': u'altBchoice95.bmp', 'Choice1': u'altBchoice91.bmp', 'Choice2': u'altBchoice92.bmp', 'Choice3': u'altBchoice93.bmp', 'Choice4': u'altBchoice94.bmp', 'Corr': 1}, {'Stimulus': u'altBfold10.bmp', 'Choice5': u'altBchoice105.bmp', 'Choice1': u'altBchoice101.bmp', 'Choice2': u'altBchoice102.bmp', 'Choice3': u'altBchoice103.bmp', 'Choice4': u'altBchoice104.bmp', 'Corr': 1}, {'Stimulus': u'altBfold11.bmp', 'Choice5': u'altBchoice115.bmp', 'Choice1': u'altBchoice111.bmp', 'Choice2': u'altBchoice112.bmp', 'Choice3': u'altBchoice113.bmp', 'Choice4': u'altBchoice114.bmp', 'Corr': 1}, {'Stimulus': u'altBfold12.bmp', 'Choice5': u'altBchoice125.bmp', 'Choice1': u'altBchoice121.bmp', 'Choice2': u'altBchoice122.bmp', 'Choice3': u'altBchoice123.bmp', 'Choice4': u'altBchoice124.bmp', 'Corr': 1}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="[0]" valType="str"/>
+    </LoopInitiator>
+    <Routine name="trial"/>
+    <Routine name="Feedback1"/>
+    <Routine name="crosshair"/>
+    <LoopTerminator name="trials"/>
+    <LoopInitiator loopType="TrialHandler" name="trials_3">
+      <Param name="conditionsFile" updates="None" val="CognitiveTaskSetupFiles - PaperFold.csv" valType="str"/>
+      <Param name="name" updates="None" val="trials_3" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="[{'Stimulus': u'altAfold3.bmp', 'Choice5': u'altAchoice35.bmp', 'Choice1': u'altAchoice31.bmp', 'Choice2': u'altAchoice32.bmp', 'Choice3': u'altAchoice33.bmp', 'Choice4': u'altAchoice34.bmp', 'Corr': 2}, {'Stimulus': u'altAfold8.bmp', 'Choice5': u'altAchoice85.bmp', 'Choice1': u'altAchoice81.bmp', 'Choice2': u'altAchoice82.bmp', 'Choice3': u'altAchoice83.bmp', 'Choice4': u'altAchoice84.bmp', 'Corr': 2}, {'Stimulus': u'altBfold1.bmp', 'Choice5': u'altBchoice15.bmp', 'Choice1': u'altBchoice11.bmp', 'Choice2': u'altBchoice12.bmp', 'Choice3': u'altBchoice13.bmp', 'Choice4': u'altBchoice14.bmp', 'Corr': 3}, {'Stimulus': u'altBfold2.bmp', 'Choice5': u'altBchoice25.bmp', 'Choice1': u'altBchoice21.bmp', 'Choice2': u'altBchoice22.bmp', 'Choice3': u'altBchoice23.bmp', 'Choice4': u'altBchoice24.bmp', 'Corr': 1}, {'Stimulus': u'altBfold3.bmp', 'Choice5': u'altBchoice35.bmp', 'Choice1': u'altBchoice31.bmp', 'Choice2': u'altBchoice32.bmp', 'Choice3': u'altBchoice33.bmp', 'Choice4': u'altBchoice34.bmp', 'Corr': 4}, {'Stimulus': u'altBfold4.bmp', 'Choice5': u'altBchoice45.bmp', 'Choice1': u'altBchoice41.bmp', 'Choice2': u'altBchoice42.bmp', 'Choice3': u'altBchoice43.bmp', 'Choice4': u'altBchoice44.bmp', 'Corr': 3}, {'Stimulus': u'altBfold5.bmp', 'Choice5': u'altBchoice55.bmp', 'Choice1': u'altBchoice51.bmp', 'Choice2': u'altBchoice52.bmp', 'Choice3': u'altBchoice53.bmp', 'Choice4': u'altBchoice54.bmp', 'Corr': 2}, {'Stimulus': u'altBfold6.bmp', 'Choice5': u'altBchoice65.bmp', 'Choice1': u'altBchoice61.bmp', 'Choice2': u'altBchoice62.bmp', 'Choice3': u'altBchoice63.bmp', 'Choice4': u'altBchoice64.bmp', 'Corr': 2}, {'Stimulus': u'altBfold7.bmp', 'Choice5': u'altBchoice75.bmp', 'Choice1': u'altBchoice71.bmp', 'Choice2': u'altBchoice72.bmp', 'Choice3': u'altBchoice73.bmp', 'Choice4': u'altBchoice74.bmp', 'Corr': 2}, {'Stimulus': u'altBfold8.bmp', 'Choice5': u'altBchoice85.bmp', 'Choice1': u'altBchoice81.bmp', 'Choice2': u'altBchoice82.bmp', 'Choice3': u'altBchoice83.bmp', 'Choice4': u'altBchoice84.bmp', 'Corr': 4}, {'Stimulus': u'altBfold9.bmp', 'Choice5': u'altBchoice95.bmp', 'Choice1': u'altBchoice91.bmp', 'Choice2': u'altBchoice92.bmp', 'Choice3': u'altBchoice93.bmp', 'Choice4': u'altBchoice94.bmp', 'Corr': 2}, {'Stimulus': u'altBfold10.bmp', 'Choice5': u'altBchoice105.bmp', 'Choice1': u'altBchoice101.bmp', 'Choice2': u'altBchoice102.bmp', 'Choice3': u'altBchoice103.bmp', 'Choice4': u'altBchoice104.bmp', 'Corr': 1}, {'Stimulus': u'altBfold11.bmp', 'Choice5': u'altBchoice115.bmp', 'Choice1': u'altBchoice111.bmp', 'Choice2': u'altBchoice112.bmp', 'Choice3': u'altBchoice113.bmp', 'Choice4': u'altBchoice114.bmp', 'Corr': 3}, {'Stimulus': u'altBfold12.bmp', 'Choice5': u'altBchoice125.bmp', 'Choice1': u'altBchoice121.bmp', 'Choice2': u'altBchoice122.bmp', 'Choice3': u'altBchoice123.bmp', 'Choice4': u'altBchoice124.bmp', 'Corr': 4}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="[1]" valType="code"/>
+    </LoopInitiator>
+    <Routine name="trial"/>
+    <Routine name="Feedback2"/>
+    <Routine name="crosshair"/>
+    <LoopTerminator name="trials_3"/>
+    <Routine name="GetReady"/>
+    <Routine name="crosshair"/>
+    <LoopInitiator loopType="TrialHandler" name="trials_2">
+      <Param name="conditionsFile" updates="None" val="CognitiveTaskSetupFiles - PaperFold.csv" valType="str"/>
+      <Param name="name" updates="None" val="trials_2" valType="code"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
       <Param name="loopType" updates="None" val="random" valType="str"/>
       <Param name="nReps" updates="None" val="1" valType="code"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
-      <Param name="conditions" updates="None" val="[{'Stimulus': u'altAfold3.bmp', 'Choice5': u'altAchoice35.bmp', 'Choice1': u'altAchoice31.bmp', 'Choice2': u'altAchoice32.bmp', 'Choice3': u'altAchoice33.bmp', 'Choice4': u'altAchoice34.bmp', 'Corr': 1}, {'Stimulus': u'altAfold8.bmp', 'Choice5': u'altAchoice85.bmp', 'Choice1': u'altAchoice81.bmp', 'Choice2': u'altAchoice82.bmp', 'Choice3': u'altAchoice83.bmp', 'Choice4': u'altAchoice84.bmp', 'Corr': 1}, {'Stimulus': u'altBfold1.bmp', 'Choice5': u'altBchoice15.bmp', 'Choice1': u'altBchoice11.bmp', 'Choice2': u'altBchoice12.bmp', 'Choice3': u'altBchoice13.bmp', 'Choice4': u'altBchoice14.bmp', 'Corr': 1}, {'Stimulus': u'altBfold2.bmp', 'Choice5': u'altBchoice25.bmp', 'Choice1': u'altBchoice21.bmp', 'Choice2': u'altBchoice22.bmp', 'Choice3': u'altBchoice23.bmp', 'Choice4': u'altBchoice24.bmp', 'Corr': 1}, {'Stimulus': u'altBfold3.bmp', 'Choice5': u'altBchoice35.bmp', 'Choice1': u'altBchoice31.bmp', 'Choice2': u'altBchoice32.bmp', 'Choice3': u'altBchoice33.bmp', 'Choice4': u'altBchoice34.bmp', 'Corr': 1}, {'Stimulus': u'altBfold4.bmp', 'Choice5': u'altBchoice45.bmp', 'Choice1': u'altBchoice41.bmp', 'Choice2': u'altBchoice42.bmp', 'Choice3': u'altBchoice43.bmp', 'Choice4': u'altBchoice44.bmp', 'Corr': 1}, {'Stimulus': u'altBfold5.bmp', 'Choice5': u'altBchoice55.bmp', 'Choice1': u'altBchoice51.bmp', 'Choice2': u'altBchoice52.bmp', 'Choice3': u'altBchoice53.bmp', 'Choice4': u'altBchoice54.bmp', 'Corr': 1}, {'Stimulus': u'altBfold6.bmp', 'Choice5': u'altBchoice65.bmp', 'Choice1': u'altBchoice61.bmp', 'Choice2': u'altBchoice62.bmp', 'Choice3': u'altBchoice63.bmp', 'Choice4': u'altBchoice64.bmp', 'Corr': 1}, {'Stimulus': u'altBfold7.bmp', 'Choice5': u'altBchoice75.bmp', 'Choice1': u'altBchoice71.bmp', 'Choice2': u'altBchoice72.bmp', 'Choice3': u'altBchoice73.bmp', 'Choice4': u'altBchoice74.bmp', 'Corr': 1}, {'Stimulus': u'altBfold8.bmp', 'Choice5': u'altBchoice85.bmp', 'Choice1': u'altBchoice81.bmp', 'Choice2': u'altBchoice82.bmp', 'Choice3': u'altBchoice83.bmp', 'Choice4': u'altBchoice84.bmp', 'Corr': 1}, {'Stimulus': u'altBfold9.bmp', 'Choice5': u'altBchoice95.bmp', 'Choice1': u'altBchoice91.bmp', 'Choice2': u'altBchoice92.bmp', 'Choice3': u'altBchoice93.bmp', 'Choice4': u'altBchoice94.bmp', 'Corr': 1}, {'Stimulus': u'altBfold10.bmp', 'Choice5': u'altBchoice105.bmp', 'Choice1': u'altBchoice101.bmp', 'Choice2': u'altBchoice102.bmp', 'Choice3': u'altBchoice103.bmp', 'Choice4': u'altBchoice104.bmp', 'Corr': 1}, {'Stimulus': u'altBfold11.bmp', 'Choice5': u'altBchoice115.bmp', 'Choice1': u'altBchoice111.bmp', 'Choice2': u'altBchoice112.bmp', 'Choice3': u'altBchoice113.bmp', 'Choice4': u'altBchoice114.bmp', 'Corr': 1}, {'Stimulus': u'altBfold12.bmp', 'Choice5': u'altBchoice125.bmp', 'Choice1': u'altBchoice121.bmp', 'Choice2': u'altBchoice122.bmp', 'Choice3': u'altBchoice123.bmp', 'Choice4': u'altBchoice124.bmp', 'Corr': 1}]" valType="str"/>
-      <Param name="Selected rows" updates="None" val="" valType="code"/>
+      <Param name="conditions" updates="None" val="[{'Stimulus': u'altAfold3.bmp', 'Choice5': u'altAchoice35.bmp', 'Choice1': u'altAchoice31.bmp', 'Choice2': u'altAchoice32.bmp', 'Choice3': u'altAchoice33.bmp', 'Choice4': u'altAchoice34.bmp', 'Corr': 2}, {'Stimulus': u'altAfold8.bmp', 'Choice5': u'altAchoice85.bmp', 'Choice1': u'altAchoice81.bmp', 'Choice2': u'altAchoice82.bmp', 'Choice3': u'altAchoice83.bmp', 'Choice4': u'altAchoice84.bmp', 'Corr': 2}, {'Stimulus': u'altBfold1.bmp', 'Choice5': u'altBchoice15.bmp', 'Choice1': u'altBchoice11.bmp', 'Choice2': u'altBchoice12.bmp', 'Choice3': u'altBchoice13.bmp', 'Choice4': u'altBchoice14.bmp', 'Corr': 3}, {'Stimulus': u'altBfold2.bmp', 'Choice5': u'altBchoice25.bmp', 'Choice1': u'altBchoice21.bmp', 'Choice2': u'altBchoice22.bmp', 'Choice3': u'altBchoice23.bmp', 'Choice4': u'altBchoice24.bmp', 'Corr': 1}, {'Stimulus': u'altBfold3.bmp', 'Choice5': u'altBchoice35.bmp', 'Choice1': u'altBchoice31.bmp', 'Choice2': u'altBchoice32.bmp', 'Choice3': u'altBchoice33.bmp', 'Choice4': u'altBchoice34.bmp', 'Corr': 4}, {'Stimulus': u'altBfold4.bmp', 'Choice5': u'altBchoice45.bmp', 'Choice1': u'altBchoice41.bmp', 'Choice2': u'altBchoice42.bmp', 'Choice3': u'altBchoice43.bmp', 'Choice4': u'altBchoice44.bmp', 'Corr': 3}, {'Stimulus': u'altBfold5.bmp', 'Choice5': u'altBchoice55.bmp', 'Choice1': u'altBchoice51.bmp', 'Choice2': u'altBchoice52.bmp', 'Choice3': u'altBchoice53.bmp', 'Choice4': u'altBchoice54.bmp', 'Corr': 2}, {'Stimulus': u'altBfold6.bmp', 'Choice5': u'altBchoice65.bmp', 'Choice1': u'altBchoice61.bmp', 'Choice2': u'altBchoice62.bmp', 'Choice3': u'altBchoice63.bmp', 'Choice4': u'altBchoice64.bmp', 'Corr': 2}, {'Stimulus': u'altBfold7.bmp', 'Choice5': u'altBchoice75.bmp', 'Choice1': u'altBchoice71.bmp', 'Choice2': u'altBchoice72.bmp', 'Choice3': u'altBchoice73.bmp', 'Choice4': u'altBchoice74.bmp', 'Corr': 2}, {'Stimulus': u'altBfold8.bmp', 'Choice5': u'altBchoice85.bmp', 'Choice1': u'altBchoice81.bmp', 'Choice2': u'altBchoice82.bmp', 'Choice3': u'altBchoice83.bmp', 'Choice4': u'altBchoice84.bmp', 'Corr': 4}, {'Stimulus': u'altBfold9.bmp', 'Choice5': u'altBchoice95.bmp', 'Choice1': u'altBchoice91.bmp', 'Choice2': u'altBchoice92.bmp', 'Choice3': u'altBchoice93.bmp', 'Choice4': u'altBchoice94.bmp', 'Corr': 2}, {'Stimulus': u'altBfold10.bmp', 'Choice5': u'altBchoice105.bmp', 'Choice1': u'altBchoice101.bmp', 'Choice2': u'altBchoice102.bmp', 'Choice3': u'altBchoice103.bmp', 'Choice4': u'altBchoice104.bmp', 'Corr': 1}, {'Stimulus': u'altBfold11.bmp', 'Choice5': u'altBchoice115.bmp', 'Choice1': u'altBchoice111.bmp', 'Choice2': u'altBchoice112.bmp', 'Choice3': u'altBchoice113.bmp', 'Choice4': u'altBchoice114.bmp', 'Corr': 3}, {'Stimulus': u'altBfold12.bmp', 'Choice5': u'altBchoice125.bmp', 'Choice1': u'altBchoice121.bmp', 'Choice2': u'altBchoice122.bmp', 'Choice3': u'altBchoice123.bmp', 'Choice4': u'altBchoice124.bmp', 'Corr': 4}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="[2,3,4,5,6,7,8,9,10,11,12,13]" valType="code"/>
     </LoopInitiator>
     <Routine name="trial"/>
-    <LoopTerminator name="trials"/>
+    <Routine name="crosshair"/>
+    <LoopTerminator name="trials_2"/>
+    <Routine name="ThankYou"/>
   </Flow>
 </PsychoPy2experiment>
