@@ -450,13 +450,13 @@ class Mywin(wx.Frame):
    def OnClickedR3C2(self, event): 
       btnR3C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C2Label))
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_DEMOv1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_DEMOv2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR3C2.SetValue(True)
       
    def OnClickedR3C3(self, event): 
       btnR3C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C3Label))
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGridStaircase_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGridStaircase_v3.py", self.PartID.GetValue(), self.VisitFolderPath])
       # Once the staircase is run, load up the file that is created and display it
       self.LoadVSTMCapacity(self)
       self.cbR3C3.SetValue(True)
