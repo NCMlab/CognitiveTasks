@@ -24,7 +24,7 @@ from numpy import (sin, cos, tan, log, log10, pi, average,
 from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
-
+import re
 FontSize = 30
 FontSizeUnits = 'pix'
 
@@ -70,7 +70,7 @@ CounterBalFlag = 'False'
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-    savePickle=True, saveWideText=False,
+    savePickle=False, saveWideText=True,
     dataFileName=filename)
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
@@ -136,7 +136,7 @@ CorrectSound.setVolume(1)
 IncorrectSound = sound.Sound('NumberSounds/incorrect.wav', secs = -1)
 IncorrectSound.setVolume(1)
 
-Instruct1text = 'You are going to hear some numbers, when the list ends, I want you to say them as your heard them.\n\nPress any key to play the practice numbers.'
+Instruct1text = 'Tell the person:\n'"You are going to hear some numbers, when the list ends, I want you to say them as your heard them."'\n\nPress any key to play the practice numbers.'
 
 Instruct1 = visual.TextStim(win=win, name='Instruct1',
     text=Instruct1text,
@@ -169,9 +169,10 @@ while WaitingForResponseFlag:
         pass
 Instruct1.setAutoDraw(False)        
 win.flip()
-# Create a list of three numbers
-R = np.random.permutation(3) + 1
-Answer.text = 'Ask the person to repeat the three digits back as they heard them.\nThe person should repeat: %s\n\nPress any key to start the actual experiment.'%(R)
+# Create a list of three numbers drawn from the numbers 1 to 9
+R = np.random.permutation(9) + 1
+R = R[0:3]
+Answer.text = 'Ask the person to repeat the three digits back as they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R)
 # cycle over the numbers and play them
 for i in range(3):
     countDown.reset()    
@@ -188,6 +189,78 @@ for i in range(3):
 # -------Start Routine "trial"-------
 Answer.setAutoDraw(True)
 win.flip()
+
+WaitingForResponseFlag = True
+while WaitingForResponseFlag:
+    theseKeys = event.getKeys()
+        
+    # check for quit:
+    if "escape" in theseKeys:
+        thisExp.abort()  # or data files will save again on exit
+        win.close()
+        core.quit()
+    if len(theseKeys) > 0:  # at least one key was pressed
+        resp.keys.extend(theseKeys)  # storing all keys
+        resp.rt.append(resp.clock.getTime())
+
+    if 'return' in theseKeys:
+        # remove the return before continuing
+        resp.keys = resp.keys[:-1]
+        WaitingForResponseFlag = False
+        break
+    else:
+        pass
+    
+if 'x' in resp.keys:
+    print('Found a mistake')
+    # A mistake as made entering the digits
+    # take all values after the LAST x   
+    resp.keys = resp.keys[''.join(resp.keys).rindex('x')+1:]
+
+print('Responses: %s'%(resp.keys))
+Answer.setAutoDraw(False)
+win.flip()
+# Convert responses to an array
+RespList = []
+for i in resp.keys:
+    RespList.append(int(i))
+RespList = np.array(RespList)
+print(RespList)
+# This is the FORWARD Span Task
+if np.array_equiv(R,RespList):
+    print('Correct')
+    CorrectSound.play()
+    thisResp = 1
+    resp.corr = 1
+else:
+    print('Incorrect')
+    IncorrectSound.play()
+    thisResp = -1
+    resp.corr = 0
+
+#WaitingForResponseFlag = True
+#while WaitingForResponseFlag:
+#    theseKeys = event.getKeys()
+#            
+#        # check for quit:
+#    if "escape" in theseKeys:
+#        thisExp.abort()  # or data files will save again on exit
+#        win.close()
+#        core.quit()
+#    if len(theseKeys) > 0:  # at least one key was pressed
+#        WaitingForResponseFlag = False
+#        break
+#    else:
+#        pass
+#Answer.setAutoDraw(False)        
+#win.flip()
+
+Instruct1.text = 'Tell the person to "Get Ready" for the real task.\n\nPress any key to begin.'
+
+
+Instruct1.setAutoDraw(True)
+win.flip()
+
 WaitingForResponseFlag = True
 while WaitingForResponseFlag:
     theseKeys = event.getKeys()
@@ -202,14 +275,13 @@ while WaitingForResponseFlag:
         break
     else:
         pass
-Answer.setAutoDraw(False)        
+Instruct1.setAutoDraw(False)        
 win.flip()
-
-
 
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
+routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
 # --------Prepare to start Staircase "Stairs" --------
@@ -236,7 +308,8 @@ for thisStair in Stairs:
     # Generate random numbers and make sure no consecutive numbers are the same
     Flag = True
     # Change the random numbers to all be different
-    R = np.random.permutation(level) + 1
+    R = np.random.permutation(9) + 1
+    R = R[0:level]
     #while Flag:
     #    R = np.random.randint(1,10,level)
     #    Flag = any(np.diff(R) == 0)
@@ -283,8 +356,8 @@ for thisStair in Stairs:
     if 'x' in resp.keys:
         print('Found a mistake')
         # A mistake as made entering the digits
-        # take all values after the x    
-        resp.keys = resp.keys[resp.keys.index('x')+1:]
+        # take all values after the LAST x   
+        resp.keys = resp.keys[''.join(resp.keys).rindex('x')+1:]
         
     print('Responses: %s'%(resp.keys))
     Answer.setAutoDraw(False)
@@ -313,7 +386,7 @@ for thisStair in Stairs:
         thisExp.addData('resp.rt', resp.rt)
     thisExp.nextEntry()
     # these shouldn't be strictly necessary (should auto-save)
-    thisExp.saveAsWideText(filename+'.csv')
+    
     #thisExp.saveAsPickle(filename)  
     Stairs.addResponse(thisResp)
     Answer.setAutoDraw(False)

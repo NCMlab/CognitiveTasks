@@ -57,7 +57,10 @@ else:
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 
 # #################
-
+thisExp = data.ExperimentHandler(name=expName, version='',
+    extraInfo=expInfo, runtimeInfo=None,
+    savePickle=False, saveWideText=True,
+    dataFileName=filename)
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
@@ -108,7 +111,7 @@ feedback_2 = visual.TextStim(win=win, name='feedback_2',
 # Initialize components for Routine "instruct"
 instructClock = core.Clock()
 instrText = visual.TextStim(win=win, name='instrText',
-    text=u"\nNow you will do the task.\nIt will be exacyly like tghe practive expcept you won't get feedback.\nPress the R key if the word is Red\nPress the Y key if the word is Yellow\nPress the G key if the word is Green\nPress the B key if the word is Blue\n\n(Esc will quit)\nPress any key to continue",
+    text=u"\nNow you will do the task.\nIt will be exacyly like the practice expcept you won't get feedback.\nPress the R key if the word is Red\nPress the Y key if the word is Yellow\nPress the G key if the word is Green\nPress the B key if the word is Blue\n\n(Esc will quit)\nPress any key to continue",
     font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
@@ -126,7 +129,7 @@ word = visual.TextStim(win=win, name='word',
 # Initialize components for Routine "thanks"
 thanksClock = core.Clock()
 thanksText = visual.TextStim(win=win, name='thanksText',
-    text='This is the end of the experiment.\n\nThanks!',
+    text='This is the end of the experiment.\n\nThank you!',
     font='arial',
     pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
