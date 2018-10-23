@@ -226,8 +226,8 @@ for i in resp.keys:
     RespList.append(int(i))
 RespList = np.array(RespList)
 print(RespList)
-# This is the FORWARD Span Task
-if np.array_equiv(R,RespList):
+# This is the BACKWARD Span Task
+if np.array_equiv(R[::-1],RespList):
     print('Correct')
     CorrectSound.play()
     thisResp = 1
@@ -287,7 +287,7 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 # --------Prepare to start Staircase "Stairs" --------
 # set up handler to look after next chosen value etc
 # This is the BACKWARD Span Task
-Stairs = data.StairHandler(startVal=3, extraInfo=expInfo,
+Stairs = data.StairHandler(startVal=2, extraInfo=expInfo,
     stepSizes=-1, stepType='lin',
     nReversals=0, nTrials=14, 
     nUp=2, nDown=1,
