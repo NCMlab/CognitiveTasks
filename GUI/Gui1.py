@@ -45,8 +45,14 @@ class Mywin(wx.Frame):
       super(Mywin, self).__init__(parent, title = title,size = (800,600))  
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
-      self.DataFolder = "../../data"
+      
       self.DataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
+      if not os.path.exists(self.DataFolder):
+        # If my specified folder does not exist, then put the data up two folders.
+            self.DataFolder = "../../data"
+            if not os.path.exists(self.DataFolder):
+                os.mkdir(self.DataFolder)
+      
       self.VisitFolderPath = 'empty'
       # Setup the Participant ID entry
       self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Participant ID:", pos = (Col1,Row1))
