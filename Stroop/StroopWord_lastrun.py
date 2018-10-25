@@ -55,7 +55,9 @@ else:
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-
+BGColor = 'grey'
+FontColor = 'white'
+StroopKeyList = ['v', 'b', 'n', 'm']
 # #################
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
@@ -69,7 +71,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=(1920, 1080), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color='darkgrey', colorSpace='rgb',
+    monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='norm')
 # store frame rate of monitor if we can measure it
@@ -82,10 +84,10 @@ else:
 # Initialize components for Routine "instructPractice"
 instructPracticeClock = core.Clock()
 instr1 = visual.TextStim(win=win, name='instr1',
-    text=u"In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate what word is written.\n\nPress the R key if the word is Red\nPress the Y key if the word is Yellow\nPress the G key if the word is Green\nPress the B key if the word is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue",
+    text=u"In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate what word is written.\n\nPress the red(v) key if the word is Red\nPress the yellow(b) key if the word is Yellow\nPress the green(n) key if the word is Green\nPress the blue(m) key if the word is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue",
     font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -94,7 +96,7 @@ word = visual.TextStim(win=win, name='word',
     text='default text',
     font='Arial',
     pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
-    color=1.0, colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "feedback"
@@ -105,16 +107,16 @@ feedback_2 = visual.TextStim(win=win, name='feedback_2',
     text='default text',
     font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=[1,1,1], colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 
 # Initialize components for Routine "instruct"
 instructClock = core.Clock()
 instrText = visual.TextStim(win=win, name='instrText',
-    text=u"\nNow you will do the task.\nIt will be exacyly like the practice expcept you won't get feedback.\nPress the R key if the word is Red\nPress the Y key if the word is Yellow\nPress the G key if the word is Green\nPress the B key if the word is Blue\n\n(Esc will quit)\nPress any key to continue",
+    text=u"\nNow you will do the task.\nIt will be exactly like the practice except you won't get feedback.\nPress the red(v) key if the word is Red\nPress the yellow(b) key if the word is Yellow\nPress the green(n) key if the word is Green\nPress the blue(m) key if the word is Blue\n\n(Esc will quit)\nPress any key to continue",
     font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=[1, 1, 1], colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -123,7 +125,7 @@ word = visual.TextStim(win=win, name='word',
     text='default text',
     font='Arial',
     pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
-    color=1.0, colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "thanks"
@@ -132,7 +134,7 @@ thanksText = visual.TextStim(win=win, name='thanksText',
     text='This is the end of the experiment.\n\nThank you!',
     font='arial',
     pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
-    color=[1, 1, 1], colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -269,7 +271,7 @@ for thisPractice in practice:
         if resp.status == STARTED and t >= frameRemains:
             resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['r', 'y', 'b', 'g'])
+            theseKeys = event.getKeys(keyList=StroopKeyList)
             
             # check for quit:
             if "escape" in theseKeys:
@@ -464,7 +466,7 @@ for thisComponent in instructComponents:
 routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=10.0, method='random', 
+trials = data.TrialHandler(nReps=3.0, method='random', 
     extraInfo=expInfo, originPath=-1,
     trialList=data.importConditions('Stroop - ColorWord.csv'),
     seed=None, name='trials')
@@ -524,7 +526,7 @@ for thisTrial in trials:
         if resp.status == STARTED and t >= frameRemains:
             resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['r', 'y', 'b', 'g'])
+            theseKeys = event.getKeys(keyList=StroopKeyList)
             
             # check for quit:
             if "escape" in theseKeys:
