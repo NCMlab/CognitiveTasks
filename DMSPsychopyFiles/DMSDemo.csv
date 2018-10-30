@@ -1,0 +1,10 @@
+TL,TM,TR,CL,CM,CR,BL,BM,BR,probe,corr
+*,*,*,*,X,*,*,*,*,x,left
+*,*,*,Y,*,K,*,*,*,y,left
+*,*,*,M,X,R,*,*,*,q,right
+K,*,L,*,*,*,P,*,R,d,right
+X,*,L,*,P,*,Q,*,G,l,left
+V,C,T,*,*,*,Q,K,H,x,right
+T,Y,S,*,R,*,G,D,V,p,right
+T,N,M,J,*,C,Q,H,V,d,right
+K,T,L,F,S,R,Z,V,Y,y,left

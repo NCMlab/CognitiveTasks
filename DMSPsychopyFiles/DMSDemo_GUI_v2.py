@@ -60,7 +60,9 @@ else:
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 CounterBalFlag = 'False'
-
+BGColor = 'grey'
+FontColor = 'white'
+AllowableKeys = ['1', '2', 'left','right']
 # #################
 ProbeColor = 'blue'
 SpacingOfLettersRelativeToCenter = 80
@@ -80,7 +82,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=(1440, 900), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0, 0, 0], colorSpace='rgb',
+    monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='pix')
 # store frame rate of monitor if we can measure it
@@ -96,17 +98,17 @@ textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text='In this experiment you will be presented with a set of letters. A set may contain anywhere from 1 to 9 letters for you to memorize.\n\nFollowing a short delay you will then be presented with a single letter and you will have to decide whether this new letter was a member of the set.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units='pix', pos=[0, 0], height=FontSize, wrapWidth=2, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "practInstruct2"
 practInstruct2Clock = core.Clock()
 textInstr2 = visual.TextStim(win=win, name='textInstr2',
     #text='Respond with the keys;\n[LEFT] if the letter WAS in the set\n[DOWN] if the letter was NOT in the set\n\nThere will be a number of practice trials in which you will be given feedback.  Try to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
-    text='Press [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
+    text='Press "LEFT" if the letter WAS in the set.\nPress "RIGHT" if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
     units='pix', pos=(0, 0), height=FontSize, wrapWidth=1200, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "countdown"
@@ -219,10 +221,10 @@ textFeedback = visual.TextStim(win=win, name='textFeedback',
 # Initialize components for Routine "mainInstruct"
 mainInstructClock = core.Clock()
 textInstr3 = visual.TextStim(win=win, name='textInstr3',
-    text='OK, ready to start the main experiment?\n\nRemember:\nPress [LEFT] for IN the set\nPress [DOWN] for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
+    text='OK, ready to start the main experiment?\n\nRemember:\nPress "LEFT" for IN the set\nPress "RIGHT" for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units='pix', pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -442,7 +444,7 @@ for thisComponent in countdownComponents:
 # set up handler to look after randomisation of conditions etc
 pracTrials = data.TrialHandler(nReps=1.0, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('DMSFileDemo.xlsx'),
+    trialList=data.importConditions('DMSFileDemo.csv'),
     seed=None, name='pracTrials')
 thisExp.addLoop(pracTrials)  # add the loop to the experiment
 thisPracTrial = pracTrials.trialList[0]  # so we can initialise stimuli with some values
@@ -615,7 +617,7 @@ for thisPracTrial in pracTrials:
             win.callOnFlip(resp.clock.reset)  # t=0 on next screen flip
             event.clearEvents(eventType='keyboard')
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['left', 'down'])
+            theseKeys = event.getKeys(keyList=AllowableKeys)
             
             # check for quit:
             if "escape" in theseKeys:

@@ -76,7 +76,9 @@ else:
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 CounterBalFlag = 'False'
-
+BGColor = 'grey'
+FontColor = 'white'
+AllowableKeys = ['1', '2', 'left','right']
 # #################  
 
 #tempFile.write("Loaded inputs\n")
@@ -158,14 +160,14 @@ else:
 InstructionsClock = core.Clock()
 if CounterBalFlag == 'False':
     textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Press [LEFT] or [1] if the letter WAS in the set.\nPress [DOWN] or [2] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress the "5" key to begin.',
+    text='Press [LEFT] or [1] if the letter WAS in the set.\nPress [RIGHT] or [2] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress the "5" key to begin.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 else:
     textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Press [2] or [DOWN] if the letter WAS in the set.\nPress [1] or [LEFT] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
+    text='Press [RIGHT] or [2] if the letter WAS in the set.\nPress [1] or [LEFT] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
@@ -720,7 +722,7 @@ for thisBlock in Blocks:
             if resp.status == STARTED and t >= frameRemains:
                 resp.status = STOPPED
             if resp.status == STARTED:
-                theseKeys = event.getKeys(keyList=['1', '2','left','down'])
+                theseKeys = event.getKeys(keyList=AllowableKeys)
                 
                 # check for quit:
                 if "escape" in theseKeys:
@@ -744,7 +746,7 @@ for thisBlock in Blocks:
                             resp.corr = 1
                         else:
                             resp.corr = 0
-                    if corr == 'down':
+                    if corr == 'right':
                         if ((resp.keys == corr) or (resp.keys == str(corr))):
                             resp.corr = 1
                         elif ((resp.keys == '2') or (resp.keys == '2')):
@@ -754,7 +756,7 @@ for thisBlock in Blocks:
                     if corr == 2:
                         if ((resp.keys == corr) or (resp.keys == str(corr))):
                             resp.corr = 1
-                        elif ((resp.keys == 'down') or (resp.keys == 'down')):
+                        elif ((resp.keys == 'right') or (resp.keys == 'right')):
                             resp.corr = 1
                         else:
                             resp.corr = 0
@@ -773,7 +775,7 @@ for thisBlock in Blocks:
                             resp.corr = 0
                         else:
                             resp.corr = 1
-                    if corr == 'down':
+                    if corr == 'right':
                         if ((resp.keys == corr) or (resp.keys == str(corr))):
                             resp.corr = 0
                         elif ((resp.keys == '2') or (resp.keys == '2')):
@@ -783,7 +785,7 @@ for thisBlock in Blocks:
                     if corr == 2:
                         if ((resp.keys == corr) or (resp.keys == str(corr))):
                             resp.corr = 0
-                        elif ((resp.keys == 'down') or (resp.keys == 'down')):
+                        elif ((resp.keys == 'right') or (resp.keys == 'right')):
                             resp.corr = 0
                         else:
                             resp.corr = 1

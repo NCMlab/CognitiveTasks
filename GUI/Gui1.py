@@ -194,7 +194,7 @@ class Mywin(wx.Frame):
       Row8BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
       self.cbR8C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
-      self.cbR8C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))      
+      #self.cbR8C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))      
 # #### Row 
       CurrentRow = Row7
       self.titleR9 = wx.StaticText(self.panel, -1, label = "Fluid", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))

@@ -9,7 +9,7 @@ data/*
 WCST/data/*.*
 *.bmp
 .DS_Store
-
+*.psydat
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

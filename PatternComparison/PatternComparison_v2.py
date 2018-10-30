@@ -59,7 +59,10 @@ else:
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 CounterBalFlag = 'False'
+BGColor = 'grey'
+FontColor = 'white'
 
+AllowableKeys = ['1', '2', 'left','right']
 # ################## An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
@@ -77,8 +80,8 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 # Setup the Window
 win = visual.Window(
     size=[1440, 900], fullscr=True, screen=0,
-    allowGUI=True, allowStencil=False,
-    monitor=u'testMonitor', color=[1,1,1], colorSpace='rgb',
+    allowGUI=False, allowStencil=False,
+    monitor=u'testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='pix')
 # store frame rate of monitor if we can measure it
@@ -91,10 +94,10 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
-    text=u'You will be presented with two figures. \nIf the figures are the same, press "z". \nIf they are different, press "x".\n\nPress any key to begin.',
+    text=u'You will be presented with two figures. \nIf the figures are the same, press "left". \nIf they are different, press "right".\n\nPress any key to begin.',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=800, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "PracticeText"
@@ -103,7 +106,7 @@ text_4 = visual.TextStim(win=win, name='text_4',
     text=u'First, will be a few trials with feedback for practice.',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -123,16 +126,16 @@ imageR = visual.ImageStim(
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-1.0)
 Same = visual.TextStim(win=win, name='Same',
-    text=u'"Same"\n 1',
+    text=u'Same\n "left"',
     font=u'Arial',
     pos=(-200, -200), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-3.0);
 Different = visual.TextStim(win=win, name='Different',
-    text=u'"Different"\n 2',
+    text=u'Different\n "right"',
     font=u'Arial',
     pos=(200, -200), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-4.0);
 
 # Initialize components for Routine "Feedback"
@@ -142,7 +145,7 @@ text_3 = visual.TextStim(win=win, name='text_3',
     text='default text',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 
 # Initialize components for Routine "CrossHair"
@@ -151,25 +154,19 @@ text = visual.TextStim(win=win, name='text',
     text='+',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
-text_2 = visual.TextStim(win=win, name='text_2',
-    text=u'You will be presented with two figures. \nIf the figures are the same, press "z". \nIf they are different, press "x".\n\nPress any key to begin.',
-    font=u'Arial',
-    pos=(0, 0), height=40, wrapWidth=800, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=0.0);
 
 # Initialize components for Routine "StartRun"
 StartRunClock = core.Clock()
 text_5 = visual.TextStim(win=win, name='text_5',
-    text=u'You will now begine the real experiment with no feedback.\n\nPress any key to begin.',
+    text=u'You will now start the real experiment with no feedback.\n\nPress any key to begin.',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -188,27 +185,10 @@ imageR = visual.ImageStim(
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-1.0)
-Same = visual.TextStim(win=win, name='Same',
-    text=u'"Same"\n 1',
-    font=u'Arial',
-    pos=(-200, -200), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-3.0);
-DIfferent = visual.TextStim(win=win, name='DIfferent',
-    text=u'"Different"\n 2',
-    font=u'Arial',
-    pos=(200, -200), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-4.0);
+
 
 # Initialize components for Routine "CrossHair"
 CrossHairClock = core.Clock()
-text = visual.TextStim(win=win, name='text',
-    text='+',
-    font='Arial',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
-    depth=0.0);
 
 # Initialize components for Routine "ThankYou"
 ThankYouClock = core.Clock()
@@ -216,7 +196,7 @@ text_6 = visual.TextStim(win=win, name='text_6',
     text=u'Thank you',
     font=u'Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -385,7 +365,7 @@ for thisPractice in Practice:
     
     resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trialComponents = [imageL, imageR, resp, Same, DIfferent]
+    trialComponents = [imageL, imageR, resp, Same, Different]
     for thisComponent in trialComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -430,7 +410,7 @@ for thisPractice in Practice:
         if resp.status == STARTED and t >= frameRemains:
             resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['1', '2', 'z', 'x'])
+            theseKeys = event.getKeys(keyList=AllowableKeys)
             
             # check for quit:
             if "escape" in theseKeys:
@@ -457,14 +437,14 @@ for thisPractice in Practice:
             Same.setAutoDraw(False)
         
         # *DIfferent* updates
-        if t >= 0.0 and DIfferent.status == NOT_STARTED:
+        if t >= 0.0 and Different.status == NOT_STARTED:
             # keep track of start time/frame for later
-            DIfferent.tStart = t
-            DIfferent.frameNStart = frameN  # exact frame index
-            DIfferent.setAutoDraw(True)
+            Different.tStart = t
+            Different.frameNStart = frameN  # exact frame index
+            Different.setAutoDraw(True)
         frameRemains = 0.0 + 3- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if DIfferent.status == STARTED and t >= frameRemains:
-            DIfferent.setAutoDraw(False)
+        if Different.status == STARTED and t >= frameRemains:
+            Different.setAutoDraw(False)
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -804,7 +784,7 @@ for thisRun in Run:
     imageR.setImage(os.path.join(BaseDir,Figure2))
     resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trialComponents = [imageL, imageR, resp, Same, DIfferent]
+    trialComponents = [imageL, imageR, resp, Same, Different]
     for thisComponent in trialComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -849,7 +829,7 @@ for thisRun in Run:
         if resp.status == STARTED and t >= frameRemains:
             resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['1', '2', 'z', 'x'])
+            theseKeys = event.getKeys(keyList=AllowableKeys)
             
             # check for quit:
             if "escape" in theseKeys:
@@ -876,14 +856,14 @@ for thisRun in Run:
             Same.setAutoDraw(False)
         
         # *DIfferent* updates
-        if t >= 0.0 and DIfferent.status == NOT_STARTED:
+        if t >= 0.0 and Different.status == NOT_STARTED:
             # keep track of start time/frame for later
-            DIfferent.tStart = t
-            DIfferent.frameNStart = frameN  # exact frame index
-            DIfferent.setAutoDraw(True)
+            Different.tStart = t
+            Different.frameNStart = frameN  # exact frame index
+            Different.setAutoDraw(True)
         frameRemains = 0.0 + 3- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if DIfferent.status == STARTED and t >= frameRemains:
-            DIfferent.setAutoDraw(False)
+        if Different.status == STARTED and t >= frameRemains:
+            Different.setAutoDraw(False)
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine

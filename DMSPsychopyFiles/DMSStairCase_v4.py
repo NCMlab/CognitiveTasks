@@ -64,7 +64,9 @@ else:
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 CounterBalFlag = 'False'
-
+BGColor = 'grey'
+FontColor = 'white'
+AllowableKeys = ['1', '2', 'left','right']
 # #################    
     
     
@@ -95,7 +97,7 @@ StairCasefileName = os.path.join('data',expInfo['expName'] + expInfo['Participan
 win = visual.Window(
     size=(1440, 900), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor=u'testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True, units = 'pix')
 
 ProbeColor = 'blue'
@@ -140,7 +142,7 @@ WaitText = visual.TextStim(win=win, name='WaitText',
     text='Press [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',units=FontSizeUnits, 
     pos=(0, 0), height=40, wrapWidth=1200, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 CountDownText = visual.TextStim(win=win, name='CountDown',
     text='CountDown',units=FontSizeUnits, 
@@ -321,7 +323,7 @@ for thisStep in staircase:
         # remove empty locations from the list
         tempLetterList = [x for x in tempLetterList if x] 
         CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
-        corr = 'down'
+        corr = 'right'
     CurrentProbe = CurrentProbe.lower()    
     LastTrial = CurrentStim + CurrentProbe.upper()
     InStim = MapLettersToScreen(CurrentStim)
