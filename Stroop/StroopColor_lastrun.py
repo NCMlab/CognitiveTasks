@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, sound, gui, visual, core, data, event, logging
+from psychopy import locale_setup, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -55,7 +55,9 @@ else:
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-
+BGColor = 'grey'
+FontColor = 'white'
+StroopKeyList = ['v', 'b', 'n', 'm']
 # #################
 
 # An ExperimentHandler isn't essential but helps with data saving
@@ -76,7 +78,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=(1920, 1080), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color='grey', colorSpace='rgb',
+    monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='norm')
 # store frame rate of monitor if we can measure it
@@ -92,7 +94,7 @@ instr1 = visual.TextStim(win=win, name='instr1',
     text=u"In this task, color patches will appear in the center of the screen.\n\nYou need to indicate the color of the patch.\n\nPress the R key if the color is Red\nPress the Y key if the color is Yellow\nPress the G key if the color is Green\nPress the B key if the color is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
     font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -113,7 +115,7 @@ feedback_2 = visual.TextStim(win=win, name='feedback_2',
     text='default text',
     font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=[1,1,1], colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 
 # Initialize components for Routine "instruct"
@@ -122,7 +124,7 @@ instrText = visual.TextStim(win=win, name='instrText',
     text=u"Now you will do the task.\n\nIt will be exactly like the practice except you won't get feedback.\nPress the R key if the color is Red\nPress the Y key if the color is Yellow\nPress the G key if the color is Green\nPress the B key if the color is Blue\n\n(Esc will quit)\nPress any key to continue\n\n",
     font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=[1, 1, 1], colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -141,7 +143,7 @@ thanksText = visual.TextStim(win=win, name='thanksText',
     text='This is the end of the experiment.\n\nThanks!',
     font='arial',
     pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
-    color=[1, 1, 1], colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -270,7 +272,7 @@ for thisPractice in practice:
         if resp.status == STARTED and t >= frameRemains:
             resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['r', 'y', 'b', 'g'])
+            theseKeys = event.getKeys(keyList=StroopKeyList)
             
             # check for quit:
             if "escape" in theseKeys:
@@ -472,7 +474,7 @@ for thisComponent in instructComponents:
 routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=10.0, method='random', 
+trials = data.TrialHandler(nReps=3.0, method='random', 
     extraInfo=expInfo, originPath=-1,
     trialList=data.importConditions('Stroop - ColorWord.csv'),
     seed=None, name='trials')
@@ -524,7 +526,7 @@ for thisTrial in trials:
         if resp.status == STARTED and t >= frameRemains:
             resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['r', 'y', 'b', 'g'])
+            theseKeys = event.getKeys(keyList=StroopKeyList)
             
             # check for quit:
             if "escape" in theseKeys:
