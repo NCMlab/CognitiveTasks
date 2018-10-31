@@ -475,7 +475,7 @@ class Mywin(wx.Frame):
       self.VSTMBlockLoadLevels = self.CreateVSTMList5(VSTMCapacity)
       print('With a capacity of %0.1f, the load levels will be:'%(VSTMCapacity))
       print( self.VSTMBlockLoadLevels)
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v4.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels])  
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v6.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels])  
       self.cbR3C4.SetValue(True)  
 
    # Row 5 Functions   

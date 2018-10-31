@@ -91,7 +91,9 @@ else:
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 CounterBalFlag = 'False'
-
+BGColor = 'grey'
+FontColor = 'white'
+AllowableKeys = ['1', '2', 'left','right']
 # #################
 dataFile = open(filename+'.csv', 'w')
 # Create the file for the Capacity
@@ -102,7 +104,7 @@ dataFile1=open(CapacityFileName+'.csv', 'w')
 win = visual.Window(
     size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0.8,0.8,0.8], colorSpace='rgb',
+    monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units=FontSizeUnits)
 
@@ -126,7 +128,7 @@ circle = visual.Polygon(
     win=win, name='polygon',units='pix', 
     edges=128, size=(CircleSize, CircleSize),
     ori=0, pos=(0, 0),
-    lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
+    lineWidth=1, lineColor='black', lineColorSpace='rgb',
     fillColor='black', fillColorSpace='rgb',
     opacity=1, depth=0.0, interpolate=True)
 
@@ -160,10 +162,10 @@ GreenCross = visual.TextStim(win=win, name='RedCross',
     
 # Instructions
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Press [LEFT] if the circle WAS in the set.\nPress [DOWN] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress "5" to begin.',
+    text='Press [LEFT] if the circle WAS in the set.\nPress [RIGHT] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress "5" to begin.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);   
     
 # Initialize components for Routine "Countdown"
@@ -171,26 +173,26 @@ text3 = visual.TextStim(win=win, name='text3',
     text='3',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 text2 = visual.TextStim(win=win, name='text2',
     text='2',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 text1 = visual.TextStim(win=win, name='text1',
     text='1',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-2.0);
     
 textThankyou = visual.TextStim(win=win, name='textThankyou',
     text='Thank you for participating!',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);    
     
 RunningClock = core.Clock()
@@ -353,7 +355,7 @@ for thisStep in staircase:
                    count += 1
         ProbeLoc = PosProbeLocation
     else:
-        corr = 'down'
+        corr = 'right'
         count = 0
         for y_offset in OffSet:
             for x_offset in OffSet:
@@ -380,7 +382,7 @@ for thisStep in staircase:
     resp.keys = -99
     resp.rt = -99
     while countDown.getTime() > 0:
-        theseKeys = event.getKeys(keyList=['escape','left', 'down'])
+        theseKeys = event.getKeys(keyList=['escape','left', 'right','1','2'])
        # if 'escape' in theseKeys:
        #     win.close()
             #core.quit()

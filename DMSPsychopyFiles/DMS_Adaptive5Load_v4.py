@@ -69,7 +69,7 @@ else:
     LoadList = LoadList.astype(np.int)
     if not os.path.exists(OutDir):
         os.mkdir(OutDir)
-    Tag = 'Run1'
+    Tag = 'BehRun1'
     FontSize = 60
     PartDataFolder = OutDir
  
@@ -706,7 +706,7 @@ for thisBlock in Blocks:
                 # keep track of start time/frame for later
                 textITI.tStart = t
                 textITI.frameNStart = frameN  # exact frame index
-                textITI.setAutoDraw(True)
+                textITI.setAutoDraw(False)
             frameRemains = (StimOnTime+RetOnTime)+ProbeOnTime + ITITime- win.monitorFramePeriod * 0.75  # most of one frame period left
             if textITI.status == STARTED and t >= frameRemains:
                 textITI.setAutoDraw(False)
@@ -732,6 +732,10 @@ for thisBlock in Blocks:
                 if len(theseKeys) > 0:  # at least one key was pressed
                     resp.keys = theseKeys[-1]  # just the last key pressed
                     resp.rt = resp.clock.getTime()
+                    # This is here to try to remove the letter from the screen after a key is pressed
+                    textProbe.setAutoDraw(False)
+                    textITI.setAutoDraw(True)
+                    win.flip()
                     
                 if CounterBalFlag == 'False':
                     if corr == 'left':
