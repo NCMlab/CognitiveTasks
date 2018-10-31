@@ -96,9 +96,11 @@ thisExp = data.ExperimentHandler(name=expName, version='',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # Which input file to use
-if Tag == '1':
-    inputFile = '../DMSPsychopyFiles/DMSBlockListMRIRun1.csv'
-else: 
+if Tag.find('BehRun1')>-1: 
+    inputFile = '../DMSPsychopyFiles/DMSBlockListBehRun1.csv'
+elif Tag.find('BehRun2')>-1: 
+    inputFile = '../DMSPsychopyFiles/DMSBlockListBehRun2.csv'    
+else:
     inputFile = '../DMSPsychopyFiles/DMSBlockListMRIRun2.csv'
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
@@ -163,14 +165,14 @@ if CounterBalFlag == 'False':
     text='Press [LEFT] or [1] if the letter WAS in the set.\nPress [RIGHT] or [2] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress the "5" key to begin.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 else:
     textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text='Press [RIGHT] or [2] if the letter WAS in the set.\nPress [1] or [LEFT] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 # Initialize components for Routine "ShortDelay"
 ShortDelayClock = core.Clock()
@@ -301,7 +303,7 @@ textThankyou = visual.TextStim(win=win, name='textThankyou',
     text='Thank you for participating!',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers

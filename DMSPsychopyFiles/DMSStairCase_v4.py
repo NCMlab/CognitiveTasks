@@ -46,7 +46,6 @@ if len(sys.argv) > 1:
     #tempFile.write('%s\n'%(sys.argv[2]))
 
     PartDataFolder = sys.argv[2]
-    FontSize= int(sys.argv[3])
     Tag = '1'
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
@@ -58,7 +57,6 @@ else:
     if not os.path.exists(OutDir):
         os.mkdir(OutDir)
     Tag = '1'
-    FontSize = 60
     PartDataFolder = OutDir
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
@@ -67,6 +65,7 @@ CounterBalFlag = 'False'
 BGColor = 'grey'
 FontColor = 'white'
 AllowableKeys = ['1', '2', 'left','right']
+FontSize = 60
 # #################    
     
     
@@ -75,16 +74,9 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = task
 expInfo['Max Trials'] = 150
 
-#make a text file to save data
-#fileName = expInfo['expName'] + expInfo['Participant ID'] + "_"+ expInfo['date']
-OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-# If the subject path does not exist, than make it
-if not os.path.exists(OutDir):
-    os.mkdir(OutDir)
-fileName = OutDir + '%s_%s_%s' % (task, expInfo['Participant ID'], expInfo['date'])
-
-dataFile = open(fileName+'.csv', 'w')#a simple text file with 'comma-separated-values'
-dataFile1=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, expInfo['Participant ID'], expInfo['date']),'w')
+dataFile = open(filename+'.csv', 'w') #a simple text file with 'comma-separated-values'
+dataFile1 = open(os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.txt' % (expInfo['Participant ID'], expName, 'CAPACITY', Tag, expInfo['date'])),'w')
+    
 
 # Put a header line into the output fileName
 dataFile.write('Trial,Load,LevelIndex,Resp,Correct,ElapsedTime,RT,CorrectRT,ProbeType,Study,Probe\n')
@@ -139,7 +131,7 @@ Nloads =  9
 # Prepare the stimuli for display
 WaitText = visual.TextStim(win=win, name='WaitText',
     #text='Remember:\nPress [LEFT] for IN the set\nPress [DOWN] for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press the [LEFT] or [DOWN] key.',
-    text='Press [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
+    text='Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',units=FontSizeUnits, 
     pos=(0, 0), height=40, wrapWidth=1200, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
@@ -371,6 +363,7 @@ for thisStep in staircase:
     KeyBoardCount = 0
     while k[0] not in ['escape', 'esc'] and KeyBoardCount < 1:
         k = event.waitKeys()
+        print(k)
         KeyBoardCount += 1
         RT = trialClock.getTime()
     # Is this respone correct?

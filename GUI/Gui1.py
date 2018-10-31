@@ -248,10 +248,10 @@ class Mywin(wx.Frame):
     file.close()
     self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
     
-   def LoadDMSCapacity(self, event):
+   def LoadDMSCapacity(self,event):
     expName = 'DMS'
     Tag = '1'
-    CapacityFileName = os.path.join(self.VisitFolderPath, '%s_%s_%s_%s_%s.csv' % (self.PartID.GetValue(), expName, 'CAPACITY', Tag, '*'))
+    CapacityFileName = os.path.join(self.VisitFolderPath, '%s_%s_%s_%s_%s.txt' % (self.PartID.GetValue(), expName, 'CAPACITY', Tag, '*'))
     # Find the capacity file and only select the last one if there are more than one
     CapacityFileName = glob.glob(CapacityFileName)[-1]
     # Now open and read the file
@@ -488,7 +488,8 @@ class Mywin(wx.Frame):
    def OnClickedR5C3(self, event): 
       btnR5C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C3Label))
-      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSStairCase_v4.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSFontSize])
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSStairCase_v4.py", self.PartID.GetValue(), self.VisitFolderPath])
+      self.LoadDMSCapacity(True)
       self.cbR5C3.SetValue(True)
    
    def OnClickedR5C6(self, event): 
@@ -496,7 +497,7 @@ class Mywin(wx.Frame):
       self.DMSTag = self.DMSTag + 1
       btnR5C6Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C6Label))
-      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'Run%d'%(self.DMSTag)])  
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'BehRun%d'%(self.DMSTag)])  
       self.cbR5C6.SetValue(True)  
    
    def OnClickedR6C2(self, event):
