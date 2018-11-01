@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, sound, gui, visual, core, data, event, logging
+from psychopy import locale_setup, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -56,6 +56,10 @@ else:
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+BGColor = u'grey'
+FontColor = u'white'
+FontSize = 60
+StroopKeyList = ['v', 'b', 'n', 'm']
 
 # #################
 
@@ -79,7 +83,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=(1920, 1080), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=u'darkgrey', colorSpace='rgb',
+    monitor=u'testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='norm')
 # store frame rate of monitor if we can measure it
@@ -92,10 +96,10 @@ else:
 # Initialize components for Routine "instructPractice"
 instructPracticeClock = core.Clock()
 instr1 = visual.TextStim(win=win, name='instr1',
-    text=u"In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate the color that the word is written in (and ignore what the word says).\n\nPress the R key if the ink is Red\nPress the Y key if the ink is Yellow\nPress the G key if the ink is Green\nPress the B key if the ink is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
+    text=u"In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate the color that the word is written in (and ignore what the word says).\n\nPress the red(v) key if the ink is Red\nPress the yellow(b) key if the ink is Yellow\nPress the green(n) key if the ink is Green\nPress the blue(m) key if the ink is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
     font=u'Arial',
-    pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    pos=[0, 0], height=0.1, wrapWidth=1000, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -103,7 +107,7 @@ trialClock = core.Clock()
 word = visual.TextStim(win=win, name='word',
     text='default text',
     font='Arial',
-    pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
+    pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
     color=1.0, colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -132,7 +136,7 @@ trialClock = core.Clock()
 word = visual.TextStim(win=win, name='word',
     text='default text',
     font='Arial',
-    pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
+    pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
     color=1.0, colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -279,7 +283,7 @@ for thisPractice in practice:
         if resp.status == STARTED and t >= frameRemains:
             resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['r', 'y', 'b', 'g'])
+            theseKeys = event.getKeys(keyList=StroopKeyList)
             
             # check for quit:
             if "escape" in theseKeys:
@@ -534,7 +538,7 @@ for thisTrial in trials:
         if resp.status == STARTED and t >= frameRemains:
             resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['r', 'y', 'b', 'g'])
+            theseKeys = event.getKeys(keyList=StroopKeyList)
             
             # check for quit:
             if "escape" in theseKeys:

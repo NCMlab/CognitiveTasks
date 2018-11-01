@@ -57,6 +57,7 @@ else:
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 BGColor = 'grey'
 FontColor = 'white'
+FontSize = 60
 StroopKeyList = ['v', 'b', 'n', 'm']
 # #################
 
