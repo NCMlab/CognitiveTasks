@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, gui, visual, core, data, event, logging, sound
+from psychopy import locale_setup, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -57,7 +57,9 @@ else:
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 CounterBalFlag = 'False'
-
+BGColor = 'grey'
+FontColor = 'white'
+FontSize = 60
 # #################
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
@@ -78,7 +80,7 @@ NStringPad = 2
 win = visual.Window(
     size=[1000, 800], fullscr=True, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
@@ -90,10 +92,10 @@ else:
 # Initialize components for Routine "LongInstr"
 LongInstrClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
-    text='Antonyms Vocabulary\n\nEach item in this test consistes of a word in capital letters followed by four words. Press the number assoiated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nSince some of the items require you to distinguish fine shades of meaning, consider all the choices before deciding which is the best. Please guess if you are unsure since there is no penalty for incorrect responses.\n\nPress any key to begin.',
+    text='Antonyms Vocabulary\n\nEach item in this test consists of a word in capital letters followed by four words. Press the number associated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nSince some of the items require you to distinguish fine shades of meaning, consider all the choices before deciding which is the best. Please guess if you are unsure since there is no penalty for incorrect responses.\n\nPress any key to begin.',
     font='Arial',
     units='pix', pos=(0, 0), height=30, wrapWidth=800, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "GetReady"
@@ -102,7 +104,7 @@ GetRead = visual.TextStim(win=win, name='GetRead',
     text='Get Ready',
     font='Arial',
     units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -117,34 +119,34 @@ polygon = visual.Rect(
 TestWord = visual.TextStim(win=win, name='TestWord',
     text='default text',
     font='Arial',
-    units='pix', pos=(0, 200), height=60, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, 200), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
     
 Resp1 = visual.TextStim(win=win, name='Resp1',
     text='default text',
     font='Arial',
-    units='pix', pos=(0, 40), height=50, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, 40), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-2.0);   
                 
 Resp2 = visual.TextStim(win=win, name='Resp2',
     text='default text',
     font='Arial',
-    units='pix', pos=(0, -20), height=50, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, -20), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-3.0);
 Resp3 = visual.TextStim(win=win, name='Resp3',
     text='default text',
     font='Arial',
-    units='pix', pos=(0, -80), height=50, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, -80), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-4.0);
 Resp4 = visual.TextStim(win=win, name='Resp4',
     text='default text',
     font='Arial',
-    units='pix', pos=(0, -140), height=50, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, -140), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-5.0);
 
 # Initialize components for Routine "Feedback"
@@ -153,8 +155,8 @@ msg = ''
 text_3 = visual.TextStim(win=win, name='text_3',
     text='default text',
     font='Arial',
-    units='pix', pos=(0, 0), height=50, wrapWidth=600, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=600, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 
 # Initialize components for Routine "ITI"
@@ -162,8 +164,8 @@ ITIClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
     text='+',
     font='Arial',
-    units='pix', pos=(0, 0), height=60, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "ShortInstr"
@@ -172,7 +174,7 @@ Instruct = visual.TextStim(win=win, name='Instruct',
     text='Press the number associated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nPress any key to begin.',
     font='Arial',
     units='pix', pos=(0, 0), height=40, wrapWidth=600, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 
@@ -181,8 +183,8 @@ ThankYouClock = core.Clock()
 Merci = visual.TextStim(win=win, name='Merci',
     text='Thank you',
     font='Arial',
-    units='pix', pos=(0, 0), height=50, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers

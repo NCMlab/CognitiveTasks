@@ -57,6 +57,7 @@ else:
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 BGColor = 'grey'
 FontColor = 'white'
+FontSize = 60
 StroopKeyList = ['v', 'b', 'n', 'm']
 # #################
 thisExp = data.ExperimentHandler(name=expName, version='',
@@ -93,9 +94,9 @@ instr1 = visual.TextStim(win=win, name='instr1',
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 word = visual.TextStim(win=win, name='word',
-    text='default text',
-    font='Arial',
-    pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
+    text=u'default text',
+    font=u'Arial',
+    pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -124,7 +125,7 @@ trialClock = core.Clock()
 word = visual.TextStim(win=win, name='word',
     text='default text',
     font='Arial',
-    pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
+    pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
