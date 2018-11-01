@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Wed Oct 31 10:47:20 2018
+    on Thu Nov  1 17:21:36 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -188,22 +188,22 @@ Opt8 = visual.TextStim(win=win, name='Opt8',
 # Initialize components for Routine "Feedback1"
 Feedback1Clock = core.Clock()
 Prac1Feedback = visual.TextStim(win=win, name='Prac1Feedback',
-    text='Here the correct answer is 2. \nThe paper is folded over once at a diagonal, starting from the upper right. Then the upper left corner is folded down. Therefore, the  hole punch gores through 4 total sheets symmetrically on each side of the diagonal.\n\nPress any key to continue.',
-    font='Arial',
-    pos=(300, 0), height=30, wrapWidth=600, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    text=u'Here the correct answer is 3. \nEvery row and column has a circle, diamond and a square in it. In addition each row and column has one cell with one, two or three concentric shapes. Therefore, the missing cell needs to have three concentric shapes be a diamond shape.\n\nPress any key to continue.',
+    font=u'Arial',
+    pos=(-350, -140), height=30, wrapWidth=600, ori=0, 
+    color=u'black', colorSpace='rgb', opacity=1,
     depth=0.0);
-Prac1Fold = visual.ImageStim(
-    win=win, name='Prac1Fold',
-    image=u'../../MatricesImages/matrix7.bmp', mask=None,
-    ori=0, pos=(0, 200), size=(556, 144),
+Prac1Matrix = visual.ImageStim(
+    win=win, name='Prac1Matrix',
+    image='sin', mask=None,
+    ori=0, pos=(0, 200), size=(430, 380),
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-1.0)
 Prac1Choice = visual.ImageStim(
     win=win, name='Prac1Choice',
     image='sin', mask=None,
-    ori=0, pos=(-175, -75), size=(150,150),
+    ori=0, pos=(75, -75), size=(120,120),
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-2.0)
@@ -334,22 +334,22 @@ Opt8 = visual.TextStim(win=win, name='Opt8',
 # Initialize components for Routine "Feedback2"
 Feedback2Clock = core.Clock()
 Prac2Feedback = visual.TextStim(win=win, name='Prac2Feedback',
-    text='Here the correct answer is 2. The paper is folded from the bottom right corner once, then folded again from the tapered right side. However, the hold punch misses the second fold.\n\nPress any key to continue.',
-    font='Arial',
+    text=u'Here the correct answer is 3. \n\nThis is because if you subtract the elements in column 2 from column 1 you get column 3. The same is true if you subtract the elements from row 2 from the elements of row 1, you get row 3.\nPress any key to continue.',
+    font=u'Arial',
     pos=(300, 0), height=30, wrapWidth=600, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=u'black', colorSpace='rgb', opacity=1,
     depth=0.0);
 Prac2Fold = visual.ImageStim(
     win=win, name='Prac2Fold',
-    image=u'../../MatricesImages/matrix7.bmp', mask=None,
-    ori=0, pos=(0, 200), size=(556, 144),
+    image='sin', mask=None,
+    ori=0, pos=(0, 200), size=(430, 380),
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-1.0)
 Prac2Choice = visual.ImageStim(
     win=win, name='Prac2Choice',
-    image=u'../../MatricesImages/matrix7.bmp', mask=None,
-    ori=0, pos=(-175, -75), size=(150, 150),
+    image='sin', mask=None,
+    ori=0, pos=(-75, -225), size=(120, 120),
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-2.0)
@@ -834,10 +834,11 @@ for thisTrial in trials:
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
-    Prac1Choice.setImage(u'../../MatricesImages/matrix7.bmp')
+    Prac1Matrix.setImage(Stimulus)
+    Prac1Choice.setImage(Choice3)
     Prac1End = event.BuilderKeyResponse()
     # keep track of which components have finished
-    Feedback1Components = [Prac1Feedback, Prac1Fold, Prac1Choice, Prac1End]
+    Feedback1Components = [Prac1Feedback, Prac1Matrix, Prac1Choice, Prac1End]
     for thisComponent in Feedback1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -856,12 +857,12 @@ for thisTrial in trials:
             Prac1Feedback.frameNStart = frameN  # exact frame index
             Prac1Feedback.setAutoDraw(True)
         
-        # *Prac1Fold* updates
-        if t >= 0.0 and Prac1Fold.status == NOT_STARTED:
+        # *Prac1Matrix* updates
+        if t >= 0.0 and Prac1Matrix.status == NOT_STARTED:
             # keep track of start time/frame for later
-            Prac1Fold.tStart = t
-            Prac1Fold.frameNStart = frameN  # exact frame index
-            Prac1Fold.setAutoDraw(True)
+            Prac1Matrix.tStart = t
+            Prac1Matrix.frameNStart = frameN  # exact frame index
+            Prac1Matrix.setAutoDraw(True)
         
         # *Prac1Choice* updates
         if t >= 0.0 and Prac1Choice.status == NOT_STARTED:
@@ -1215,6 +1216,8 @@ for thisTrial_3 in trials_3:
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
+    Prac2Fold.setImage(Stimulus)
+    Prac2Choice.setImage(Choice6)
     Prac2End = event.BuilderKeyResponse()
     # keep track of which components have finished
     Feedback2Components = [Prac2Feedback, Prac2Fold, Prac2Choice, Prac2End]
