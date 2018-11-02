@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Fri Nov  2 12:06:06 2018
+    on Fri Nov  2 11:59:01 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -23,21 +23,46 @@ import sys  # to get file system encoding
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
-os.chdir(_thisDir)
-
+# #################
 # Store info about the experiment session
-expName = 'Matrices'  # from the Builder filename that created this script
-expInfo = {u'session': u'001', u'participant': u''}
+expName = u'Fluid'  # from the Builder filename that created this script
+task = 'Matrices'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
+if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
+    expInfo['Participant ID'] = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
+
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
+ 
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+BGColor = 'grey'
+FontColor = 'white'
+FontSize = 60
 
+# #################
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/Matrices/Matrices.psyexp',
+    originPath=None,
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -52,7 +77,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=(1440, 900), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='pix')
 # store frame rate of monitor if we can measure it
@@ -68,7 +93,7 @@ Instruct = visual.TextStim(win=win, name='Instruct',
     text='Progressive Matrices\n\nThis is a test of observation and clear thinking.\nAt the top of the screen you will see a pattern with a bit cut out of it. You will look at the pattern, think what the piece must be that is needed to complete the pattern correctly both along and down. Then find the right piece out of the eight bits shown below.\nOnly one of these pieces is perfectly correct.\n\nPress any key to perform practice trials.',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -123,34 +148,34 @@ CFIg6 = visual.ImageStim(
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-6.0)
 Opt1 = visual.TextStim(win=win, name='Opt1',
-    text=u'1',
-    font=u'Arial',
+    text='1',
+    font='Arial',
     pos=(-170, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-7.0);
 Opt2 = visual.TextStim(win=win, name='Opt2',
-    text=u'2',
-    font=u'Arial',
+    text='2',
+    font='Arial',
     pos=(-20, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-8.0);
 Opt3 = visual.TextStim(win=win, name='Opt3',
-    text=u'3',
-    font=u'Arial',
+    text='3',
+    font='Arial',
     pos=(130, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-9.0);
 Opt4 = visual.TextStim(win=win, name='Opt4',
-    text=u'4',
-    font=u'Arial',
+    text='4',
+    font='Arial',
     pos=(280, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-10.0);
 Opt5 = visual.TextStim(win=win, name='Opt5',
-    text=u'5',
-    font=u'Arial',
+    text='5',
+    font='Arial',
     pos=(-170, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-11.0);
 CFig7 = visual.ImageStim(
     win=win, name='CFig7',
@@ -167,22 +192,22 @@ CFig8 = visual.ImageStim(
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-14.0)
 Opt6 = visual.TextStim(win=win, name='Opt6',
-    text=u'6',
-    font=u'Arial',
+    text='6',
+    font='Arial',
     pos=(-20, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-15.0);
 Opt7 = visual.TextStim(win=win, name='Opt7',
-    text=u'7',
-    font=u'Arial',
+    text='7',
+    font='Arial',
     pos=(130, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-16.0);
 Opt8 = visual.TextStim(win=win, name='Opt8',
-    text=u'8',
-    font=u'Arial',
+    text='8',
+    font='Arial',
     pos=(280, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-17.0);
 
 # Initialize components for Routine "Feedback1"
@@ -191,7 +216,7 @@ Prac1Feedback = visual.TextStim(win=win, name='Prac1Feedback',
     text=u'Here the correct answer is 3. \nEvery row and column has a circle, diamond and a square in it. In addition each row and column has one cell with one, two or three concentric shapes. Therefore, the missing cell needs to have three concentric shapes be a diamond shape.\n\nPress any key to continue.',
     font=u'Arial',
     pos=(-350, -140), height=30, wrapWidth=600, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 Prac1Matrix = visual.ImageStim(
     win=win, name='Prac1Matrix',
@@ -214,122 +239,8 @@ text = visual.TextStim(win=win, name='text',
     text='+',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
-
-# Initialize components for Routine "trial"
-trialClock = core.Clock()
-image = visual.ImageStim(
-    win=win, name='image',
-    image='sin', mask=None,
-    ori=0, pos=(0, 200), size=1.0,
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=0.0)
-CFig1 = visual.ImageStim(
-    win=win, name='CFig1',
-    image='sin', mask=None,
-    ori=0, pos=(-225, -75), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-1.0)
-CFig2 = visual.ImageStim(
-    win=win, name='CFig2',
-    image='sin', mask=None,
-    ori=0, pos=(-75, -75), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-2.0)
-CFig3 = visual.ImageStim(
-    win=win, name='CFig3',
-    image='sin', mask=None,
-    ori=0, pos=(75, -75), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-3.0)
-CFig4 = visual.ImageStim(
-    win=win, name='CFig4',
-    image='sin', mask=None,
-    ori=0, pos=(225, -75), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-4.0)
-CFig5 = visual.ImageStim(
-    win=win, name='CFig5',
-    image='sin', mask=None,
-    ori=0, pos=(-225, -225), size=(120,120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-5.0)
-CFIg6 = visual.ImageStim(
-    win=win, name='CFIg6',
-    image='sin', mask=None,
-    ori=0, pos=(-75, -225), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-6.0)
-Opt1 = visual.TextStim(win=win, name='Opt1',
-    text=u'1',
-    font=u'Arial',
-    pos=(-170, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-7.0);
-Opt2 = visual.TextStim(win=win, name='Opt2',
-    text=u'2',
-    font=u'Arial',
-    pos=(-20, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-8.0);
-Opt3 = visual.TextStim(win=win, name='Opt3',
-    text=u'3',
-    font=u'Arial',
-    pos=(130, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-9.0);
-Opt4 = visual.TextStim(win=win, name='Opt4',
-    text=u'4',
-    font=u'Arial',
-    pos=(280, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-10.0);
-Opt5 = visual.TextStim(win=win, name='Opt5',
-    text=u'5',
-    font=u'Arial',
-    pos=(-170, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-11.0);
-CFig7 = visual.ImageStim(
-    win=win, name='CFig7',
-    image='sin', mask=None,
-    ori=0, pos=(75, -225), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-13.0)
-CFig8 = visual.ImageStim(
-    win=win, name='CFig8',
-    image='sin', mask=None,
-    ori=0, pos=(225, -225), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-14.0)
-Opt6 = visual.TextStim(win=win, name='Opt6',
-    text=u'6',
-    font=u'Arial',
-    pos=(-20, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-15.0);
-Opt7 = visual.TextStim(win=win, name='Opt7',
-    text=u'7',
-    font=u'Arial',
-    pos=(130, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-16.0);
-Opt8 = visual.TextStim(win=win, name='Opt8',
-    text=u'8',
-    font=u'Arial',
-    pos=(280, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-17.0);
 
 # Initialize components for Routine "Feedback2"
 Feedback2Clock = core.Clock()
@@ -337,7 +248,7 @@ Prac2Feedback = visual.TextStim(win=win, name='Prac2Feedback',
     text=u'Here the correct answer is 6. \n\nThis is because if you subtract the elements in column 2 from column 1 you get column 3. The same is true if you subtract the elements from row 2 from the elements of row 1, you get row 3.\nPress any key to continue.',
     font=u'Arial',
     pos=(350, -140), height=30, wrapWidth=600, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 Prac2Fold = visual.ImageStim(
     win=win, name='Prac2Fold',
@@ -360,7 +271,7 @@ text = visual.TextStim(win=win, name='text',
     text='+',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "GetReady"
@@ -369,140 +280,11 @@ GetReady2 = visual.TextStim(win=win, name='GetReady2',
     text='Get ready to perform the task with no feedback.\nPlease try to respond as quickly and accurately as possible.\n\nPress any key to begin.',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "crosshair"
 crosshairClock = core.Clock()
-text = visual.TextStim(win=win, name='text',
-    text='+',
-    font='Arial',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
-    depth=0.0);
-
-# Initialize components for Routine "trial"
-trialClock = core.Clock()
-image = visual.ImageStim(
-    win=win, name='image',
-    image='sin', mask=None,
-    ori=0, pos=(0, 200), size=1.0,
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=0.0)
-CFig1 = visual.ImageStim(
-    win=win, name='CFig1',
-    image='sin', mask=None,
-    ori=0, pos=(-225, -75), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-1.0)
-CFig2 = visual.ImageStim(
-    win=win, name='CFig2',
-    image='sin', mask=None,
-    ori=0, pos=(-75, -75), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-2.0)
-CFig3 = visual.ImageStim(
-    win=win, name='CFig3',
-    image='sin', mask=None,
-    ori=0, pos=(75, -75), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-3.0)
-CFig4 = visual.ImageStim(
-    win=win, name='CFig4',
-    image='sin', mask=None,
-    ori=0, pos=(225, -75), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-4.0)
-CFig5 = visual.ImageStim(
-    win=win, name='CFig5',
-    image='sin', mask=None,
-    ori=0, pos=(-225, -225), size=(120,120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-5.0)
-CFIg6 = visual.ImageStim(
-    win=win, name='CFIg6',
-    image='sin', mask=None,
-    ori=0, pos=(-75, -225), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-6.0)
-Opt1 = visual.TextStim(win=win, name='Opt1',
-    text=u'1',
-    font=u'Arial',
-    pos=(-170, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-7.0);
-Opt2 = visual.TextStim(win=win, name='Opt2',
-    text=u'2',
-    font=u'Arial',
-    pos=(-20, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-8.0);
-Opt3 = visual.TextStim(win=win, name='Opt3',
-    text=u'3',
-    font=u'Arial',
-    pos=(130, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-9.0);
-Opt4 = visual.TextStim(win=win, name='Opt4',
-    text=u'4',
-    font=u'Arial',
-    pos=(280, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-10.0);
-Opt5 = visual.TextStim(win=win, name='Opt5',
-    text=u'5',
-    font=u'Arial',
-    pos=(-170, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-11.0);
-CFig7 = visual.ImageStim(
-    win=win, name='CFig7',
-    image='sin', mask=None,
-    ori=0, pos=(75, -225), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-13.0)
-CFig8 = visual.ImageStim(
-    win=win, name='CFig8',
-    image='sin', mask=None,
-    ori=0, pos=(225, -225), size=(120, 120),
-    color=[1,1,1], colorSpace='rgb', opacity=1,
-    flipHoriz=False, flipVert=False,
-    texRes=128, interpolate=True, depth=-14.0)
-Opt6 = visual.TextStim(win=win, name='Opt6',
-    text=u'6',
-    font=u'Arial',
-    pos=(-20, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-15.0);
-Opt7 = visual.TextStim(win=win, name='Opt7',
-    text=u'7',
-    font=u'Arial',
-    pos=(130, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-16.0);
-Opt8 = visual.TextStim(win=win, name='Opt8',
-    text=u'8',
-    font=u'Arial',
-    pos=(280, -180), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
-    depth=-17.0);
-
-# Initialize components for Routine "crosshair"
-crosshairClock = core.Clock()
-text = visual.TextStim(win=win, name='text',
-    text='+',
-    font='Arial',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
-    depth=0.0);
 
 # Initialize components for Routine "ThankYou"
 ThankYouClock = core.Clock()
@@ -510,7 +292,7 @@ text_2 = visual.TextStim(win=win, name='text_2',
     text='Thank You',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -599,7 +381,7 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('Matrices.csv', selection='[0]'),
+    trialList=data.importConditions('../Matrices/Matrices.csv', selection='[0]'),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -981,7 +763,7 @@ for thisTrial in trials:
 # set up handler to look after randomisation of conditions etc
 trials_3 = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('Matrices.csv', selection='[1]'),
+    trialList=data.importConditions('../Matrices/Matrices.csv', selection='[1]'),
     seed=None, name='trials_3')
 thisExp.addLoop(trials_3)  # add the loop to the experiment
 thisTrial_3 = trials_3.trialList[0]  # so we can initialise stimuli with some values
@@ -1494,7 +1276,7 @@ for thisComponent in crosshairComponents:
 # set up handler to look after randomisation of conditions etc
 trials_2 = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('Matrices.csv', selection='[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]'),
+    trialList=data.importConditions('../Matrices/Matrices.csv', selection='[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]'),
     seed=None, name='trials_2')
 thisExp.addLoop(trials_2)  # add the loop to the experiment
 thisTrial_2 = trials_2.trialList[0]  # so we can initialise stimuli with some values

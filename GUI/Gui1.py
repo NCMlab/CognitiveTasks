@@ -201,12 +201,17 @@ class Mywin(wx.Frame):
       # Buttons
       self.btnR9C2 = wx.Button(self.panel,-1,"Paper Folding", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR9C2.Bind(wx.EVT_BUTTON,self.OnClickedR9C2) 
+      self.btnR9C3 = wx.Button(self.panel,-1,"Matrices", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR9C3.Bind(wx.EVT_BUTTON,self.OnClickedR9C3) 
+      
       #self.btnR9C3 = wx.Button(self.panel,-1,"Letter Comp", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       #self.btnR9C3.Bind(wx.EVT_BUTTON,self.OnClickedR8C3) 
     # Box
       Row9BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
       self.cbR9C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
+      self.cbR9C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
+      
       #self.cbR9C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))      
 
 # ##########
@@ -231,8 +236,10 @@ class Mywin(wx.Frame):
       for child in self.panel.GetChildren():
         # Diable all buttons except the button to enter the participant ID
         if isinstance(child, wx.Button):
-            if child.Label != "Submit":
+            if (child.Label != "Submit"):
                 child.Enable()
+            if (child.Label == "Paper Folding"):
+                child.Disable()
                 
    def LoadVSTMCapacity(self, event):
     expName = 'VSTM'
@@ -524,7 +531,6 @@ class Mywin(wx.Frame):
       core.shellCall([sys.executable, "../PatternComparison/PatternComparison_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR8C2.SetValue(True)
    
-   
    def OnClickedR8C3(self, event):
       pass
    
@@ -533,7 +539,13 @@ class Mywin(wx.Frame):
       print("Label of pressed button = %s"%(btnR9C2Label))
       core.shellCall([sys.executable, "../PaperFolding/PaperFolding_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR9C2.SetValue(True)
-   
+
+   def OnClickedR9C3(self, event):
+      btnR9C3Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR9C3Label))
+      core.shellCall([sys.executable, "../Matrices/Matrices_v1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      self.cbR9C3.SetValue(True)
+      
    def CloseGUI(self,event):
         self.Close()
       
