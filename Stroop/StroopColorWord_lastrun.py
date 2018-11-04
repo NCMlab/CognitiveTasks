@@ -59,6 +59,7 @@ filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant
 BGColor = u'grey'
 FontColor = u'white'
 FontSize = 60
+InstrFontSize = 50
 StroopKeyList = ['v', 'b', 'n', 'm']
 
 # #################
@@ -81,11 +82,11 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1920, 1080), fullscr=True, screen=0,
+    size=(1200, 800), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor=u'testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
-    units='norm')
+    units='pix')
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
 if expInfo['frameRate'] != None:
@@ -98,7 +99,7 @@ instructPracticeClock = core.Clock()
 instr1 = visual.TextStim(win=win, name='instr1',
     text=u"In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate the color that the word is written in (and ignore what the word says).\n\nPress the red(v) key if the ink is Red\nPress the yellow(b) key if the ink is Yellow\nPress the green(n) key if the ink is Green\nPress the blue(m) key if the ink is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
     font=u'Arial',
-    pos=[0, 0], height=0.1, wrapWidth=1000, ori=0, 
+    pos=[0, 0], height=InstrFontSize, wrapWidth=1000, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -118,7 +119,7 @@ msg=''
 feedback_2 = visual.TextStim(win=win, name='feedback_2',
     text='default text',
     font='Arial',
-    pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
+    pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
     color=[1,1,1], colorSpace='rgb', opacity=1,
     depth=-1.0);
 
@@ -127,7 +128,7 @@ instructClock = core.Clock()
 instrText = visual.TextStim(win=win, name='instrText',
     text=u"Now you will do the task.\nIt will be exactly like the practice except you won't get feedback.\nPress the R key if the ink is Red\nPress the Y key if the ink is Yellow\nPress the G key if the ink is Green\nPress the B key if the ink is Blue\n\n(Esc will quit)\nPress any key to continue\n",
     font=u'Arial',
-    pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
+    pos=[0, 0], height=InstrFontSize, wrapWidth=1000, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -143,9 +144,9 @@ word = visual.TextStim(win=win, name='word',
 # Initialize components for Routine "thanks"
 thanksClock = core.Clock()
 thanksText = visual.TextStim(win=win, name='thanksText',
-    text='This is the end of the experiment.\n\nThanks!',
+    text='Thank you',
     font='arial',
-    pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
+    pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=0.0);
 
