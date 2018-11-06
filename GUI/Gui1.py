@@ -6,6 +6,7 @@ from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 
 # DIALOG BOX RESOURCES
 # http://www.blog.pythonlibrary.org/2010/07/10/the-dialogs-of-wxpython-part-2-of-2/
+# Clock resources: psychopy-users/tFghyXkOx5U
 
 import os  # handy system and path functions
 import sys  # to get file system encoding
