@@ -59,7 +59,7 @@ filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant
 BGColor = u'grey'
 FontColor = u'white'
 FontSize = 60
-InstrFontSize = 50
+InstrFontSize = 40
 StroopKeyList = ['v', 'b', 'n', 'm']
 
 # #################
@@ -96,13 +96,20 @@ else:
 
 # Initialize components for Routine "instructPractice"
 instructPracticeClock = core.Clock()
-instr1 = visual.TextStim(win=win, name='instr1',
-    text=u"In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate the color that the word is written in (and ignore what the word says).\n\nPress the red(v) key if the ink is Red\nPress the yellow(b) key if the ink is Yellow\nPress the green(n) key if the ink is Green\nPress the blue(m) key if the ink is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
+instr1a = visual.TextStim(win=win, name='instr1a',
+    text=u"In this task, words will appear in the center of the screen, like this:\n\n\nYou need to indicate the COLOR that the word is written in (and ignore what the word says).\n\nPress the red(v) key if the ink is Red\nPress the yellow(b) key if the ink is Yellow\nPress the green(n) key if the ink is Green\nPress the blue(m) key if the ink is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
     font=u'Arial',
     pos=[0, 0], height=InstrFontSize, wrapWidth=1000, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
-
+    
+instr1b = visual.TextStim(win=win, name='instr1b',
+    text=u"BLUE",
+    font=u'Arial',
+    pos=[0, 220], height=FontSize, wrapWidth=1000, ori=0, 
+    color='red', colorSpace='rgb', opacity=1,
+    depth=0.0);
+    
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 word = visual.TextStim(win=win, name='word',
@@ -162,7 +169,7 @@ continueRoutine = True
 # update component parameters for each repeat
 ready1 = event.BuilderKeyResponse()
 # keep track of which components have finished
-instructPracticeComponents = [instr1, ready1]
+instructPracticeComponents = [instr1a, instr1b, ready1]
 for thisComponent in instructPracticeComponents:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
@@ -175,11 +182,12 @@ while continueRoutine:
     # update/draw components on each frame
     
     # *instr1* updates
-    if t >= 0.0 and instr1.status == NOT_STARTED:
+    if t >= 0.0 and instr1a.status == NOT_STARTED:
         # keep track of start time/frame for later
-        instr1.tStart = t
-        instr1.frameNStart = frameN  # exact frame index
-        instr1.setAutoDraw(True)
+        instr1a.tStart = t
+        instr1a.frameNStart = frameN  # exact frame index
+        instr1a.setAutoDraw(True)
+        instr1b.setAutoDraw(True)
     
     # *ready1* updates
     if t >= 0.0 and ready1.status == NOT_STARTED:

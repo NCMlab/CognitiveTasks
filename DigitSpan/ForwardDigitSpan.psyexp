@@ -29,7 +29,7 @@
   <Routines>
     <Routine name="trial">
       <SoundComponent name="sound_1">
-        <Param name="sound" updates="constant" val="NumberSounds/1.wav" valType="str"/>
+        <Param name="sound" updates="constant" val="NumberSounds/6.wav" valType="str"/>
         <Param name="volume" updates="constant" val="1" valType="code"/>
         <Param name="name" updates="None" val="sound_1" valType="code"/>
         <Param name="stopVal" updates="constant" val="1.5" valType="code"/>

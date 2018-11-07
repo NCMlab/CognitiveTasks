@@ -428,7 +428,7 @@ for thisComponent in countdownComponents:
 # set up handler to look after randomisation of conditions etc
 pracTrials = data.TrialHandler(nReps=1.0, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('DMSFileDemo.xlsx'),
+    trialList=data.importConditions('DMSFileDemo.csv'),
     seed=None, name='pracTrials')
 thisExp.addLoop(pracTrials)  # add the loop to the experiment
 thisPracTrial = pracTrials.trialList[0]  # so we can initialise stimuli with some values

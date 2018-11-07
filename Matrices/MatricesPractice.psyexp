@@ -22,7 +22,7 @@
     <Param name="Show mouse" updates="None" val="False" valType="bool"/>
     <Param name="Data filename" updates="None" val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code"/>
     <Param name="Show info dlg" updates="None" val="False" valType="bool"/>
-    <Param name="expName" updates="None" val="MatricesWClock" valType="str"/>
+    <Param name="expName" updates="None" val="MatricesPractice" valType="str"/>
     <Param name="logging level" updates="None" val="exp" valType="code"/>
     <Param name="Screen" updates="None" val="1" valType="num"/>
   </Settings>
@@ -462,34 +462,6 @@
         <Param name="font" updates="constant" val="Arial" valType="str"/>
         <Param name="letterHeight" updates="constant" val="40" valType="code"/>
       </TextComponent>
-      <CodeComponent name="code">
-        <Param name="Begin Experiment" updates="constant" val="countdownStarted = False" valType="extendedCode"/>
-        <Param name="name" updates="None" val="code" valType="code"/>
-        <Param name="Begin Routine" updates="constant" val="if not countdownStarted:&amp;#10;    countdownClock = core.CountdownTimer(600)&amp;#10;    countdownStarted = True" valType="extendedCode"/>
-        <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
-        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
-        <Param name="Each Frame" updates="constant" val="timeRemaining = countdownClock.getTime()&amp;#10;if timeRemaining &lt;= 0.0:&amp;#10;    continueRoutine = False&amp;#10;    trials_2.finished = True&amp;#10;    countdown.Started = False&amp;#10;else:&amp;#10;    minutes = int(timeRemaining/60.0)&amp;#10;    seconds = int(timeRemaining - (minutes*60.0))&amp;#10;    timeText = str(minutes) + &quot;:&quot; + str(seconds)" valType="extendedCode"/>
-      </CodeComponent>
-      <TextComponent name="text_3">
-        <Param name="opacity" updates="constant" val="1" valType="code"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="None" val="text_3" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
-        <Param name="color" updates="constant" val="white" valType="str"/>
-        <Param name="text" updates="set every frame" val="$timeText" valType="str"/>
-        <Param name="stopVal" updates="constant" val="" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
-        <Param name="flip" updates="constant" val="" valType="str"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="from exp settings" valType="str"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="ori" updates="constant" val="0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="font" updates="constant" val="Arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="20" valType="code"/>
-      </TextComponent>
     </Routine>
     <Routine name="crosshair">
       <TextComponent name="text">
@@ -513,17 +485,17 @@
         <Param name="letterHeight" updates="constant" val="40" valType="code"/>
       </TextComponent>
     </Routine>
-    <Routine name="Feedback1">
-      <TextComponent name="Prac1Feedback">
+    <Routine name="Instructions">
+      <TextComponent name="Instruct">
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="None" val="Prac1Feedback" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="600" valType="code"/>
+        <Param name="name" updates="None" val="Instruct" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="1000" valType="code"/>
         <Param name="color" updates="constant" val="black" valType="str"/>
-        <Param name="text" updates="constant" val="Here the correct answer is 3. &amp;#10;Every row and column has a circle, diamond and a square in it. In addition each row and column has one cell with one, two or three concentric shapes. Therefore, the missing cell needs to have three concentric shapes be a diamond shape.&amp;#10;&amp;#10;Press any key to continue." valType="str"/>
+        <Param name="text" updates="constant" val="Progressive Matrices&amp;#10;&amp;#10;This is a test of observation and clear thinking.&amp;#10;At the top of the screen you will see a pattern with a bit cut out of it. You will look at the pattern, think what the piece must be that is needed to complete the pattern correctly both along and down. Then find the right piece out of the eight bits shown below.&amp;#10;Only one of these pieces is perfectly correct.&amp;#10;&amp;#10;Press any key to perform practice trials." valType="str"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="pos" updates="constant" val="(-350, -140)" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
         <Param name="flip" updates="constant" val="" valType="str"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="units" updates="None" val="from exp settings" valType="str"/>
@@ -532,56 +504,12 @@
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
         <Param name="font" updates="constant" val="Arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="30" valType="code"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
       </TextComponent>
-      <ImageComponent name="Prac1Matrix">
-        <Param name="opacity" updates="constant" val="1" valType="code"/>
-        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
-        <Param name="name" updates="None" val="Prac1Matrix" valType="code"/>
-        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
-        <Param name="stopVal" updates="constant" val="" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="mask" updates="constant" val="None" valType="str"/>
-        <Param name="pos" updates="constant" val="(0, 200)" valType="code"/>
-        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="from exp settings" valType="str"/>
-        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="ori" updates="constant" val="0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="image" updates="set every repeat" val="$Stimulus" valType="str"/>
-        <Param name="size" updates="constant" val="(430, 380)" valType="code"/>
-      </ImageComponent>
-      <ImageComponent name="Prac1Choice">
-        <Param name="opacity" updates="constant" val="1" valType="code"/>
-        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
-        <Param name="name" updates="None" val="Prac1Choice" valType="code"/>
-        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
-        <Param name="stopVal" updates="constant" val="" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="mask" updates="constant" val="None" valType="str"/>
-        <Param name="pos" updates="constant" val="(75, -75)" valType="code"/>
-        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="from exp settings" valType="str"/>
-        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="ori" updates="constant" val="0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="image" updates="set every repeat" val="$Choice3" valType="str"/>
-        <Param name="size" updates="constant" val="(120,120)" valType="code"/>
-      </ImageComponent>
-      <KeyboardComponent name="Prac1End">
+      <KeyboardComponent name="StartPractice">
         <Param name="correctAns" updates="constant" val="" valType="str"/>
         <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
-        <Param name="name" updates="None" val="Prac1End" valType="code"/>
+        <Param name="name" updates="None" val="StartPractice" valType="code"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
@@ -677,17 +605,17 @@
         <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
       </KeyboardComponent>
     </Routine>
-    <Routine name="Instructions">
-      <TextComponent name="Instruct">
+    <Routine name="Feedback1">
+      <TextComponent name="Prac1Feedback">
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="None" val="Instruct" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="1000" valType="code"/>
+        <Param name="name" updates="None" val="Prac1Feedback" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="660" valType="code"/>
         <Param name="color" updates="constant" val="black" valType="str"/>
-        <Param name="text" updates="constant" val="Progressive Matrices&amp;#10;&amp;#10;This is a test of observation and clear thinking.&amp;#10;At the top of the screen you will see a pattern with a bit cut out of it. You will look at the pattern, think what the piece must be that is needed to complete the pattern correctly both along and down. Then find the right piece out of the eight bits shown below.&amp;#10;Only one of these pieces is perfectly correct.&amp;#10;&amp;#10;Press any key to perform practice trials." valType="str"/>
+        <Param name="text" updates="set every repeat" val="$Feedback" valType="str"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="pos" updates="constant" val="(-350, -160)" valType="code"/>
         <Param name="flip" updates="constant" val="" valType="str"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="units" updates="None" val="from exp settings" valType="str"/>
@@ -696,12 +624,56 @@
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
         <Param name="font" updates="constant" val="Arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+        <Param name="letterHeight" updates="constant" val="30" valType="code"/>
       </TextComponent>
-      <KeyboardComponent name="StartPractice">
+      <ImageComponent name="Prac1Matrix">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="Prac1Matrix" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(0, 200)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="image" updates="set every repeat" val="$Stimulus" valType="str"/>
+        <Param name="size" updates="constant" val="(430, 380)" valType="code"/>
+      </ImageComponent>
+      <ImageComponent name="Prac1Choice">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="Prac1Choice" valType="code"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="pos" updates="constant" val="(75, -75)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="image" updates="set every repeat" val="$CorrectImage" valType="str"/>
+        <Param name="size" updates="constant" val="(120,120)" valType="code"/>
+      </ImageComponent>
+      <KeyboardComponent name="Prac1End">
         <Param name="correctAns" updates="constant" val="" valType="str"/>
         <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
-        <Param name="name" updates="None" val="StartPractice" valType="code"/>
+        <Param name="name" updates="None" val="Prac1End" valType="code"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
@@ -714,56 +686,45 @@
         <Param name="store" updates="constant" val="last key" valType="str"/>
         <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
       </KeyboardComponent>
+      <TextComponent name="CorrectAnswer">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="CorrectAnswer" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="black" valType="str"/>
+        <Param name="text" updates="set every repeat" val="$Corr" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(130, -30)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="40" valType="code"/>
+      </TextComponent>
     </Routine>
   </Routines>
   <Flow>
     <Routine name="Instructions"/>
     <LoopInitiator loopType="TrialHandler" name="trials">
-      <Param name="conditionsFile" updates="None" val="Matrices.csv" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="MatricesPractice.csv" valType="str"/>
       <Param name="name" updates="None" val="trials" valType="code"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
       <Param name="loopType" updates="None" val="sequential" valType="str"/>
       <Param name="nReps" updates="None" val="1" valType="code"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
-      <Param name="conditions" updates="None" val="[{'Choice4': u'matrix1choice4.bmp', 'Choice8': u'matrix1choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix1.bmp', 'Choice5': u'matrix1choice5.bmp', 'Choice6': u'matrix1choice6.bmp', 'Choice7': u'matrix1choice7.bmp', 'Choice1': u'matrix1choice1.bmp', 'Choice2': u'matrix1choice2.bmp', 'Choice3': u'matrix1choice3.bmp'}, {'Choice4': u'matrix2choice4.bmp', 'Choice8': u'matrix2choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix2.bmp', 'Choice5': u'matrix2choice5.bmp', 'Choice6': u'matrix2choice6.bmp', 'Choice7': u'matrix2choice7.bmp', 'Choice1': u'matrix2choice1.bmp', 'Choice2': u'matrix2choice2.bmp', 'Choice3': u'matrix2choice3.bmp'}, {'Choice4': u'matrix3choice4.bmp', 'Choice8': u'matrix3choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix3.bmp', 'Choice5': u'matrix3choice5.bmp', 'Choice6': u'matrix3choice6.bmp', 'Choice7': u'matrix3choice7.bmp', 'Choice1': u'matrix3choice1.bmp', 'Choice2': u'matrix3choice2.bmp', 'Choice3': u'matrix3choice3.bmp'}, {'Choice4': u'matrix4choice4.bmp', 'Choice8': u'matrix4choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix4.bmp', 'Choice5': u'matrix4choice5.bmp', 'Choice6': u'matrix4choice6.bmp', 'Choice7': u'matrix4choice7.bmp', 'Choice1': u'matrix4choice1.bmp', 'Choice2': u'matrix4choice2.bmp', 'Choice3': u'matrix4choice3.bmp'}, {'Choice4': u'matrix5choice4.bmp', 'Choice8': u'matrix5choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix5.bmp', 'Choice5': u'matrix5choice5.bmp', 'Choice6': u'matrix5choice6.bmp', 'Choice7': u'matrix5choice7.bmp', 'Choice1': u'matrix5choice1.bmp', 'Choice2': u'matrix5choice2.bmp', 'Choice3': u'matrix5choice3.bmp'}, {'Choice4': u'matrix6choice4.bmp', 'Choice8': u'matrix6choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix6.bmp', 'Choice5': u'matrix6choice5.bmp', 'Choice6': u'matrix6choice6.bmp', 'Choice7': u'matrix6choice7.bmp', 'Choice1': u'matrix6choice1.bmp', 'Choice2': u'matrix6choice2.bmp', 'Choice3': u'matrix6choice3.bmp'}, {'Choice4': u'matrix7choice4.bmp', 'Choice8': u'matrix7choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix7.bmp', 'Choice5': u'matrix7choice5.bmp', 'Choice6': u'matrix7choice6.bmp', 'Choice7': u'matrix7choice7.bmp', 'Choice1': u'matrix7choice1.bmp', 'Choice2': u'matrix7choice2.bmp', 'Choice3': u'matrix7choice3.bmp'}, {'Choice4': u'matrix8choice4.bmp', 'Choice8': u'matrix8choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix8.bmp', 'Choice5': u'matrix8choice5.bmp', 'Choice6': u'matrix8choice6.bmp', 'Choice7': u'matrix8choice7.bmp', 'Choice1': u'matrix8choice1.bmp', 'Choice2': u'matrix8choice2.bmp', 'Choice3': u'matrix8choice3.bmp'}, {'Choice4': u'matrix9choice4.bmp', 'Choice8': u'matrix9choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix9.bmp', 'Choice5': u'matrix9choice5.bmp', 'Choice6': u'matrix9choice6.bmp', 'Choice7': u'matrix9choice7.bmp', 'Choice1': u'matrix9choice1.bmp', 'Choice2': u'matrix9choice2.bmp', 'Choice3': u'matrix9choice3.bmp'}, {'Choice4': u'matrix10choice4.bmp', 'Choice8': u'matrix10choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix10.bmp', 'Choice5': u'matrix10choice5.bmp', 'Choice6': u'matrix10choice6.bmp', 'Choice7': u'matrix10choice7.bmp', 'Choice1': u'matrix10choice1.bmp', 'Choice2': u'matrix10choice2.bmp', 'Choice3': u'matrix10choice3.bmp'}, {'Choice4': u'matrix11choice4.bmp', 'Choice8': u'matrix11choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix11.bmp', 'Choice5': u'matrix11choice5.bmp', 'Choice6': u'matrix11choice6.bmp', 'Choice7': u'matrix11choice7.bmp', 'Choice1': u'matrix11choice1.bmp', 'Choice2': u'matrix11choice2.bmp', 'Choice3': u'matrix11choice3.bmp'}, {'Choice4': u'matrix12choice4.bmp', 'Choice8': u'matrix12choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix12.bmp', 'Choice5': u'matrix12choice5.bmp', 'Choice6': u'matrix12choice6.bmp', 'Choice7': u'matrix12choice7.bmp', 'Choice1': u'matrix12choice1.bmp', 'Choice2': u'matrix12choice2.bmp', 'Choice3': u'matrix12choice3.bmp'}, {'Choice4': u'matrix13choice4.bmp', 'Choice8': u'matrix13choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix13.bmp', 'Choice5': u'matrix13choice5.bmp', 'Choice6': u'matrix13choice6.bmp', 'Choice7': u'matrix13choice7.bmp', 'Choice1': u'matrix13choice1.bmp', 'Choice2': u'matrix13choice2.bmp', 'Choice3': u'matrix13choice3.bmp'}, {'Choice4': u'matrix14choice4.bmp', 'Choice8': u'matrix14choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix14.bmp', 'Choice5': u'matrix14choice5.bmp', 'Choice6': u'matrix14choice6.bmp', 'Choice7': u'matrix14choice7.bmp', 'Choice1': u'matrix14choice1.bmp', 'Choice2': u'matrix14choice2.bmp', 'Choice3': u'matrix14choice3.bmp'}, {'Choice4': u'matrix15choice4.bmp', 'Choice8': u'matrix15choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix15.bmp', 'Choice5': u'matrix15choice5.bmp', 'Choice6': u'matrix15choice6.bmp', 'Choice7': u'matrix15choice7.bmp', 'Choice1': u'matrix15choice1.bmp', 'Choice2': u'matrix15choice2.bmp', 'Choice3': u'matrix15choice3.bmp'}, {'Choice4': u'matrix16choice4.bmp', 'Choice8': u'matrix16choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix16.bmp', 'Choice5': u'matrix16choice5.bmp', 'Choice6': u'matrix16choice6.bmp', 'Choice7': u'matrix16choice7.bmp', 'Choice1': u'matrix16choice1.bmp', 'Choice2': u'matrix16choice2.bmp', 'Choice3': u'matrix16choice3.bmp'}, {'Choice4': u'matrix17choice4.bmp', 'Choice8': u'matrix17choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix17.bmp', 'Choice5': u'matrix17choice5.bmp', 'Choice6': u'matrix17choice6.bmp', 'Choice7': u'matrix17choice7.bmp', 'Choice1': u'matrix17choice1.bmp', 'Choice2': u'matrix17choice2.bmp', 'Choice3': u'matrix17choice3.bmp'}, {'Choice4': u'matrix18choice4.bmp', 'Choice8': u'matrix18choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix18.bmp', 'Choice5': u'matrix18choice5.bmp', 'Choice6': u'matrix18choice6.bmp', 'Choice7': u'matrix18choice7.bmp', 'Choice1': u'matrix18choice1.bmp', 'Choice2': u'matrix18choice2.bmp', 'Choice3': u'matrix18choice3.bmp'}]" valType="str"/>
-      <Param name="Selected rows" updates="None" val="[0]" valType="str"/>
+      <Param name="conditions" updates="None" val="[{'Choice8': u'../../MatricesImages/altBpracticematrix1choice8.bmp', 'Feedback': u'Every row and every column has a circle, diamond and a square in it. In addition, each row and column has one cell with one, two and three concentric shapes. Therefore, the missing cell needs to have three concentric shapes and be a diamond.', 'Stimulus': u'../../MatricesImages/altBpracticematrix1.bmp', 'Choice5': u'../../MatricesImages/altBpracticematrix1choice5.bmp', 'Choice6': u'../../MatricesImages/altBpracticematrix1choice6.bmp', 'Choice7': u'../../MatricesImages/altBpracticematrix1choice7.bmp', 'Choice1': u'../../MatricesImages/altBpracticematrix1choice1.bmp', 'Choice2': u'../../MatricesImages/altBpracticematrix1choice2.bmp', 'Choice3': u'../../MatricesImages/altBpracticematrix1choice3.bmp', 'Choice4': u'../../MatricesImages/altBpracticematrix1choice4.bmp', 'Corr': 3, 'CorrectImage': u'../../MatricesImages/altBpracticematrix1choice3.bmp'}, {'Choice8': u'../../MatricesImages/altBpracticematrix2choice8.bmp', 'Feedback': u'The elements of row 2 are subtracted from the elements of row 1 to produce row 3. The same rule is applied to the columns, where the elements in column 2 are subtracted from the elements in column 1 to produce column 3.', 'Stimulus': u'../../MatricesImages/altBpracticematrix2.bmp', 'Choice5': u'../../MatricesImages/altBpracticematrix2choice5.bmp', 'Choice6': u'../../MatricesImages/altBpracticematrix2choice6.bmp', 'Choice7': u'../../MatricesImages/altBpracticematrix2choice7.bmp', 'Choice1': u'../../MatricesImages/altBpracticematrix2choice1.bmp', 'Choice2': u'../../MatricesImages/altBpracticematrix2choice2.bmp', 'Choice3': u'../../MatricesImages/altBpracticematrix2choice3.bmp', 'Choice4': u'../../MatricesImages/altBpracticematrix2choice4.bmp', 'Corr': 6, 'CorrectImage': u'../../MatricesImages/altBpracticematrix2choice6.bmp'}, {'Choice8': u'../../MatricesImages/altAMatrix1Choice8.bmp', 'Feedback': u'The cross pieces are moving down towards the center of the object. The number of objects also increases going down the rows. ', 'Stimulus': u'../../MatricesImages/altAMatrix1.bmp', 'Choice5': u'../../MatricesImages/altAMatrix1Choice5.bmp', 'Choice6': u'../../MatricesImages/altAMatrix1Choice6.bmp', 'Choice7': u'../../MatricesImages/altAMatrix1Choice7.bmp', 'Choice1': u'../../MatricesImages/altAMatrix1Choice1.bmp', 'Choice2': u'../../MatricesImages/altAMatrix1Choice2.bmp', 'Choice3': u'../../MatricesImages/altAMatrix1Choice3.bmp', 'Choice4': u'../../MatricesImages/altAMatrix1Choice4.bmp', 'Corr': 1, 'CorrectImage': u'../../MatricesImages/altAMatrix1Choice1.bmp'}, {'Choice8': u'../../MatricesImages/AltAMatrix10Choice8.bmp', 'Feedback': u'The elements of row 1 are added to row 2 to produce row 3. The same rule is applied to the columns, where the elements in column 1 are added to the elements in column 1 to produce column 2. In addition, the dots go to the corners of the outside square and the strips go inside the inside square, but remain outside the central circle. Therefore, two ruls are used.', 'Stimulus': u'../../MatricesImages/AltAMatrix10.bmp', 'Choice5': u'../../MatricesImages/AltAMatrix10Choice5.bmp', 'Choice6': u'../../MatricesImages/AltAMatrix10Choice6.bmp', 'Choice7': u'../../MatricesImages/AltAMatrix10Choice7.bmp', 'Choice1': u'../../MatricesImages/AltAMatrix10Choice1.bmp', 'Choice2': u'../../MatricesImages/AltAMatrix10Choice2.bmp', 'Choice3': u'../../MatricesImages/AltAMatrix10Choice3.bmp', 'Choice4': u'../../MatricesImages/AltAMatrix10Choice4.bmp', 'Corr': 8, 'CorrectImage': u'../../MatricesImages/AltAMatrix10Choice8.bmp'}, {'Choice8': u'../../MatricesImages/matrixsamplechoice8.bmp', 'Feedback': u'Going across the columns, the bottom square is removed from each element in column 1 to produce column 2.  And again, the bottom square is removed from each element in column 2 to produce column 3. And additional rule is applied going down the rows that produces the same effect. Each element in row one contains a single line, each element in row 2 contains two lines, each element in row 3 contains three lines.  ', 'Stimulus': u'../../MatricesImages/matrixsample.bmp', 'Choice5': u'../../MatricesImages/matrixsamplechoice5.bmp', 'Choice6': u'../../MatricesImages/matrixsamplechoice6.bmp', 'Choice7': u'../../MatricesImages/matrixsamplechoice7.bmp', 'Choice1': u'../../MatricesImages/matrixsamplechoice1.bmp', 'Choice2': u'../../MatricesImages/matrixsamplechoice2.bmp', 'Choice3': u'../../MatricesImages/matrixsamplechoice3.bmp', 'Choice4': u'../../MatricesImages/matrixsamplechoice4.bmp', 'Corr': 5, 'CorrectImage': u'../../MatricesImages/matrixsamplechoice5.bmp'}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
     </LoopInitiator>
     <Routine name="trial"/>
     <Routine name="Feedback1"/>
     <Routine name="crosshair"/>
     <LoopTerminator name="trials"/>
-    <LoopInitiator loopType="TrialHandler" name="trials_3">
-      <Param name="conditionsFile" updates="None" val="Matrices.csv" valType="str"/>
-      <Param name="name" updates="None" val="trials_3" valType="code"/>
-      <Param name="isTrials" updates="None" val="True" valType="bool"/>
-      <Param name="random seed" updates="None" val="" valType="code"/>
-      <Param name="loopType" updates="None" val="sequential" valType="str"/>
-      <Param name="nReps" updates="None" val="1" valType="code"/>
-      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
-      <Param name="conditions" updates="None" val="[{'Choice4': u'matrix1choice4.bmp', 'Choice8': u'matrix1choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix1.bmp', 'Choice5': u'matrix1choice5.bmp', 'Choice6': u'matrix1choice6.bmp', 'Choice7': u'matrix1choice7.bmp', 'Choice1': u'matrix1choice1.bmp', 'Choice2': u'matrix1choice2.bmp', 'Choice3': u'matrix1choice3.bmp'}, {'Choice4': u'matrix2choice4.bmp', 'Choice8': u'matrix2choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix2.bmp', 'Choice5': u'matrix2choice5.bmp', 'Choice6': u'matrix2choice6.bmp', 'Choice7': u'matrix2choice7.bmp', 'Choice1': u'matrix2choice1.bmp', 'Choice2': u'matrix2choice2.bmp', 'Choice3': u'matrix2choice3.bmp'}, {'Choice4': u'matrix3choice4.bmp', 'Choice8': u'matrix3choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix3.bmp', 'Choice5': u'matrix3choice5.bmp', 'Choice6': u'matrix3choice6.bmp', 'Choice7': u'matrix3choice7.bmp', 'Choice1': u'matrix3choice1.bmp', 'Choice2': u'matrix3choice2.bmp', 'Choice3': u'matrix3choice3.bmp'}, {'Choice4': u'matrix4choice4.bmp', 'Choice8': u'matrix4choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix4.bmp', 'Choice5': u'matrix4choice5.bmp', 'Choice6': u'matrix4choice6.bmp', 'Choice7': u'matrix4choice7.bmp', 'Choice1': u'matrix4choice1.bmp', 'Choice2': u'matrix4choice2.bmp', 'Choice3': u'matrix4choice3.bmp'}, {'Choice4': u'matrix5choice4.bmp', 'Choice8': u'matrix5choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix5.bmp', 'Choice5': u'matrix5choice5.bmp', 'Choice6': u'matrix5choice6.bmp', 'Choice7': u'matrix5choice7.bmp', 'Choice1': u'matrix5choice1.bmp', 'Choice2': u'matrix5choice2.bmp', 'Choice3': u'matrix5choice3.bmp'}, {'Choice4': u'matrix6choice4.bmp', 'Choice8': u'matrix6choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix6.bmp', 'Choice5': u'matrix6choice5.bmp', 'Choice6': u'matrix6choice6.bmp', 'Choice7': u'matrix6choice7.bmp', 'Choice1': u'matrix6choice1.bmp', 'Choice2': u'matrix6choice2.bmp', 'Choice3': u'matrix6choice3.bmp'}, {'Choice4': u'matrix7choice4.bmp', 'Choice8': u'matrix7choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix7.bmp', 'Choice5': u'matrix7choice5.bmp', 'Choice6': u'matrix7choice6.bmp', 'Choice7': u'matrix7choice7.bmp', 'Choice1': u'matrix7choice1.bmp', 'Choice2': u'matrix7choice2.bmp', 'Choice3': u'matrix7choice3.bmp'}, {'Choice4': u'matrix8choice4.bmp', 'Choice8': u'matrix8choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix8.bmp', 'Choice5': u'matrix8choice5.bmp', 'Choice6': u'matrix8choice6.bmp', 'Choice7': u'matrix8choice7.bmp', 'Choice1': u'matrix8choice1.bmp', 'Choice2': u'matrix8choice2.bmp', 'Choice3': u'matrix8choice3.bmp'}, {'Choice4': u'matrix9choice4.bmp', 'Choice8': u'matrix9choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix9.bmp', 'Choice5': u'matrix9choice5.bmp', 'Choice6': u'matrix9choice6.bmp', 'Choice7': u'matrix9choice7.bmp', 'Choice1': u'matrix9choice1.bmp', 'Choice2': u'matrix9choice2.bmp', 'Choice3': u'matrix9choice3.bmp'}, {'Choice4': u'matrix10choice4.bmp', 'Choice8': u'matrix10choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix10.bmp', 'Choice5': u'matrix10choice5.bmp', 'Choice6': u'matrix10choice6.bmp', 'Choice7': u'matrix10choice7.bmp', 'Choice1': u'matrix10choice1.bmp', 'Choice2': u'matrix10choice2.bmp', 'Choice3': u'matrix10choice3.bmp'}, {'Choice4': u'matrix11choice4.bmp', 'Choice8': u'matrix11choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix11.bmp', 'Choice5': u'matrix11choice5.bmp', 'Choice6': u'matrix11choice6.bmp', 'Choice7': u'matrix11choice7.bmp', 'Choice1': u'matrix11choice1.bmp', 'Choice2': u'matrix11choice2.bmp', 'Choice3': u'matrix11choice3.bmp'}, {'Choice4': u'matrix12choice4.bmp', 'Choice8': u'matrix12choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix12.bmp', 'Choice5': u'matrix12choice5.bmp', 'Choice6': u'matrix12choice6.bmp', 'Choice7': u'matrix12choice7.bmp', 'Choice1': u'matrix12choice1.bmp', 'Choice2': u'matrix12choice2.bmp', 'Choice3': u'matrix12choice3.bmp'}, {'Choice4': u'matrix13choice4.bmp', 'Choice8': u'matrix13choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix13.bmp', 'Choice5': u'matrix13choice5.bmp', 'Choice6': u'matrix13choice6.bmp', 'Choice7': u'matrix13choice7.bmp', 'Choice1': u'matrix13choice1.bmp', 'Choice2': u'matrix13choice2.bmp', 'Choice3': u'matrix13choice3.bmp'}, {'Choice4': u'matrix14choice4.bmp', 'Choice8': u'matrix14choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix14.bmp', 'Choice5': u'matrix14choice5.bmp', 'Choice6': u'matrix14choice6.bmp', 'Choice7': u'matrix14choice7.bmp', 'Choice1': u'matrix14choice1.bmp', 'Choice2': u'matrix14choice2.bmp', 'Choice3': u'matrix14choice3.bmp'}, {'Choice4': u'matrix15choice4.bmp', 'Choice8': u'matrix15choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix15.bmp', 'Choice5': u'matrix15choice5.bmp', 'Choice6': u'matrix15choice6.bmp', 'Choice7': u'matrix15choice7.bmp', 'Choice1': u'matrix15choice1.bmp', 'Choice2': u'matrix15choice2.bmp', 'Choice3': u'matrix15choice3.bmp'}, {'Choice4': u'matrix16choice4.bmp', 'Choice8': u'matrix16choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix16.bmp', 'Choice5': u'matrix16choice5.bmp', 'Choice6': u'matrix16choice6.bmp', 'Choice7': u'matrix16choice7.bmp', 'Choice1': u'matrix16choice1.bmp', 'Choice2': u'matrix16choice2.bmp', 'Choice3': u'matrix16choice3.bmp'}, {'Choice4': u'matrix17choice4.bmp', 'Choice8': u'matrix17choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix17.bmp', 'Choice5': u'matrix17choice5.bmp', 'Choice6': u'matrix17choice6.bmp', 'Choice7': u'matrix17choice7.bmp', 'Choice1': u'matrix17choice1.bmp', 'Choice2': u'matrix17choice2.bmp', 'Choice3': u'matrix17choice3.bmp'}, {'Choice4': u'matrix18choice4.bmp', 'Choice8': u'matrix18choice8.bmp', 'Corr': 1, 'Stimulus': u'matrix18.bmp', 'Choice5': u'matrix18choice5.bmp', 'Choice6': u'matrix18choice6.bmp', 'Choice7': u'matrix18choice7.bmp', 'Choice1': u'matrix18choice1.bmp', 'Choice2': u'matrix18choice2.bmp', 'Choice3': u'matrix18choice3.bmp'}]" valType="str"/>
-      <Param name="Selected rows" updates="None" val="[1]" valType="str"/>
-    </LoopInitiator>
-    <Routine name="trial"/>
-    <Routine name="Feedback2"/>
-    <Routine name="crosshair"/>
-    <LoopTerminator name="trials_3"/>
-    <Routine name="GetReady"/>
-    <Routine name="crosshair"/>
-    <LoopInitiator loopType="TrialHandler" name="trials_2">
-      <Param name="conditionsFile" updates="None" val="Matrices.csv" valType="str"/>
-      <Param name="name" updates="None" val="trials_2" valType="code"/>
-      <Param name="isTrials" updates="None" val="True" valType="bool"/>
-      <Param name="random seed" updates="None" val="" valType="code"/>
-      <Param name="loopType" updates="None" val="sequential" valType="str"/>
-      <Param name="nReps" updates="None" val="1" valType="code"/>
-      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
-      <Param name="conditions" updates="None" val="[{'Choice4': u'../../MatricesImages/matrix1choice4.bmp', 'Choice8': u'../../MatricesImages/matrix1choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix1.bmp', 'Choice5': u'../../MatricesImages/matrix1choice5.bmp', 'Choice6': u'../../MatricesImages/matrix1choice6.bmp', 'Choice7': u'../../MatricesImages/matrix1choice7.bmp', 'Choice1': u'../../MatricesImages/matrix1choice1.bmp', 'Choice2': u'../../MatricesImages/matrix1choice2.bmp', 'Choice3': u'../../MatricesImages/matrix1choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix2choice4.bmp', 'Choice8': u'../../MatricesImages/matrix2choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix2.bmp', 'Choice5': u'../../MatricesImages/matrix2choice5.bmp', 'Choice6': u'../../MatricesImages/matrix2choice6.bmp', 'Choice7': u'../../MatricesImages/matrix2choice7.bmp', 'Choice1': u'../../MatricesImages/matrix2choice1.bmp', 'Choice2': u'../../MatricesImages/matrix2choice2.bmp', 'Choice3': u'../../MatricesImages/matrix2choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix3choice4.bmp', 'Choice8': u'../../MatricesImages/matrix3choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix3.bmp', 'Choice5': u'../../MatricesImages/matrix3choice5.bmp', 'Choice6': u'../../MatricesImages/matrix3choice6.bmp', 'Choice7': u'../../MatricesImages/matrix3choice7.bmp', 'Choice1': u'../../MatricesImages/matrix3choice1.bmp', 'Choice2': u'../../MatricesImages/matrix3choice2.bmp', 'Choice3': u'../../MatricesImages/matrix3choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix4choice4.bmp', 'Choice8': u'../../MatricesImages/matrix4choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix4.bmp', 'Choice5': u'../../MatricesImages/matrix4choice5.bmp', 'Choice6': u'../../MatricesImages/matrix4choice6.bmp', 'Choice7': u'../../MatricesImages/matrix4choice7.bmp', 'Choice1': u'../../MatricesImages/matrix4choice1.bmp', 'Choice2': u'../../MatricesImages/matrix4choice2.bmp', 'Choice3': u'../../MatricesImages/matrix4choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix5choice4.bmp', 'Choice8': u'../../MatricesImages/matrix5choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix5.bmp', 'Choice5': u'../../MatricesImages/matrix5choice5.bmp', 'Choice6': u'../../MatricesImages/matrix5choice6.bmp', 'Choice7': u'../../MatricesImages/matrix5choice7.bmp', 'Choice1': u'../../MatricesImages/matrix5choice1.bmp', 'Choice2': u'../../MatricesImages/matrix5choice2.bmp', 'Choice3': u'../../MatricesImages/matrix5choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix6choice4.bmp', 'Choice8': u'../../MatricesImages/matrix6choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix6.bmp', 'Choice5': u'../../MatricesImages/matrix6choice5.bmp', 'Choice6': u'../../MatricesImages/matrix6choice6.bmp', 'Choice7': u'../../MatricesImages/matrix6choice7.bmp', 'Choice1': u'../../MatricesImages/matrix6choice1.bmp', 'Choice2': u'../../MatricesImages/matrix6choice2.bmp', 'Choice3': u'../../MatricesImages/matrix6choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix7choice4.bmp', 'Choice8': u'../../MatricesImages/matrix7choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix7.bmp', 'Choice5': u'../../MatricesImages/matrix7choice5.bmp', 'Choice6': u'../../MatricesImages/matrix7choice6.bmp', 'Choice7': u'../../MatricesImages/matrix7choice7.bmp', 'Choice1': u'../../MatricesImages/matrix7choice1.bmp', 'Choice2': u'../../MatricesImages/matrix7choice2.bmp', 'Choice3': u'../../MatricesImages/matrix7choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix8choice4.bmp', 'Choice8': u'../../MatricesImages/matrix8choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix8.bmp', 'Choice5': u'../../MatricesImages/matrix8choice5.bmp', 'Choice6': u'../../MatricesImages/matrix8choice6.bmp', 'Choice7': u'../../MatricesImages/matrix8choice7.bmp', 'Choice1': u'../../MatricesImages/matrix8choice1.bmp', 'Choice2': u'../../MatricesImages/matrix8choice2.bmp', 'Choice3': u'../../MatricesImages/matrix8choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix9choice4.bmp', 'Choice8': u'../../MatricesImages/matrix9choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix9.bmp', 'Choice5': u'../../MatricesImages/matrix9choice5.bmp', 'Choice6': u'../../MatricesImages/matrix9choice6.bmp', 'Choice7': u'../../MatricesImages/matrix9choice7.bmp', 'Choice1': u'../../MatricesImages/matrix9choice1.bmp', 'Choice2': u'../../MatricesImages/matrix9choice2.bmp', 'Choice3': u'../../MatricesImages/matrix9choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix10choice4.bmp', 'Choice8': u'../../MatricesImages/matrix10choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix10.bmp', 'Choice5': u'../../MatricesImages/matrix10choice5.bmp', 'Choice6': u'../../MatricesImages/matrix10choice6.bmp', 'Choice7': u'../../MatricesImages/matrix10choice7.bmp', 'Choice1': u'../../MatricesImages/matrix10choice1.bmp', 'Choice2': u'../../MatricesImages/matrix10choice2.bmp', 'Choice3': u'../../MatricesImages/matrix10choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix11choice4.bmp', 'Choice8': u'../../MatricesImages/matrix11choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix11.bmp', 'Choice5': u'../../MatricesImages/matrix11choice5.bmp', 'Choice6': u'../../MatricesImages/matrix11choice6.bmp', 'Choice7': u'../../MatricesImages/matrix11choice7.bmp', 'Choice1': u'../../MatricesImages/matrix11choice1.bmp', 'Choice2': u'../../MatricesImages/matrix11choice2.bmp', 'Choice3': u'../../MatricesImages/matrix11choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix12choice4.bmp', 'Choice8': u'../../MatricesImages/matrix12choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix12.bmp', 'Choice5': u'../../MatricesImages/matrix12choice5.bmp', 'Choice6': u'../../MatricesImages/matrix12choice6.bmp', 'Choice7': u'../../MatricesImages/matrix12choice7.bmp', 'Choice1': u'../../MatricesImages/matrix12choice1.bmp', 'Choice2': u'../../MatricesImages/matrix12choice2.bmp', 'Choice3': u'../../MatricesImages/matrix12choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix13choice4.bmp', 'Choice8': u'../../MatricesImages/matrix13choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix13.bmp', 'Choice5': u'../../MatricesImages/matrix13choice5.bmp', 'Choice6': u'../../MatricesImages/matrix13choice6.bmp', 'Choice7': u'../../MatricesImages/matrix13choice7.bmp', 'Choice1': u'../../MatricesImages/matrix13choice1.bmp', 'Choice2': u'../../MatricesImages/matrix13choice2.bmp', 'Choice3': u'../../MatricesImages/matrix13choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix14choice4.bmp', 'Choice8': u'../../MatricesImages/matrix14choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix14.bmp', 'Choice5': u'../../MatricesImages/matrix14choice5.bmp', 'Choice6': u'../../MatricesImages/matrix14choice6.bmp', 'Choice7': u'../../MatricesImages/matrix14choice7.bmp', 'Choice1': u'../../MatricesImages/matrix14choice1.bmp', 'Choice2': u'../../MatricesImages/matrix14choice2.bmp', 'Choice3': u'../../MatricesImages/matrix14choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix15choice4.bmp', 'Choice8': u'../../MatricesImages/matrix15choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix15.bmp', 'Choice5': u'../../MatricesImages/matrix15choice5.bmp', 'Choice6': u'../../MatricesImages/matrix15choice6.bmp', 'Choice7': u'../../MatricesImages/matrix15choice7.bmp', 'Choice1': u'../../MatricesImages/matrix15choice1.bmp', 'Choice2': u'../../MatricesImages/matrix15choice2.bmp', 'Choice3': u'../../MatricesImages/matrix15choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix16choice4.bmp', 'Choice8': u'../../MatricesImages/matrix16choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix16.bmp', 'Choice5': u'../../MatricesImages/matrix16choice5.bmp', 'Choice6': u'../../MatricesImages/matrix16choice6.bmp', 'Choice7': u'../../MatricesImages/matrix16choice7.bmp', 'Choice1': u'../../MatricesImages/matrix16choice1.bmp', 'Choice2': u'../../MatricesImages/matrix16choice2.bmp', 'Choice3': u'../../MatricesImages/matrix16choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix17choice4.bmp', 'Choice8': u'../../MatricesImages/matrix17choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix17.bmp', 'Choice5': u'../../MatricesImages/matrix17choice5.bmp', 'Choice6': u'../../MatricesImages/matrix17choice6.bmp', 'Choice7': u'../../MatricesImages/matrix17choice7.bmp', 'Choice1': u'../../MatricesImages/matrix17choice1.bmp', 'Choice2': u'../../MatricesImages/matrix17choice2.bmp', 'Choice3': u'../../MatricesImages/matrix17choice3.bmp'}, {'Choice4': u'../../MatricesImages/matrix18choice4.bmp', 'Choice8': u'../../MatricesImages/matrix18choice8.bmp', 'Corr': 1, 'Stimulus': u'../../MatricesImages/matrix18.bmp', 'Choice5': u'../../MatricesImages/matrix18choice5.bmp', 'Choice6': u'../../MatricesImages/matrix18choice6.bmp', 'Choice7': u'../../MatricesImages/matrix18choice7.bmp', 'Choice1': u'../../MatricesImages/matrix18choice1.bmp', 'Choice2': u'../../MatricesImages/matrix18choice2.bmp', 'Choice3': u'../../MatricesImages/matrix18choice3.bmp'}]" valType="str"/>
-      <Param name="Selected rows" updates="None" val="[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]" valType="str"/>
-    </LoopInitiator>
-    <Routine name="trial"/>
-    <Routine name="crosshair"/>
-    <LoopTerminator name="trials_2"/>
     <Routine name="ThankYou"/>
   </Flow>
 </PsychoPy2experiment>

@@ -187,7 +187,7 @@ class Mywin(wx.Frame):
       CurrentRow = Row6
       self.titleR8 = wx.StaticText(self.panel, -1, label = "Speed", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
-      self.btnR8C2 = wx.Button(self.panel,-1,"Pattern Comp", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR8C2 = wx.Button(self.panel,-1,"Patt. Comp", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR8C2.Bind(wx.EVT_BUTTON,self.OnClickedR8C2) 
       #self.btnR8C3 = wx.Button(self.panel,-1,"Letter Comp", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       #self.btnR8C3.Bind(wx.EVT_BUTTON,self.OnClickedR8C3) 
@@ -200,7 +200,9 @@ class Mywin(wx.Frame):
       CurrentRow = Row7
       self.titleR9 = wx.StaticText(self.panel, -1, label = "Fluid", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
-      self.btnR9C2 = wx.Button(self.panel,-1,"Paper Folding", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR9C2 = wx.Button(self.panel,-1,"Paper Folding", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR9C2.Bind(wx.EVT_BUTTON,self.OnClickedR9C2) 
+      self.btnR9C2 = wx.Button(self.panel,-1,"Mat. Practice", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR9C2.Bind(wx.EVT_BUTTON,self.OnClickedR9C2) 
       self.btnR9C3 = wx.Button(self.panel,-1,"Matrices", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR9C3.Bind(wx.EVT_BUTTON,self.OnClickedR9C3) 
@@ -517,7 +519,7 @@ class Mywin(wx.Frame):
    def OnClickedR7C2(self, event):
       btnR7C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR7C2Label))
-      core.shellCall([sys.executable, "../DigitSpan/ForwardDigitSpan.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../DigitSpan/ForwardDigitSpanv2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR7C2.SetValue(True)      
    
    def OnClickedR7C3(self, event):
@@ -538,13 +540,13 @@ class Mywin(wx.Frame):
    def OnClickedR9C2(self, event):
       btnR9C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR9C2Label))
-      core.shellCall([sys.executable, "../PaperFolding/PaperFolding_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../Matrices/MatricesPractice_lastrun.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR9C2.SetValue(True)
 
    def OnClickedR9C3(self, event):
       btnR9C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR9C3Label))
-      core.shellCall([sys.executable, "../Matrices/Matrices_v1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../Matrices/MatricesWClockMainv2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR9C3.SetValue(True)
       
    def CloseGUI(self,event):

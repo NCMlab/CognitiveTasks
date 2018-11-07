@@ -35,7 +35,7 @@ os.chdir(_thisDir)
 # #################
 # Store info about the experiment session
 expName = u'DigitSpan'  # from the Builder filename that created this script
-task = 'Backward'
+task = 'Forward'
 expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
@@ -145,7 +145,7 @@ ThankYouText = visual.TextStim(win=win, name='ThankYouText',
     color='black', colorSpace='rgb', opacity=1,
     depth=-9.0, units=FontSizeUnits);
 
-Instruct1text = 'Tell the person:\n'"You are going to hear some numbers, when the list ends, I want you to say them to me BACKWARDS from how you heard them."'\n\nPress any key to play the practice numbers.'
+Instruct1text = 'Tell the person:\n'"You are going to hear some numbers, when the list ends, I want you to say them to me FORWARDS from how you heard them."'\n\nPress any key to play the practice numbers.'
 
 Instruct1 = visual.TextStim(win=win, name='Instruct1',
     text=Instruct1text,
@@ -181,7 +181,7 @@ win.flip()
 # Create a list of three numbers drawn from the numbers 1 to 9
 R = np.random.permutation(9) + 1
 R = R[0:3]
-Answer.text = 'Ask the person to repeat the three digits BACKWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R[::-1])
+Answer.text = 'Ask the person to repeat the three digits FORWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R[::-1])
 # cycle over the numbers and play them
 for i in range(3):
     countDown.reset()    
@@ -235,8 +235,8 @@ for i in resp.keys:
     RespList.append(int(i))
 RespList = np.array(RespList)
 print(RespList)
-# This is the BACKWARD Span Task
-if np.array_equiv(R[::-1],RespList):
+# This is the FORWARD Span Task
+if np.array_equiv(R,RespList):
     print('Correct')
     CorrectSound.play()
     thisResp = 1
@@ -295,8 +295,8 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 
 # --------Prepare to start Staircase "Stairs" --------
 # set up handler to look after next chosen value etc
-# This is the BACKWARD Span Task
-Stairs = data.StairHandler(startVal=2, extraInfo=expInfo,
+# This is the FORWARD Span Task
+Stairs = data.StairHandler(startVal=3, extraInfo=expInfo,
     stepSizes=-1, stepType='lin',
     nReversals=0, nTrials=NumberOfTrials, 
     nUp=2, nDown=1,
@@ -323,7 +323,7 @@ for thisStair in Stairs:
     #    R = np.random.randint(1,10,level)
     #    Flag = any(np.diff(R) == 0)
     print(R)    
-    Answer.text = 'Backward: %s'%(R[::-1])
+    Answer.text = 'Forward: %s'%(R)
     # cycle over the numbers and play them
     for i in range(level):
         countDown.reset()    
@@ -377,8 +377,8 @@ for thisStair in Stairs:
         RespList.append(int(i))
     RespList = np.array(RespList)
     print(RespList)
-    # This is the BACKWARD Span Task
-    if np.array_equiv(R[::-1],RespList):
+    # This is the FORWARD Span Task
+    if np.array_equiv(R,RespList):
         print('Correct')
         CorrectSound.play()
         thisResp = 1
