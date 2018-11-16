@@ -449,7 +449,7 @@ thisBlock = Blocks.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisBlock.rgb)
 if thisBlock != None:
     for paramName in thisBlock.keys():
-        exec(paramName + '= thisBlock.' + paramName)
+        exec('{} = thisBlock[paramName]'.format(paramName))
 # This counter is used to keep track of which block of the experiment is being presented.
 # It is also used to index the block load level list. This allows each block to dynamically be
 # set to different load levels based on their capacity.
@@ -460,7 +460,7 @@ for thisBlock in Blocks:
     # abbreviate parameter names if possible (e.g. rgb = thisBlock.rgb)
     if thisBlock != None:
         for paramName in thisBlock.keys():
-            exec(paramName + '= thisBlock.' + paramName)
+            exec('{} = thisBlock[paramName]'.format(paramName))
     ## Set up which rows to select 
     print "Block = %d"%(BlockCount)
     print LoadList
@@ -550,7 +550,7 @@ for thisBlock in Blocks:
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
         for paramName in thisTrial.keys():
-            exec(paramName + '= thisTrial.' + paramName)
+            exec('{} = thisTrial[paramName]'.format(paramName))
     
     for thisTrial in trials:
         currentLoop = trials
@@ -558,7 +558,7 @@ for thisBlock in Blocks:
         # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
         if thisTrial != None:
             for paramName in thisTrial.keys():
-                exec(paramName + '= thisTrial.' + paramName)
+                exec('{} = thisTrial[paramName]'.format(paramName))
         
         # ------Prepare to start Routine "trial"-------
         t = 0

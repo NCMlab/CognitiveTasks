@@ -60,6 +60,7 @@ else:
 #tempFile.write("Loaded inputs\n")
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
+FontSize = 60
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
@@ -116,9 +117,9 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Ready to start the main experiment?\n\nRemember:\nPress [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
+    text='Ready to start the main experiment?\n\nRemember:\nPress [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -127,7 +128,7 @@ ShortDelayClock = core.Clock()
 textEndDelay = visual.TextStim(win=win, name='textEndDelay',
     text='+',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -136,19 +137,19 @@ CountdownClock = core.Clock()
 text3 = visual.TextStim(win=win, name='text3',
     text='3',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 text2 = visual.TextStim(win=win, name='text2',
     text='2',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
 text1 = visual.TextStim(win=win, name='text1',
     text='1',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-2.0);
 
@@ -157,73 +158,73 @@ trialClock = core.Clock()
 textTL = visual.TextStim(win=win, name='textTL',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(-50, 50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(-50, 50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 textTM = visual.TextStim(win=win, name='textTM',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, 50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
 textTR = visual.TextStim(win=win, name='textTR',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(50, 50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(50, 50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-2.0);
 textCL = visual.TextStim(win=win, name='textCL',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(-50, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(-50, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-3.0);
 textCM = visual.TextStim(win=win, name='textCM',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-4.0);
 textCR = visual.TextStim(win=win, name='textCR',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(50, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(50, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-5.0);
 textBL = visual.TextStim(win=win, name='textBL',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(-50, -50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(-50, -50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-6.0);
 textBM = visual.TextStim(win=win, name='textBM',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, -50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, -50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-7.0);
 textBR = visual.TextStim(win=win, name='textBR',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(50, -50), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(50, -50), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-8.0);
 textDelay = visual.TextStim(win=win, name='textDelay',
     text='+',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='green', colorSpace='rgb', opacity=1,
     depth=-9.0);
 textProbe = visual.TextStim(win=win, name='textProbe',
     text='default text',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-10.0);
 textITI = visual.TextStim(win=win, name='textITI',
     text='+',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-11.0);
 
@@ -232,7 +233,7 @@ InterblockClock = core.Clock()
 textInterblock = visual.TextStim(win=win, name='textInterblock',
     text='+',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='red', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -241,7 +242,7 @@ ShortDelayClock = core.Clock()
 textEndDelay = visual.TextStim(win=win, name='textEndDelay',
     text='+',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -250,7 +251,7 @@ ThankyouClock = core.Clock()
 textThankyou = visual.TextStim(win=win, name='textThankyou',
     text='Thank you for participating!',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -391,7 +392,7 @@ thisBlock = Blocks.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisBlock.rgb)
 if thisBlock != None:
     for paramName in thisBlock.keys():
-        exec(paramName + '= thisBlock.' + paramName)
+        exec('{} = thisBlock[paramName]'.format(paramName))
 # This counter is used to keep track of which block of the experiment is being presented.
 # It is also used to index the block load level list. This allows each block to dynamically be
 # set to different load levels based on their capacity.
@@ -402,7 +403,8 @@ for thisBlock in Blocks:
     # abbreviate parameter names if possible (e.g. rgb = thisBlock.rgb)
     if thisBlock != None:
         for paramName in thisBlock.keys():
-            exec(paramName + '= thisBlock.' + paramName)
+            exec('{} = thisBlock[paramName]'.format(paramName))
+            
     ## Set up which rows to select 
     print "Block = %d"%(BlockCount)
     print LoadList
@@ -485,21 +487,21 @@ for thisBlock in Blocks:
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='sequential', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockListv2.csv', selection=SelectionList),
+        trialList=data.importConditions('../DMSPsychopyFiles/DMSBlockListBehRun1.csv', selection=SelectionList),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
         for paramName in thisTrial.keys():
-            exec(paramName + '= thisTrial.' + paramName)
-    
+            exec('{} = thisTrial[paramName]'.format(paramName))
+ 
     for thisTrial in trials:
         currentLoop = trials
         # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
         if thisTrial != None:
             for paramName in thisTrial.keys():
-                exec(paramName + '= thisTrial.' + paramName)
+                exec('{} = thisTrial[paramName]'.format(paramName))
         
         # ------Prepare to start Routine "trial"-------
         t = 0
@@ -665,7 +667,7 @@ for thisBlock in Blocks:
             if resp.status == STARTED and t >= frameRemains:
                 resp.status = STOPPED
             if resp.status == STARTED:
-                theseKeys = event.getKeys(keyList=['left', 'down'])
+                theseKeys = event.getKeys(keyList=['left', 'right'])
                 
                 # check for quit:
                 if "escape" in theseKeys:
@@ -678,6 +680,9 @@ for thisBlock in Blocks:
                         resp.corr = 1
                     else:
                         resp.corr = 0
+                    textProbe.setAutoDraw(False)
+                    textITI.setAutoDraw(True)
+                    win.flip()
             
             # check if all components have finished
             if not continueRoutine:  # a component has requested a forced-end of Routine

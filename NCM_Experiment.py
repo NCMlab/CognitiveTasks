@@ -229,7 +229,7 @@ class Mywin(wx.Frame):
       self.DMSStairCaseDateStr = data.getDateStr()
       btn = event.GetEventObject().GetLabel() 
       print "Label of pressed button = ",btn 
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v2.py", self.PartID.GetValue(),'60'])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v4.py", self.PartID.GetValue(), os.path.join('..','..','data',self.PartID.GetValue())])
       self.LoadDMSCapacity(self)
       
    def OnClickedDMSBlock(self, event): 
@@ -238,7 +238,7 @@ class Mywin(wx.Frame):
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v3.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v4.py", self.PartID.GetValue(), self.PartID.GetValue(),self.DMSBlockLoadLevels, '60', 'BehRun1'])
       self.DMSBlockCB.SetValue(True)
    
    def CreateDMSList(self, DMSCapacity):
