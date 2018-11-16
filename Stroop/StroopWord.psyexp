@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<PsychoPy2experiment encoding="utf-8" version="1.85.3">
+<PsychoPy2experiment encoding="utf-8" version="1.90.3">
   <Settings>
     <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
     <Param name="color" updates="None" val="darkgrey" valType="str"/>
@@ -44,23 +44,23 @@
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="ori" updates="constant" val="0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.2" valType="code"/>
+        <Param name="startVal" updates="None" val="0" valType="code"/>
         <Param name="font" updates="constant" val="Arial" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.2" valType="code"/>
       </TextComponent>
       <KeyboardComponent name="resp">
-        <Param name="correctAns" updates="constant" val="$Corr" valType="str"/>
+        <Param name="correctAns" updates="constant" val="$CorrColor" valType="str"/>
         <Param name="storeCorrect" updates="constant" val="True" valType="bool"/>
         <Param name="name" updates="None" val="resp" valType="code"/>
-        <Param name="stopVal" updates="constant" val="6" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="discard previous" updates="constant" val="True" valType="bool"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="allowedKeys" updates="constant" val="'r','y','b','g'" valType="code"/>
+        <Param name="allowedKeys" updates="constant" val="'v','b','n','m'" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.2" valType="code"/>
+        <Param name="startVal" updates="None" val="0" valType="code"/>
         <Param name="store" updates="constant" val="last key" valType="str"/>
         <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
       </KeyboardComponent>
@@ -99,6 +99,44 @@
         <Param name="allowedKeys" updates="constant" val="" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
         <Param name="startVal" updates="None" val="0" valType="code"/>
+        <Param name="store" updates="constant" val="nothing" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="instructPractice">
+      <TextComponent name="instr1">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="constant" val="instr1" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="In this task, words will appear in the center of the screen, like this:&amp;#10;BLUE&amp;#10;You need to indicate what word is written.&amp;#10;&amp;#10;Press the R key if the word is Red&amp;#10;Press the Y key if the word is Yellow&amp;#10;Press the G key if the word is Green&amp;#10;Press the B key if the word is Blue&amp;#10;&amp;#10;(Esc will quit)&amp;#10;Let's start with a few practice trials&amp;#10;Press any key to continue" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="[0, 0]" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.1" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="ready1">
+        <Param name="correctAns" updates="constant" val="" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="ready1" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
         <Param name="store" updates="constant" val="nothing" valType="str"/>
         <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
       </KeyboardComponent>
@@ -155,56 +193,18 @@
         <Param name="letterHeight" updates="constant" val="0.1" valType="code"/>
       </TextComponent>
     </Routine>
-    <Routine name="instructPractice">
-      <TextComponent name="instr1">
-        <Param name="opacity" updates="constant" val="1" valType="code"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="constant" val="instr1" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
-        <Param name="color" updates="constant" val="white" valType="str"/>
-        <Param name="text" updates="constant" val="In this task, words will appear in the center of the screen, like this:&amp;#10;BLUE&amp;#10;You need to indicate what word is written.&amp;#10;&amp;#10;Press the R key if the word is Red&amp;#10;Press the Y key if the word is Yellow&amp;#10;Press the G key if the word is Green&amp;#10;Press the B key if the word is Blue&amp;#10;&amp;#10;(Esc will quit)&amp;#10;Let's start with a few practice trials&amp;#10;Press any key to continue" valType="str"/>
-        <Param name="stopVal" updates="constant" val="" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="pos" updates="constant" val="[0, 0]" valType="code"/>
-        <Param name="flip" updates="constant" val="" valType="str"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="from exp settings" valType="str"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="ori" updates="constant" val="0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="font" updates="constant" val="Arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="0.1" valType="code"/>
-      </TextComponent>
-      <KeyboardComponent name="ready1">
-        <Param name="correctAns" updates="constant" val="" valType="str"/>
-        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
-        <Param name="name" updates="None" val="ready1" valType="code"/>
-        <Param name="stopVal" updates="constant" val="" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="allowedKeys" updates="constant" val="" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="store" updates="constant" val="nothing" valType="str"/>
-        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
-      </KeyboardComponent>
-    </Routine>
   </Routines>
   <Flow>
     <Routine name="instructPractice"/>
     <LoopInitiator loopType="TrialHandler" name="practice">
-      <Param name="conditionsFile" updates="None" val="Stroop - Practice1WordColor.csv" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="StroopPractice1WordColor.csv" valType="str"/>
       <Param name="name" updates="None" val="practice" valType="code"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
       <Param name="loopType" updates="None" val="random" valType="str"/>
       <Param name="nReps" updates="None" val="1" valType="num"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
-      <Param name="conditions" updates="None" val="[{'TextColor': u'Yellow', 'Word': u'Blue', 'Corr': u'y', 'Congruency': u'Incon'}, {'TextColor': u'Yellow', 'Word': u'Yellow', 'Corr': u'y', 'Congruency': u'Con'}, {'TextColor': u'Green', 'Word': u'Blue', 'Corr': u'g', 'Congruency': u'Incon'}, {'TextColor': u'Yellow', 'Word': u'Green', 'Corr': u'y', 'Congruency': u'Incon'}, {'TextColor': u'Red', 'Word': u'Red', 'Corr': u'r', 'Congruency': u'Con'}, {'TextColor': u'Blue', 'Word': u'Green', 'Corr': u'b', 'Congruency': u'Incon'}, {'TextColor': u'Blue', 'Word': u'Red', 'Corr': u'b', 'Congruency': u'Incon'}, {'TextColor': u'Green', 'Word': u'Green', 'Corr': u'g', 'Congruency': u'Con'}, {'TextColor': u'Red', 'Word': u'Green', 'Corr': u'r', 'Congruency': u'Incon'}, {'TextColor': u'Blue', 'Word': u'Blue', 'Corr': u'b', 'Congruency': u'Con'}]" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([(u'Word', u'Blue'), (u'TextColor', u'Yellow'), (u'Congruency', u'Incon'), (u'CorrColor', u'b'), (u'CorrWord', u'm'), (u'ShapeColor', [1, 1, -1])]), OrderedDict([(u'Word', u'Yellow'), (u'TextColor', u'Yellow'), (u'Congruency', u'Con'), (u'CorrColor', u'b'), (u'CorrWord', u'b'), (u'ShapeColor', [1, 1, -1])]), OrderedDict([(u'Word', u'Blue'), (u'TextColor', u'Green'), (u'Congruency', u'Incon'), (u'CorrColor', u'n'), (u'CorrWord', u'm'), (u'ShapeColor', [-1, 0.6, -1])]), OrderedDict([(u'Word', u'Green'), (u'TextColor', u'Yellow'), (u'Congruency', u'Incon'), (u'CorrColor', u'b'), (u'CorrWord', u'n'), (u'ShapeColor', [1, 1, -1])]), OrderedDict([(u'Word', u'Red'), (u'TextColor', u'Red'), (u'Congruency', u'Con'), (u'CorrColor', u'v'), (u'CorrWord', u'v'), (u'ShapeColor', [1, -1, -1])]), OrderedDict([(u'Word', u'Green'), (u'TextColor', u'Blue'), (u'Congruency', u'Incon'), (u'CorrColor', u'm'), (u'CorrWord', u'n'), (u'ShapeColor', [-1, -1, 1])]), OrderedDict([(u'Word', u'Red'), (u'TextColor', u'Blue'), (u'Congruency', u'Incon'), (u'CorrColor', u'm'), (u'CorrWord', u'v'), (u'ShapeColor', [-1, -1, 1])]), OrderedDict([(u'Word', u'Green'), (u'TextColor', u'Green'), (u'Congruency', u'Con'), (u'CorrColor', u'n'), (u'CorrWord', u'n'), (u'ShapeColor', [-1, 0.6, -1])]), OrderedDict([(u'Word', u'Green'), (u'TextColor', u'Red'), (u'Congruency', u'Incon'), (u'CorrColor', u'v'), (u'CorrWord', u'n'), (u'ShapeColor', [1, -1, -1])]), OrderedDict([(u'Word', u'Blue'), (u'TextColor', u'Blue'), (u'Congruency', u'Con'), (u'CorrColor', u'm'), (u'CorrWord', u'm'), (u'ShapeColor', [-1, -1, 1])])]" valType="str"/>
       <Param name="Selected rows" updates="None" val="" valType="str"/>
     </LoopInitiator>
     <Routine name="trial"/>
@@ -219,7 +219,7 @@
       <Param name="loopType" updates="None" val="random" valType="str"/>
       <Param name="nReps" updates="None" val="10" valType="num"/>
       <Param name="endPoints" updates="None" val="[1, 2]" valType="num"/>
-      <Param name="conditions" updates="None" val="[{'TextColor': u'Red', 'Word': u'Red', 'Corr': u'r', 'Congruency': u'Con'}, {'TextColor': u'Yellow', 'Word': u'Red', 'Corr': u'y', 'Congruency': u'Incon'}, {'TextColor': u'Blue', 'Word': u'Red', 'Corr': u'b', 'Congruency': u'Incon'}, {'TextColor': u'Green', 'Word': u'Red', 'Corr': u'g', 'Congruency': u'Incon'}, {'TextColor': u'Red', 'Word': u'Yellow', 'Corr': u'r', 'Congruency': u'Incon'}, {'TextColor': u'Yellow', 'Word': u'Yellow', 'Corr': u'y', 'Congruency': u'Con'}, {'TextColor': u'Blue', 'Word': u'Yellow', 'Corr': u'b', 'Congruency': u'Incon'}, {'TextColor': u'Green', 'Word': u'Yellow', 'Corr': u'g', 'Congruency': u'Incon'}, {'TextColor': u'Red', 'Word': u'Blue', 'Corr': u'r', 'Congruency': u'Incon'}, {'TextColor': u'Yellow', 'Word': u'Blue', 'Corr': u'y', 'Congruency': u'Incon'}, {'TextColor': u'Blue', 'Word': u'Blue', 'Corr': u'b', 'Congruency': u'Con'}, {'TextColor': u'Green', 'Word': u'Blue', 'Corr': u'g', 'Congruency': u'Incon'}, {'TextColor': u'Red', 'Word': u'Green', 'Corr': u'r', 'Congruency': u'Incon'}, {'TextColor': u'Yellow', 'Word': u'Green', 'Corr': u'y', 'Congruency': u'Incon'}, {'TextColor': u'Blue', 'Word': u'Green', 'Corr': u'b', 'Congruency': u'Incon'}, {'TextColor': u'Green', 'Word': u'Green', 'Corr': u'g', 'Congruency': u'Con'}]" valType="str"/>
+      <Param name="conditions" updates="None" val="[OrderedDict([(u'Word', u'Red'), (u'TextColor', u'Red'), (u'Congruency', u'Con'), (u'CorrWord', u'v'), (u'CorrColor', u'v'), (u'ShapeColor', [1, -1, -1])]), OrderedDict([(u'Word', u'Red'), (u'TextColor', u'Yellow'), (u'Congruency', u'Incon'), (u'CorrWord', u'm'), (u'CorrColor', u'v'), (u'ShapeColor', [1, 1, -1])]), OrderedDict([(u'Word', u'Red'), (u'TextColor', u'Blue'), (u'Congruency', u'Incon'), (u'CorrWord', u'n'), (u'CorrColor', u'v'), (u'ShapeColor', [-1, -1, 1])]), OrderedDict([(u'Word', u'Red'), (u'TextColor', u'Green'), (u'Congruency', u'Incon'), (u'CorrWord', u'b'), (u'CorrColor', u'v'), (u'ShapeColor', [-1, 0.6, -1])]), OrderedDict([(u'Word', u'Yellow'), (u'TextColor', u'Red'), (u'Congruency', u'Incon'), (u'CorrWord', u'v'), (u'CorrColor', u'b'), (u'ShapeColor', [1, -1, -1])]), OrderedDict([(u'Word', u'Yellow'), (u'TextColor', u'Yellow'), (u'Congruency', u'Con'), (u'CorrWord', u'm'), (u'CorrColor', u'b'), (u'ShapeColor', [1, 1, -1])]), OrderedDict([(u'Word', u'Yellow'), (u'TextColor', u'Blue'), (u'Congruency', u'Incon'), (u'CorrWord', u'n'), (u'CorrColor', u'b'), (u'ShapeColor', [-1, -1, 1])]), OrderedDict([(u'Word', u'Yellow'), (u'TextColor', u'Green'), (u'Congruency', u'Incon'), (u'CorrWord', u'b'), (u'CorrColor', u'b'), (u'ShapeColor', [-1, 0.6, -1])]), OrderedDict([(u'Word', u'Blue'), (u'TextColor', u'Red'), (u'Congruency', u'Incon'), (u'CorrWord', u'v'), (u'CorrColor', u'm'), (u'ShapeColor', [1, -1, -1])]), OrderedDict([(u'Word', u'Blue'), (u'TextColor', u'Yellow'), (u'Congruency', u'Incon'), (u'CorrWord', u'm'), (u'CorrColor', u'm'), (u'ShapeColor', [1, 1, -1])]), OrderedDict([(u'Word', u'Blue'), (u'TextColor', u'Blue'), (u'Congruency', u'Con'), (u'CorrWord', u'n'), (u'CorrColor', u'm'), (u'ShapeColor', [-1, -1, 1])]), OrderedDict([(u'Word', u'Blue'), (u'TextColor', u'Green'), (u'Congruency', u'Incon'), (u'CorrWord', u'b'), (u'CorrColor', u'm'), (u'ShapeColor', [-1, 0.6, -1])]), OrderedDict([(u'Word', u'Green'), (u'TextColor', u'Red'), (u'Congruency', u'Incon'), (u'CorrWord', u'v'), (u'CorrColor', u'n'), (u'ShapeColor', [1, -1, -1])]), OrderedDict([(u'Word', u'Green'), (u'TextColor', u'Yellow'), (u'Congruency', u'Incon'), (u'CorrWord', u'm'), (u'CorrColor', u'n'), (u'ShapeColor', [1, 1, -1])]), OrderedDict([(u'Word', u'Green'), (u'TextColor', u'Blue'), (u'Congruency', u'Incon'), (u'CorrWord', u'n'), (u'CorrColor', u'n'), (u'ShapeColor', [-1, -1, 1])]), OrderedDict([(u'Word', u'Green'), (u'TextColor', u'Green'), (u'Congruency', u'Con'), (u'CorrWord', u'b'), (u'CorrColor', u'n'), (u'ShapeColor', [-1, 0.6, -1])])]" valType="str"/>
       <Param name="Selected rows" updates="None" val="" valType="str"/>
     </LoopInitiator>
     <Routine name="trial"/>
