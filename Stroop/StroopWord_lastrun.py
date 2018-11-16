@@ -1,8 +1,8 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Wed 03 Oct 2018 01:40:48 PM EDT
+This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
+    on Fri Nov 16 11:59:20 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, sound, gui, visual, core, data, event, logging
+from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, clock
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -25,54 +25,37 @@ import sys  # to get file system encoding
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
-# #################
 # Store info about the experiment session
-expName = u'Stroop'  # from the Builder filename that created this script
-task = 'Word'
-expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
-
+expName = 'StroopWord'  # from the Builder filename that created this script
+expInfo = {u'session': u'01', u'participant': u''}
+dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
+if dlg.OK == False:
+    core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
-if len(sys.argv) > 1:
-    #tempFile.write("Entered if clause\n")
-    #tempFile.write('%s\n'%(sys.argv[2]))
-    expInfo['Participant ID'] = sys.argv[1]
-    #tempFile.write('%s\n'%(sys.argv[1]))
-    #tempFile.write('%s\n'%(sys.argv[2]))
 
-    PartDataFolder = sys.argv[2]
-    Tag = '1'
-else:
-    dlg = gui.DlgFromDict(dictionary=expInfo)
-    if dlg.OK == False:
-        core.quit()  # user pressed cancel
-    DataFolder = "../../data"
-    PartDataFolder = 'unorganized'
-    OutDir = os.path.join(DataFolder, PartDataFolder)
-    if not os.path.exists(OutDir):
-        os.mkdir(OutDir)
-    Tag = '1'
- 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-BGColor = 'grey'
-FontColor = 'white'
-FontSize = 60
-StroopKeyList = ['v', 'b', 'n', 'm']
-# #################
+filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s' % (expInfo['participant'], expInfo['date'])
+
+# An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    savePickle=False, saveWideText=True,
+    originPath=u'/Users/jasonsteffener/Documents/CognitiveTasks-master/Stroop/StroopWord.psyexp',
+    savePickle=True, saveWideText=True,
     dataFileName=filename)
+# save a log file for detail verbose info
+logFile = logging.LogFile(filename+'.log', level=logging.WARNING)
+logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
+
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
 
 # Setup the Window
 win = visual.Window(
-    size=(1920, 1080), fullscr=True, screen=0,
+    size=[1440, 900], fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=BGColor, colorSpace='rgb',
+    monitor='testMonitor', color='darkgrey', colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='norm')
 # store frame rate of monitor if we can measure it
@@ -85,19 +68,19 @@ else:
 # Initialize components for Routine "instructPractice"
 instructPracticeClock = core.Clock()
 instr1 = visual.TextStim(win=win, name='instr1',
-    text=u"In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate what word is written.\n\nPress the red(v) key if the word is Red\nPress the yellow(b) key if the word is Yellow\nPress the green(n) key if the word is Green\nPress the blue(m) key if the word is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue",
-    font=u'Arial',
+    text="In this task, words will appear in the center of the screen, like this:\nBLUE\nYou need to indicate what word is written.\n\nPress the R key if the word is Red\nPress the Y key if the word is Yellow\nPress the G key if the word is Green\nPress the B key if the word is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue",
+    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 word = visual.TextStim(win=win, name='word',
-    text=u'default text',
+    text='default text',
     font=u'Arial',
-    pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
+    color=1.0, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "feedback"
@@ -108,34 +91,34 @@ feedback_2 = visual.TextStim(win=win, name='feedback_2',
     text='default text',
     font=u'Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    color=[1,1,1], colorSpace='rgb', opacity=1,
     depth=-1.0);
 
 # Initialize components for Routine "instruct"
 instructClock = core.Clock()
 instrText = visual.TextStim(win=win, name='instrText',
-    text=u"\nNow you will do the task.\nIt will be exactly like the practice except you won't get feedback.\nPress the red(v) key if the word is Red\nPress the yellow(b) key if the word is Yellow\nPress the green(n) key if the word is Green\nPress the blue(m) key if the word is Blue\n\n(Esc will quit)\nPress any key to continue",
-    font=u'Arial',
+    text="\nNow you will do the task.\nIt will be exactly like the practice except you won't get feedback.\nPress the R key if the word is Red\nPress the Y key if the word is Yellow\nPress the G key if the word is Green\nPress the B key if the word is Blue\n\n(Esc will quit)\nPress any key to continue",
+    font='Arial',
     pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 word = visual.TextStim(win=win, name='word',
     text='default text',
-    font='Arial',
-    pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    font=u'Arial',
+    pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
+    color=1.0, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "thanks"
 thanksClock = core.Clock()
 thanksText = visual.TextStim(win=win, name='thanksText',
-    text='This is the end of the experiment.\n\nThank you!',
+    text='This is the end of the experiment.\n\nThanks!',
     font='arial',
     pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -214,21 +197,21 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 practice = data.TrialHandler(nReps=1.0, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('Stroop - Practice1WordColor.csv'),
+    trialList=data.importConditions(u'StroopPractice1WordColor.csv'),
     seed=None, name='practice')
 thisExp.addLoop(practice)  # add the loop to the experiment
 thisPractice = practice.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
 if thisPractice != None:
-    for paramName in thisPractice.keys():
-        exec(paramName + '= thisPractice.' + paramName)
+    for paramName in thisPractice:
+        exec('{} = thisPractice[paramName]'.format(paramName))
 
 for thisPractice in practice:
     currentLoop = practice
     # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
     if thisPractice != None:
-        for paramName in thisPractice.keys():
-            exec(paramName + '= thisPractice.' + paramName)
+        for paramName in thisPractice:
+            exec('{} = thisPractice[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
@@ -236,7 +219,7 @@ for thisPractice in practice:
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
-    word.setColor('black', colorSpace='rgb')
+    word.setColor(u'black', colorSpace='rgb')
     word.setText(TextColor)
     resp = event.BuilderKeyResponse()
     # keep track of which components have finished
@@ -253,14 +236,14 @@ for thisPractice in practice:
         # update/draw components on each frame
         
         # *word* updates
-        if t >= 0.2 and word.status == NOT_STARTED:
+        if t >= 0 and word.status == NOT_STARTED:
             # keep track of start time/frame for later
             word.tStart = t
             word.frameNStart = frameN  # exact frame index
             word.setAutoDraw(True)
         
         # *resp* updates
-        if t >= 0.2 and resp.status == NOT_STARTED:
+        if t >= 0 and resp.status == NOT_STARTED:
             # keep track of start time/frame for later
             resp.tStart = t
             resp.frameNStart = frameN  # exact frame index
@@ -268,11 +251,8 @@ for thisPractice in practice:
             # keyboard checking is just starting
             win.callOnFlip(resp.clock.reset)  # t=0 on next screen flip
             event.clearEvents(eventType='keyboard')
-        frameRemains = 0.2 + 6- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if resp.status == STARTED and t >= frameRemains:
-            resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=StroopKeyList)
+            theseKeys = event.getKeys(keyList=['v', 'b', 'n', 'm'])
             
             # check for quit:
             if "escape" in theseKeys:
@@ -281,7 +261,7 @@ for thisPractice in practice:
                 resp.keys = theseKeys[-1]  # just the last key pressed
                 resp.rt = resp.clock.getTime()
                 # was this 'correct'?
-                if (resp.keys == str(Corr)) or (resp.keys == Corr):
+                if (resp.keys == str(CorrColor)) or (resp.keys == CorrColor):
                     resp.corr = 1
                 else:
                     resp.corr = 0
@@ -313,7 +293,7 @@ for thisPractice in practice:
     if resp.keys in ['', [], None]:  # No response was made
         resp.keys=None
         # was no response the correct answer?!
-        if str(Corr).lower() == 'none':
+        if str(CorrColor).lower() == 'none':
            resp.corr = 1  # correct non-response
         else:
            resp.corr = 0  # failed to respond (incorrectly)
@@ -467,23 +447,23 @@ for thisComponent in instructComponents:
 routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=3.0, method='random', 
+trials = data.TrialHandler(nReps=10.0, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('Stroop - ColorWord.csv'),
+    trialList=data.importConditions(u'Stroop - ColorWord.csv'),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
 if thisTrial != None:
-    for paramName in thisTrial.keys():
-        exec(paramName + '= thisTrial.' + paramName)
+    for paramName in thisTrial:
+        exec('{} = thisTrial[paramName]'.format(paramName))
 
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
-        for paramName in thisTrial.keys():
-            exec(paramName + '= thisTrial.' + paramName)
+        for paramName in thisTrial:
+            exec('{} = thisTrial[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
@@ -491,7 +471,7 @@ for thisTrial in trials:
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
-    word.setColor('black', colorSpace='rgb')
+    word.setColor(u'black', colorSpace='rgb')
     word.setText(TextColor)
     resp = event.BuilderKeyResponse()
     # keep track of which components have finished
@@ -508,14 +488,14 @@ for thisTrial in trials:
         # update/draw components on each frame
         
         # *word* updates
-        if t >= 0.2 and word.status == NOT_STARTED:
+        if t >= 0 and word.status == NOT_STARTED:
             # keep track of start time/frame for later
             word.tStart = t
             word.frameNStart = frameN  # exact frame index
             word.setAutoDraw(True)
         
         # *resp* updates
-        if t >= 0.2 and resp.status == NOT_STARTED:
+        if t >= 0 and resp.status == NOT_STARTED:
             # keep track of start time/frame for later
             resp.tStart = t
             resp.frameNStart = frameN  # exact frame index
@@ -523,11 +503,8 @@ for thisTrial in trials:
             # keyboard checking is just starting
             win.callOnFlip(resp.clock.reset)  # t=0 on next screen flip
             event.clearEvents(eventType='keyboard')
-        frameRemains = 0.2 + 6- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if resp.status == STARTED and t >= frameRemains:
-            resp.status = STOPPED
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=StroopKeyList)
+            theseKeys = event.getKeys(keyList=['v', 'b', 'n', 'm'])
             
             # check for quit:
             if "escape" in theseKeys:
@@ -536,7 +513,7 @@ for thisTrial in trials:
                 resp.keys = theseKeys[-1]  # just the last key pressed
                 resp.rt = resp.clock.getTime()
                 # was this 'correct'?
-                if (resp.keys == str(Corr)) or (resp.keys == Corr):
+                if (resp.keys == str(CorrColor)) or (resp.keys == CorrColor):
                     resp.corr = 1
                 else:
                     resp.corr = 0
@@ -568,7 +545,7 @@ for thisTrial in trials:
     if resp.keys in ['', [], None]:  # No response was made
         resp.keys=None
         # was no response the correct answer?!
-        if str(Corr).lower() == 'none':
+        if str(CorrColor).lower() == 'none':
            resp.corr = 1  # correct non-response
         else:
            resp.corr = 0  # failed to respond (incorrectly)
@@ -647,7 +624,7 @@ for thisComponent in thanksComponents:
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
-#thisExp.saveAsPickle(filename)
+thisExp.saveAsPickle(filename)
 logging.flush()
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit

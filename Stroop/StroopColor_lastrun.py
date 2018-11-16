@@ -77,7 +77,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1920, 1080), fullscr=False, screen=0,
+    size=(1920, 1080), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
