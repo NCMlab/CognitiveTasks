@@ -120,11 +120,11 @@ class Experiment():
             fieldPos = TPOS,elementTex=None))            
         
         # Make the piles
-        for i in range(4):
-            self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='grey',
-                        pos = ((i-1.5)*(CARDX+CARDW),PrevCARDY),lineColor='black',interpolate=False))
-            self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='grey',
-                        fieldPos = ((i-1.5)*(CARDX+CARDW),PrevCARDY),elementTex=None))
+        #for i in range(4):
+        self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='grey',
+                        pos = DiscardPOS,lineColor='black',interpolate=False))
+        self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='grey',
+                        fieldPos = DiscardPOS,elementTex=None))
             
 
         self.text = visual.TextStim(self.win,pos=FPOS,height=2)
@@ -173,10 +173,10 @@ class Experiment():
         self.elems[4].setXYs(SPOS[target[2]])
         self.elems[4].draw()
         # Add piles of previous cards
-        for i in range(5,9):
-            self.cards[i].draw()
+        #for i in range(5,9):
+        self.cards[5].draw()
 
-            self.elems[i].draw()
+        self.elems[5].draw()
         self.win.flip()
 
         # wait for response
@@ -216,13 +216,13 @@ class Experiment():
         
         #self.cards[4+card+1].setPos((self.cards[card].pos[X],-1))
         #self.elems[4+card+1].setFieldPos((self.cards[card].pos[X],-1))
-        self.cards[4+card+1].fillColor = self.cards[card].fillColor
-        self.cards[4+card+1].setPos((self.cards[card].pos[X],-1))
-        self.elems[4+card+1].setFieldPos(TPOS)
-        self.elems[4+card+1].setColors(CLRS[target[0]])
-        self.elems[4+card+1].setMask(SHAPES[target[1]])
-        self.elems[4+card+1].setXYs(SPOS[target[2]])
-        self.elems[4+card+1].setFieldPos((self.cards[card].pos[X],-1))
+        self.cards[5].fillColor = self.cards[card].fillColor
+        self.cards[5].setPos(DiscardPOS)
+        self.elems[5].setFieldPos(TPOS)
+        self.elems[5].setColors(CLRS[target[0]])
+        self.elems[5].setMask(SHAPES[target[1]])
+        self.elems[5].setXYs(SPOS[target[2]])
+        self.elems[5].setFieldPos(DiscardPOS)
         # Dots are still there
 
         for i in range(4):
@@ -230,9 +230,9 @@ class Experiment():
             self.elems[i].draw()
         
         
-        for i in range(5,9):
-            self.cards[i].draw()
-            self.elems[i].draw()
+        #for i in range(5,9):
+        self.cards[5].draw()
+        self.elems[5].draw()
         # Display cards and choice  
         
         self.win.flip()
@@ -258,9 +258,9 @@ class Experiment():
         self.output.write('%d,%d,%d\n'%tuple(target))
         self.output.flush()
         self.text.draw()
-        for i in range(5,9):
-            self.cards[i].draw()
-            self.elems[i].draw()
+        #for i in range(5,9):
+        self.cards[5].draw()
+        self.elems[5].draw()
         self.win.flip()
         core.wait(2)
 
@@ -277,12 +277,12 @@ class Experiment():
 #            self.runTrial(t)
     def run(self, num_trials, rule_delta=10):
         #At the beginning reset the discard piles
-        for i in range(5,9):
-            self.cards[i].fillColor = 'grey'
+        #for i in range(5,9):
+        self.cards[5].fillColor = 'grey'
             
-            self.elems[i].color = 'grey'
+        self.elems[5].color = 'grey'
             
-            self.cards[i].draw()
+        self.cards[5].draw()
             #self.elems[i].draw()
         self.rule = 0
         self.corstreak = 0
@@ -390,7 +390,7 @@ TPOS=(0,-9)# position of the target card
 FPOS=(0,3.8)# position of the feedback
 CARDY=9# vertical position of choice cards
 PrevCARDY = -1
-
+DiscardPOS = (0, PrevCARDY)
 CARDX=1 # horizontal space between choice cards
 CARDW=4 # card width
 CARDH=6 # card height
