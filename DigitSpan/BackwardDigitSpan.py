@@ -323,7 +323,7 @@ for thisStair in Stairs:
     #    R = np.random.randint(1,10,level)
     #    Flag = any(np.diff(R) == 0)
     print(R)    
-    Answer.text = 'Backward: %s'%(R[::-1])
+    Answer.text = 'Backward: %s\n\n\nTrial Number %d of %d'%(R[::-1],count, NumberOfTrials)
     # cycle over the numbers and play them
     for i in range(level):
         countDown.reset()    

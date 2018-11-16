@@ -77,7 +77,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1920, 1080), fullscr=False, screen=0,
+    size=(1920, 1080), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
@@ -92,9 +92,9 @@ else:
 # Initialize components for Routine "instructPractice"
 instructPracticeClock = core.Clock()
 instr1 = visual.TextStim(win=win, name='instr1',
-    text=u"In this task, color patches will appear in the center of the screen.\n\nYou need to indicate the color of the patch.\n\nPress the R key if the color is Red\nPress the Y key if the color is Yellow\nPress the G key if the color is Green\nPress the B key if the color is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
+    text=u"In this task, color patches will appear in the center of the screen.\n\nYou need to indicate the color of the patch.\n\nPress the red(v) key if the ink is Red\nPress the yellow(b) key if the ink is Yellow\nPress the green(n) key if the ink is Green\nPress the blue(m) key if the ink is Blue\n\n(Esc will quit)\nLet's start with a few practice trials\nPress any key to continue\n",
     font=u'Arial',
-    pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
+    pos=[0, 0], height=0.1, wrapWidth=1000, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -223,14 +223,14 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 practice = data.TrialHandler(nReps=1.0, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('Stroop - Practice1WordColor.csv'),
+    trialList=data.importConditions('StroopPractice1WordColor.csv'),
     seed=None, name='practice')
 thisExp.addLoop(practice)  # add the loop to the experiment
 thisPractice = practice.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
 if thisPractice != None:
     for paramName in thisPractice.keys():
-        exec(paramName + '= thisPractice.' + paramName)
+        exec('{} = thisTrial[paramName]'.format(paramName))
 
 for thisPractice in practice:
     currentLoop = practice

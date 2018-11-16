@@ -312,7 +312,6 @@ for thisStair in Stairs:
     currentLoop = Stairs
     level = thisStair
     print("Trial Number: %d"%(count))
-    count += 1
     # Generate the number list
     # Generate random numbers and make sure no consecutive numbers are the same
     Flag = True
@@ -323,7 +322,8 @@ for thisStair in Stairs:
     #    R = np.random.randint(1,10,level)
     #    Flag = any(np.diff(R) == 0)
     print(R)    
-    Answer.text = 'Forward: %s'%(R)
+    Answer.text = 'Forward: %s\n\n\nTrial Number %d of %d'%(R,count, NumberOfTrials)
+    count += 1
     # cycle over the numbers and play them
     for i in range(level):
         countDown.reset()    
