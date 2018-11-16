@@ -435,7 +435,7 @@ class Mywin(wx.Frame):
    def OnClickedR1C3(self, event): 
       btnR1C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR1C3Label))
-      core.shellCall([sys.executable, "../Stroop/StroopWord_lastrun.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../Stroop/StroopWordv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR1C3.SetValue(True)
       
    def OnClickedR1C4(self, event): 

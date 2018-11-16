@@ -94,7 +94,7 @@ LongInstrClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
     text='Antonyms Vocabulary\n\nEach item in this test consists of a word in capital letters followed by four words. Press the number associated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nSince some of the items require you to distinguish fine shades of meaning, consider all the choices before deciding which is the best. Please guess if you are unsure since there is no penalty for incorrect responses.\n\nPress any key to begin.',
     font='Arial',
-    units='pix', pos=(0, 0), height=30, wrapWidth=800, ori=0, 
+    units='pix', pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 

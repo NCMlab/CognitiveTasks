@@ -1,0 +1,6 @@
+Word,TextColor,Congruency,CorrColor,CorrWord,ShapeColor,practice.thisRepN,practice.thisTrialN,practice.thisN,practice.thisIndex,resp.keys,resp.corr,resp.rt,Participant ID,date,expName,session,frameRate,
+Yellow,Yellow,Con,b,b,"[1, 1, -1]",0,0,0,1,b,1,0.986263036728,9999999,2018_Nov_16_1207,Stroop,01,59.512413838116395,
+Blue,Blue,Con,m,m,"[-1, -1, 1]",0,1,1,9,m,1,0.785680055618,9999999,2018_Nov_16_1207,Stroop,01,59.512413838116395,
+Green,Green,Con,n,n,"[-1, 0.6, -1]",0,2,2,7,m,0,4.03181695938,9999999,2018_Nov_16_1207,Stroop,01,59.512413838116395,
+Red,Blue,Incon,m,v,"[-1, -1, 1]",0,3,3,6,m,1,0.236968040466,9999999,2018_Nov_16_1207,Stroop,01,59.512413838116395,
+Green,Blue,Incon,m,n,"[-1, -1, 1]",0,4,4,5,m,1,0.137058973312,9999999,2018_Nov_16_1207,Stroop,01,59.512413838116395,

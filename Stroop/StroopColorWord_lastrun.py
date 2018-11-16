@@ -487,7 +487,7 @@ for thisComponent in instructComponents:
 routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=10.0, method='random', 
+trials = data.TrialHandler(nReps=6.0, method='random', 
     extraInfo=expInfo, originPath=-1,
     trialList=data.importConditions('Stroop - ColorWord.csv'),
     seed=None, name='trials')
