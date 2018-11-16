@@ -77,7 +77,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1920, 1080), fullscr=True, screen=0,
+    size=(1920, 1080), fullscr=False, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
@@ -141,9 +141,9 @@ polygon = visual.Rect(
 # Initialize components for Routine "thanks"
 thanksClock = core.Clock()
 thanksText = visual.TextStim(win=win, name='thanksText',
-    text='This is the end of the experiment.\n\nThanks!',
+    text='This is the end of the experiment.\n\nThank you!',
     font='arial',
-    pos=[0, 0], height=0.2, wrapWidth=None, ori=0, 
+    pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -230,14 +230,14 @@ thisPractice = practice.trialList[0]  # so we can initialise stimuli with some v
 # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
 if thisPractice != None:
     for paramName in thisPractice.keys():
-        exec('{} = thisTrial[paramName]'.format(paramName))
+        exec('{} = thisPractice[paramName]'.format(paramName))
 
 for thisPractice in practice:
     currentLoop = practice
     # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
     if thisPractice != None:
         for paramName in thisPractice.keys():
-            exec(paramName + '= thisPractice.' + paramName)
+            exec('{} = thisPractice[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
@@ -282,7 +282,7 @@ for thisPractice in practice:
                 resp.keys = theseKeys[-1]  # just the last key pressed
                 resp.rt = resp.clock.getTime()
                 # was this 'correct'?
-                if (resp.keys == str(Corr)) or (resp.keys == Corr):
+                if (resp.keys == str(CorrColor)) or (resp.keys == CorrColor):
                     resp.corr = 1
                 else:
                     resp.corr = 0
@@ -321,7 +321,7 @@ for thisPractice in practice:
     if resp.keys in ['', [], None]:  # No response was made
         resp.keys=None
         # was no response the correct answer?!
-        if str(Corr).lower() == 'none':
+        if str(CorrColor).lower() == 'none':
            resp.corr = 1  # correct non-response
         else:
            resp.corr = 0  # failed to respond (incorrectly)
@@ -484,14 +484,14 @@ thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
 if thisTrial != None:
     for paramName in thisTrial.keys():
-        exec(paramName + '= thisTrial.' + paramName)
+        exec('{} = thisTrial[paramName]'.format(paramName))
 
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
         for paramName in thisTrial.keys():
-            exec(paramName + '= thisTrial.' + paramName)
+            exec('{} = thisTrial[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
@@ -536,7 +536,7 @@ for thisTrial in trials:
                 resp.keys = theseKeys[-1]  # just the last key pressed
                 resp.rt = resp.clock.getTime()
                 # was this 'correct'?
-                if (resp.keys == str(Corr)) or (resp.keys == Corr):
+                if (resp.keys == str(CorrColor)) or (resp.keys == CorrColor):
                     resp.corr = 1
                 else:
                     resp.corr = 0
@@ -575,7 +575,7 @@ for thisTrial in trials:
     if resp.keys in ['', [], None]:  # No response was made
         resp.keys=None
         # was no response the correct answer?!
-        if str(Corr).lower() == 'none':
+        if str(CorrColor).lower() == 'none':
            resp.corr = 1  # correct non-response
         else:
            resp.corr = 0  # failed to respond (incorrectly)
