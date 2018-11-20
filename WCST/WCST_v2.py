@@ -34,7 +34,7 @@ else:
     Tag = '1'
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-
+FontSize = 40
 # #################
 #V Load up the Card Order
 FileName = '../WCST/CardOrder.csv'
@@ -46,7 +46,7 @@ INSTRUCTIONS = ('Select one of the four cards displayed at the top of the screen
                               +'or the shape of the objects they display. You will be given feedback whether the '
                               +'selected card was RIGHT or WRONG. Use the feedback to determine which '
                               +'dimension is targeted by feedback and based on it select the right card. The '
-                              +'targeted dimension may change from to time without notice.\n\nPress any key to begin')
+                              +'targeted dimension may change from to time to time without notice.\n\nPress any key to begin')
 
 X = 0
 Y = 1
@@ -301,7 +301,7 @@ class Experiment():
 
             
     def instruct(self, inst_text, go_text):
-        inst = visual.TextStim(self.win, pos=(0,0), height=1, alignHoriz='center', wrapWidth=22)
+        inst = visual.TextStim(self.win, pos=(0,0), height=1.4, alignHoriz='center', wrapWidth=38)
         inst.setText(inst_text)
         inst.draw()
         self.win.flip()
@@ -321,6 +321,14 @@ class Experiment():
         inst.draw()
         self.win.flip()
         core.wait(1)
+        
+    def ThankYou(self):
+        ThankYou = visual.TextStim(self.win, pos = (0,0), height = 1.4)
+        ThankYou.setText('Thank You')
+        ThankYou.draw()
+        self.win.flip()
+        core.wait(3)
+        self.sin.flip()
         
     def CardInstruct(self):
         inst = visual.TextStim(self.win, pos=(0,0), height=1, alignHoriz='center', wrapWidth=22)
@@ -446,7 +454,8 @@ E = Experiment()
 E.output = open(filename, 'w')
 E.output.write('TrialNum,Card,Rule,RespTime,Correct\n') 
 E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
-E.run(num_trials=12, rule_delta=3)
+E.run(num_trials=12, rule_delta=3) 
+
 
 E = Experiment()
 E.output = open(filename, 'a')
@@ -454,6 +463,7 @@ E.output.write('TrialNum,Card,Rule,RespTime,Correct\n')
 E.instruct('Remember: '+INSTRUCTIONS+' the test', 'Starting the test...')
 E.CardInstruct()
 E.run(num_trials=64, rule_delta=10)
+E.ThankYou() 
 E.output.close()
 E.win.close()
 
