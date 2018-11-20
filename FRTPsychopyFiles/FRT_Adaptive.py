@@ -47,7 +47,8 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
 # tempFile.write('%s\n'%(sys.argv[2]))
 
-
+FontColor = 'white'
+BGColor = 'grey'
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 #filename = _thisDir + os.sep + 'data/%s_%s_%s' %(expName, expInfo['Participant ID'], expInfo['date'])
@@ -72,7 +73,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=[1440, 900], fullscr=True, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor='MacBookPro', color=[0,0,0], colorSpace='rgb',
+    monitor='MacBookPro', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='pix')
 win.mouseVisible = False
@@ -87,10 +88,10 @@ else:
 InstructionsClock = core.Clock()
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
     #text='Ready to start the main experiment?\n\nRemember:\nPress [LEFT] for the SAME person\nPress [DOWN] for DIFFERENT people\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
-    text='Remember:\nPress [LEFT] for the SAME person.\nPress [DOWN] for DIFFERENT people.\nThis time, the next trial will not appear automatically after your answer (there may be a delay).\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed, press any key.',
+    text='Remember:\nPress [LEFT] for the SAME person.\nPress [RIGHT] for DIFFERENT people.\nThis time, the next trial will not appear automatically after your answer (there may be a delay).\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed, press any key.',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "Countdown"
@@ -650,14 +651,15 @@ thisTrials1 = trials1.trialList[0]  # so we can initialise stimuli with some val
 # abbreviate parameter names if possible (e.g. rgb = thisTrials1.rgb)
 if thisTrials1 != None:
     for paramName in thisTrials1.keys():
-        exec(paramName + '= thisTrials1.' + paramName)
+        exec('{} = thisTrials1[paramName]'.format(paramName)) 
 
 for thisTrials1 in trials1:
     currentLoop = trials1
     # abbreviate parameter names if possible (e.g. rgb = thisTrials1.rgb)
     if thisTrials1 != None:
         for paramName in thisTrials1.keys():
-            exec(paramName + '= thisTrials1.' + paramName)
+            exec('{} = thisTrials1[paramName]'.format(paramName)) 
+
     # After the info for this trial has been loaded use the values entered
     # First, check to see if input noise values have been entered
     if len(sys.argv) > 2:
@@ -914,14 +916,15 @@ thisTrials2 = trials2.trialList[0]  # so we can initialise stimuli with some val
 # abbreviate parameter names if possible (e.g. rgb = thisTrials2.rgb)
 if thisTrials2 != None:
     for paramName in thisTrials2.keys():
-        exec(paramName + '= thisTrials2.' + paramName)
+        exec('{} = thisTrials2[paramName]'.format(paramName)) 
 
 for thisTrials2 in trials2:
     currentLoop = trials2
     # abbreviate parameter names if possible (e.g. rgb = thisTrials2.rgb)
     if thisTrials2 != None:
         for paramName in thisTrials2.keys():
-            exec(paramName + '= thisTrials2.' + paramName)
+            exec('{} = thisTrials2[paramName]'.format(paramName)) 
+            
     # After the info for this trial has been loaded use the values entered
     # First, check to see if input noise values have been entered
     if len(sys.argv) > 2:
@@ -1177,14 +1180,14 @@ thisTrials3 = trials3.trialList[0]  # so we can initialise stimuli with some val
 # abbreviate parameter names if possible (e.g. rgb = thisTrials3.rgb)
 if thisTrials3 != None:
     for paramName in thisTrials3.keys():
-        exec(paramName + '= thisTrials3.' + paramName)
+        exec('{} = thisTrials3[paramName]'.format(paramName)) 
 
 for thisTrials3 in trials3:
     currentLoop = trials3
     # abbreviate parameter names if possible (e.g. rgb = thisTrials3.rgb)
     if thisTrials3 != None:
         for paramName in thisTrials3.keys():
-            exec(paramName + '= thisTrials3.' + paramName)
+            exec('{} = thisTrials3[paramName]'.format(paramName)) 
     
     # After the info for this trial has been loaded use the values entered
     # First, check to see if input noise values have been entered
@@ -1441,14 +1444,14 @@ thisTrials4 = trials4.trialList[0]  # so we can initialise stimuli with some val
 # abbreviate parameter names if possible (e.g. rgb = thisTrials4.rgb)
 if thisTrials4 != None:
     for paramName in thisTrials4.keys():
-        exec(paramName + '= thisTrials4.' + paramName)
+        exec('{} = thisTrials4[paramName]'.format(paramName)) 
 
 for thisTrials4 in trials4:
     currentLoop = trials4
     # abbreviate parameter names if possible (e.g. rgb = thisTrials4.rgb)
     if thisTrials4 != None:
         for paramName in thisTrials4.keys():
-            exec(paramName + '= thisTrials4.' + paramName)
+            exec('{} = thisTrials4[paramName]'.format(paramName)) 
     
     # After the info for this trial has been loaded use the values entered
     # First, check to see if input noise values have been entered
@@ -1705,14 +1708,15 @@ thisTrials5 = trials5.trialList[0]  # so we can initialise stimuli with some val
 # abbreviate parameter names if possible (e.g. rgb = thisTrials5.rgb)
 if thisTrials5 != None:
     for paramName in thisTrials5.keys():
-        exec(paramName + '= thisTrials5.' + paramName)
+        exec('{} = thisTrials5[paramName]'.format(paramName)) 
 
 for thisTrials5 in trials5:
     currentLoop = trials5
     # abbreviate parameter names if possible (e.g. rgb = thisTrials5.rgb)
     if thisTrials5 != None:
         for paramName in thisTrials5.keys():
-            exec(paramName + '= thisTrials5.' + paramName)
+            exec('{} = thisTrials5[paramName]'.format(paramName)) 
+            
     # After the info for this trial has been loaded use the values entered
     # First, check to see if input noise values have been entered
     if len(sys.argv) > 2:
@@ -1968,14 +1972,15 @@ thisTrials6 = trials6.trialList[0]  # so we can initialise stimuli with some val
 # abbreviate parameter names if possible (e.g. rgb = thisTrials6.rgb)
 if thisTrials6 != None:
     for paramName in thisTrials6.keys():
-        exec(paramName + '= thisTrials6.' + paramName)
+        exec('{} = thisTrials6[paramName]'.format(paramName)) 
 
 for thisTrials6 in trials6:
     currentLoop = trials6
     # abbreviate parameter names if possible (e.g. rgb = thisTrials6.rgb)
     if thisTrials6 != None:
         for paramName in thisTrials6.keys():
-            exec(paramName + '= thisTrials6.' + paramName)
+            exec('{} = thisTrials6[paramName]'.format(paramName)) 
+            
     # After the info for this trial has been loaded use the values entered
     # First, check to see if input noise values have been entered
     if len(sys.argv) > 2:

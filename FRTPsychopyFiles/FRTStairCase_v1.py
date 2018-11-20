@@ -18,8 +18,11 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = task
 #expInfo['Participant ID'] = 'TestGUI'
 
+FontColor = 'white'
+BGColor = 'grey'
+
 #make a text file to save data
-OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+#OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
 OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
 
 # If the subject path does not exist, than make it
@@ -45,14 +48,12 @@ dataFile1=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, expInfo['Participant ID'
 win = visual.Window(
     size=(1440, 900), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor=u'testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True, units = 'pix')
     
 trials1 = data.TrialHandler(nReps=1, method='random', 
     trialList=data.importConditions('FRTPsychopyFiles/FRTStairCaseTrials.csv'),
     seed=None, name='trials1')
-
-
 
 #and some handy clocks to keep track of time
 globalClock = core.Clock()
@@ -64,16 +65,16 @@ NumberOfReversals = 20
 
 WaitText = visual.TextStim(win=win, name='WaitText',
     #text='Remember:\nPress [LEFT] when the pictures are of the same person\nPress [DOWN] if the pictures are NOT of the same person\n\nTry to respond as quickly and as accurately as possible.\n\n When you are ready to proceed press the [LEFT] or [DOWN] key.',
-    text='Remember:\nPress [LEFT] for the SAME person.\nPress [DOWN] for DIFFERENT people.\nThis time, you will NOT receive feedback after your responses.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed, press the [LEFT] or [DOWN] key.',
+    text='Remember:\nPress [LEFT] for the SAME person.\nPress [RIGHT] for DIFFERENT people.\nThis time, you will NOT receive feedback after your responses.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed, press the [LEFT] or [DOWN] key.',
     font='Times New Roman',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 CountDownText = visual.TextStim(win=win, name='CountDown',
     text='CountDown',
     font='Times New Roman',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0); 
     
 #WhiteMask = visual.ImageStim(
@@ -166,8 +167,8 @@ for thisStep in staircase:
     CurrentRandomTrial = RandomTrialOrder[CurrentTrial]
     thisTrials1 = trials1.trialList[CurrentRandomTrial]
     for paramName in thisTrials1.keys():
-        exec(paramName + '= thisTrials1.' + paramName)  
-                
+        exec('{} = thisTrials1[paramName]'.format(paramName))  
+
     print 'TrialN:' + str(CurrentTrial)+'ThisStep: '+str(thisStep)+'Corr: '+str(corr)
     FaceOpacity = thisStep                    
     NoiseOpacity = 1.0 - FaceOpacity
@@ -203,7 +204,8 @@ for thisStep in staircase:
         KeyBoardCount += 1
         RT = trialClock.getTime()
     # Is this respone correct?
-    if k[-1] == str(thisTrials1.corr):
+    #if k[-1] == str(thisTrials1.corr):
+    if k[-1] == str(corr):    
         # YES
         print k[-1]
         thisResp = 1
@@ -291,6 +293,7 @@ for thisStep in staircase:
     TrialCount += 1
     #
 print EndFlag
+
 
 Capacity = 1-numpy.mean(staircase.reversalIntensities)
 dataFile1.write('%0.4f'%(Capacity))
