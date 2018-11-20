@@ -94,7 +94,7 @@ Instruct = visual.TextStim(win=win, name='Instruct',
     text='Progressive Matrices\n\nThis is a test of observation and clear thinking.\nAt the top of the screen you will see a pattern with a bit cut out of it. You will look at the pattern, think what the piece must be that is needed to complete the pattern correctly both along and down. Then find the right piece out of the eight bits shown below.\nOnly one of these pieces is perfectly correct.\n\nYou will have 10 minutes to complete as many trials as possible.\nPress any key to continue.',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "GetReady"
@@ -103,7 +103,7 @@ GetReady2 = visual.TextStim(win=win, name='GetReady2',
     text='Get ready to perform the task with no feedback.\nPlease try to respond as quickly and accurately as possible.\n\nPress any key to begin.',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "crosshair"
@@ -112,7 +112,7 @@ text = visual.TextStim(win=win, name='text',
     text='+',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -242,7 +242,7 @@ text = visual.TextStim(win=win, name='text',
     text='+',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "ThankYou"
@@ -251,7 +251,7 @@ text_2 = visual.TextStim(win=win, name='text_2',
     text='Thank You',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -478,14 +478,14 @@ thisTrial_2 = trials_2.trialList[0]  # so we can initialise stimuli with some va
 # abbreviate parameter names if possible (e.g. rgb = thisTrial_2.rgb)
 if thisTrial_2 != None:
     for paramName in thisTrial_2.keys():
-        exec(paramName + '= thisTrial_2.' + paramName)
+        exec('{} = thisTrial_2[paramName]'.format(paramName))
 
 for thisTrial_2 in trials_2:
     currentLoop = trials_2
     # abbreviate parameter names if possible (e.g. rgb = thisTrial_2.rgb)
     if thisTrial_2 != None:
         for paramName in thisTrial_2.keys():
-            exec(paramName + '= thisTrial_2.' + paramName)
+            exec('{} = thisTrial_2[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0

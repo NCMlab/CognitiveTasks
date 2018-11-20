@@ -94,7 +94,7 @@ Instruct = visual.TextStim(win=win, name='Instruct',
     text='Progressive Matrices\n\nThis is a test of observation and clear thinking.\nAt the top of the screen you will see a pattern with a bit cut out of it. You will look at the pattern, think what the piece must be that is needed to complete the pattern correctly both along and down. Then find the right piece out of the eight bits shown below.\nOnly one of these pieces is perfectly correct.\n\nPress any key to perform practice trials.',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -158,13 +158,13 @@ Opt2 = visual.TextStim(win=win, name='Opt2',
     text=u'2',
     font=u'Arial',
     pos=(-20, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-8.0);
 Opt3 = visual.TextStim(win=win, name='Opt3',
     text=u'3',
     font=u'Arial',
     pos=(130, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-9.0);
 Opt4 = visual.TextStim(win=win, name='Opt4',
     text='4',
@@ -217,7 +217,7 @@ Prac1Feedback = visual.TextStim(win=win, name='Prac1Feedback',
     text='default text',
     font=u'Arial',
     pos=(-350, -160), height=30, wrapWidth=660, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 Prac1Matrix = visual.ImageStim(
     win=win, name='Prac1Matrix',
@@ -237,7 +237,7 @@ CorrectAnswer = visual.TextStim(win=win, name='CorrectAnswer',
     text='default text',
     font=u'Arial',
     pos=(130, -30), height=40, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=-4.0);
 
 # Initialize components for Routine "crosshair"
@@ -246,7 +246,7 @@ text = visual.TextStim(win=win, name='text',
     text='+',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "ThankYou"
@@ -255,7 +255,7 @@ text_2 = visual.TextStim(win=win, name='text_2',
     text='Thank You',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -351,14 +351,14 @@ thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
 if thisTrial != None:
     for paramName in thisTrial.keys():
-        exec(paramName + '= thisTrial.' + paramName)
-
+        exec('{} = thisTrial[paramName]'.format(paramName))
+        
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
         for paramName in thisTrial.keys():
-            exec(paramName + '= thisTrial.' + paramName)
+            exec('{} = thisTrial[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0

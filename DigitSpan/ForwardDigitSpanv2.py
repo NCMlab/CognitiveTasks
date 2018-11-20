@@ -181,7 +181,7 @@ win.flip()
 # Create a list of three numbers drawn from the numbers 1 to 9
 R = np.random.permutation(9) + 1
 R = R[0:3]
-Answer.text = 'Ask the person to repeat the three digits FORWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R[::-1])
+Answer.text = 'Ask the person to repeat the three digits FORWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R)
 # cycle over the numbers and play them
 for i in range(3):
     countDown.reset()    
@@ -343,7 +343,7 @@ for thisStair in Stairs:
 
     WaitingForResponseFlag = True
     while WaitingForResponseFlag:
-        theseKeys = event.getKeys()
+        theseKeys = event.getKeys(keyList=['1','2','3','4','5','6','7','8','9','x','return'])
             
         # check for quit:
         if "escape" in theseKeys:
