@@ -25,7 +25,7 @@ expInfo['expName'] = task
 
 #make a text file to save data
 #fileName = expInfo['expName'] + expInfo['Participant ID'] + "_"+ expInfo['date']
-OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
 # If the subject path does not exist, than make it
 if not os.path.exists(OutDir):
     os.mkdir(OutDir)
@@ -84,31 +84,31 @@ trialClock = core.Clock()
 
 # Load up the data from the file
 trials1 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile1.csv'),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile1.csv'),
      seed=None, name='trials1')
 trials2 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile2.csv'),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile2.csv'),
      seed=None, name='trials2')
 trials3 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile3.csv'),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile3.csv'),
      seed=None, name='trials3')
 trials4 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile4.csv'),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile4.csv'),
      seed=None, name='trials4')
 trials5 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile5.csv'),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile5.csv'),
      seed=None, name='trials5')
 trials6 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile6.csv'),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile6.csv'),
      seed=None, name='trials6')
 trials7 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile7.csv'),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile7.csv'),
      seed=None, name='trials7')
 trials8 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile8.csv'),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile8.csv'),
      seed=None, name='trials8')
 trials9 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile9.csv'),
+    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile9.csv'),
      seed=None, name='trials9')
      
 # Put all trials together
@@ -126,7 +126,7 @@ for i in range(0,Nloads,1):
 # Prepare the stimuli for display
 WaitText = visual.TextStim(win=win, name='WaitText',
     #text='Remember:\nPress [LEFT] for IN the set\nPress [DOWN] for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press the [LEFT] or [DOWN] key.',
-    text='Press [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
+    text='Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',units=FontSizeUnits, 
     pos=(0, 0), height=40, wrapWidth=1200, ori=0, 
     color='yellow', colorSpace='rgb', opacity=1,

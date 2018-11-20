@@ -133,7 +133,7 @@ feedback_2 = visual.TextStim(win=win, name='feedback_2',
 # Initialize components for Routine "instruct"
 instructClock = core.Clock()
 instrText = visual.TextStim(win=win, name='instrText',
-    text=u"Now you will do the task.\nIt will be exactly like the practice except you won't get feedback.\nPress the R key if the ink is Red\nPress the Y key if the ink is Yellow\nPress the G key if the ink is Green\nPress the B key if the ink is Blue\n\n(Esc will quit)\nPress any key to continue\n",
+    text=u"Now you will do the task.\nIt will be exactly like the practice except you won't get feedback.\nPress the red(v) key if the ink is Red\nPress the yellow(b) key if the ink is Yellow\nPress the green(n) key if the ink is Green\nPress the blue(m) key if the ink is Blue\n\n(Esc will quit)\nPress any key to continue\n",
     font=u'Arial',
     pos=[0, 0], height=InstrFontSize, wrapWidth=1000, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
