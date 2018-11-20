@@ -2,16 +2,41 @@
 
 from psychopy import core, visual,  data, event , gui
 from psychopy.tools.filetools import fromFile, toFile
-import time, numpy, random
+import time, random
+import numpy as np
 import os
 import sys
+
+def MapLettersToScreen(Stim):
+    NLet = len(Stim)
+    if NLet == 1:
+        Output = '****'+Stim+'****'
+    elif NLet == 2:
+        Output = '***'+Stim[0]+'*'+Stim[1]+'***'
+    elif NLet == 3:
+        Output = '***'+Stim+'***'
+    elif NLet == 4:
+        Output = Stim[0]+'*'+Stim[1]+'***'+Stim[2]+'*'+Stim[3]
+    elif NLet == 5:
+        Output = Stim[0]+'*'+Stim[1]+'*'+Stim[2]+'*'+Stim[3]+'*'+Stim[4]
+    elif NLet == 6:
+        Output = Stim[0:3]+'***'+Stim[3:6]
+    elif NLet == 7:
+        Output = Stim[0:3]+'*'+Stim[3]+'*'+Stim[4:7]
+    elif NLet == 8:
+        Output = Stim[0:4]+'*'+Stim[4:8]
+    else:
+        Output = Stim
+    return(Output)
+        
 
 expInfo = {'Max Trials':150, 'Participant ID':'', 'Session':'001'}
 PartDataFolder = 'unorganized'
 if len(sys.argv) > 1:
     expInfo['Participant ID'] = sys.argv[1]
     PartDataFolder = sys.argv[1]
-    FontSize = int(sys.argv[2])
+    FontSize = 60
+    #FontSize = int(sys.argv[2])
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     FontSize = 60
@@ -22,10 +47,11 @@ task = 'DMSstair_'
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = task
 
-
+BGColor = 'grey'
+FontColor = 'white'
 #make a text file to save data
 #fileName = expInfo['expName'] + expInfo['Participant ID'] + "_"+ expInfo['date']
-OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
 # If the subject path does not exist, than make it
 if not os.path.exists(OutDir):
     os.mkdir(OutDir)
@@ -37,7 +63,7 @@ dataFile1=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, expInfo['Participant ID'
 # Put a header line into the output fileName
 dataFile.write('Trial,Load,LevelIndex,Resp,Correct,ElapsedTime,RT,CorrectRT,ProbeType,Study,Probe\n')
 StairCasefileName = os.path.join('data',expInfo['expName'] + expInfo['Participant ID']  + "_" + expInfo['date']+'Staircase.csv')
-       
+      
 #create window and stimuli
 # SMall screen
 # win = visual.Window([800,600],allowGUI=True, monitor='testMonitor', units='norm')
@@ -45,7 +71,7 @@ StairCasefileName = os.path.join('data',expInfo['expName'] + expInfo['Participan
 win = visual.Window(
     size=(1440, 900), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor=u'testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True, units = 'pix')
 
 ProbeColor = 'blue'
@@ -80,62 +106,8 @@ win = visual.Window(
 globalClock = core.Clock()
 trialClock = core.Clock()
 
-
-
-# Load up the data from the file
-trials1 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile1.csv'),
-     seed=None, name='trials1')
-trials2 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile2.csv'),
-     seed=None, name='trials2')
-trials3 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile3.csv'),
-     seed=None, name='trials3')
-trials4 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile4.csv'),
-     seed=None, name='trials4')
-trials5 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile5.csv'),
-     seed=None, name='trials5')
-trials6 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile6.csv'),
-     seed=None, name='trials6')
-trials7 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile7.csv'),
-     seed=None, name='trials7')
-trials8 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile8.csv'),
-     seed=None, name='trials8')
-trials9 = data.TrialHandler(nReps=1, method='random',
-    trialList=data.importConditions('../DMSPsychopyFiles/DMSStaircaseFiles/testDMSFile9.csv'),
-     seed=None, name='trials9')
-     
-# Put all trials together
-Ntrials = len(trials1.trialList)
-AllTrials = [trials1, trials2, trials3, trials4, trials5, trials6, trials7, trials8, trials9]
-# ####
-thisTrial = trials1.trialList[0]  # so we can initialise stimuli with some values
-# abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
-if thisTrial != None:
-    for paramName in thisTrial:
-        exec('{} = thisTrial[paramName]'.format(paramName))
-
-for thisTrial in trials1:
-    currentLoop = trials1
-    # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
-    if thisTrial != None:
-        for paramName in thisTrial:
-            exec('{} = thisTrial[paramName]'.format(paramName))
-
-# ####
-Nloads = numpy.size(AllTrials)
+Nloads =  9
 # How to shuffle the lists?
-# I can make a list of random numbers. Then whenever I pick a stim set I just cycle 
-# down this list of random numbers.
-AllTrialsRandom = {}
-for i in range(0,Nloads,1):
-    AllTrialsRandom[i] = numpy.random.permutation(Ntrials)
 
 
 # Prepare the stimuli for display
@@ -144,7 +116,7 @@ WaitText = visual.TextStim(win=win, name='WaitText',
     text='Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',units=FontSizeUnits, 
     pos=(0, 0), height=40, wrapWidth=1200, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 CountDownText = visual.TextStim(win=win, name='CountDown',
     text='CountDown',units=FontSizeUnits, 
@@ -290,89 +262,66 @@ core.wait(CountDownTime)
 
 globalClock.reset()
 LettersInThisTrial = ''
+LastTrial = ''
+CurrentCount = 0
 for thisStep in staircase:
+    CurrentCount += 1
     print '--------------'
     print 'ThisStep: '+str(thisStep)
     # Reset clock
     t = 0
     trialClock.reset()
-
-
+    CurrentLoad = int(Nloads + 1 - thisStep)  
+    LetterList = 'BCDFGHJKMNPQRSTVXYZ'
+    LettersToRemove = list(set(LastTrial))
+    tempLetterList = list(LetterList)
+    for j in LettersToRemove:
+        tempLetterList[tempLetterList.index(j)] = ''
+    # remove empty locations from the list
+    tempLetterList = [x for x in tempLetterList if x] 
+    # Create the lost of curent stimulus letters
+    CurrentStim = ''
+    CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
+    for j in CurrentStimIndex:
+        CurrentStim += tempLetterList[j]
+    # Is the probe in teh set?
+    Probe = np.round(np.random.uniform())
+    if bool(Probe):
+        # Yes, the probe is in the set
+        CurrentProbe = CurrentStim[np.random.permutation(len(CurrentStim))[0]]
+        corr = 'left'
+    else:
+        # Remove the current stim letters from the available letter set
+        for j in CurrentStim:
+            tempLetterList[tempLetterList.index(j)] = ''
+        # remove empty locations from the list
+        tempLetterList = [x for x in tempLetterList if x] 
+        CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
+        corr = 'right'
+    CurrentProbe = CurrentProbe.lower()    
+    LastTrial = CurrentStim + CurrentProbe.upper()
+    InStim = MapLettersToScreen(CurrentStim)
+    
     # What count are we for this load level?
-    CurrentLoad = int(Nloads + 1 - thisStep)    
-    AddTrialFlag = True
-    LettersInLastTrial = LettersInThisTrial
-    WhileLoopCount = 0
-    while AddTrialFlag:
-        CurrentCount = count[CurrentLoad - 1]
-        RandomCurrentCount = AllTrialsRandom[CurrentLoad-1][CurrentCount]
-        # extract this trial
-        CurrentTrial = AllTrials[CurrentLoad-1].trialList[RandomCurrentCount]
-        
-        # For each trial check to see if any of the selected letters were contained in the previous trial.
-        # Make a string out of the letters used this trial
-        LettersInThisTrial = str(CurrentTrial.BL)+str(CurrentTrial.BM)+str(CurrentTrial.BR)+str(CurrentTrial.CL)+str(CurrentTrial.CM)+str(CurrentTrial.CR)+str(CurrentTrial.TL)+str(CurrentTrial.TM)+str(CurrentTrial.TR)+str(CurrentTrial.probe)
-        # Make them all upper case
-        LettersInThisTrial = LettersInThisTrial.upper()
-        # remove any asterixs
-        LettersInThisTrial = LettersInThisTrial.replace('*','')
-
-        tempCount = 0
-        ProbetempCount = 0
-        for i in LettersInThisTrial:
-            for j in LettersInLastTrial:
-                if i == j:
-                    tempCount += 1
-        # Check the probe
-        i = LettersInThisTrial[-1]
-        for j in LettersInLastTrial:
-                if i == j:
-                    ProbetempCount += 1
-        # make sure there is NO overlap between the two letter lists
-        if tempCount == 0:
-            AddTrialFlag = False
-        # I am allowing any letter in a nine load level to be included in the last letter set
-        # How do I make sure the Probe is not in the last study set?
-        # How do I make sure the Probe is not in the last study set?
-        elif (tempCount == 1) and (CurrentLoad == 8) and (ProbetempCount == 0):
-            AddTrialFlag = False
-        elif (tempCount == 2) and (CurrentLoad == 9) and (ProbetempCount == 0):
-            AddTrialFlag = False
-            
-        # if there is any overlap then pick the next item in the random list
-        else: 
-            if count[CurrentLoad - 1] < (Ntrials-1):
-                count[CurrentLoad - 1] += 1
-            else:
-                count[CurrentLoad - 1] = 1
-        WhileLoopCount += 1
-        # The program freezes sometimes. I cant figure out why but it may be due to this while loop
-        # I am putting in a break. So if it cannot make a trial after 1000 tries it makes a bad trial
-        # instead of freezing
-        if WhileLoopCount > 1000:
-            AddTrialFlag = False
-    print "While Loop Count: "+str(WhileLoopCount)
-    print count
-    print LettersInThisTrial       
+      
     # If so choose a different set of letters.
     # The exception is with load level 9. For this case make sure 8 of the lettters are unique and 
     # The current probe is NOT part of the previous trial.
+
     
-    for paramName in CurrentTrial.keys():
-        exec(paramName + '= CurrentTrial.' + paramName)
-    #print 'cLoad:'+ str(thisStep) + ', cStep: '+str(CurrentCount)+
-    print 'Corr: ' + str(CurrentTrial.corr)        
+
+
     # Set the values of the different letters
-    textTL.setText(TL)
-    textTM.setText(TM)
-    textTR.setText(TR)
-    textCL.setText(CL)
-    textCM.setText(CM)
-    textCR.setText(CR)
-    textBL.setText(BL)
-    textBM.setText(BM)
-    textBR.setText(BR)    
-    textProbe.setText(CurrentTrial.probe)
+    textTL.setText(InStim[0])
+    textTM.setText(InStim[1])
+    textTR.setText(InStim[2])
+    textCL.setText(InStim[3])
+    textCM.setText(InStim[4])
+    textCR.setText(InStim[5])
+    textBL.setText(InStim[6])
+    textBM.setText(InStim[7])
+    textBR.setText(InStim[8])    
+    textProbe.setText(CurrentProbe)
     # Draw the different letters to the screen
     textTL.draw(); textTM.draw(); textTR.draw();
     textCL.draw(); textCM.draw(); textCR.draw();
@@ -396,10 +345,11 @@ for thisStep in staircase:
     KeyBoardCount = 0
     while k[0] not in ['escape', 'esc'] and KeyBoardCount < 1:
         k = event.waitKeys()
+        print(k)
         KeyBoardCount += 1
         RT = trialClock.getTime()
     # Is this respone correct?
-    if k[-1] == str(CurrentTrial.corr):
+    if k[-1] == str(corr):
         # YES
         print k[-1]
         thisResp = 1
@@ -420,12 +370,8 @@ for thisStep in staircase:
     if CorrectResp == 1 and k[-1] == 'left':
         PosProbe = 1
     # Add this respone to the data file
-    dataFile.write('%i,%i,%i,%s,%i,%0.3f,%0.4f,%0.4f,%i,%s,%s\n' %(TrialCount,CurrentLoad, CurrentCount, k[-1],CorrectResp,globalClock.getTime(),RT,CorrectRT,PosProbe,LettersInThisTrial[0:-1],LettersInThisTrial[-1]))
-    # update the counter for this load
-    if count[CurrentLoad - 1] < (Ntrials-1):
-        count[CurrentLoad - 1] += 1
-    else:
-        count[CurrentLoad - 1] = 1
+    dataFile.write('%i,%i,%i,%s,%i,%0.3f,%0.4f,%0.4f,%i,%s,%s\n' %(TrialCount,CurrentLoad, CurrentCount, k[-1],CorrectResp,globalClock.getTime(),RT,CorrectRT,PosProbe,CurrentStim,CurrentProbe))
+
 
     # Add an ITI between trials
     textITI.draw()
@@ -439,7 +385,7 @@ for thisStep in staircase:
         win.close()
         EndFlag = 'MaxTrialsExceeded'
         dataFile.write('%s\n'%(EndFlag))
-        Capacity = 10-numpy.mean(staircase.reversalIntensities)
+        Capacity = 10-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
         print 
         print "Ending because the maximum number of trials was reached."
@@ -455,7 +401,7 @@ for thisStep in staircase:
         win.close()
         EndFlag = 'TimeExceeded'
         dataFile.write('%s\n'%(EndFlag))
-        Capacity = 10-numpy.mean(staircase.reversalIntensities)
+        Capacity = 10-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
         print 
         print "Ending because Time was exceeded."
@@ -471,7 +417,7 @@ for thisStep in staircase:
         win.close()
         EndFlag = 'UserEscape'
         dataFile.write('%s\n'%(EndFlag))
-        Capacity = 10-numpy.mean(staircase.reversalIntensities)
+        Capacity = 10-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
         print
         print "Ending because Escape was pressed."
@@ -485,7 +431,7 @@ for thisStep in staircase:
         core.quit()
 print EndFlag
 
-Capacity = 10-numpy.mean(staircase.reversalIntensities)
+Capacity = 10-np.mean(staircase.reversalIntensities)
 Capacity = Capacity
 dataFile1.write('%0.4f'%(Capacity))
 print

@@ -229,7 +229,7 @@ class Mywin(wx.Frame):
       self.DMSStairCaseDateStr = data.getDateStr()
       btn = event.GetEventObject().GetLabel() 
       print "Label of pressed button = ",btn 
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v4.py", self.PartID.GetValue(), os.path.join('..','..','data',self.PartID.GetValue())])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMSStairCase_v4_forBehav.py", self.PartID.GetValue()])
       self.LoadDMSCapacity(self)
       
    def OnClickedDMSBlock(self, event): 
