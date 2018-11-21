@@ -42,6 +42,11 @@ else:
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
 ProbeColor = 'blue'
+FontColor = 'white'
+StimOnTime = 2.5
+RetOnTime = 3.5
+ProbeOnTime= 2.5
+ITITime = 1.0
 
 SpacingOfLettersRelativeToCenter = 80
 
@@ -82,17 +87,17 @@ textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text='In this experiment you will be presented with a set of letters. A set may contain anywhere from 1 to 9 letters for you to memorize.\n\nFollowing a short delay you will then be presented with a single letter and you will have to decide whether this new letter was a member of the set.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units='pix', pos=[0, 0], height=FontSize, wrapWidth=2, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "practInstruct2"
 practInstruct2Clock = core.Clock()
 textInstr2 = visual.TextStim(win=win, name='textInstr2',
     #text='Respond with the keys;\n[LEFT] if the letter WAS in the set\n[DOWN] if the letter was NOT in the set\n\nThere will be a number of practice trials in which you will be given feedback.  Try to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
-    text='Press [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
+    text='Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
     units='pix', pos=(0, 0), height=FontSize, wrapWidth=1200, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "countdown"
@@ -191,6 +196,13 @@ textProbe = visual.TextStim(win=win, name='textProbe',
     color=ProbeColor, colorSpace='rgb', opacity=1,
     depth=-11.0);
 
+thanksText = visual.TextStim(win=win, name='thanksText',
+    text='Thank you!',
+    font='Times New Roman',
+    pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
+    depth=0.0);
+    
 # Initialize components for Routine "feedback"
 feedbackClock = core.Clock()
 #msg variable just needs some value at start
@@ -205,10 +217,10 @@ textFeedback = visual.TextStim(win=win, name='textFeedback',
 # Initialize components for Routine "mainInstruct"
 mainInstructClock = core.Clock()
 textInstr3 = visual.TextStim(win=win, name='textInstr3',
-    text='OK, ready to start the main experiment?\n\nRemember:\nPress [LEFT] for IN the set\nPress [DOWN] for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
+    text='OK, ready to start the main experiment?\n\nRemember:\nPress [LEFT] for IN the set\nPress [RIGHT] for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units='pix', pos=[0, 0], height=FontSize, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -435,14 +447,14 @@ thisPracTrial = pracTrials.trialList[0]  # so we can initialise stimuli with som
 # abbreviate parameter names if possible (e.g. rgb = thisPracTrial.rgb)
 if thisPracTrial != None:
     for paramName in thisPracTrial.keys():
-        exec(paramName + '= thisPracTrial.' + paramName)
+        exec('{} = thisPracTrial[paramName]'.format(paramName))
 
 for thisPracTrial in pracTrials:
     currentLoop = pracTrials
     # abbreviate parameter names if possible (e.g. rgb = thisPracTrial.rgb)
     if thisPracTrial != None:
         for paramName in thisPracTrial.keys():
-            exec(paramName + '= thisPracTrial.' + paramName)
+            exec('{} = thisPracTrial[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
@@ -490,7 +502,7 @@ for thisPracTrial in pracTrials:
             textTL.tStart = t
             textTL.frameNStart = frameN  # exact frame index
             textTL.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5 + StimOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textTL.status == STARTED and t >= frameRemains:
             textTL.setAutoDraw(False)
         
@@ -500,7 +512,7 @@ for thisPracTrial in pracTrials:
             textTM.tStart = t
             textTM.frameNStart = frameN  # exact frame index
             textTM.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5 + StimOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textTM.status == STARTED and t >= frameRemains:
             textTM.setAutoDraw(False)
         
@@ -510,7 +522,7 @@ for thisPracTrial in pracTrials:
             textTR.tStart = t
             textTR.frameNStart = frameN  # exact frame index
             textTR.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5 + StimOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textTR.status == STARTED and t >= frameRemains:
             textTR.setAutoDraw(False)
         
@@ -520,7 +532,7 @@ for thisPracTrial in pracTrials:
             textCL.tStart = t
             textCL.frameNStart = frameN  # exact frame index
             textCL.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5 + StimOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textCL.status == STARTED and t >= frameRemains:
             textCL.setAutoDraw(False)
         
@@ -530,7 +542,7 @@ for thisPracTrial in pracTrials:
             textCM.tStart = t
             textCM.frameNStart = frameN  # exact frame index
             textCM.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5 + StimOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textCM.status == STARTED and t >= frameRemains:
             textCM.setAutoDraw(False)
         
@@ -540,7 +552,7 @@ for thisPracTrial in pracTrials:
             textCR.tStart = t
             textCR.frameNStart = frameN  # exact frame index
             textCR.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5 + StimOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textCR.status == STARTED and t >= frameRemains:
             textCR.setAutoDraw(False)
         
@@ -550,7 +562,7 @@ for thisPracTrial in pracTrials:
             textBL.tStart = t
             textBL.frameNStart = frameN  # exact frame index
             textBL.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5 + StimOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textBL.status == STARTED and t >= frameRemains:
             textBL.setAutoDraw(False)
         
@@ -560,7 +572,7 @@ for thisPracTrial in pracTrials:
             textBM.tStart = t
             textBM.frameNStart = frameN  # exact frame index
             textBM.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5 + StimOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textBM.status == STARTED and t >= frameRemains:
             textBM.setAutoDraw(False)
         
@@ -570,29 +582,29 @@ for thisPracTrial in pracTrials:
             textBR.tStart = t
             textBR.frameNStart = frameN  # exact frame index
             textBR.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5 + StimOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textBR.status == STARTED and t >= frameRemains:
             textBR.setAutoDraw(False)
         
         # *textDelay* updates
-        if t >= 2.5 and textDelay.status == NOT_STARTED:
+        if t >= 0.5+StimOnTime and textDelay.status == NOT_STARTED:
             # keep track of start time/frame for later
             textDelay.tStart = t
             textDelay.frameNStart = frameN  # exact frame index
             textDelay.setAutoDraw(True)
-        frameRemains = 2.5 + 2.5- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.5+StimOnTime + RetOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textDelay.status == STARTED and t >= frameRemains:
             textDelay.setAutoDraw(False)
         
         # *textProbe* updates
-        if t >= 5.0 and textProbe.status == NOT_STARTED:
+        if t >= 0.5+StimOnTime+RetOnTime and textProbe.status == NOT_STARTED:
             # keep track of start time/frame for later
             textProbe.tStart = t
             textProbe.frameNStart = frameN  # exact frame index
             textProbe.setAutoDraw(True)
         
         # *resp* updates
-        if t >= 5.0 and resp.status == NOT_STARTED:
+        if t >= 0.5+StimOnTime+RetOnTime and resp.status == NOT_STARTED:
             # keep track of start time/frame for later
             resp.tStart = t
             resp.frameNStart = frameN  # exact frame index
@@ -601,7 +613,7 @@ for thisPracTrial in pracTrials:
             win.callOnFlip(resp.clock.reset)  # t=0 on next screen flip
             event.clearEvents(eventType='keyboard')
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['left', 'down'])
+            theseKeys = event.getKeys(keyList=['left', 'right'])
             
             # check for quit:
             if "escape" in theseKeys:
@@ -713,7 +725,12 @@ for thisPracTrial in pracTrials:
             thisComponent.setAutoDraw(False)
     
     thisExp.nextEntry()
-    
+
+thanksText.draw()
+win.flip()
+core.wait(2)
+win.flip()
+
 # completed 1.0 repeats of 'pracTrials'
 
 # get names of stimulus parameters

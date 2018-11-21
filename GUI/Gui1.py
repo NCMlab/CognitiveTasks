@@ -287,7 +287,7 @@ class Mywin(wx.Frame):
             thisInfo = myDlg.data
     
             if (float(thisInfo[0]) >= float(Range[0])) and (float(thisInfo[0]) <= float(Range[1])):
-                print "Capacity = " + str(thisInfo)
+                print("Capacity = " + str(thisInfo))
                 Capacity = float(thisInfo[0])
             else:
                 print("Out of Range")
@@ -399,7 +399,7 @@ class Mywin(wx.Frame):
                 dlg = wx.SingleChoiceDialog(self, 'Select a visit','Select Visit Folder', ListOfVisitFoldersNames,wx.CHOICEDLG_STYLE)
                 dlg.Show()
                 if dlg.ShowModal() == wx.ID_OK:
-                    print 'You selected: %s\n' % dlg.GetStringSelection()
+                    print('You selected: %s\n' % dlg.GetStringSelection())
                     self.VisitFolderName = dlg.GetStringSelection()
                     self.VisitFolderPath = os.path.join(self.PartFolder, self.VisitFolderName)
                 dlg.Destroy()
