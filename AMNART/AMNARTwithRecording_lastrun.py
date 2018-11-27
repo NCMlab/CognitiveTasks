@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Wed Nov 21 15:44:34 2018
+This experiment was created using PsychoPy2 Experiment Builder (v1.90.1),
+    on Mon Nov 26 15:55:47 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -56,8 +56,8 @@ if not os.path.isdir(wavDirName):
 
 # Setup the Window
 win = visual.Window(
-    size=[1440, 900], fullscr=True, screen=0,
-    allowGUI=False, allowStencil=False,
+    size=[1440, 900], fullscr=False, screen=0,
+    allowGUI=True, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='pix')
@@ -84,9 +84,9 @@ Instr = visual.TextStim(win=win, name='Instr',
 trialClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     pos=(0, 0), height=80, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "CrossHair"
@@ -218,7 +218,7 @@ for thisTrial in trials:
     # update component parameters for each repeat
     text.setText(WordList)
     key_resp_2 = event.BuilderKeyResponse()
-    mic_1 = microphone.AdvAudioCapture(name='mic_1', saveDir=wavDirName, stereo=True)
+    mic_1 = microphone.AdvAudioCapture(name='mic_1', saveDir=wavDirName, stereo=False)
     # keep track of which components have finished
     trialComponents = [text, key_resp_2, mic_1]
     for thisComponent in trialComponents:
