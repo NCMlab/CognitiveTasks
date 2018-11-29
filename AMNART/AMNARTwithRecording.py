@@ -1,8 +1,8 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Tue Nov  6 22:42:37 2018
+    on Wed Nov 21 15:49:54 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, gui, visual, core, data, event, logging, sound
+from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, clock, microphone
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'AMNART'  # from the Builder filename that created this script
+expName = u'AMNARTwithRecording'  # from the Builder filename that created this script
 expInfo = {u'session': u'001', u'participant': u''}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False:
@@ -40,7 +40,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/AMNART/AMNART.psyexp',
+    originPath=None,
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -50,14 +50,20 @@ logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a f
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
+wavDirName = filename + '_wav'
+if not os.path.isdir(wavDirName):
+    os.makedirs(wavDirName)  # to hold .wav files
 
 # Setup the Window
 win = visual.Window(
-    size=(1440, 900), fullscr=True, screen=0,
+    size=[1440, 900], fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='pix')
+
+# Enable sound input/output:
+microphone.switchOn()
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
 if expInfo['frameRate'] != None:
@@ -68,10 +74,10 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 Instr = visual.TextStim(win=win, name='Instr',
-    text=u"This is a test of reading skills.\n\nYou will be shown one word at a time on the screen.\nI want you to read each word. There are many words that you probably won't recognise, in fact most people don't know them, so just have a guess at these, O.K.?\n\nPress any key to begin.",
-    font=u'Arial',
-    units='pix', pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    text="This is a test of reading skills.\n\nYou will be shown one word at a time on the screen.\nI want you to read each word. There are many worss that you probably won't recognise, in fact most people don't know them, so just have a guess at these, O.K.?\n\nPress any key to begin.",
+    font='Arial',
+    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -86,19 +92,19 @@ text = visual.TextStim(win=win, name='text',
 # Initialize components for Routine "CrossHair"
 CrossHairClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
-    text=u'+',
-    font=u'Arial',
+    text='+',
+    font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "ThankYou"
 ThankYouClock = core.Clock()
 Thanks = visual.TextStim(win=win, name='Thanks',
-    text=u'Thank you',
-    font=u'Arial',
+    text='Thank you',
+    font='Arial',
     pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -187,20 +193,20 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions(u'../AMNART/AMNART.csv'),
+    trialList=data.importConditions('../AMNART/AMNART.csv'),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
 if thisTrial != None:
-    for paramName in thisTrial.keys():
+    for paramName in thisTrial:
         exec('{} = thisTrial[paramName]'.format(paramName))
 
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
-        for paramName in thisTrial.keys():
+        for paramName in thisTrial:
             exec('{} = thisTrial[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
@@ -208,17 +214,19 @@ for thisTrial in trials:
     trialClock.reset()  # clock
     frameN = -1
     continueRoutine = True
+    routineTimer.add(3.000000)
     # update component parameters for each repeat
     text.setText(WordList)
     key_resp_2 = event.BuilderKeyResponse()
+    mic_1 = microphone.AdvAudioCapture(name='mic_1', saveDir=wavDirName, stereo=True)
     # keep track of which components have finished
-    trialComponents = [text, key_resp_2]
+    trialComponents = [text, key_resp_2, mic_1]
     for thisComponent in trialComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
     
     # -------Start Routine "trial"-------
-    while continueRoutine:
+    while continueRoutine and routineTimer.getTime() > 0:
         # get current time
         t = trialClock.getTime()
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
@@ -230,6 +238,9 @@ for thisTrial in trials:
             text.tStart = t
             text.frameNStart = frameN  # exact frame index
             text.setAutoDraw(True)
+        frameRemains = 0.0 + 3- win.monitorFramePeriod * 0.75  # most of one frame period left
+        if text.status == STARTED and t >= frameRemains:
+            text.setAutoDraw(False)
         
         # *key_resp_2* updates
         if t >= 0.0 and key_resp_2.status == NOT_STARTED:
@@ -240,6 +251,9 @@ for thisTrial in trials:
             # keyboard checking is just starting
             win.callOnFlip(key_resp_2.clock.reset)  # t=0 on next screen flip
             event.clearEvents(eventType='keyboard')
+        frameRemains = 0.0 + 3- win.monitorFramePeriod * 0.75  # most of one frame period left
+        if key_resp_2.status == STARTED and t >= frameRemains:
+            key_resp_2.status = STOPPED
         if key_resp_2.status == STARTED:
             theseKeys = event.getKeys(keyList=['left', 'right'])
             
@@ -249,8 +263,17 @@ for thisTrial in trials:
             if len(theseKeys) > 0:  # at least one key was pressed
                 key_resp_2.keys = theseKeys[-1]  # just the last key pressed
                 key_resp_2.rt = key_resp_2.clock.getTime()
-                # a response ends the routine
-                continueRoutine = False
+        
+        # *mic_1* updates
+        if t >= 0.0 and mic_1.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            mic_1.tStart = t
+            mic_1.frameNStart = frameN  # exact frame index
+            mic_1.status = STARTED
+            mic_1.record(sec=3, block=False)  # start the recording thread
+        
+        if mic_1.status == STARTED and not mic_1.recorder.running:
+            mic_1.status = FINISHED
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -279,8 +302,12 @@ for thisTrial in trials:
     trials.addData('key_resp_2.keys',key_resp_2.keys)
     if key_resp_2.keys != None:  # we had a response
         trials.addData('key_resp_2.rt', key_resp_2.rt)
-    # the Routine "trial" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset()
+    # mic_1 stop & responses
+    mic_1.stop()  # sometimes helpful
+    if not mic_1.savedFile:
+        mic_1.savedFile = None
+    # store data for trials (TrialHandler)
+    trials.addData('mic_1.filename', mic_1.savedFile)
     
     # ------Prepare to start Routine "CrossHair"-------
     t = 0

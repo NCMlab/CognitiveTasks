@@ -78,7 +78,7 @@ textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text='In this experiment you will be presented with a pair of faces. \n\nYou will have to decide whether these faces are from the same person or different people. \n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units='pix', pos=[0, 0], height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "practInstruct2"
@@ -87,19 +87,19 @@ textInstr2 = visual.TextStim(win=win, name='textInstr2',
     text='For example;\nThese two faces are from the SAME PERSON',
     font='Times New Roman',
     units='pix', pos=(-256, 192), height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 textInstr3 = visual.TextStim(win=win, name='textInstr3',
     text='These next two faces are from DIFFERENT PEOPLE',
     font='Times New Roman',
     units='pix', pos=(-256, -140), height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
 textInstr4 = visual.TextStim(win=win, name='textInstr4',
     text='When you are ready to proceed press any key.',
     font='Times New Roman',
     units='pix', pos=(-256, -350), height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-2.0);
 image1 = visual.ImageStim(
     win=win, name='image1',units='pix', 
@@ -136,7 +136,7 @@ textInstr5 = visual.TextStim(win=win, name='textInstr5',
     text='Faces will be degraded to varying levels. \n\nDo not worry if you cannot distinguish certain faces, just try your best!\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units='pix', pos=(-256, 0), height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 image1A = visual.ImageStim(
     win=win, name='image1A',units='pix', 
@@ -198,10 +198,10 @@ image4An = visual.ImageStim(
 # Initialize components for Routine "practInstruct4"
 practInstruct4Clock = core.Clock()
 textInstr6 = visual.TextStim(win=win, name='textInstr6',
-    text='Respond with the keys;\n[LEFT] if the two faces are from the SAME PERSON\n[DOWN] if the two faces are from DIFFERENT PEOPLE\n\nThere will be a number of practice trials in which you will be given feedback.  Try to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.\n',
+    text='Respond with the keys;\n[LEFT] if the two faces are from the SAME PERSON\n[RIGHT] if the two faces are from DIFFERENT PEOPLE\n\nThere will be a number of practice trials in which you will be given feedback.  Try to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.\n',
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "Countdown"
@@ -276,10 +276,10 @@ textFeedback = visual.TextStim(win=win, name='textFeedback',
 # Initialize components for Routine "mainInstruct1"
 mainInstruct1Clock = core.Clock()
 textInstr7 = visual.TextStim(win=win, name='textInstr7',
-    text='OK, ready to start the main experiment?\n\nRemember:\nPress [LEFT] for the SAME person\nPress [DOWN] for DIFFERENT people\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
+    text='OK, ready to start the main experiment?\n\nRemember:\nPress [LEFT] for the SAME person\nPress [RIGHT] for DIFFERENT people\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
-    units='pix', pos=[0, 0], height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    units='pix', pos=[0, 0], height=40, wrapWidth=1000, ori=0, 
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "mainInstruct2"
@@ -288,7 +288,7 @@ textInstr8 = visual.TextStim(win=win, name='textInstr8',
     text='Remember;\nFaces will be degraded to varying levels.',
     font='Times New Roman',
     units='pix', pos=(-256, -300), height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 image1B = visual.ImageStim(
     win=win, name='image1B',units='pix', 
@@ -378,7 +378,7 @@ textInstr9 = visual.TextStim(win=win, name='textInstr9',
     text='When you are ready to proceed press any key.',
     font='Times New Roman',
     units='pix', pos=(256, -300), height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-13.0);
 
 # Create some handy timers
@@ -926,7 +926,7 @@ for thisTrial in trials:
             win.callOnFlip(resp.clock.reset)  # t=0 on next screen flip
             event.clearEvents(eventType='keyboard')
         if resp.status == STARTED:
-            theseKeys = event.getKeys(keyList=['left', 'down'])
+            theseKeys = event.getKeys(keyList=['left', 'right'])
             
             # check for quit:
             if "escape" in theseKeys:

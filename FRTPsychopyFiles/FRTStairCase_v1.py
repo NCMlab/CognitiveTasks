@@ -65,7 +65,7 @@ NumberOfReversals = 20
 
 WaitText = visual.TextStim(win=win, name='WaitText',
     #text='Remember:\nPress [LEFT] when the pictures are of the same person\nPress [DOWN] if the pictures are NOT of the same person\n\nTry to respond as quickly and as accurately as possible.\n\n When you are ready to proceed press the [LEFT] or [DOWN] key.',
-    text='Remember:\nPress [LEFT] for the SAME person.\nPress [RIGHT] for DIFFERENT people.\nThis time, you will NOT receive feedback after your responses.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed, press the [LEFT] or [DOWN] key.',
+    text='Remember:\nPress [LEFT] for the SAME person.\nPress [RIGHT] for DIFFERENT people.\nThis time, you will NOT receive feedback after your responses.\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed, press the [LEFT] or [RIGHT] key.',
     font='Times New Roman',
     pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,

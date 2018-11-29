@@ -325,22 +325,22 @@ for thisComponent in GetReadyComponents:
 # set up handler to look after randomisation of conditions etc
 Practice = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('AntonymsTest - Sheet1.csv', selection='[0,1,2,3]'),
+    trialList=data.importConditions('../../AntonymsTest - Sheet1.csv', selection='[0,1,2,3]'),
     seed=None, name='Practice')
 thisExp.addLoop(Practice)  # add the loop to the experiment
 thisPractice = Practice.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
 if thisPractice != None:
     for paramName in thisPractice.keys():
-        exec(paramName + '= thisPractice.' + paramName)
-
+        exec('{} = thisPractice[paramName]'.format(paramName))
+        
 for thisPractice in Practice:
     currentLoop = Practice
     # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
     if thisPractice != None:
         for paramName in thisPractice.keys():
-            exec(paramName + '= thisPractice.' + paramName)
-    
+            exec('{} = thisPractice[paramName]'.format(paramName))
+            
     # ------Prepare to start Routine "trial"-------
     t = 0
     trialClock.reset()  # clock
@@ -721,7 +721,7 @@ for thisComponent in GetReadyComponents:
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('AntonymsTest - Sheet1.csv', selection='[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]'),
+    trialList=data.importConditions('../../AntonymsTest - Sheet1.csv', selection='[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]'),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values

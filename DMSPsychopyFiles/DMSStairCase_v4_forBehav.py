@@ -69,7 +69,7 @@ StairCasefileName = os.path.join('data',expInfo['expName'] + expInfo['Participan
 # win = visual.Window([800,600],allowGUI=True, monitor='testMonitor', units='norm')
 # Full screen
 win = visual.Window(
-    size=(1440, 900), fullscr=True, screen=0,
+    size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor=u'testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True, units = 'pix')
@@ -108,12 +108,18 @@ trialClock = core.Clock()
 
 Nloads =  9
 # How to shuffle the lists?
-
+InstrText = 'Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\n'
+InstrText = InstrText + 'You will NOT receive feedback after each trial.\n\n'
+InstrText = InstrText + 'Remember that the letters to study will be in white and CAPITALIZED.\n'
+InstrText = InstrText + 'The test letter will be in blue and will be lowercase.\n'
+InstrText = InstrText + 'Try to respond as quickly and as accurately as possible.\n\n'
+InstrText = InstrText + 'Press any key to begin.'
+    
 
 # Prepare the stimuli for display
 WaitText = visual.TextStim(win=win, name='WaitText',
     #text='Remember:\nPress [LEFT] for IN the set\nPress [DOWN] for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press the [LEFT] or [DOWN] key.',
-    text='Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
+    text= InstrText,
     font='Times New Roman',units=FontSizeUnits, 
     pos=(0, 0), height=40, wrapWidth=1200, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
@@ -272,23 +278,30 @@ for thisStep in staircase:
     t = 0
     trialClock.reset()
     CurrentLoad = int(Nloads + 1 - thisStep)  
-    LetterList = 'BCDFGHJKMNPQRSTVXYZ'
+    LetterList = 'BCDFGHJKLMNPQRSTVXYZ'
     LettersToRemove = list(set(LastTrial))
     tempLetterList = list(LetterList)
     for j in LettersToRemove:
         tempLetterList[tempLetterList.index(j)] = ''
     # remove empty locations from the list
     tempLetterList = [x for x in tempLetterList if x] 
-    # Create the lost of curent stimulus letters
+    # Create the list of current stimulus letters
     CurrentStim = ''
     CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
     for j in CurrentStimIndex:
         CurrentStim += tempLetterList[j]
-    # Is the probe in teh set?
+    # Is the probe in the set?
     Probe = np.round(np.random.uniform())
     if bool(Probe):
         # Yes, the probe is in the set
-        CurrentProbe = CurrentStim[np.random.permutation(len(CurrentStim))[0]]
+        #CurrentProbe = CurrentStim[np.random.permutation(len(CurrentStim))[0]]
+        LookingForProbe = True
+        while LookingForProbe:
+            #CurrentProbe = tempLetterList[np.random.permutation(len(CurrentStim))[0]]
+            CurrentProbe = CurrentStim[np.random.permutation(len(CurrentStim))[0]]
+            if CurrentProbe != 'L':
+                LookingForProbe = False
+        
         corr = 'left'
     else:
         # Remove the current stim letters from the available letter set
@@ -296,7 +309,24 @@ for thisStep in staircase:
             tempLetterList[tempLetterList.index(j)] = ''
         # remove empty locations from the list
         tempLetterList = [x for x in tempLetterList if x] 
-        CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
+        # There is a problem here:
+            # CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
+            # IndexError: index 0 is out of bounds for axis 0 with size 0
+            #
+            # THe problem is that with a set size of 9 and a negative probe, ten letters cannot be used 
+            # for the next trial. If I exclude the letter 'ell' then I only have 19 letters to choose 
+            # from and two negative probe trials need 20 letters so there is not enough.
+            # This causes the error.
+            # When adding in the letter 'ell' there are just enough letters. I could do something to minimize
+            # the number of interferring letters from previous trials to use 19 letters. Or I could stress
+            # in the instructions that the study letters are capital and the probes in blue are lowercase letters. 
+        # I am adding 'ell' back as a study set letter, but I will exclude it from being a probe letter.
+        # The participant cannot know this though.
+        LookingForProbe = True
+        while LookingForProbe:
+            CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
+            if CurrentProbe != 'L':
+                LookingForProbe = False
         corr = 'right'
     CurrentProbe = CurrentProbe.lower()    
     LastTrial = CurrentStim + CurrentProbe.upper()
@@ -309,7 +339,7 @@ for thisStep in staircase:
     # The current probe is NOT part of the previous trial.
 
     
-
+    print('Stim: %s, Probe: %s, ProbeType: %s'%(CurrentStim, CurrentProbe, Probe))
 
     # Set the values of the different letters
     textTL.setText(InStim[0])
@@ -344,7 +374,8 @@ for thisStep in staircase:
     k = ['']
     KeyBoardCount = 0
     while k[0] not in ['escape', 'esc'] and KeyBoardCount < 1:
-        k = event.waitKeys()
+        k = event.waitKeys(keyList=['left', 'right','escape'])
+        
         print(k)
         KeyBoardCount += 1
         RT = trialClock.getTime()

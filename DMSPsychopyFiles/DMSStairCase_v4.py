@@ -127,15 +127,23 @@ trialClock = core.Clock()
 Nloads =  9
 # How to shuffle the lists?
 
+InstrText = 'Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\n'
+InstrText = InstrText + 'You will NOT receive feedback after each trial.\n\n'
+InstrText = InstrText + 'Remember that the letters to study will be in white and CAPITALIZED.\n'
+InstrText = InstrText + 'The test letter will be in blue and will be lowercase.\n'
+InstrText = InstrText + 'Try to respond as quickly and as accurately as possible.\n\n'
+InstrText = InstrText + 'Press any key to begin.'
+    
 
 # Prepare the stimuli for display
 WaitText = visual.TextStim(win=win, name='WaitText',
     #text='Remember:\nPress [LEFT] for IN the set\nPress [DOWN] for NOT in the set\n\nTry to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press the [LEFT] or [DOWN] key.',
-    text='Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
+    text= InstrText,
     font='Times New Roman',units=FontSizeUnits, 
     pos=(0, 0), height=40, wrapWidth=1200, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
+    
 CountDownText = visual.TextStim(win=win, name='CountDown',
     text='CountDown',units=FontSizeUnits, 
     font='Times New Roman',
@@ -290,7 +298,7 @@ for thisStep in staircase:
     t = 0
     trialClock.reset()
     CurrentLoad = int(Nloads + 1 - thisStep)  
-    LetterList = 'BCDFGHJKMNPQRSTVXYZ'
+    LetterList = 'BCDFGHJKLMNPQRSTVXYZ'
     LettersToRemove = list(set(LastTrial))
     tempLetterList = list(LetterList)
     for j in LettersToRemove:
@@ -306,7 +314,13 @@ for thisStep in staircase:
     Probe = np.round(np.random.uniform())
     if bool(Probe):
         # Yes, the probe is in the set
-        CurrentProbe = CurrentStim[np.random.permutation(len(CurrentStim))[0]]
+        #CurrentProbe = CurrentStim[np.random.permutation(len(CurrentStim))[0]]
+        LookingForProbe = True
+        while LookingForProbe:
+            #CurrentProbe = tempLetterList[np.random.permutation(len(CurrentStim))[0]]
+            CurrentProbe = CurrentStim[np.random.permutation(len(CurrentStim))[0]]
+            if CurrentProbe != 'L':
+                LookingForProbe = False
         corr = 'left'
     else:
         # Remove the current stim letters from the available letter set
@@ -314,7 +328,11 @@ for thisStep in staircase:
             tempLetterList[tempLetterList.index(j)] = ''
         # remove empty locations from the list
         tempLetterList = [x for x in tempLetterList if x] 
-        CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
+        LookingForProbe = True
+        while LookingForProbe:
+            CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
+            if CurrentProbe != 'L':
+                LookingForProbe = False
         corr = 'right'
     CurrentProbe = CurrentProbe.lower()    
     LastTrial = CurrentStim + CurrentProbe.upper()
@@ -362,7 +380,7 @@ for thisStep in staircase:
     k = ['']
     KeyBoardCount = 0
     while k[0] not in ['escape', 'esc'] and KeyBoardCount < 1:
-        k = event.waitKeys()
+        k = event.waitKeys(keyList=['left', 'right','escape','1','2'])
         print(k)
         KeyBoardCount += 1
         RT = trialClock.getTime()
