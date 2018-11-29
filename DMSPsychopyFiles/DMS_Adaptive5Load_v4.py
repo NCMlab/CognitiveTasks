@@ -381,6 +381,7 @@ for thisComponent in InstructionsComponents:
 # the Routine "Instructions" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
+
 # ------Prepare to start Routine "ShortDelay"-------
 t = 0
 globalClock.reset()
@@ -963,75 +964,12 @@ for thisComponent in ShortDelayComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
 
-# ------Prepare to start Routine "ThankYou"-------
-t = 0
-ThankYouClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-OK2 = event.BuilderKeyResponse()
-# keep track of which components have finished
-ThankYouComponents = [textThankYou, OK2]
-for thisComponent in ThankYouComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
 
-# -------Start Routine "ThankYou"-------
+textThankyou.draw()
+win.flip()
+core.wait(3)
+win.flip()
 
-while continueRoutine:
-    # get current time
-    t = ThankYouClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *textThankYou* updates
-    if t >= 0.0 and textThankYou.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        textThankYou.tStart = t
-        textThankYou.frameNStart = frameN  # exact frame index
-        textThankYou.setAutoDraw(True)
-    
-    # *OK2* updates
-    if t >= 0.0 and OK2.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        OK2.tStart = t
-        OK2.frameNStart = frameN  # exact frame index
-        OK2.status = STARTED
-        # keyboard checking is just starting
-        event.clearEvents(eventType='keyboard')
-    if OK2.status == STARTED:
-        theseKeys = event.getKeys(keyList=['q'])
-        
-        # check for quit:
-        if "escape" in theseKeys:
-            endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
-            # a response ends the routine
-            continueRoutine = False
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in ThankYouComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "ThankYou"-------
-for thisComponent in ThankYouComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# the Routine "ThankYou" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
 
         
         
