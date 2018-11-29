@@ -272,14 +272,14 @@ for thisStep in staircase:
     t = 0
     trialClock.reset()
     CurrentLoad = int(Nloads + 1 - thisStep)  
-    LetterList = 'BCDFGHJKMNPQRSTVXYZ'
+    LetterList = 'BCDFGHJKLMNPQRSTVXYZ'
     LettersToRemove = list(set(LastTrial))
     tempLetterList = list(LetterList)
     for j in LettersToRemove:
         tempLetterList[tempLetterList.index(j)] = ''
     # remove empty locations from the list
     tempLetterList = [x for x in tempLetterList if x] 
-    # Create the lost of curent stimulus letters
+    # Create the list of current stimulus letters
     CurrentStim = ''
     CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
     for j in CurrentStimIndex:
@@ -296,6 +296,17 @@ for thisStep in staircase:
             tempLetterList[tempLetterList.index(j)] = ''
         # remove empty locations from the list
         tempLetterList = [x for x in tempLetterList if x] 
+        # There is a problem here:
+            # CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
+            # IndexError: index 0 is out of bounds for axis 0 with size 0
+            #
+            # THe problem is that with a set size of 9 and a negative probe, ten letters cannot be used 
+            # for the next trial. If I exclude the letter 'ell' then I only have 19 letters to choose 
+            # from and two negative probe trials need 20 letters so there is not enough.
+            # This causes the error.
+            # When adding in the letter 'ell' there are just enough letters. I could do something to minimize
+            # the number of interferring letters from previous trials to use 19 letters. Or I could stress
+            # in the instructions that the study letters are capital and the probes in blue are lowercase letters. 
         CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
         corr = 'right'
     CurrentProbe = CurrentProbe.lower()    
