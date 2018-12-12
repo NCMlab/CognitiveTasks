@@ -728,14 +728,14 @@ thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
 if thisTrial != None:
     for paramName in thisTrial.keys():
-        exec(paramName + '= thisTrial.' + paramName)
+        exec('{} = thisTrial[paramName]'.format(paramName))
 
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
         for paramName in thisTrial.keys():
-            exec(paramName + '= thisTrial.' + paramName)
+            exec('{} = thisTrial[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
