@@ -13,6 +13,9 @@ import sys  # to get file system encoding
 import wx
 import numpy as np
 import glob
+sys.path.insert(0, '../DataHandlingScripts')
+import NeuroPsychDataHandling
+
 Top = 20
 Left = 20
 RowWidth = 50
@@ -243,7 +246,14 @@ class Mywin(wx.Frame):
                 child.Enable()
             if (child.Label == "Paper Folding"):
                 child.Disable()
-                
+    
+   def CheckAvailableData(self):
+        # This needs to check off the data that has been collected already
+        #for i in self.CurrentData.TaskList:
+        #    if self.CurrentData.TaskList['Completed'] == True:
+        #        self.cbR1C4.SetValue(True)      
+        pass
+    
    def LoadVSTMCapacity(self, event):
     expName = 'VSTM'
     Tag = '1'
@@ -403,6 +413,10 @@ class Mywin(wx.Frame):
                     self.VisitFolderName = dlg.GetStringSelection()
                     self.VisitFolderPath = os.path.join(self.PartFolder, self.VisitFolderName)
                 dlg.Destroy()
+                
+                # If the visit folder exists, load the data in it and see what it has
+                self.CurrentData = NeuroPsychDataHandling.NeuroPsychData(self.VisitFolderPath)
+                print(self.CurrentData.TaskList)
             else:
                 # Make a new visit
                 # New visit folders will increment the visit number V002, V003, etc
