@@ -344,14 +344,14 @@ thisPractice = Practice.trialList[0]  # so we can initialise stimuli with some v
 # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
 if thisPractice != None:
     for paramName in thisPractice.keys():
-        exec(paramName + '= thisPractice.' + paramName)
+        exec('{} = thisPractice[paramName]'.format(paramName))
 
 for thisPractice in Practice:
     currentLoop = Practice
     # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
     if thisPractice != None:
         for paramName in thisPractice.keys():
-            exec(paramName + '= thisPractice.' + paramName)
+            exec('{} = thisPractice[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
@@ -764,14 +764,14 @@ thisRun = Run.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisRun.rgb)
 if thisRun != None:
     for paramName in thisRun.keys():
-        exec(paramName + '= thisRun.' + paramName)
+        exec('{} = thisRun[paramName]'.format(paramName))
 
 for thisRun in Run:
     currentLoop = Run
     # abbreviate parameter names if possible (e.g. rgb = thisRun.rgb)
     if thisRun != None:
         for paramName in thisRun.keys():
-            exec(paramName + '= thisRun.' + paramName)
+            exec('{} = thisRun[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
