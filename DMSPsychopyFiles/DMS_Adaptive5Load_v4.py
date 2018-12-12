@@ -158,12 +158,18 @@ if expInfo['frameRate'] != None:
 else:
     frameDur = 1.0 / 60.0  # could not measure, so guess
 
+InstrText1 = 'Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\n'
+InstrText1 = InstrText1 + 'You will NOT receive feedback after each trial.\n\n'
+InstrText1 = InstrText1 + 'Remember that the letters to study will be in white and CAPITALIZED.\n'
+InstrText1 = InstrText1 + 'The test letter will be in blue and will be lowercase.\n'
+InstrText1 = InstrText1 + 'Try to respond as quickly and as accurately as possible.\n\n'
+InstrText1 = InstrText1 + 'Press the [5] key to begin.'
+
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 if CounterBalFlag == 'False':
     textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Press [LEFT] or [1] if the letter WAS in the set.\nPress [RIGHT] or [2] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress the "5" key to begin.',
-    font='Times New Roman',
+    text=InstrText1, font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
