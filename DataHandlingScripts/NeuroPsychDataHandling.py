@@ -53,19 +53,19 @@ class NeuroPsychData():
     
     def AssignCheckBoxValues(self):
         # This maps the tasks onto their respective checkboxes
-        self.TaskList['Stroop_Color']['CBLoc'] = ''
-        self.TaskList['Stroop_Word']['CBLoc'] = ''
-        self.TaskList['Stroop_ColorWord']['CBLoc'] = ''
+        self.TaskList['Stroop_Color']['CBLoc'] = 'cbR1C2'
+        self.TaskList['Stroop_Word']['CBLoc'] = 'cbR1C3'
+        self.TaskList['Stroop_ColorWord']['CBLoc'] = 'cbR1C4'
         self.TaskList['WCST']['CBLoc'] = 'cbR2C2'
-        self.TaskList['DigitSpan_Forward']['CBLoc'] = ''
-        self.TaskList['DigitSpan_Backward']['CBLoc'] = ''
-        self.TaskList['Matrices_Main']['CBLoc'] = ''
+        self.TaskList['DigitSpan_Forward']['CBLoc'] = 'cbR7C2'
+        self.TaskList['DigitSpan_Backward']['CBLoc'] = 'cbR7C3'
+        self.TaskList['Matrices_Main']['CBLoc'] = 'cbR9C3'
         self.TaskList['VSTM_Stair']['CBLoc'] = 'cbR3C3'
         self.TaskList['VSTM_Block']['CBLoc'] = 'cbR3C4'
-        self.TaskList['DMS_Stair']['CBLoc'] = ''
-        self.TaskList['DMS_Stair']['CBLoc'] = ''
-        self.TaskList['Speed_PatternComp']['CBLoc'] = ''
-        self.TaskList['Vocab_Antonyms']['CBLoc'] = ''
+        self.TaskList['DMS_Stair']['CBLoc'] = 'cbR5C3'
+        self.TaskList['DMS_Block']['CBLoc'] = 'cbR5C6'
+        self.TaskList['Speed_PatternComp']['CBLoc'] = 'cbR8C2'
+        self.TaskList['Vocab_Antonyms']['CBLoc'] = 'cbR6C2'
         
             
     def FindParticipantID(self):

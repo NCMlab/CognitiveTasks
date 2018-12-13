@@ -221,8 +221,8 @@ class Mywin(wx.Frame):
       #self.cbR9C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))      
 
 # ##########
-     # self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (Col4,Row10), size = ((ButtonWidth, ButtonHeight))) 
-     # self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
+    #  self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (Col4,Row10), size = ((ButtonWidth, ButtonHeight))) 
+    #  self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
 
       self.btnClose = wx.Button(self.panel,-1,"Close", pos = (Col1,Row10), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
@@ -230,7 +230,13 @@ class Mywin(wx.Frame):
       self.Centre() 
       self.Show() 
       self.Fit()  
-      
+
+   def TESTGUI(self, event):
+    #self.cbR1C4.SetValue(True)  
+    self.CheckAvailableData()
+    exec('self.%s.SetValue(True)'%('cbR1C4'))
+    #self.LoadVSTMCapacity(self)
+
    def DisableAll(self): 
       for child in self.panel.GetChildren():
         # Diable all buttons except the button to enter the participant ID
@@ -249,10 +255,11 @@ class Mywin(wx.Frame):
     
    def CheckAvailableData(self):
         # This needs to check off the data that has been collected already
-        #for i in self.CurrentData.TaskList:
-        #    if self.CurrentData.TaskList['Completed'] == True:
-        #        self.cbR1C4.SetValue(True)      
-        pass
+        for i in self.CurrentData.TaskList:
+            if self.CurrentData.TaskList[i]['Completed'] == True:
+                print(self.CurrentData.TaskList[i])
+                exec('self.%s.SetValue(True)'%(self.CurrentData.TaskList[i]['CBLoc']))      
+        
     
    def LoadVSTMCapacity(self, event):
     expName = 'VSTM'
@@ -285,8 +292,7 @@ class Mywin(wx.Frame):
    def OnClickedR6C2(self, event):
     pass
 
-   def TESTGUI(self, event):
-    self.LoadVSTMCapacity(self)
+
     
    def ManualEntryCapacity(self,Range):
         myDlg = gui.Dlg(title=u"NCM Lab", labelButtonOK=' OK ', labelButtonCancel=' Cancel ',)
@@ -416,7 +422,8 @@ class Mywin(wx.Frame):
                 
                 # If the visit folder exists, load the data in it and see what it has
                 self.CurrentData = NeuroPsychDataHandling.NeuroPsychData(self.VisitFolderPath)
-                print(self.CurrentData.TaskList)
+                self.CheckAvailableData()
+                
             else:
                 # Make a new visit
                 # New visit folders will increment the visit number V002, V003, etc
@@ -432,6 +439,7 @@ class Mywin(wx.Frame):
       btnName = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnName))
       # Check to see if there is a participant folder for this person
+      # Need to clear the filename box and uncheck all CBs
       self.CheckPartFolder()
       self.CheckVisitFolder()
       # Enabale the buttons again
