@@ -47,9 +47,10 @@ InterBlockTime = 2 #13.0
 ShortDelayTime = 5 #16.0
 
 NumberOfBlocks = 3
-NTrialsPerBlock = 6
+NTrialsPerBlock = 2
 FeedbackTime = 2
-
+BGColor = 'grey'
+FontColor = 'white'
 ## These are great for testing quickly
 #  StimOnTime = .25
 #RetOnTime = .25
@@ -113,7 +114,7 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 win = visual.Window(
     size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0.8,0.8,0.8], colorSpace='rgb',
+    monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units=FontSizeUnits)
     
@@ -155,7 +156,7 @@ circle = visual.Polygon(
     win=win, name='polygon',units='pix', 
     edges=128, size=(CircleSize, CircleSize),
     ori=0, pos=(0, 0),
-    lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
+    lineWidth=1, lineColor='black', lineColorSpace='rgb',
     fillColor='black', fillColorSpace='rgb',
     opacity=1, depth=0.0, interpolate=True)
     
@@ -163,7 +164,7 @@ ProbeCircle = visual.Polygon(
     win=win, name='polygon',units='pix', 
     edges=128, size=(CircleSize, CircleSize),
     ori=0, pos=(0, 0),
-    lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
+    lineWidth=1, lineColor=ProbeColor, lineColorSpace='rgb',
     fillColor=ProbeColor, fillColorSpace='rgb',
     opacity=1, depth=0.0, interpolate=True)
 
@@ -178,7 +179,7 @@ WhiteCross = visual.TextStim(win=win, name='RedCross',
     text='+',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-9.0);
 GreenCross = visual.TextStim(win=win, name='RedCross',
     text='+',
@@ -189,10 +190,10 @@ GreenCross = visual.TextStim(win=win, name='RedCross',
     
 # Instructions
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Press [LEFT] if the circle WAS in the set.\nPress [DOWN] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress "5" to begin.',
+    text='Press [LEFT] if the circle WAS in the set.\nPress [RIGHT] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress "5" to begin.',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);   
 
 # Feedback 
@@ -200,7 +201,7 @@ FeedbackText = visual.TextStim(win=win, name='textInstr1',
     text='Feedback',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=1200, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);   
 
 # Initialize components for Routine "Countdown"
@@ -208,26 +209,26 @@ text3 = visual.TextStim(win=win, name='text3',
     text='3',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 text2 = visual.TextStim(win=win, name='text2',
     text='2',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 text1 = visual.TextStim(win=win, name='text1',
     text='1',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-2.0);
     
 textThankyou = visual.TextStim(win=win, name='textThankyou',
     text='Thank you for participating!',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);    
     
 RunningClock = core.Clock()
@@ -344,7 +345,7 @@ for thisBlock in Blocks:
         if ProbeList[TrialCount] == 1:
             corr = 'left'
         else:
-            corr = 'down'
+            corr = 'right'
 
         # Make sure the Locations does not include the central location because 
         # the cross hair is to remain on the screen
@@ -436,7 +437,7 @@ for thisBlock in Blocks:
         continueRoutine = True 
         while continueRoutine:
         # while countDown.getTime() > 0:
-            theseKeys = event.getKeys(keyList=['escape','left', 'down','1','2'])
+            theseKeys = event.getKeys(keyList=['escape','left', 'right','1','2'])
             if 'escape' in theseKeys:
                 core.quit()
             elif len(theseKeys) > 0:  # at least one key was pressed
@@ -476,7 +477,7 @@ for thisBlock in Blocks:
                     if corr == 2:
                         if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
                             thisResp.corr = 1
-                        elif ((thisResp.keys == 'down') or (thisResp.keys == 'down')):
+                        elif ((thisResp.keys == 'right') or (thisResp.keys == 'right')):
                             thisResp.corr = 1
                         else:
                             thisResp.corr = 0
@@ -496,7 +497,7 @@ for thisBlock in Blocks:
                             thisResp.corr = 0
                         else:
                             thisResp.corr = 1
-                    if corr == 'down':
+                    if corr == 'right':
                         if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
                             thisResp.corr = 0
                         elif ((thisResp.keys == '2') or (thisResp.keys == '2')):
@@ -506,7 +507,7 @@ for thisBlock in Blocks:
                     if corr == 2:
                         if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
                             thisResp.corr = 0
-                        elif ((thisResp.keys == 'down') or (thisResp.keys == 'down')):
+                        elif ((thisResp.keys == 'right') or (thisResp.keys == 'right')):
                             thisResp.corr = 0
                         else:
                             thisResp.corr = 1                

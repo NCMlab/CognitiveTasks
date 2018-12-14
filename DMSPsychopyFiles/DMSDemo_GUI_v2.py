@@ -451,14 +451,14 @@ thisPracTrial = pracTrials.trialList[0]  # so we can initialise stimuli with som
 # abbreviate parameter names if possible (e.g. rgb = thisPracTrial.rgb)
 if thisPracTrial != None:
     for paramName in thisPracTrial.keys():
-        exec(paramName + '= thisPracTrial.' + paramName)
+        exec('{} = thisPracTrial[paramName]'.format(paramName))
 
 for thisPracTrial in pracTrials:
     currentLoop = pracTrials
     # abbreviate parameter names if possible (e.g. rgb = thisPracTrial.rgb)
     if thisPracTrial != None:
         for paramName in thisPracTrial.keys():
-            exec(paramName + '= thisPracTrial.' + paramName)
+            exec('{} = thisPracTrial[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
