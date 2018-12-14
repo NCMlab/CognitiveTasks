@@ -100,6 +100,10 @@ if Tag.find('BehRun1')>-1:
     inputFile = '../DMSPsychopyFiles/DMSBlockListBehRun1.csv'
 elif Tag.find('BehRun2')>-1: 
     inputFile = '../DMSPsychopyFiles/DMSBlockListBehRun2.csv'    
+elif Tag.find('MRIRun1')>-1: 
+    inputFile = '../DMSPsychopyFiles/DMSBlockListMRIRun1.csv'    
+elif Tag.find('MRIRun2')>-1: 
+    inputFile = '../DMSPsychopyFiles/DMSBlockListMRIRun2.csv'    
 else:
     inputFile = '../DMSPsychopyFiles/DMSBlockListMRIRun2.csv'
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
@@ -123,10 +127,12 @@ ITITime = 1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-InterBlockTime = 3.0
+
+InterBlockTime = 13.0
+
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
-ShortDelayTime = 3.0
+ShortDelayTime = 16.0
 NumberOfBlocks = 5
 TrialsPerBlock = 6
 ## These are great for testing quickly
