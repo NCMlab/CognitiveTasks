@@ -8,6 +8,7 @@ from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
 # http://www.blog.pythonlibrary.org/2010/07/10/the-dialogs-of-wxpython-part-2-of-2/
 # Clock resources: psychopy-users/tFghyXkOx5U
  
+ 
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import wx
@@ -386,12 +387,13 @@ class Mywin(wx.Frame):
       self.cbR3C4.SetValue(True)  
 
    def OnClickedR3C5(self, event): 
+      self.VSTMTag = self.VSTMTag + 1
       btnR3C5Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C5Label))
       self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
       print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
       print( self.VSTMBlockLoadLevels)
-      #core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v6.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels])  
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v6_FMRI.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag)])  
       self.cbR3C5.SetValue(True)  
    # Row 5 Functions   
    

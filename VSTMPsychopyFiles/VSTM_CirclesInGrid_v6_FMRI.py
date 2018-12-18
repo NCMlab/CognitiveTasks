@@ -41,10 +41,10 @@ ITITime = 1.0 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-InterBlockTime = 5 #13.0
+InterBlockTime = 20.0
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
-ShortDelayTime = 5 #16.0
+ShortDelayTime = 16.0
 NumberOfBlocks = 5
 NTrialsPerBlock = 6
 
@@ -169,7 +169,7 @@ WhiteCross = visual.TextStim(win=win, name='RedCross',
     text='+',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-9.0);
 GreenCross = visual.TextStim(win=win, name='RedCross',
     text='+',
@@ -554,8 +554,9 @@ for thisBlock in Blocks:
         TrialCount += 1
         while countDown.getTime() > 0:
             pass
-            
+    RedCross.setAutoDraw(False)        
     WhiteCross.setAutoDraw(True)
+    win.flip()
     countDown.add(InterBlockTime - 3)
     while countDown.getTime() > 0:
         pass
