@@ -93,7 +93,7 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=u'/home/jsteffe/Dropbox/SteffenerColumbia/Projects/MyProjects/NeuralCognitiveMapping/DMSPsychopyFiles/DMS_Adaptive.psyexp',
-    savePickle=True, saveWideText=True,
+    savePickle=False, saveWideText=True,
     dataFileName=filename)
 # Which input file to use
 if Tag.find('BehRun1')>-1: 
@@ -852,10 +852,10 @@ for thisBlock in Blocks:
         params = []
     else:
         params = trials.trialList[0].keys()
-    # save data for this loop
-    trials.saveAsText(filename + 'trials.csv', delim=',',
-        stimOut=params,
-        dataOut=['n','all_mean','all_std', 'all_raw'])
+#    # save data for this loop
+#    trials.saveAsText(filename + 'trials.csv', delim=',',
+#        stimOut=params,
+#        dataOut=['n','all_mean','all_std', 'all_raw'])
     
     # ------Prepare to start Routine "Interblock"-------
     t = 0
@@ -920,9 +920,9 @@ if Blocks.trialList in ([], [None], None):
 else:
     params = Blocks.trialList[0].keys()
 # save data for this loop
-Blocks.saveAsText(filename + 'Blocks.csv', delim=',',
-    stimOut=params,
-    dataOut=['n','all_mean','all_std', 'all_raw'])
+#Blocks.saveAsText(filename + 'Blocks.csv', delim=',',
+#    stimOut=params,
+#    dataOut=['n','all_mean','all_std', 'all_raw'])
 
 # ------Prepare to start Routine "ShortDelay"-------
 t = 0
@@ -989,7 +989,7 @@ win.flip()
 routineTimer.reset()
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
-thisExp.saveAsPickle(filename)
+# thisExp.saveAsPickle(filename)
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
 win.close()

@@ -128,13 +128,17 @@ print(filename)
 #filename = OutDir + '%s%s_%s_%s' % (expName, task, expInfo['Participant ID'], expInfo['date'])
 #print(filename)
 #dataFile = open(filename+'.csv', 'w')
-dataFile.write('Trial,Load,TrialStartTime,Resp,Corr,RT,CorrectRT,ProbeType,ProbeLoc,StimLoc\n')
+dataFile.write('Trial,Load,TrialStartTime,Resp,Corr,RT,CorrectRT,ProbeType,ProbeLoc,')
+# WHen writing out the data make sure to write out column names 
+for i in np.arange(max(LoadList)):
+    dataFile.write('StimLoc%02d,'%(i+1))
+dataFile.write('\n')
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-    savePickle=False, saveWideText=True,
+    savePickle=False, saveWideText=False,
     dataFileName=filename)
     
 thisResp = event.BuilderKeyResponse()

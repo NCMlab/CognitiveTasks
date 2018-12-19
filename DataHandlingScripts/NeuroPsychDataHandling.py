@@ -7,6 +7,16 @@ import numpy as np
 # Check to see which result files are present.
 # Check for duplicate files and only keep the latest one. 
 # Move or rename the old ones
+# 
+# DMS 
+# # Capacity 
+# # Beh Runs (List)
+    # 1
+    # 2
+# # MRI Runs
+    # 1
+    # 2
+
 
 #InputFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/99012345/2018_Dec_12_1044_V001'
 #LL = NeuroPsychData(InputFolder) 
@@ -18,6 +28,11 @@ class NeuroPsychData():
         self.FindParticipantID()
         self.FindResults()
         self.AssignCheckBoxValues()
+        
+    def DMSResults(self):
+        self.DMS.Capacity = -9999
+        self.DMS.BehRuns = []
+        self.DMS.MRIRuns = []        
         
     def ListOfExpectedResults(self):
         # This list could be a structure
@@ -154,4 +169,7 @@ class NeuroPsychData():
         pass
     
     def ReadBlockData(self):
+        pass
+        
+    def ReadFile(VisitFolder, subid, TaskTag):
         pass
