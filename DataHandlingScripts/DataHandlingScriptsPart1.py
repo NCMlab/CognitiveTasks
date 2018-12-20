@@ -4,7 +4,8 @@ import shutil
 import csv
 import pandas as pd
 import numpy as np
-VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/99012345/2018_Dec_12_1044_V001'
+BaseDir = '/home/jsteffen'
+VisitFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/99012345/2018_Dec_12_1044_V001')
 subid = '99012345'
 TaskTag = 'DMS_'
 
@@ -103,61 +104,60 @@ def ProcessAntonym(Data):
     Out['RT'] = Data_Run['resp.rt'].mean()
     return Out
 
-def CheckWCSTErrors(Data, CurrentRule, PreviousRule, ):
-    # Make this so it gets passed one row at a time because passing the entire DF is too much
-    Sel = Data['Card%02d%s'%(int(Data['Card'][i]),RuleList[CurrentRule])][i]
-    Probe = Data['Probe%s'%(RuleList[CurrentRule])][i]
-    # Do they match?
-    Match = Sel == Probe
-    # If an error is made does it match the previous rule?
-    PersError = False
-    if not Match:
-        PreviousProbe = Data_Run['Probe%s'%(RuleList[PreviousRule])][i]
-        if Sel == PreviousProbe:
-            PersError = True
-
-def ProcessWCST(Data):
-    # RuleList
+def CheckWCSTErrors(CurrentRow, CurrentRule, PreviousRule):
     RuleList = []
     RuleList.append('Color')
     RuleList.append('Shape')
-    RuleList.append('Count')        
+    RuleList.append('Count')   
+    # Make this so it gets passed one row at a time because passing the entire DF is too much
+    Sel = CurrentRow['Card%02d%s'%(int(CurrentRow['Card']),RuleList[CurrentRule])]
+    Probe = CurrentRow['Probe%s'%(RuleList[CurrentRule])]
+    # Do they match?
+    Match = Sel == Probe
+    Error = True
+    PersError = False
+    if Match:
+        Error = False
+    elif not Match:
+    # If an error is made does it match the previous rule?
+        Error = True
+        PreviousProbe = CurrentRow['Probe%s'%(RuleList[PreviousRule])]
+        if Sel == PreviousProbe:
+            PersError = True
+    
+    return Error, PersError, Sel, Probe
+
+def ProcessWCST(Data):
     # Remove the practice trials
     FindTask = DataWCST[DataWCST['TrialNum'].str.match('TrialNum')].index[0]
     Data_Run = DataWCST.iloc[FindTask+1:]
     PreviousRule = -1
-
-    for i in Data_Run.index:
-        CurrentRule = int(Data_Run['Rule'][i])       
-        if CurrentRule == 0: # Match based on color
-            # is the color of the probe card the same as the color of the card selected
-            Sel = Data_Run['Card%02d%s'%(int(Data_Run['Card'][i]),RuleList[CurrentRule])][i]
-            Probe = Data_Run['Probe%s'%(RuleList[CurrentRule])][i]
-            # Do they match?
-            Match = Sel == Probe
-            # If an error is made does it match the previous rule?
-            PersError = False
-            if not Match:
-                PreviousProbe = Data_Run['Probe%s'%(RuleList[PreviousRule])][i]
-                if Sel == PreviousProbe:
-                    PersError = True
-            print('CurrentRule = %d, Match = %r, PerError = %r'%(CurrentRule, Match, PersError))
-            
-        elif CurrentRule == 1: # Match based on shape
-            # is the color of the probe card the same as the color of the card selected
-            Sel = Data_Run['Card%02dShape'%(int(Data_Run['Card'][i]))][i]
-            Probe = Data_Run['ProbeShape'][i]
-            # Do they match?
-            Match = Sel == Probe
-            print('CurrentRule = %d, Match = %r'%(CurrentRule, Match))
-        elif CurrentRule == 2: # Match based on count
-            # is the color of the probe card the same as the color of the card selected
-            Sel = Data_Run['Card%02dCount'%(int(Data_Run['Card'][i]))][i]
-            Probe = Data_Run['ProbeCount'][i]
-            # Do they match?
-            Match = Sel == Probe
-            print('CurrentRule = %d, Match = %r'%(CurrentRule, Match))
-        PreviousRule = CurrentRule
-
-    pass
-    # Process
+    # Start counters for the number of errors
+    NumTrials = 0
+    NumErrors = 0
+    NumPersErrors = 0
+    # Cycle over each data row
+    for i, CurrentRow in Data_Run.iterrows():
+        NumTrials += 1
+        # extrcat the current rule
+        CurrentRule = int(CurrentRow['Rule'])
+        if (PreviousRule != -1) and (CurrentRule != LastTrialRule):
+            # If previous rule is -1 then leave it
+            # if the current rule is different from the rule on the last trial, then change the previous rule
+            # Then update the previous rule because the rules have changed
+            PreviousRule = LastTrialRule
+        # Check for errors on this row
+        (Error, PersError, Sel, Probe) = CheckWCSTErrors(CurrentRow, CurrentRule, PreviousRule)
+        # update error counters
+        if Error: 
+            NumErrors += 1
+        if PersError:
+            NumPersErrors += 1
+        LastTrialRule = CurrentRule
+        #print('%d, CurrentRule = %d, Probe = %d, Sel = %d, Error = %r, PerError = %r'%(i, CurrentRule, Probe, Sel, Error, PersError))    
+    #print('Number of Trials: %d, Number of Errors: %d, Number Pers Errors: %d'%(NumTrials, NumErrors, NumPersErrors))
+    Out = {}
+    Out['NTrials'] = NumTrials
+    Out['NErrors'] = NumErrors
+    Out['NPersErrors'] = NumPersErrors
+    return Out
