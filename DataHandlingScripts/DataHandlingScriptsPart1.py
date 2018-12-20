@@ -10,6 +10,11 @@ TaskTag = 'DMS_'
 
 
 def ReadFile(VisitFolder, subid, TaskTag):
+    # Find the file that matches the TaskTag
+    # If multiple CSV files are found then the user is prompted to pick one.
+    # Un selected files are renamed with XXX at their beginning.
+    # The next time this program is run on this folder there will now only be one file 
+    # available and the user will not be prompted again
     Data = []
     # List all files in the visit folder
     ll = os.listdir(VisitFolder)
@@ -46,7 +51,8 @@ def ReadFile(VisitFolder, subid, TaskTag):
         # Now open the file
         InputFile = os.path.join(VisitFolder, SelectedFile)
         # Read whole file into a dataframe
-        # This does not work for VSTM files where not all columns have header names
+        # Note, in order for the data to be read as a dataframe all columns need to have headings.
+        # If not an error is thrown
         Data = pd.read_csv(InputFile)
         # If the data is to be read into a big list use this:
         #    fid = open(InputFile, 'r')
@@ -89,10 +95,69 @@ def ProcessPattComp(Data):
     return Out
     
 def ProcessAntonym(Data):
-        # First remove the practice rows from the data file
+    # First remove the practice rows from the data file
     Data_Run = Data[Data['Trials.thisN'].notnull()]
     Out = {}
     Out['NResp'] = Data_Run['resp.corr'].count()
     Out['Acc'] = Data_Run['resp.corr'].mean()    
     Out['RT'] = Data_Run['resp.rt'].mean()
     return Out
+
+def CheckWCSTErrors(Data, CurrentRule, PreviousRule, ):
+    # Make this so it gets passed one row at a time because passing the entire DF is too much
+    Sel = Data['Card%02d%s'%(int(Data['Card'][i]),RuleList[CurrentRule])][i]
+    Probe = Data['Probe%s'%(RuleList[CurrentRule])][i]
+    # Do they match?
+    Match = Sel == Probe
+    # If an error is made does it match the previous rule?
+    PersError = False
+    if not Match:
+        PreviousProbe = Data_Run['Probe%s'%(RuleList[PreviousRule])][i]
+        if Sel == PreviousProbe:
+            PersError = True
+
+def ProcessWCST(Data):
+    # RuleList
+    RuleList = []
+    RuleList.append('Color')
+    RuleList.append('Shape')
+    RuleList.append('Count')        
+    # Remove the practice trials
+    FindTask = DataWCST[DataWCST['TrialNum'].str.match('TrialNum')].index[0]
+    Data_Run = DataWCST.iloc[FindTask+1:]
+    PreviousRule = -1
+
+    for i in Data_Run.index:
+        CurrentRule = int(Data_Run['Rule'][i])       
+        if CurrentRule == 0: # Match based on color
+            # is the color of the probe card the same as the color of the card selected
+            Sel = Data_Run['Card%02d%s'%(int(Data_Run['Card'][i]),RuleList[CurrentRule])][i]
+            Probe = Data_Run['Probe%s'%(RuleList[CurrentRule])][i]
+            # Do they match?
+            Match = Sel == Probe
+            # If an error is made does it match the previous rule?
+            PersError = False
+            if not Match:
+                PreviousProbe = Data_Run['Probe%s'%(RuleList[PreviousRule])][i]
+                if Sel == PreviousProbe:
+                    PersError = True
+            print('CurrentRule = %d, Match = %r, PerError = %r'%(CurrentRule, Match, PersError))
+            
+        elif CurrentRule == 1: # Match based on shape
+            # is the color of the probe card the same as the color of the card selected
+            Sel = Data_Run['Card%02dShape'%(int(Data_Run['Card'][i]))][i]
+            Probe = Data_Run['ProbeShape'][i]
+            # Do they match?
+            Match = Sel == Probe
+            print('CurrentRule = %d, Match = %r'%(CurrentRule, Match))
+        elif CurrentRule == 2: # Match based on count
+            # is the color of the probe card the same as the color of the card selected
+            Sel = Data_Run['Card%02dCount'%(int(Data_Run['Card'][i]))][i]
+            Probe = Data_Run['ProbeCount'][i]
+            # Do they match?
+            Match = Sel == Probe
+            print('CurrentRule = %d, Match = %r'%(CurrentRule, Match))
+        PreviousRule = CurrentRule
+
+    pass
+    # Process
