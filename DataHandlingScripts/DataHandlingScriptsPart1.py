@@ -4,11 +4,6 @@ import shutil
 import csv
 import pandas as pd
 import numpy as np
-BaseDir = '/home/jsteffen'
-VisitFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/99012345/2018_Dec_12_1044_V001')
-subid = '99012345'
-TaskTag = 'DMS_'
-
 
 def ReadFile(VisitFolder, subid, TaskTag):
     # Find the file that matches the TaskTag
@@ -62,46 +57,70 @@ def ReadFile(VisitFolder, subid, TaskTag):
     return Data
     
 def ProcessVSTMBlock(Data):
-    Out = {}
-    # If there is an entry that is -99 it is a missing value and needs to be changed to NaN
-    Data = Data.replace(-99, NaN)
-    TabNResp = pd.pivot_table(Data, values = 'Corr', index = 'Load', aggfunc = 'count')
-    TabRT = pd.pivot_table(Data, values = 'RT', index = 'Load', aggfunc = np.mean)    
-    TabAcc = pd.pivot_table(Data, values = 'Corr', index = 'Load', aggfunc = np.mean)    
-    Out['NResp'] = TabNResp
-    Out['RT'] = TabRT
-    Out['Acc'] = TabAcc
+    if len(Data) > 0:
+        Out = {}
+        # If there is an entry that is -99 it is a missing value and needs to be changed to NaN
+        Data = Data.replace(-99, nan)
+        TabNResp = pd.pivot_table(Data, values = 'Corr', index = 'Load', aggfunc = 'count')
+        TabRT = pd.pivot_table(Data, values = 'RT', index = 'Load', aggfunc = np.mean)    
+        TabAcc = pd.pivot_table(Data, values = 'Corr', index = 'Load', aggfunc = np.mean)    
+        Out['NResp'] = TabNResp
+        Out['RT'] = TabRT
+        Out['Acc'] = TabAcc
+    else:
+        Out = {}
+        Out['NResp'] = -9999
+        Out['Acc'] = -9999
+        Out['RT'] = -9999
     return Out
     
 def ProcessDMSBlock(Data):
-    Out = {}
-    # This finds the number of trials for which a response was made
-    TabNResp = pd.pivot_table(Data, values = 'resp.corr', index = 'Load', aggfunc = 'count')
-    # What is the average RT broken by load
-    TabRT = pd.pivot_table(Data, values = 'resp.rt', index = 'Load', aggfunc = np.mean)    
-    # What is the average accuracy
-    TabAcc = pd.pivot_table(Data, values = 'resp.corr', index = 'Load', aggfunc = np.mean)    
-    Out['NResp'] = TabNResp
-    Out['RT'] = TabRT
-    Out['Acc'] = TabAcc
+    if len(Data) > 0:
+        Out = {}
+        # This finds the number of trials for which a response was made
+        TabNResp = pd.pivot_table(Data, values = 'resp.corr', index = 'Load', aggfunc = 'count')
+        # What is the average RT broken by load
+        TabRT = pd.pivot_table(Data, values = 'resp.rt', index = 'Load', aggfunc = np.mean)    
+        # What is the average accuracy
+        TabAcc = pd.pivot_table(Data, values = 'resp.corr', index = 'Load', aggfunc = np.mean)    
+        Out['NResp'] = TabNResp
+        Out['RT'] = TabRT
+        Out['Acc'] = TabAcc
+    else:
+        Out = {}
+        Out['NResp'] = -9999
+        Out['Acc'] = -9999
+        Out['RT'] = -9999
     return Out    
     
 def ProcessPattComp(Data):
-    # First remove the practice rows from the data file
-    Data_Run = Data[Data['Run.thisN'].notnull()]
-    Out = {}
-    Out['NResp'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Difficulty', aggfunc = 'count')
-    Out['RT'] = pd.pivot_table(Data_Run, values = 'resp.rt', index = 'Difficulty', aggfunc = np.mean)
-    Out['Acc'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Difficulty', aggfunc = np.mean)
+    if len(Data) > 0:
+        # First remove the practice rows from the data file
+        Data_Run = Data[Data['Run.thisN'].notnull()]
+        Out = {}
+        Out['NResp'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Difficulty', aggfunc = 'count')
+        Out['RT'] = pd.pivot_table(Data_Run, values = 'resp.rt', index = 'Difficulty', aggfunc = np.mean)
+        Out['Acc'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Difficulty', aggfunc = np.mean)
+    else:
+        Out = {}
+        Out['NResp'] = -9999
+        Out['Acc'] = -9999
+        Out['RT'] = -9999
     return Out
     
 def ProcessAntonym(Data):
-    # First remove the practice rows from the data file
-    Data_Run = Data[Data['Trials.thisN'].notnull()]
-    Out = {}
-    Out['NResp'] = Data_Run['resp.corr'].count()
-    Out['Acc'] = Data_Run['resp.corr'].mean()    
-    Out['RT'] = Data_Run['resp.rt'].mean()
+    if len(Data) > 0:
+        # First remove the practice rows from the data file
+        Data_Run = Data[Data['trials.thisN'].notnull()]
+        Out = {}
+        Out['NResp'] = Data_Run['resp.corr'].count()
+        Out['Acc'] = Data_Run['resp.corr'].mean()    
+        Out['RT'] = Data_Run['resp.rt'].mean()
+    else:
+        Out = {}
+        Out['NResp'] = -9999
+        Out['Acc'] = -9999
+        Out['RT'] = -9999
     return Out
 
 def CheckWCSTErrors(CurrentRow, CurrentRule, PreviousRule):
@@ -124,40 +143,77 @@ def CheckWCSTErrors(CurrentRow, CurrentRule, PreviousRule):
         PreviousProbe = CurrentRow['Probe%s'%(RuleList[PreviousRule])]
         if Sel == PreviousProbe:
             PersError = True
-    
     return Error, PersError, Sel, Probe
 
 def ProcessWCST(Data):
-    # Remove the practice trials
-    FindTask = DataWCST[DataWCST['TrialNum'].str.match('TrialNum')].index[0]
-    Data_Run = DataWCST.iloc[FindTask+1:]
-    PreviousRule = -1
-    # Start counters for the number of errors
-    NumTrials = 0
-    NumErrors = 0
-    NumPersErrors = 0
-    # Cycle over each data row
-    for i, CurrentRow in Data_Run.iterrows():
-        NumTrials += 1
-        # extrcat the current rule
-        CurrentRule = int(CurrentRow['Rule'])
-        if (PreviousRule != -1) and (CurrentRule != LastTrialRule):
-            # If previous rule is -1 then leave it
-            # if the current rule is different from the rule on the last trial, then change the previous rule
-            # Then update the previous rule because the rules have changed
-            PreviousRule = LastTrialRule
-        # Check for errors on this row
-        (Error, PersError, Sel, Probe) = CheckWCSTErrors(CurrentRow, CurrentRule, PreviousRule)
-        # update error counters
-        if Error: 
-            NumErrors += 1
-        if PersError:
-            NumPersErrors += 1
-        LastTrialRule = CurrentRule
-        #print('%d, CurrentRule = %d, Probe = %d, Sel = %d, Error = %r, PerError = %r'%(i, CurrentRule, Probe, Sel, Error, PersError))    
-    #print('Number of Trials: %d, Number of Errors: %d, Number Pers Errors: %d'%(NumTrials, NumErrors, NumPersErrors))
-    Out = {}
-    Out['NTrials'] = NumTrials
-    Out['NErrors'] = NumErrors
-    Out['NPersErrors'] = NumPersErrors
+    if len(Data) > 0:
+        # Remove the practice trials
+        FindTask = Data[Data['TrialNum'].str.match('TrialNum')].index[0]
+        Data_Run = Data.iloc[FindTask+1:]
+        PreviousRule = -1
+        # Start counters for the number of errors
+        NumTrials = 0
+        NumErrors = 0
+        NumPersErrors = 0
+        # Cycle over each data row
+        for i, CurrentRow in Data_Run.iterrows():
+            NumTrials += 1
+            # extrcat the current rule
+            CurrentRule = int(CurrentRow['Rule'])
+            if (PreviousRule != -1) and (CurrentRule != LastTrialRule):
+                # If previous rule is -1 then leave it
+                # if the current rule is different from the rule on the last trial, then change the previous rule
+                # Then update the previous rule because the rules have changed
+                PreviousRule = LastTrialRule
+            # Check for errors on this row
+            (Error, PersError, Sel, Probe) = CheckWCSTErrors(CurrentRow, CurrentRule, PreviousRule)
+            # update error counters
+            if Error: 
+                NumErrors += 1
+            if PersError:
+                NumPersErrors += 1
+            LastTrialRule = CurrentRule
+            #print('%d, CurrentRule = %d, Probe = %d, Sel = %d, Error = %r, PerError = %r'%(i, CurrentRule, Probe, Sel, Error, PersError))    
+        #print('Number of Trials: %d, Number of Errors: %d, Number Pers Errors: %d'%(NumTrials, NumErrors, NumPersErrors))
+        Out = {}
+        Out['NTrials'] = NumTrials
+        Out['NErrors'] = NumErrors
+        Out['NPersErrors'] = NumPersErrors
+    else:
+        Out = {}
+        Out['NTrials'] = -9999
+        Out['NErrors'] = -9999
+        Out['NPersErrors'] = -9999
     return Out
+    
+def ProcessMatrices(Data):
+    if len(Data) > 0:
+        # How many trials were completed
+        NTrials = Data['key_resp_2.corr'].count()
+        # How many trials were answered correctly
+        NCorr = Data['key_resp_2.corr'].sum()
+        # What is the percent accuracy
+        Acc = Data['key_resp_2.corr'].mean()
+        Out = {}
+        Out['Acc'] = Acc
+        Out['NTrials'] = NTrials
+        Out['NCorr'] = NCorr 
+    else:
+        Out = {}
+        Out['Acc'] = -9999
+        Out['NTrials'] = -9999
+        Out['NCorr'] = -9999       
+    return Out
+
+def ProcessStroopColor(Data):
+    if len(Data) > 0:
+    # First remove the practice rows from the data file
+    Data_Run = Data[Data['trials.thisN'].notnull()]
+    pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count') 
+    pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.mean) 
+    pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count')     
+def ProcessStroopWord(Data):
+    pass    
+    
+def ProcessStroopColorWord(Data):
+    pass
