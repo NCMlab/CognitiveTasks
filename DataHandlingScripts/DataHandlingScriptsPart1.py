@@ -205,6 +205,7 @@ def ProcessMatrices(Data):
         Out['NCorr'] = -9999       
     return Out
 
+
 # def ProcessStroopColor(Data):
 #     # Stroop color uses the shape color to determine the test colors which is the 
 #     # same as the TEXT color
@@ -219,6 +220,7 @@ def ProcessMatrices(Data):
 #     pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count') 
 #     pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.mean) 
 #     pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count')     
+
 def ProcessStroopWord(Data):
     pass    
     

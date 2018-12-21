@@ -401,9 +401,9 @@ if practice.trialList in ([], [None], None):
 else:
     params = practice.trialList[0].keys()
 # save data for this loop
-practice.saveAsExcel(filename + '.xlsx', sheetName='practice',
-    stimOut=params,
-    dataOut=['n','all_mean','all_std', 'all_raw'])
+#practice.saveAsExcel(filename + '.xlsx', sheetName='practice',
+#    stimOut=params,
+#    dataOut=['n','all_mean','all_std', 'all_raw'])
 
 # ------Prepare to start Routine "instruct"-------
 t = 0
@@ -536,7 +536,7 @@ for thisTrial in trials:
                 resp.keys = theseKeys[-1]  # just the last key pressed
                 resp.rt = resp.clock.getTime()
                 # was this 'correct'?
-                if (resp.keys == str(CorrColor)) or (resp.keys == CorrColor):
+                if (resp.keys == str(CorrShape)) or (resp.keys == CorrShape): ### Make sure this is correct
                     resp.corr = 1
                 else:
                     resp.corr = 0
@@ -596,9 +596,9 @@ if trials.trialList in ([], [None], None):
 else:
     params = trials.trialList[0].keys()
 # save data for this loop
-trials.saveAsExcel(filename + '.xlsx', sheetName='trials',
-    stimOut=params,
-    dataOut=['n','all_mean','all_std', 'all_raw'])
+#trials.saveAsExcel(filename + '.xlsx', sheetName='trials',
+#    stimOut=params,
+#    dataOut=['n','all_mean','all_std', 'all_raw'])
 
 # ------Prepare to start Routine "thanks"-------
 t = 0
