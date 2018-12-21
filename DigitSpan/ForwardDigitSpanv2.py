@@ -309,6 +309,7 @@ level = thisStair = 3  # initialise some vals
 count = 1
 for thisStair in Stairs:
     resp.keys = []
+    resp.rt = [] # Do this to reset the RT list
     currentLoop = Stairs
     level = thisStair
     print("Trial Number: %d"%(count))
@@ -343,7 +344,7 @@ for thisStair in Stairs:
 
     WaitingForResponseFlag = True
     while WaitingForResponseFlag:
-        theseKeys = event.getKeys(keyList=['1','2','3','4','5','6','7','8','9','x','return'])
+        theseKeys = event.getKeys(keyList=['1','2','3','4','5','6','7','8','9','x','return','escape'])
             
         # check for quit:
         if "escape" in theseKeys:

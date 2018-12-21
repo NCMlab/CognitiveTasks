@@ -28,16 +28,17 @@ def ReadFile(VisitFolder, subid, TaskTag):
             SizeOfFile = np.round(os.stat(os.path.join(VisitFolder,matching[0])).st_size/1048)
             print('\t%d) %s, size = %0.0f kB'%(count, i,SizeOfFile))
             count += 1
-        sel = input('Which one should be kept?  ')
-        SelectedFile = matching[int(sel)-1]
-        # Rename the unselected files so they will hopefully not be selected the next time!
-        count = 1
-        for i in matching:
-            if not count == int(sel):
-                OutName = 'XXX_' + i
-                print(OutName)
-                shutil.move(os.path.join(VisitFolder,i), os.path.join(VisitFolder, OutName))
-            count += 1    
+        sel = input('Which one should be kept?  (Press return to skip)')
+        if len(sel) > 0:
+            SelectedFile = matching[int(sel)-1]
+            # Rename the unselected files so they will hopefully not be selected the next time!
+            count = 1
+            for i in matching:
+                if not count == int(sel):
+                    OutName = 'XXX_' + i
+                    print(OutName)
+                    shutil.move(os.path.join(VisitFolder,i), os.path.join(VisitFolder, OutName))
+                count += 1    
     elif len(matching) == 1:
         SelectedFile= matching[0]
     else:
@@ -206,23 +207,152 @@ def ProcessMatrices(Data):
     return Out
 
 
-# def ProcessStroopColor(Data):
-#     # Stroop color uses the shape color to determine the test colors which is the 
-#     # same as the TEXT color
-#     # Mapping is
-#     # Red -- v
-#     # Green -- b
-#     # Yellow - n
-#     # Blue - m
-#     if len(Data) > 0:
-#     # First remove the practice rows from the data file
-#     Data_Run = Data[Data['trials.thisN'].notnull()]
-#     pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count') 
-#     pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.mean) 
-#     pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count')     
-
+def ProcessStroopColor(Data):
+    # Stroop color uses the shape color to determine the test colors which is the 
+    # same as the TEXT color
+    # Mapping is
+    # Red -- v
+    # Green -- b
+    # Yellow - n
+    # Blue - m
+    if len(Data) > 0:
+        # First remove the practice rows from the data file
+        Data_Run = Data[Data['trials.thisN'].notnull()]
+        Out = {}
+        Out['Acc'] =   Data_Run['resp.corr'].mean()
+        Out['NTrials'] = Data_Run['resp.corr'].count()
+        Out['NCorr'] = Data_Run['resp.corr'].sum()
+        Out['RT'] = Data_Run['resp.rt'].mean()
+    else:
+        Out = {}
+        Out['Acc'] = -9999
+        Out['NTrials'] = -9999
+        Out['NCorr'] = -9999   
+        Out['RT'] = -9999
+    return Out
+    
 def ProcessStroopWord(Data):
-    pass    
+    # Stroop color uses the shape color to determine the test colors which is the 
+    # same as the TEXT color
+    # Mapping is
+    # Red -- v
+    # Green -- b
+    # Yellow - n
+    # Blue - m
+    if len(Data) > 0:
+        # First remove the practice rows from the data file
+        Data_Run = Data[Data['trials.thisN'].notnull()]
+        Out = {}
+        Out['Acc'] =   Data_Run['resp.corr'].mean()
+        Out['NTrials'] = Data_Run['resp.corr'].count()
+        Out['NCorr'] = Data_Run['resp.corr'].sum()
+        Out['RT'] = Data_Run['resp.rt'].mean()
+    else:
+        Out = {}
+        Out['Acc'] = -9999
+        Out['NTrials'] = -9999
+        Out['NCorr'] = -9999   
+        Out['RT'] = -9999         
+    return Out    
     
 def ProcessStroopColorWord(Data):
-    pass
+    # Stroop color uses the shape color to determine the test colors which is the 
+    # same as the TEXT color
+    # Mapping is
+    # Red -- v
+    # Green -- b
+    # Yellow - n
+    # Blue - m
+    if len(Data) > 0:
+        # First remove the practice rows from the data file
+        Data_Run = Data[Data['trials.thisN'].notnull()]
+        Out = {}
+        Out['Acc'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.mean)
+        Out['NCorr'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.sum)
+        Out['NTrials'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count')
+        Out['RT'] = pd.pivot_table(Data_Run, values = 'resp.rt', index = 'Congruency', aggfunc = np.mean)
+    else:
+        Out = {}
+        Out['Acc'] = -9999
+        Out['NTrials'] = -9999
+        Out['NCorr'] = -9999   
+        Out['RT'] = -9999    
+    return Out        
+
+def ProcessDigitSpan(Data, Dir):
+    StairLoad = []
+    Correct = []
+    if len(Data) > 0:
+        # cycle over each row 
+        for i, CurrentRow in Data.iterrows():
+            match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
+            StairLoad.append(Load)
+            print(match)
+            if match:
+                Correct.append(1)
+            else:
+                Correct.append(0)
+        Capacity, NReversals = CalcuateCapacity(StairLoad)
+        NTrials = len(Data)
+        Out = {}
+        Out['Capacity'] = Capacity
+        Out['NReversals'] = NReversals
+        Out['NTrials'] = NTrials
+        Out['NCorrect'] = sum(Correct)
+    else:
+        Out = {}
+        Out['Capacity'] = -9999
+        Out['NReversals'] = -9999
+        Out['NTrials'] = -9999
+        Out['NCorrect'] = -9999
+    print(Correct)
+    return Out
+            
+def ProcessDigitSpanOneRow(Row, Dir):
+    StrTest = Row['Digits']
+    Test = [];
+    for i in StrTest:
+        if i.isdigit():
+            Test.append(int(i))
+    # This is stored as a string
+    StrResp = Row['resp.keys']
+    Resp = [];
+    for i in StrResp:
+        if i.isdigit():
+            Resp.append(int(i))
+    # If this is the backward span, flip the list
+    if Dir == 'Backward':
+        # Are the test sequence and the response the same?
+        Test = Test.reverse()
+        match = Test == Resp
+        print(match)
+    else:
+        match = Test == Resp
+    # What is the load?
+    Load = len(Test)
+    return match, Load
+
+def CalcuateCapacity(StairLoad):
+    # Take as input the load levels
+    Rev = []
+    # find out when the load is increasing and when it is decreasing
+    Up = False
+    Down = False
+    Previous = 0
+    for i in StairLoad:
+        if i > Previous:
+            Up = True
+            Rev.append(1)
+        elif i < Previous:
+            Down = True
+            Rev.append(-1)
+        else:
+            Rev.append(Rev[-1])
+        Previous = i
+        # any changes in the direction are reversals
+    Rev = np.diff(Rev)
+    Rev = np.nonzero(Rev)[0]
+    RevLoads = np.array(StairLoad)[Rev]
+    NReversals = len(RevLoads)
+    Capacity = RevLoads.mean()
+    return Capacity, NReversals

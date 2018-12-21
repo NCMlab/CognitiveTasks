@@ -451,7 +451,7 @@ class Mywin(wx.Frame):
    def OnClickedR1C2(self, event): 
       btnR1C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR1C2Label))
-      core.shellCall([sys.executable, "../Stroop/StroopColor_lastrun.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../Stroop/StroopColorv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR1C2.SetValue(True)
       
    def OnClickedR1C3(self, event): 
@@ -463,7 +463,7 @@ class Mywin(wx.Frame):
    def OnClickedR1C4(self, event): 
       btnR1C4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR1C4Label))
-      core.shellCall([sys.executable, "../Stroop/StroopColorWord_lastrun.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../Stroop/StroopColorWordv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR1C4.SetValue(True)      
 
    # Row 2 Functions   
