@@ -205,13 +205,20 @@ def ProcessMatrices(Data):
         Out['NCorr'] = -9999       
     return Out
 
-def ProcessStroopColor(Data):
-    if len(Data) > 0:
-    # First remove the practice rows from the data file
-    Data_Run = Data[Data['trials.thisN'].notnull()]
-    pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count') 
-    pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.mean) 
-    pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count')     
+# def ProcessStroopColor(Data):
+#     # Stroop color uses the shape color to determine the test colors which is the 
+#     # same as the TEXT color
+#     # Mapping is
+#     # Red -- v
+#     # Green -- b
+#     # Yellow - n
+#     # Blue - m
+#     if len(Data) > 0:
+#     # First remove the practice rows from the data file
+#     Data_Run = Data[Data['trials.thisN'].notnull()]
+#     pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count') 
+#     pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.mean) 
+#     pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count')     
 def ProcessStroopWord(Data):
     pass    
     

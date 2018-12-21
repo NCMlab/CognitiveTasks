@@ -1,4 +1,5 @@
 BaseDir = '/home/jsteffen'
+BaseDir = '/Users/jasonsteffener'
 VisitFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/99012345/2018_Dec_12_1044_V001')
 subid = '99012345'
 
@@ -24,3 +25,4 @@ Results['Ant'] = ProcessAntonym(Data)
 Data = ReadFile(VisitFolder, subid, 'Matrices_Main')
 Results['Matrices'] = ProcessMatrices(Data)
 Results
+
