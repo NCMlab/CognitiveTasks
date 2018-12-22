@@ -323,9 +323,8 @@ def ProcessDigitSpanOneRow(Row, Dir):
     # If this is the backward span, flip the list
     if Dir == 'Backward':
         # Are the test sequence and the response the same?
-        Test = Test.reverse()
+        Test.reverse()
         match = Test == Resp
-        print(match)
     else:
         match = Test == Resp
     # What is the load?
