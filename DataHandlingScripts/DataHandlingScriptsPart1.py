@@ -503,8 +503,25 @@ def IsDataComplete(OutDF, partID, VisID):
 def WriteOneSubjToOutDataFile(OneSubData, OutFile):
     pass
     
-def WriteHeaderToOutDataFile(OneSubData, OutFile):
+def WriteHeaderToOutDataFile(OneSubData, OutFileFID):
     pass
+
+def LocateOutDataFile():
+    BaseDir = '/Users/jasonsteffener'
+    OutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData')
+    BaseFileName = 'NCM_Master_NP'
+    # What files exist with this name?
+    Files = glob.glob(os.path.join(OutDataFolder, BaseFileName + '*.csv'))
+    now = datetime.datetime.now()
+    NowString = now.strftime("_updated_%b-%d-%Y_%H-%M.csv")
+    NewOutFileName = BaseFileName + NowString
+    
+    if len(Files) == 0:
+        fid = open(os.path.join(OutDataFolder,NewOutFileName),'w')
+    else:
+        # this will open an existing file
+        fid = open(Files[-1],'a')    
+    return fid
     
 def LoadRawData(VisitFolder, subid):
     Results = {}
@@ -551,4 +568,4 @@ def LoadRawData(VisitFolder, subid):
     Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
 
     return Results
-    
+
