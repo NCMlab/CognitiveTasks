@@ -6,8 +6,6 @@ import pandas as pd
 import numpy as np
 import glob
 
-
-        
 def FindResults(TaskList, VisitFolder, PartID):
     for j in TaskList:
         TempFile = glob.glob(os.path.join(VisitFolder,(PartID+'_'+j+'*.csv')))
@@ -141,21 +139,75 @@ def ProcessDMSBlock(Data):
         Out['NResp'] = -9999
         Out['Acc'] = -9999
         Out['RT'] = -9999
-    return Out    
+    return Out  
+    
+def ProcessDMSBlockv2(Data):
+    #cycle over load levels and save as relative load and absolute load
+    UniqueLoad = Data['Load'].unique()
+    UniqueLoad = UniqueLoad[~np.isnan(UniqueLoad)]
+    UniqueLoad.sort()
+    
+    Out = {}
+    count = 1
+    for i in UniqueLoad:
+        temp = Data[Data['Load']==i]
+        # find acc
+        Acc = (temp['resp.corr'].mean())
+        RT = (temp['resp.rt'].mean())
+        NResp = (temp['resp.corr'].count())
+        Tag1 = 'RelLoad%02d'%(count)
+        Tag2 = 'AbsLoad%02d'%(i)
+        Out[Tag1+'_Acc'] = Acc
+        Out[Tag2+'_Acc'] = Acc
+        Out[Tag1+'_RT'] = RT
+        Out[Tag2+'_RT'] = RT
+        Out[Tag1+'_NResp'] = NResp
+        Out[Tag2+'_NResp'] = NResp
+        count += 1
+    return Out
+    
+def CalculateDMSLoad(OneLineOfData):
+    # calculate load from CSV results file
+    Stim = OneLineOfData['TL']+OneLineOfData['TM']+OneLineOfData['TR']
+    Stim = Stim + OneLineOfData['CL']+OneLineOfData['CM']+OneLineOfData['CR']
+    Stim = Stim + OneLineOfData['BL']+OneLineOfData['BM']+OneLineOfData['BR']
+    if  not OneLineOfData.isnull()['TL']:
+        Load = 9 - Stim.count('*')
+    else:
+        Load = np.nan
+    #OneLineOfData['Load'] = Load
+    return Load
+
+def CheckDMSDataFrameForLoad(Data):
+    # some versions of the DMS files do not have a column of load values
+    if not 'Load' in Data.index:
+        Load = []
+        for index, row in Data.iterrows():
+            Load.append(CalculateDMSLoad(row))
+        Data['Load'] = Load
+    return Data
     
 def ProcessPattComp(Data):
     if len(Data) > 0:
         # First remove the practice rows from the data file
         Data_Run = Data[Data['Run.thisN'].notnull()]
         Out = {}
-        Out['NResp'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Difficulty', aggfunc = 'count')
-        Out['RT'] = pd.pivot_table(Data_Run, values = 'resp.rt', index = 'Difficulty', aggfunc = np.mean)
-        Out['Acc'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Difficulty', aggfunc = np.mean)
+        LevelsOfDiff = Data_Run['Difficulty'].unique()
+        LevelsOfDiff.sort()
+        for i in LevelsOfDiff:
+            temp = Data_Run[Data_Run['Difficulty'] == i]
+            Tag = 'Load%02d'%(i)
+            Out[Tag + '_Acc'] = temp['resp.corr'].mean()
+            Out[Tag + '_RT'] = temp['resp.rt'].mean()
+            Out[Tag + '_NResp'] = temp['resp.corr'].count()            
     else:
         Out = {}
-        Out['NResp'] = -9999
-        Out['Acc'] = -9999
-        Out['RT'] = -9999
+        for i in arange(1,4):
+            Tag = 'Load%02d'%(i)
+            Out[Tag + '_Acc'] = -9999
+            Out[Tag + '_RT'] = -9999
+            Out[Tag + '_NResp'] = -9999  
+
     return Out
     
 def ProcessAntonym(Data):
@@ -454,7 +506,49 @@ def WriteOneSubjToOutDataFile(OneSubData, OutFile):
 def WriteHeaderToOutDataFile(OneSubData, OutFile):
     pass
     
-def LoadRawData(VisitFolder):
+def LoadRawData(VisitFolder, subid):
+    Results = {}
+    # Stroop
+    Data = ReadFile(VisitFolder, subid, 'Stroop_Color_')
+    Results['StrpC'] = ProcessStroopColor(Data)
     
-    return RawData
+    Data = ReadFile(VisitFolder, subid, 'Stroop_Word_')
+    Results['StrpW'] = ProcessStroopWord(Data)
+    
+    Data = ReadFile(VisitFolder, subid, 'Stroop_ColorWord')
+    Results['StrpCW'] = ProcessStroopColorWord(Data)
+    
+    # Wisconsin Card Sort
+    Data = ReadFile(VisitFolder, subid, 'WCST')
+    Results['WCST'] = ProcessWCST(Data)
+    
+    # Antonyms
+    Data = ReadFile(VisitFolder, subid, 'Vocab_Antonyms')
+    Results['Ant'] = ProcessAntonym(Data)
+    
+    # Digit Span
+    # Forward
+    Data = ReadFile(VisitFolder, subid, 'DigitSpan_Forward')
+    Dir = 'Forward'
+    Results['DSFor'] = ProcessDigitSpan(Data, Dir)
+    
+    # Backward
+    Data = ReadFile(VisitFolder, subid, 'DigitSpan_Backward')
+    Dir = 'Backward'
+    Results['DSBack'] = ProcessDigitSpan(Data, Dir)
+    
+    
+    # Pattern Comparison
+    Data = ReadFile(VisitFolder, subid, 'Speed_PatternComp')
+    Results['PComp'] = ProcessPattComp(Data)
+    
+    # Matrics
+    Data = ReadFile(VisitFolder, subid, 'Matrices_Main')
+    Results['Matr'] = ProcessMatrices(Data)
+
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun2')
+    Data = CheckDMSDataFrameForLoad(Data)
+    Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
+
+    return Results
     

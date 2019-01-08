@@ -18,7 +18,9 @@ subid = '99012345'
 
 TaskList = DataHandlingScriptsPart1.ListOfExpectedResults()
 TaskList = DataHandlingScriptsPart1.FindResults(TaskList, VisitFolder, subid)
-    
+Results = DataHandlingScriptsPart1.LoadRawData(VisitFolder, subid)
+
+
 
 Results = {}
 # Stroop
@@ -76,7 +78,8 @@ Results['StroopColorWord']
 
 
 Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun2')
-ProcessDMSBlock(Data)
+Data = CheckDMSDataFrameForLoad(Data)
+Res = ProcessDMSBlock(Data)
 
 
 
