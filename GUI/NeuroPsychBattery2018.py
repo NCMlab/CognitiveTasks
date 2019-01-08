@@ -221,8 +221,8 @@ class Mywin(wx.Frame):
       #self.cbR9C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))      
 
 # ##########
-    #  self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (Col4,Row10), size = ((ButtonWidth, ButtonHeight))) 
-    #  self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
+      self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (Col4,Row10), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
 
       self.btnClose = wx.Button(self.panel,-1,"Close", pos = (Col1,Row10), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
@@ -235,14 +235,20 @@ class Mywin(wx.Frame):
     #self.cbR1C4.SetValue(True)  
     self.CheckAvailableData()
     exec('self.%s.SetValue(True)'%('cbR1C4'))
-    #self.LoadVSTMCapacity(self)
-
+   
+   def UnCheckAllCheckBoxes(self):
+    for child in self.panel.GetChildren():
+        if isinstance(child, wx.CheckBox):
+            child.SetValue(False)
+   
    def DisableAll(self): 
       for child in self.panel.GetChildren():
         # Diable all buttons except the button to enter the participant ID
         if isinstance(child, wx.Button):
             if child.Label != "Submit":
                 child.Disable()
+                
+    
    
    def EnableAll(self): 
       for child in self.panel.GetChildren():
@@ -433,9 +439,15 @@ class Mywin(wx.Frame):
         print(self.VisitFolderPath)
         
         # Add the path name to the GUI
+        # Add the new label
         self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (Col4,Row1))
+        #self.PartIDLabel = wx.StaticText.setText(self.VisitFolderName)
+        #(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (Col4,Row1))
+        
         
    def OnCickPartEntry(self, event):
+      # Uncheck all checkboxes
+      self.UnCheckAllCheckBoxes()
       btnName = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnName))
       # Check to see if there is a participant folder for this person

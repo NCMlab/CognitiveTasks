@@ -5,8 +5,9 @@ import sys
 BaseDir = '/home/jsteffen'
 BaseDir = '/Users/jasonsteffener'
 sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','DataHandlingScripts'))
-import DataHandlingScriptsPart1 as DH
+from DataHandlingScriptsPart1 import *
 
+import DataHandlingScriptsPart1
 importlib.reload(DataHandlingScriptsPart1)
 
 
@@ -15,37 +16,39 @@ VisitFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjec
 subid = '99012345'
 
 
-
+TaskList = DataHandlingScriptsPart1.ListOfExpectedResults()
+TaskList = DataHandlingScriptsPart1.FindResults(TaskList, VisitFolder, subid)
+    
 
 Results = {}
 # Stroop
-Data = DH.ReadFile(VisitFolder, subid, 'Stroop_Color_')
-Results['StroopColor'] = DH.ProcessStroopColor(Data)
+Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'Stroop_Color_')
+Results['StroopColor'] = DataHandlingScriptsPart1.ProcessStroopColor(Data)
 
-Data = DH.ReadFile(VisitFolder, subid, 'Stroop_Word_')
-Results['StroopWord'] = DH.ProcessStroopWord(Data)
+Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'Stroop_Word_')
+Results['StroopWord'] = DataHandlingScriptsPart1.ProcessStroopWord(Data)
 
 Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'Stroop_ColorWord')
 Results['StroopColorWord'] = DataHandlingScriptsPart1.ProcessStroopColorWord(Data)
 
 # Wisconsin Card Sort
-Data = DH.ReadFile(VisitFolder, subid, 'WCST')
-Results['WCST'] = DH.ProcessWCST(Data)
+Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'WCST')
+Results['WCST'] = DataHandlingScriptsPart1.ProcessWCST(Data)
 
 # Antonyms
-Data = ReadFile(VisitFolder, subid, 'Vocab_Antonyms')
-Results['Ant'] = ProcessAntonym(Data)
+Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'Vocab_Antonyms')
+Results['Ant'] = DataHandlingScriptsPart1.ProcessAntonym(Data)
 
 # Digit Span
 # Forward
-Data = DH.ReadFile(VisitFolder, subid, 'DigitSpan_Forward')
+Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'DigitSpan_Forward')
 Dir = 'Forward'
-Results['DigitSpanForward'] = ProcessDigitSpan(Data, Dir)
+Results['DigitSpanForward'] = DataHandlingScriptsPart1.ProcessDigitSpan(Data, Dir)
 
 # Backward
-Data = DH.ReadFile(VisitFolder, subid, 'DigitSpan_Backward')
+Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'DigitSpan_Backward')
 Dir = 'Backward'
-Results['DigitSpanBackward'] = ProcessDigitSpan(Data, Dir)
+Results['DigitSpanBackward'] = DataHandlingScriptsPart1.ProcessDigitSpan(Data, Dir)
 
 
 # Pattern Comparison
@@ -59,8 +62,8 @@ Results['Matrices'] = ProcessMatrices(Data)
 # DMS Tasks
 # Read capacity also
 
-Data = DH.ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
-Results['DMSMRI1'] = DH.ProcessDMSBlock(Data)
+Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
+Results['DMSMRI1'] = DataHandlingScriptsPart1.ProcessDMSBlock(Data)
 #DataDMSR2 = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun4')
 #Results['DMSMRI1'] = ProcessDMSBlock(DataDMSR2)
 # VSTM Tasks
@@ -70,3 +73,16 @@ Results
 
 
 Results['StroopColorWord']
+
+
+Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun2')
+ProcessDMSBlock(Data)
+
+
+
+
+## List keys
+for i in Results.keys():
+    print(i)
+    for j in Results[i].keys():
+        print('%s: %0.3f'%(j,Results[i][j]))

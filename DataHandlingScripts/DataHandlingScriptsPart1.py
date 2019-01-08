@@ -4,7 +4,54 @@ import shutil
 import csv
 import pandas as pd
 import numpy as np
+import glob
 
+
+        
+def FindResults(TaskList, VisitFolder, PartID):
+    for j in TaskList:
+        TempFile = glob.glob(os.path.join(VisitFolder,(PartID+'_'+j+'*.csv')))
+         # Ideally the file names shoudl be checked to pick the latest one   
+        if len(TempFile) > 0:
+            TaskList[j]['DataFile'] = TempFile[-1]
+            TaskList[j]['Completed'] = True
+    return TaskList
+
+def ListOfExpectedResults():
+    # This list could be a structure
+    # This list is the list of names in the structure
+    # Then each would have a flag as to whether it was found
+    # It can each have the results
+    TaskList = {}
+    TaskList['Stroop_Color'] = {}
+    TaskList['Stroop_Color']['Completed'] = False
+    
+    TaskList['Stroop_Word'] = {}
+    TaskList['Stroop_Word']['Completed'] = False  
+    TaskList['Stroop_ColorWord'] = {}
+    TaskList['Stroop_ColorWord']['Completed'] = False  
+    TaskList['WCST'] = {}
+    TaskList['WCST']['Completed'] = False  
+    TaskList['DigitSpan_Forward'] = {}
+    TaskList['DigitSpan_Forward']['Completed'] = False              
+    TaskList['DigitSpan_Backward'] = {}
+    TaskList['DigitSpan_Backward']['Completed'] = False  
+    TaskList['Matrices_Main'] = {}
+    TaskList['Matrices_Main']['Completed'] = False  
+    TaskList['DMS_Stair'] = {}
+    TaskList['DMS_Stair']['Completed'] = False  
+    TaskList['DMS_Block'] = {}
+    TaskList['DMS_Block']['Completed'] = False  
+    TaskList['VSTM_Stair'] = {}
+    TaskList['VSTM_Stair']['Completed'] = False                  
+    TaskList['VSTM_Block'] = {}
+    TaskList['VSTM_Block']['Completed'] = False  
+    TaskList['Speed_PatternComp'] = {}
+    TaskList['Speed_PatternComp']['Completed'] = False  
+    TaskList['Vocab_Antonyms'] = {}
+    TaskList['Vocab_Antonyms']['Completed'] = False  
+    return TaskList
+                                                                                     
 def ReadFile(VisitFolder, subid, TaskTag):
     # Find the file that matches the TaskTag
     # If multiple CSV files are found then the user is prompted to pick one.
@@ -39,6 +86,8 @@ def ReadFile(VisitFolder, subid, TaskTag):
                     print(OutName)
                     shutil.move(os.path.join(VisitFolder,i), os.path.join(VisitFolder, OutName))
                 count += 1    
+        else:
+            SelectedFile = False
     elif len(matching) == 1:
         SelectedFile= matching[0]
     else:
@@ -266,11 +315,26 @@ def ProcessStroopColorWord(Data):
     if len(Data) > 0:
         # First remove the practice rows from the data file
         Data_Run = Data[Data['trials.thisN'].notnull()]
+        Data_Run_Con = Data[Data['Congruency']=='Con']
+        Data_Run_Incon = Data[Data['Congruency']=='Incon']
         Out = {}
-        Out['Acc'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.mean)
-        Out['NCorr'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.sum)
-        Out['NTrials'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count')
-        Out['RT'] = pd.pivot_table(Data_Run, values = 'resp.rt', index = 'Congruency', aggfunc = np.mean)
+        Out['All_Acc'] = Data_Run['resp.corr'].mean()
+        Out['All_NTrials'] = Data_Run['resp.corr'].count()
+        Out['All_NCorr'] = Data_Run['resp.corr'].sum()
+        Out['All_RT'] = Data_Run['resp.rt'].mean()
+        Out['Con_Acc'] = Data_Run_Con['resp.corr'].mean()
+        Out['Con_NTrials'] = Data_Run_Con['resp.corr'].count()
+        Out['Con_NCorr'] = Data_Run_Con['resp.corr'].sum()
+        Out['Con_RT'] = Data_Run_Con['resp.rt'].mean()  
+        Out['Incon_Acc'] = Data_Run_Incon['resp.corr'].mean()
+        Out['Incon_NTrials'] = Data_Run_Incon['resp.corr'].count()
+        Out['Incon_NCorr'] = Data_Run_Incon['resp.corr'].sum()
+        Out['Incon_RT'] = Data_Run_Incon['resp.rt'].mean()  
+        #               
+        # Out['Acc'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.mean)
+        # Out['NCorr'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = np.sum)
+        # Out['NTrials'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count')
+        # Out['RT'] = pd.pivot_table(Data_Run, values = 'resp.rt', index = 'Congruency', aggfunc = np.mean)
     else:
         Out = {}
         Out['Acc'] = -9999
@@ -355,3 +419,42 @@ def CalcuateCapacity(StairLoad):
     NReversals = len(RevLoads)
     Capacity = RevLoads.mean()
     return Capacity, NReversals
+    
+def PutDataIntoOutputFile():
+    # There will be a single output resultsvfile
+    # it will have these columns:
+    #   partID
+    #   visitID, which will often be 1,2,3
+    #   data checked, this cannot be changed by the program but only by a human
+    #   data completeness flag
+    #
+    # 
+    # First, the part id and visit id are read from the folder names.
+    # Then the output data is checked to find this person. If found the data checked flag is TRUE
+    # if yes, check to see if data is complete in out file. 
+    # if not, then load all data and see if the missing data is now available
+    pass
+    
+def CycleOverDataFolders():
+    return VisitFolder, partID, VisID
+    
+def LoadOutDataFile(OutDataFilePathName):
+    # Make a data frame from CSV file
+    return OutDF   
+
+def IsVisitInOutDataFile(OutDF, partID, VisID):
+    return Flag
+    
+def IsDataComplete(OutDF, partID, VisID):
+    return Flag
+    
+def WriteOneSubjToOutDataFile(OneSubData, OutFile):
+    pass
+    
+def WriteHeaderToOutDataFile(OneSubData, OutFile):
+    pass
+    
+def LoadRawData(VisitFolder):
+    
+    return RawData
+    
