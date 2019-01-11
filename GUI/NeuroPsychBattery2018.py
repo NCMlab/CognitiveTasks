@@ -69,6 +69,7 @@ class Mywin(wx.Frame):
       self.VSTMBlockLoadLevels = '1 2 3 4 5'     
       self.DMSFontSize = '60'
       self.DMSTag = 0
+      self.VSTMTag = 0
       # #### Row 
       # STROOP
       CurrentRow = Row2
@@ -513,13 +514,14 @@ class Mywin(wx.Frame):
       self.cbR3C3.SetValue(True)
       
    def OnClickedR3C4(self, event): 
+      self.VSTMTag = self.VSTMTag + 1
       btnR3C4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C4Label))
       #VSTMCapacity = 7
       self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
       print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
       print( self.VSTMBlockLoadLevels)
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v6.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels])  
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v6.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'BehRun%d'%(self.VSTMTag)])  
       self.cbR3C4.SetValue(True)  
 
    # Row 5 Functions   

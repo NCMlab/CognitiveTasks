@@ -143,28 +143,38 @@ def ProcessDMSBlock(Data):
     return Out  
     
 def ProcessDMSBlockv2(Data):
-    #cycle over load levels and save as relative load and absolute load
-    UniqueLoad = Data['Load'].unique()
-    UniqueLoad = UniqueLoad[~np.isnan(UniqueLoad)]
-    UniqueLoad.sort()
-    
     Out = {}
-    count = 1
-    for i in UniqueLoad:
-        temp = Data[Data['Load']==i]
-        # find acc
-        Acc = (temp['resp.corr'].mean())
-        RT = (temp['resp.rt'].mean())
-        NResp = (temp['resp.corr'].count())
-        Tag1 = 'RelLoad%02d'%(count)
-        Tag2 = 'AbsLoad%02d'%(i)
-        Out[Tag1+'_Acc'] = Acc
-        Out[Tag2+'_Acc'] = Acc
-        Out[Tag1+'_RT'] = RT
-        Out[Tag2+'_RT'] = RT
-        Out[Tag1+'_NResp'] = NResp
-        Out[Tag2+'_NResp'] = NResp
-        count += 1
+    if len(Data) > 0:
+        #cycle over load levels and save as relative load and absolute load
+        UniqueLoad = Data['Load'].unique()
+        UniqueLoad = UniqueLoad[~np.isnan(UniqueLoad)]
+        UniqueLoad.sort()
+        count = 1
+        for i in UniqueLoad:
+            temp = Data[Data['Load']==i]
+            # find acc
+            Acc = (temp['resp.corr'].mean())
+            RT = (temp['resp.rt'].mean())
+            NResp = (temp['resp.corr'].count())
+            Tag1 = 'RelLoad%02d'%(count)
+            Tag2 = 'AbsLoad%02d'%(i)
+            Out[Tag1+'_Acc'] = Acc
+            Out[Tag2+'_Acc'] = Acc
+            Out[Tag1+'_RT'] = RT
+            Out[Tag2+'_RT'] = RT
+            Out[Tag1+'_NResp'] = NResp
+            Out[Tag2+'_NResp'] = NResp
+            count += 1
+    else:
+        for i in range(1,6):
+            Tag1 = 'RelLoad%02d'%(i)
+            Tag2 = 'AbsLoad%02d'%(i)
+            Out[Tag1+'_Acc'] = -9999
+            Out[Tag2+'_Acc'] = -9999
+            Out[Tag1+'_RT'] = -9999
+            Out[Tag2+'_RT'] = -9999
+            Out[Tag1+'_NResp'] = -9999
+            Out[Tag2+'_NResp'] = -9999
     return Out
     
 def CalculateDMSLoad(OneLineOfData):
@@ -180,12 +190,13 @@ def CalculateDMSLoad(OneLineOfData):
     return Load
 
 def CheckDMSDataFrameForLoad(Data):
-    # some versions of the DMS files do not have a column of load values
-    if not 'Load' in Data.index:
-        Load = []
-        for index, row in Data.iterrows():
-            Load.append(CalculateDMSLoad(row))
-        Data['Load'] = Load
+    if len(Data) > 0:
+        # some versions of the DMS files do not have a column of load values
+        if not 'Load' in Data.index:
+            Load = []
+            for index, row in Data.iterrows():
+                Load.append(CalculateDMSLoad(row))
+            Data['Load'] = Load
     return Data
     
 def ProcessPattComp(Data):
@@ -521,8 +532,9 @@ def CycleOverDataFolders(AllOutDataFolder):
                     Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
                     FlatResults = FlattenDict(Results)
                     # add subid and visitid
-                    FlatResults['subid'] = subid
-                    FlatResults['Visid'] = Visid
+                    FlatResults['AAsubid'] = subid
+                    FlatResults['AAVisid'] = Visid
+                    FlatResults['AAChecked'] = 0
                     ListOfDict.append(FlatResults)
     df = pd.DataFrame(ListOfDict)
     return df
@@ -533,10 +545,24 @@ def LoadOutDataFile(OutDataFilePathName):
     OutDF = pd.read_csv(OutDataFilePathName)
     return OutDF   
 
-def IsVisitInOutDataFile(OutDF, partID, VisID):
-    return Flag
+def IsVisitInOutDataFile(DF, subid, Visid):
+    Flag = False
+    index = -1
+    SubIndex = DF.index[DF['AAsubid'] == int(subid)]
+    VisIndex = DF.index[DF['AAVisid'] == Visid] 
     
-def IsDataComplete(OutDF, partID, VisID):
+    if (len(SubIndex) > 0) and (len(VisIndex) > 0):
+        if SubIndex[0] == VisIndex[0]:
+            Flag = True 
+            index = SubIndex[0]    
+    return Flag, index
+    
+    
+def IsDataChecked(DF, index):
+    # has a user checked this data?
+    Flag = False
+    if DD.loc[index]['AAChecked'] == 1:
+        Flag = True
     return Flag
     
 def WriteOneSubjToOutDataFile(OneSubData, OutFile):
@@ -563,6 +589,7 @@ def LocateOutDataFile():
     return FileName
     
 def LoadRawData(VisitFolder, subid):
+    print('working on %s'%(subid))
     Results = {}
     # Stroop
     Data = ReadFile(VisitFolder, subid, 'Stroop_Color_')
@@ -602,9 +629,25 @@ def LoadRawData(VisitFolder, subid):
     Data = ReadFile(VisitFolder, subid, 'Matrices_Main')
     Results['Matr'] = ProcessMatrices(Data)
 
-  #  Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun2')
-   # Data = CheckDMSDataFrameForLoad(Data)
-    #Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+    Data = CheckDMSDataFrameForLoad(Data)
+    Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
 
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun2')
+    Data = CheckDMSDataFrameForLoad(Data)
+    Results['DMSBeh2'] = ProcessDMSBlockv2(Data)
+
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
+    Data = CheckDMSDataFrameForLoad(Data)
+    Results['DMSMRI1'] = ProcessDMSBlockv2(Data)
+
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
+    Data = CheckDMSDataFrameForLoad(Data)
+    Results['DMSMRI2'] = ProcessDMSBlockv2(Data)
+
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+    Data = CheckDMSDataFrameForLoad(Data)
+    Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
+    
     return Results
 

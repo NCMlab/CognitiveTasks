@@ -77,7 +77,7 @@ if len(sys.argv) > 1:
     LoadList = np.array(LoadList)
     LoadList = LoadList.astype(np.int)
 
-    Tag = '1'
+    Tag = sys.argv[4]
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
@@ -90,7 +90,7 @@ else:
     LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
     LoadList = LoadList.astype(np.int)
     
-    Tag = '1'
+    Tag = 'BehRun1'
     PartDataFolder = OutDir
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
