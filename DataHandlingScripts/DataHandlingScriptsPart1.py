@@ -5,6 +5,7 @@ import csv
 import pandas as pd
 import numpy as np
 import glob
+import datetime
 
 def FindResults(TaskList, VisitFolder, PartID):
     for j in TaskList:
@@ -202,7 +203,7 @@ def ProcessPattComp(Data):
             Out[Tag + '_NResp'] = temp['resp.corr'].count()            
     else:
         Out = {}
-        for i in arange(1,4):
+        for i in range(1,4):
             Tag = 'Load%02d'%(i)
             Out[Tag + '_Acc'] = -9999
             Out[Tag + '_RT'] = -9999
@@ -408,7 +409,7 @@ def ProcessDigitSpan(Data, Dir):
                 Correct.append(1)
             else:
                 Correct.append(0)
-        Capacity, NReversals = CalcuateCapacity(StairLoad)
+        Capacity, NReversals = CalculateCapacity(StairLoad)
         NTrials = len(Data)
         Out = {}
         Out['Capacity'] = Capacity
@@ -447,7 +448,7 @@ def ProcessDigitSpanOneRow(Row, Dir):
     Load = len(Test)
     return match, Load
 
-def CalcuateCapacity(StairLoad):
+def CalculateCapacity(StairLoad):
     # Take as input the load levels
     Rev = []
     # find out when the load is increasing and when it is decreasing
@@ -485,13 +486,51 @@ def PutDataIntoOutputFile():
     # Then the output data is checked to find this person. If found the data checked flag is TRUE
     # if yes, check to see if data is complete in out file. 
     # if not, then load all data and see if the missing data is now available
+    df2 = pd.DataFrame.from_dict(FlatResults, orient='index')
     pass
-    
-def CycleOverDataFolders():
-    return VisitFolder, partID, VisID
-    
+
+def FlattenDict(Results):
+    # cycle over tasks
+    FlatResults = {}
+    for i in Results.keys():
+        for j in Results[i].keys():
+            FlatResults['%s_%s'%(i,j)] = Results[i][j]
+            # print('%s_%s: %0.2f'%(i,j,Results[i][j]))
+    return FlatResults
+
+def CycleOverDataFolders(AllOutDataFolder):
+    #cycle over folders
+    df = pd.DataFrame()
+    ListOfDict = []
+    # get all sub dirs
+    subdirs = glob.glob(os.path.join(AllOutDataFolder,'*/'))
+    for subdir in subdirs:
+        # check subdir based on some criteria
+        CurDir = os.path.split(subdir)[0]
+        CurDir = os.path.split(CurDir)[-1]
+        if CurDir.isdigit():
+            #enter the directory and find visit folders
+            VisitFolders = glob.glob(os.path.join(subdir,'*/'))
+            for visFold in VisitFolders:
+                CurVis = os.path.split(visFold)[0]
+                CurVis = os.path.split(CurVis)[-1]
+                if CurVis[-4:-2] == 'V0':
+                    subid = CurDir
+                    Visid = CurVis
+                    print('%s, %s'%(subid, Visid))
+                    Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
+                    FlatResults = FlattenDict(Results)
+                    # add subid and visitid
+                    FlatResults['subid'] = subid
+                    FlatResults['Visid'] = Visid
+                    ListOfDict.append(FlatResults)
+    df = pd.DataFrame(ListOfDict)
+    return df
+
+        
 def LoadOutDataFile(OutDataFilePathName):
     # Make a data frame from CSV file
+    OutDF = pd.read_csv(OutDataFilePathName)
     return OutDF   
 
 def IsVisitInOutDataFile(OutDF, partID, VisID):
@@ -517,11 +556,11 @@ def LocateOutDataFile():
     NewOutFileName = BaseFileName + NowString
     
     if len(Files) == 0:
-        fid = open(os.path.join(OutDataFolder,NewOutFileName),'w')
+        FileName = os.path.join(OutDataFolder,NewOutFileName)
     else:
         # this will open an existing file
-        fid = open(Files[-1],'a')    
-    return fid
+        FileName = Files[-1] 
+    return FileName
     
 def LoadRawData(VisitFolder, subid):
     Results = {}
@@ -563,9 +602,9 @@ def LoadRawData(VisitFolder, subid):
     Data = ReadFile(VisitFolder, subid, 'Matrices_Main')
     Results['Matr'] = ProcessMatrices(Data)
 
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun2')
-    Data = CheckDMSDataFrameForLoad(Data)
-    Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
+  #  Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun2')
+   # Data = CheckDMSDataFrameForLoad(Data)
+    #Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
 
     return Results
 
