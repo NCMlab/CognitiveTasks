@@ -23,19 +23,21 @@ BGColor = 'grey'
 
 #make a text file to save data
 #OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+# OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
 
 # If the subject path does not exist, than make it
 if not os.path.exists(OutDir):
     os.mkdir(OutDir)
-fileName = OutDir + '%s%s_%s' % (task, expInfo['Participant ID'], expInfo['date'])
+fileName = OutDir + os.sep + '%s%s_%s' % (task, expInfo['Participant ID'], expInfo['date'])
 
 dataFile = open(fileName+'.csv', 'w') #a simple text file with 'comma-separated-values'
 # Put a header line into the output fileName
 dataFile.write('Trial,NoiseLevel,Resp,Correct,ElapsedTime,RT,CorrectRT\n')
 StairCasefileName = os.path.join('data',expInfo['expName'] + expInfo['Participant ID'] + "_" + expInfo['date']+'Staircase.txt')
 
-dataFile1=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, expInfo['Participant ID'], expInfo['date']),'w')
+dataFile1=open(OutDir + os.sep+'CAPACITY_%s%s_%s.txt' % (task, expInfo['Participant ID'], expInfo['date']),'w')
 
 
 

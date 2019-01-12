@@ -52,18 +52,26 @@ BGColor = 'grey'
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 #filename = _thisDir + os.sep + 'data/%s_%s_%s' %(expName, expInfo['Participant ID'], expInfo['date'])
-OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-filename = OutDir + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
+#OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+
+DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+# OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
+
+
+filename = OutDir + os.sep + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
+
+
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-    savePickle=True, saveWideText=True,
+    savePickle=False, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
-logFile = logging.LogFile(filename+'.log', level=logging.EXP)
-logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
+#logFile = logging.LogFile(filename+'.log', level=logging.EXP)
+#logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 

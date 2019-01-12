@@ -51,7 +51,12 @@ BGColor = 'grey'
 FontColor = 'white'
 #make a text file to save data
 #fileName = expInfo['expName'] + expInfo['Participant ID'] + "_"+ expInfo['date']
-OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+# OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+# OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
+
+
 # If the subject path does not exist, than make it
 if not os.path.exists(OutDir):
     os.mkdir(OutDir)

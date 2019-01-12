@@ -181,8 +181,12 @@ class Mywin(wx.Frame):
         #dateStr = "2017_Jul_27_1536"
         PartID = self.PartID.GetValue()
         #fileName = task + PartID + "_"+ dateStr
-        OutDir = '..' + os.sep + 'data' + os.sep + PartID + os.sep
-        CapFile=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, PartID, dateStr),'r')
+        
+        DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+        # OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+        OutDir = os.path.join(DropBoxFolder, 'data',PartID)
+        # OutDir = '..' + os.sep + 'data' + os.sep + PartID + os.sep
+        CapFile=open(OutDir + os.sep+'CAPACITY_%s%s_%s.txt' % (task, PartID, dateStr),'r')
         
         #CapFile = open(os.path.join("data","CAPACITY_" + fileName + ".txt"),'r')
         # Read the capcity from the file and make it a local variable

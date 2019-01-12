@@ -43,14 +43,18 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 #filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
-OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-filename = OutDir + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
+#OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+# OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
+
+filename = OutDir + os.sep+'%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=u'/Users/jasonsteffener/Dropbox/NeuralCognitiveMapping/FRTPsychopyFiles/FRTDemo.psyexp',
-    savePickle=True, saveWideText=True,
+    savePickle=False, saveWideText=True,
     dataFileName=filename)
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
@@ -841,15 +845,15 @@ thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
 if thisTrial != None:
     for paramName in thisTrial.keys():
-        exec(paramName + '= thisTrial.' + paramName)
-
+        exec('{} = thisTrial[paramName]'.format(paramName))
+        
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
         for paramName in thisTrial.keys():
-            exec(paramName + '= thisTrial.' + paramName)
-    
+            #exec(paramName + '= thisTrial.' + paramName)
+            exec('{} = thisTrial[paramName]'.format(paramName))
     # ------Prepare to start Routine "trial"-------
     t = 0
     trialClock.reset()  # clock
@@ -1047,9 +1051,9 @@ if trials.trialList in ([], [None], None):
 else:
     params = trials.trialList[0].keys()
 # save data for this loop
-trials.saveAsExcel(filename + '.xlsx', sheetName='trials',
-    stimOut=params,
-    dataOut=['n','all_mean','all_std', 'all_raw'])
+#trials.saveAsExcel(filename + '.xlsx', sheetName='trials',
+#    stimOut=params,
+#    dataOut=['n','all_mean','all_std', 'all_raw'])
 
 # ------Prepare to start Routine "mainInstruct1"-------
 t = 0

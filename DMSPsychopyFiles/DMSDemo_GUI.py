@@ -52,7 +52,12 @@ SpacingOfLettersRelativeToCenter = 80
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 #filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
-OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+#OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+# OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
+OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
+
+
 filename = OutDir + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
 
 # An ExperimentHandler isn't essential but helps with data saving
