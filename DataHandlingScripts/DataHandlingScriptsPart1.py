@@ -633,21 +633,20 @@ def LoadRawData(VisitFolder, subid):
     Data = CheckDMSDataFrameForLoad(Data)
     Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
 
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun2')
-    Data = CheckDMSDataFrameForLoad(Data)
-    Results['DMSBeh2'] = ProcessDMSBlockv2(Data)
-
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
-    Data = CheckDMSDataFrameForLoad(Data)
-    Results['DMSMRI1'] = ProcessDMSBlockv2(Data)
-
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
-    Data = CheckDMSDataFrameForLoad(Data)
-    Results['DMSMRI2'] = ProcessDMSBlockv2(Data)
-
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
-    Data = CheckDMSDataFrameForLoad(Data)
-    Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
+    Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
+    Results['VSTMBeh1'] = ProcessDMSBlockv2(Data)
     
+#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
+#     Data = CheckDMSDataFrameForLoad(Data)
+#     Results['DMSMRI1'] = ProcessDMSBlockv2(Data)
+# 
+#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
+#     Data = CheckDMSDataFrameForLoad(Data)
+#     Results['DMSMRI2'] = ProcessDMSBlockv2(Data)
+# 
+#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+#     Data = CheckDMSDataFrameForLoad(Data)
+#     Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
+#     
     return Results
 

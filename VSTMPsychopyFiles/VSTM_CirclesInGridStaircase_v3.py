@@ -108,7 +108,10 @@ win = visual.Window(
     blendMode='avg', useFBO=True,
     units=FontSizeUnits)
 
-dataFile.write('Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList\n')
+dataFile.write('Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList,')
+for i in np.arange(max(LoadList)):
+    dataFile.write('StimLoc%02d,'%(i+1))
+dataFile.write('\n')
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',

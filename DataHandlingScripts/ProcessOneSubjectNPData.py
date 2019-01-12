@@ -18,19 +18,19 @@ FN = DataHandlingScriptsPart1.LocateOutDataFile()
 df.to_csv(FN)
 
 
-
-
-subid = '99012345'
-Visid = '2018_Dec_12_1044_V001'
-FN = DataHandlingScriptsPart1.LocateOutDataFile()
-DD = DataHandlingScriptsPart1.LoadOutDataFile(FN)
-DataHandlingScriptsPart1.IsVisitInOutDataFile(DD, subid, Visid)
-
-VisitFolder = os.path.join(AllOutDataFolder, subid, '2018_Oct_24_1022_V002')
-Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
-
-Data = DataHandlingScriptsPart1.CheckDMSDataFrameForLoad(Data)
-
-Results['DMSBeh1'] = DataHandlingScriptsPart1.ProcessDMSBlockv2(Data)
-
-
+# 
+# 
+# subid = '99012345'
+# Visid = '2018_Dec_12_1044_V001'
+# FN = DataHandlingScriptsPart1.LocateOutDataFile()
+# DD = DataHandlingScriptsPart1.LoadOutDataFile(FN)
+# DataHandlingScriptsPart1.IsVisitInOutDataFile(DD, subid, Visid)
+# 
+# VisitFolder = os.path.join(AllOutDataFolder, subid, '2018_Oct_24_1022_V002')
+# Data = DataHandlingScriptsPart1.ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+# 
+# Data = DataHandlingScriptsPart1.CheckDMSDataFrameForLoad(Data)
+# 
+# Results['DMSBeh1'] = DataHandlingScriptsPart1.ProcessDMSBlockv2(Data)
+# 
+# 
