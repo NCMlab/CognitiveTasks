@@ -58,7 +58,7 @@ DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolum
 OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
 
 
-filename = OutDir + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
+filename = OutDir + os.sep + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',

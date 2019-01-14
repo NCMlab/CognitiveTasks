@@ -1,4 +1,0 @@
-imageL,imageLn,imageR,imageRn,imageLop,imageLnop,imageRop,imageRnop,corr,trials1.thisRepN,trials1.thisTrialN,trials1.thisN,trials1.thisIndex,resp.keys,resp.corr,resp.rt,Participant ID,date,Session,frameRate,
-FRTFaces/cropAM11NEHR.JPG,FRTFaces/noisecropAM11NEHR.JPG,FRTFaces/cropAM11NEHL.JPG,FRTFaces/noisecropAM11NEHL.JPG,1.0,0.0,1.0,0.0,left,0,0,0,0,left,1,1.78489208221,12321,2019_Jan_12_1600,001,60.13839143613376,
-FRTFaces/cropAM20NEHR.JPG,FRTFaces/noisecropAM20NEHR.JPG,FRTFaces/cropAM20NEHL.JPG,FRTFaces/noisecropAM20NEHL.JPG,1.0,0.0,1.0,0.0,left,0,1,1,1,left,1,1.21855998039,12321,2019_Jan_12_1600,001,60.13839143613376,
-FRTFaces/cropAF12NEHR.JPG,FRTFaces/noisecropAF12NEHR.JPG,FRTFaces/cropAF12NEHL.JPG,FRTFaces/noisecropAF12NEHL.JPG,1.0,0.0,1.0,0.0,left,0,2,2,2,None,0,,12321,2019_Jan_12_1600,001,60.13839143613376,

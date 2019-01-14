@@ -241,8 +241,12 @@ class Mywin(wx.Frame):
       print "Label of pressed button = ",btn 
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
+      
+      DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+      PartDataFolder = os.path.join(DropBoxFolder,'data', self.PartID.GetValue())
+      print('Saving data to:\n\t%s'%(PartDataFolder))
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
-      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v4.py", self.PartID.GetValue(), self.PartID.GetValue(),self.DMSBlockLoadLevels, '60', 'BehRun1'])
+      core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v4.py", self.PartID.GetValue(), PartDataFolder, self.DMSBlockLoadLevels, '60', 'BehRun1'])
       self.DMSBlockCB.SetValue(True)
    
    def CreateDMSList(self, DMSCapacity):

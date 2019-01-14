@@ -60,10 +60,10 @@ OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
 # If the subject path does not exist, than make it
 if not os.path.exists(OutDir):
     os.mkdir(OutDir)
-fileName = OutDir + '%s_%s_%s' % (task, expInfo['Participant ID'], expInfo['date'])
+fileName = OutDir + os.sep + '%s_%s_%s' % (task, expInfo['Participant ID'], expInfo['date'])
 
 dataFile = open(fileName+'.csv', 'w')#a simple text file with 'comma-separated-values'
-dataFile1=open(OutDir + 'CAPACITY_%s%s_%s.txt' % (task, expInfo['Participant ID'], expInfo['date']),'w')
+dataFile1=open(OutDir + os.sep + 'CAPACITY_%s%s_%s.txt' % (task, expInfo['Participant ID'], expInfo['date']),'w')
 
 # Put a header line into the output fileName
 dataFile.write('Trial,Load,LevelIndex,Resp,Correct,ElapsedTime,RT,CorrectRT,ProbeType,Study,Probe\n')
