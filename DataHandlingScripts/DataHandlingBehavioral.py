@@ -7,19 +7,6 @@ import pandas as pd
 import fnmatch
 import numpy as np
 
-BaseDir = '/home/jsteffen'
-BaseDir = '/Users/jasonsteffener'
-sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','DataHandlingScripts'))
-
-
-import DataHandlingScriptsPart1
-importlib.reload(DataHandlingScriptsPart1)
-
-
-AllOutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/')
-
-df = DataHandlingScriptsPart1.CycleOverDataFolders(AllOutDataFolder)
-
 def CycleOverBehDataFolders(AllOutDataFolder):
     #cycle over folders
     df = pd.DataFrame()
@@ -55,11 +42,6 @@ def CycleOverBehDataFolders(AllOutDataFolder):
     # return df
 
 
-
-VisitFolder='/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/11101035/'
-subid = '11101035'
-TaskTag = 'DMS_Block'
-DataHandlingScriptsPart1.ReadFile(subdir, subid, 'DMS_Block')
 
 def LoadRawBehData(VisitFolder, subid):
     print('working on %s'%(subid))
@@ -147,11 +129,3 @@ def ProcessFRTBlock(Data, CAP):
     return Out
 
 
-Results = {} 
-Data = ReadBehFile(VisitFolder, subid, 'DMS_Block')
-Data = DataHandlingScriptsPart1.CheckDMSDataFrameForLoad(Data)
-Results['DMSBeh1'] = DataHandlingScriptsPart1.ProcessDMSBlockv2(Data)
-
-Data = ReadBehFile(VisitFolder, subid, 'FRT_Block')
-CAP = ReadCapacity(VisitFolder, 'CAPACITY_FRTstair')
-Results['FRTBeh1'] = ProcessFRTBlock(Data, CAP)
