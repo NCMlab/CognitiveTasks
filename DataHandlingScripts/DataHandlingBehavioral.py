@@ -33,6 +33,14 @@ def CycleOverBehDataFolders(AllOutDataFolder):
         if CurDir.isdigit() and CurDir[0] == '1':
             subid = CurDir
             print(CurDir)
+            Results = LoadRawBehData(subdir, subid)
+            
+            FlatResults = DataHandlingScriptsPart1.FlattenDict(Results)
+                    # add subid and visitid
+            FlatResults['AAsubid'] = subid
+            ListOfDict.append(FlatResults)
+    df = pd.DataFrame(ListOfDict)
+    return df
            # Results = LoadRawBehData(subdir,subid)
             
             # #enter the directory and find visit folders
@@ -55,38 +63,36 @@ def CycleOverBehDataFolders(AllOutDataFolder):
     # return df
 
 
+# 
+# VisitFolder='/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/11101035/'
+# subid = '11101035'
+# TaskTag = 'DMS_Block'
+# DataHandlingScriptsPart1.ReadFile(subdir, subid, 'DMS_Block')
 
-VisitFolder='/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/11101035/'
-subid = '11101035'
-TaskTag = 'DMS_Block'
-DataHandlingScriptsPart1.ReadFile(subdir, subid, 'DMS_Block')
-
-def LoadRawBehData(VisitFolder, subid):
-    print('working on %s'%(subid))
-    Results = {}
-    # DMS
-    pass
 
 def ReadBehFile(VisitFolder, subid, TaskTag):
     ll = os.listdir(VisitFolder)
     SearchFor = TaskTag + '_' + subid
     matching = fnmatch.filter(ll,SearchFor+'*.csv')
-    matchingBlock = fnmatch.filter(ll,SearchString+'*Blocks.csv')
-    matchingTrial = fnmatch.filter(ll,SearchString+'*trials.csv')
+    matchingBlock = fnmatch.filter(ll,SearchFor+'*Blocks.csv')
+    matchingTrial = fnmatch.filter(ll,SearchFor+'*trials.csv')
     if len(matchingBlock) > 0:
         NewDMSFlag = True
             
     matching = set(matching) - set(matchingBlock)
     matching = list(set(matching) - set(matchingTrial))             
-    matching = matching[-1]
-    InputFile = os.path.join(VisitFolder, matching)
-    Data = pd.read_csv(InputFile)
-
+    if len(matching) > 0:
+        matching = matching[-1]
+        InputFile = os.path.join(VisitFolder, matching)
+        print(matching)
+        Data = pd.read_csv(InputFile)
+    else:
+        Data = []
     return Data
 
 def ReadCapacity(SubDir, SearchString):
     ll = os.listdir(SubDir)
-    matching = fnmatch.filter(ll,'*'+SearchString+'*')
+    matching = fnmatch.filter(ll,SearchString+'*')
     if len(matching) > 0:
         InFile = os.path.join(SubDir,matching[0])
         fid = open(InFile,'r')
@@ -103,7 +109,6 @@ def CreateFRTList(FRTCapacity):
     # Convert this array to a string so it can be passed as an argument
     FRTList = ' '.join(str(e) for e in FRTList)
     return FRTList 
-         
          
 def ProcessFRTBlock(Data, CAP):
     # big note on this. The load is not entered in the ouput file!!
@@ -134,6 +139,7 @@ def ProcessFRTBlock(Data, CAP):
             Out[Tag1+'_NResp'] = NResp
             Out[Tag2+'_NResp'] = NResp
             count += 1
+
     else:
         for i in range(1,6):
             Tag1 = 'RelLoad%02d'%(i)
@@ -146,12 +152,18 @@ def ProcessFRTBlock(Data, CAP):
             Out[Tag2+'_NResp'] = -9999
     return Out
 
-
-Results = {} 
-Data = ReadBehFile(VisitFolder, subid, 'DMS_Block')
-Data = DataHandlingScriptsPart1.CheckDMSDataFrameForLoad(Data)
-Results['DMSBeh1'] = DataHandlingScriptsPart1.ProcessDMSBlockv2(Data)
-
-Data = ReadBehFile(VisitFolder, subid, 'FRT_Block')
-CAP = ReadCapacity(VisitFolder, 'CAPACITY_FRTstair')
-Results['FRTBeh1'] = ProcessFRTBlock(Data, CAP)
+def LoadRawBehData(VisitFolder, subid):
+    Results = {} 
+    Data = ReadBehFile(VisitFolder, subid, 'DMS_Block')
+    Data = DataHandlingScriptsPart1.CheckDMSDataFrameForLoad(Data)
+    Results['DMSBeh1'] = DataHandlingScriptsPart1.ProcessDMSBlockv2(Data)
+    DMSCap = ReadCapacity(VisitFolder, 'CAPACITY_DMSstair')
+    Results['DMSBeh1']['Cap'] = DMSCap
+    Data = ReadBehFile(VisitFolder, subid, 'FRT_Block')
+    FRTCap = ReadCapacity(VisitFolder, 'CAPACITY_FRTstair')
+    Results['FRTBeh1'] = ProcessFRTBlock(Data, FRTCap)
+    Results['FRTBeh1']['Cap'] = FRTCap
+    return Results
+    
+    
+def Cycle
