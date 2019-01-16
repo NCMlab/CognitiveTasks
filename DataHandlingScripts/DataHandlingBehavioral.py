@@ -134,11 +134,11 @@ def ProcessFRTBlock(Data, CAP):
             Tag1 = 'RelLoad%02d'%(i)
             Tag2 = 'AbsLoad%02d'%(i)
             Out[Tag1+'_Acc'] = -9999
-            Out[Tag2+'_Acc'] = -9999
+            #Out[Tag2+'_Acc'] = -9999
             Out[Tag1+'_RT'] = -9999
-            Out[Tag2+'_RT'] = -9999
+            #Out[Tag2+'_RT'] = -9999
             Out[Tag1+'_NResp'] = -9999
-            Out[Tag2+'_NResp'] = -9999
+            #Out[Tag2+'_NResp'] = -9999
     return Out
 
 

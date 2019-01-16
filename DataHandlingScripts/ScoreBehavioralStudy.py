@@ -3,9 +3,11 @@ import importlib
 import sys
 import pandas as pd
 import csv
-
+import datetime
 import NCMPartv2
 import ScoreNIHToolbox
+import glob
+importlib.reload(ScoreNIHToolbox)
 importlib.reload(NCMPartv2)
 
 BaseDir = '/home/jsteffen'
@@ -76,32 +78,67 @@ for i in PartData:
 # Map the psychopy ans SM data together
 for i in DataList:
     SMsubid = i.subid
-    dfLOC = find(df['AAsubid'] == SMsubid)
-    df.loc[dfLOC,'eduSM'] = i.edu
-    df.loc[dfLOC,'sex'] = i.sex
-    df.loc[dfLOC,'BDIscore'] = i.BDIscore
-    df.loc[dfLOC,'GDSscore'] = i.GDSscore
-    df.loc[dfLOC,'FOSC'] = i.FOSC
-    df.loc[dfLOC,'PAAerobic'] = i.PAAerobicMin
-    df.loc[dfLOC,'PABicycling'] = i.PABicyclingMin
-    df.loc[dfLOC,'PAJogging'] = i.PAJoggingMin
-    df.loc[dfLOC,'PALapSwim'] = i.PALapSwimMin
-    df.loc[dfLOC,'PALowIntensity'] = i.PALowIntensityMin
-    df.loc[dfLOC,'PARunning'] = i.PARunningMin
-    df.loc[dfLOC,'PATennis'] = i.PATennisMin
-    df.loc[dfLOC,'PAWalkHike'] = i.PAWalkHikeMin
-    
+    dfLOC = (df['AAsubid'] == SMsubid)
+    dfLOC = [i for i, x in enumerate(dfLOC) if x]
+    if len(dfLOC) > 0:
+        df.loc[dfLOC[0],'ageSM'] = i.age
+        df.loc[dfLOC[0],'ageGroupSM'] = i.ageGroup
+        df.loc[dfLOC[0],'eduSM'] = i.edu
+        df.loc[dfLOC[0],'sex'] = i.sex
+        df.loc[dfLOC[0],'BDIscore'] = i.BDIscore
+        df.loc[dfLOC[0],'GDSscore'] = i.GDSscore
+        df.loc[dfLOC[0],'FOSC'] = i.FOSC
+        df.loc[dfLOC[0],'PAAerobic'] = i.PAAerobicMin
+        df.loc[dfLOC[0],'PABicycling'] = i.PABicyclingMin
+        df.loc[dfLOC[0],'PAJogging'] = i.PAJoggingMin
+        df.loc[dfLOC[0],'PALapSwim'] = i.PALapSwimMin
+        df.loc[dfLOC[0],'PALowIntensity'] = i.PALowIntensityMin
+        df.loc[dfLOC[0],'PARunning'] = i.PARunningMin
+        df.loc[dfLOC[0],'PATennis'] = i.PATennisMin
+        df.loc[dfLOC[0],'PAWalkHike'] = i.PAWalkHikeMin
+    else: # the part is not in the tasks DF
+       pass 
 
 dfAll = df.merge(dfNIH, left_on='AAsubid', right_on='AAsubid', how='outer')
-
+dfAll['Checked'] = np.zeros([len(dfAll)])
 BaseFileName = 'NCM_BehavStudy_Tasks_NIH_SM'
+
+
 now = datetime.datetime.now()
 NowString = now.strftime("_updated_%b-%d-%Y_%H-%M.csv")
 NewOutFileName = BaseFileName + NowString
 OutFile = os.path.join(AllOutDataFolder, NewOutFileName)
+
 dfAll.to_csv(OutFile)
 
+dfOld = LoadExistingData(OutDataFolder, BaseFileName)
 
+def LoadExistingData(OutDataFolder, BaseFileName):
+    Files = glob.glob(os.path.join(OutDataFolder, BaseFileName + '*.csv'))
+    df = pd.read_csv(Files[-1]) 
+    return df
+
+
+def SeeIfDataHasBeenChecked(dfAll, dfOld):
+    NewPartList = ScoreNIHToolbox.ExtractUniquePartIDs(dfAll['AAsubid'])
+    OldPartList = ScoreNIHToolbox.ExtractUniquePartIDs(dfOld['AAsubid'])    
+    for i in NewPartList:
+        # is the sub from dfAll in dfOld
+        if len(find(OldPartList==i)) > 0:
+            # is Checked in dfOld == 1?
+            temp = dfAll[dfAll['AAsubid'] == i]
+            if temp['Checked'] == 0:
+                
+        else:
+            # no .. add them to dfOld
+            dfOld.append(dfAll[dfAll['AAsubid'] == i])
+            
+            #
+    # yes
+    # is Checked in dfOld == 1?
+    # yes, do nothing
+    # else, update dfOld
+    #check existing data file to see i
 # inputFileName = [u'/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/SurveyMonkeyExports/Participant Questionnaire.csv']
 # # open the file
 # fid = open(inputFileName[0],'r', encoding="ISO-8859-1")

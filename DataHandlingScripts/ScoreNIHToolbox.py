@@ -9,16 +9,16 @@ import tkinter
 
 
 def Run():
-    FNData, FNScore = SelectScoresFile()
-    Data, Score = LoadAssessments(FNData, FNScore)
+    FNData, FNScore, FNReg = SelectScoresFile()
+    Data, Score, Reg = LoadAssessments(FNData, FNScore, FNReg)
     PartIDList = ExtractUniquePartIDs(Data['PIN'])
     
     ListOfDict = []
     for partID in PartIDList:
         print('Working on: %s'%(partID))
     # partID = PartIDList[4]
-        dataOne, scoreOne  = ExtractDataFromOnePart(Data, Score, partID)
-        Results = ScoreAll(dataOne, scoreOne)
+        dataOne, scoreOne, regOne = ExtractDataFromOnePart(Data, Score, Reg, partID)
+        Results = ScoreAll(dataOne, scoreOne, regOne)
         FlatResults = DataHandlingScriptsPart1.FlattenDict(Results)
                     # add subid and visitid
         FlatResults['AAsubid'] = partID
@@ -32,23 +32,32 @@ def SelectScoresFile():
     NIHPath = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/NIHToolboxExports')
     FileNameData = os.path.join(NIHPath, '2018-09-23 21.16.07 Assessment Data.csv')
     FileNameScore = os.path.join(NIHPath, '2018-09-23 21.16.07 Assessment Scores.csv')
-    return FileNameData, FileNameScore
+    FileNameReg = os.path.join(NIHPath, '2018-09-23 21.16.07 Registration Data.csv')
+    return FileNameData, FileNameScore, FileNameReg
     
-def LoadAssessments(FileNameData, FileNameScore):
+def LoadAssessments(FileNameData, FileNameScore, FileNameReg):
     Data = pd.read_csv(FileNameData)
     Score = pd.read_csv(FileNameScore)
-    return Data, Score
+    Reg = pd.read_csv(FileNameReg)
+    return Data, Score, Reg
 
-def ExtractDataFromOnePart(Data, Score, partID):
+def ExtractDataFromOnePart(Data, Score, Reg, partID):
     dataOne = Data[Data['PIN'] == partID]
     scoreOne = Score[Score['PIN'] == partID]
-    return dataOne , scoreOne   
+    regOne = Reg[Reg['PIN'] == partID]
+    return dataOne, scoreOne, regOne  
     
 def ExtractUniquePartIDs(DFcol):
     PartIDList = DFcol.unique()
     return PartIDList
 
-def ScoreAll(dataOne, scoreOne):
+def ExtractReg(regOne):
+    Out= {}
+    Out['Age'] = regOne['Age'].max()
+    Out['Edu'] = regOne['Education'].max()
+    return Out
+    
+def ScoreAll(dataOne, scoreOne, regOne):
     Results = {}
     LongName = 'NIH Toolbox Picture Vocabulary Test Age 3+ v2.0'
     TaskScore = scoreOne[scoreOne['Inst'] == LongName]
@@ -78,7 +87,9 @@ def ScoreAll(dataOne, scoreOne):
     
     LongName = 'NIH Toolbox Oral Reading Recognition Test Age 3+ v2.0'
     TaskScore = scoreOne[scoreOne['Inst'] == LongName]
-    Results['OralRead'] = ScoreOralRead(TaskScore)    
+    Results['OralRead'] = ScoreOralRead(TaskScore)  
+    
+    Results['NIH'] = ExtractReg(regOne)
     return Results
     
 def ScorePictVocab(TaskScore):
