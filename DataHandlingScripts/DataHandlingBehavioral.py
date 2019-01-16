@@ -6,6 +6,8 @@ import glob
 import pandas as pd
 import fnmatch
 import numpy as np
+import DataHandlingScriptsPart1
+
 
 def CycleOverBehDataFolders(AllOutDataFolder):
     #cycle over folders
@@ -118,13 +120,13 @@ def ProcessFRTBlock(Data, CAP):
             RT = (temp['resp.rt'].mean())
             NResp = (temp['resp.corr'].count())
             Tag1 = 'RelLoad%02d'%(count)
-            Tag2 = 'AbsLoad%02f'%(ActLoad)
+            #Tag2 = 'AbsLoad%02f'%(ActLoad)
             Out[Tag1+'_Acc'] = Acc
-            Out[Tag2+'_Acc'] = Acc
+            #Out[Tag2+'_Acc'] = Acc
             Out[Tag1+'_RT'] = RT
-            Out[Tag2+'_RT'] = RT
+            #Out[Tag2+'_RT'] = RT
             Out[Tag1+'_NResp'] = NResp
-            Out[Tag2+'_NResp'] = NResp
+            #Out[Tag2+'_NResp'] = NResp
             count += 1
 
     else:

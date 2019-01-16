@@ -78,7 +78,7 @@ class NCMParticipant(object):
 # #        self.CalcThroughput('DMS')
 #         self.StairCaseLoadAnalysis('DMSstair', 'DMS')
 #        self.StairCaseLoadAnalysis('FRTstair', 'FRT')
-        self.LoadNIHdata()
+        # self.LoadNIHdata()
         # Load the DMS Staircase file
 #        self.ReadStairData('DMS')
 #        self.CalculateDMSCapacity()
