@@ -5,10 +5,11 @@ import pandas as pd
 import csv
 
 import NCMPartv2
+import ScoreNIHToolbox
 importlib.reload(NCMPartv2)
 
 BaseDir = '/home/jsteffen'
-#BaseDir = '/Users/jasonsteffener'
+BaseDir = '/Users/jasonsteffener'
 sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','DataHandlingScripts'))
 
 
@@ -19,35 +20,15 @@ importlib.reload(DataHandlingBehavioral)
 
 AllOutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/')
 
+dfTasks = DataHandlingBehavioral.CycleOverBehDataFolders(AllOutDataFolder)
 
-df = DataHandlingBehavioral.CycleOverBehDataFolders(AllOutDataFolder)
-
-# inputFileName = [u'/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/SurveyMonkeyExports/Participant Questionnaire.csv']
-# # open the file
-# fid = open(inputFileName[0],'r', encoding="ISO-8859-1")
-# 
-# data = csv.reader(fid)
-# data = pd.read_csv(fid, sep=',', encoding='latin-1')
-# # 
-# df = pd.read_csv(inputFileName[0], sep=',', encoding='latin-1')
-# indices = [i for i, c in enumerate(df.columns) if not c.startswith('Unnamed')]
-# questions = [c for c in df.columns if not c.startswith('Unnamed')]
-# slices = [slice(i, j) for i, j in zip(indices, indices[1:] + [None])]
-# for q in slices:
-#     print(df.iloc[:, q])  # Use `display` if using Jupyter
-# 
-# def parse_response(s):
-#     try:
-#         return s[~s.isnull()][0]
-#     except IndexError:
-#         return np.nan
-# 
-# data = [df.iloc[:, q].apply(parse_response, axis=1)[1:] for q in slices]
-# dfOUT = pd.concat(data, axis=1)
-# dfOUT.columns = questions
+    
+# Load the NIH data
+dfNIH = ScoreNIHToolbox.Run()
 
 
-####
+
+
 
 inputFileName = [u'/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/SurveyMonkeyExports/Participant Questionnaire.csv']
 # open the file  
@@ -92,4 +73,50 @@ for i in PartData:
             
 
 # Map the psychopy ans SM data together
-# Load the NIH data
+for i in DataList:
+    SMsubid = i.subid
+    dfLOC = find(df['AAsubid'] == SMsubid)
+    df.loc[dfLOC,'eduSM'] = i.edu
+    df.loc[dfLOC,'sex'] = i.sex
+    df.loc[dfLOC,'BDIscore'] = i.BDIscore
+    df.loc[dfLOC,'GDSscore'] = i.GDSscore
+    df.loc[dfLOC,'FOSC'] = i.FOSC
+    df.loc[dfLOC,'PAAerobic'] = i.PAAerobicMin
+    df.loc[dfLOC,'PABicycling'] = i.PABicyclingMin
+    df.loc[dfLOC,'PAJogging'] = i.PAJoggingMin
+    df.loc[dfLOC,'PALapSwim'] = i.PALapSwimMin
+    df.loc[dfLOC,'PALowIntensity'] = i.PALowIntensityMin
+    df.loc[dfLOC,'PARunning'] = i.PARunningMin
+    df.loc[dfLOC,'PATennis'] = i.PATennisMin
+    df.loc[dfLOC,'PAWalkHike'] = i.PAWalkHikeMin
+    
+dfSM = df 
+
+
+
+# inputFileName = [u'/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/SurveyMonkeyExports/Participant Questionnaire.csv']
+# # open the file
+# fid = open(inputFileName[0],'r', encoding="ISO-8859-1")
+# 
+# data = csv.reader(fid)
+# data = pd.read_csv(fid, sep=',', encoding='latin-1')
+# # 
+# df = pd.read_csv(inputFileName[0], sep=',', encoding='latin-1')
+# indices = [i for i, c in enumerate(df.columns) if not c.startswith('Unnamed')]
+# questions = [c for c in df.columns if not c.startswith('Unnamed')]
+# slices = [slice(i, j) for i, j in zip(indices, indices[1:] + [None])]
+# for q in slices:
+#     print(df.iloc[:, q])  # Use `display` if using Jupyter
+# 
+# def parse_response(s):
+#     try:
+#         return s[~s.isnull()][0]
+#     except IndexError:
+#         return np.nan
+# 
+# data = [df.iloc[:, q].apply(parse_response, axis=1)[1:] for q in slices]
+# dfOUT = pd.concat(data, axis=1)
+# dfOUT.columns = questions
+
+
+####
