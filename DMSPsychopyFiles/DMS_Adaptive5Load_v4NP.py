@@ -74,7 +74,7 @@ else:
     PartDataFolder = OutDir
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expName, expInfo['Participant ID'], task, Tag, expInfo['date']))
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 CounterBalFlag = 'False'
 BGColor = 'grey'
 FontColor = 'white'

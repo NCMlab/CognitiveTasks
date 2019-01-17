@@ -24,6 +24,17 @@ OutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProj
 
 df = DataHandlingBehavioral.CycleOverBehDataFolders(OutDataFolder)
 
+# subid = '1001003'
+# VisitFolder = os.path.join(OutDataFolder,subid)
+# ScoreOneBeh(VisitFolder,subid)
+# Data = DataHandlingBehavioral.ReadBehFile(VisitFolder, '*DMS_Block', subid)
+# 
+# 
+# Data = DataHandlingBehavioral.CheckDMSDataFrameForLoad(Data)
+
+def ScoreOneBeh(subdir, subid):
+    Results = DataHandlingBehavioral.LoadRawBehData(subdir, subid)
+    return Results
     
 # Load the NIH data
 dfNIH = ScoreNIHToolbox.Run(BaseDir)
@@ -106,7 +117,7 @@ BaseFileName = 'NCM_BehavStudy_Tasks_NIH_SM'
 now = datetime.datetime.now()
 NowString = now.strftime("_updated_%b-%d-%Y_%H-%M.csv")
 NewOutFileName = BaseFileName + NowString
-OutFile = os.path.join(AllOutDataFolder, NewOutFileName)
+OutFile = os.path.join(OutDataFolder, NewOutFileName)
 
 dfAll.to_csv(OutFile, index = False)
 

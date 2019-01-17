@@ -6,7 +6,15 @@ import tkinter
 # filename = tkinter.filedialog.askopenfilename() # show an "Open" dialog box and return the path to the selected file
 # print(filename)
 
+'''
+To do
+the version numbers have updated so that i need my task data selection to be more flexible
+eg subject 1001003 and pict vocab
 
+remove hard coding of nih file selection
+
+add tet date to outpout
+'''
 
 def Run(BaseDir):
     FNData, FNScore, FNReg = SelectScoresFile(BaseDir)
@@ -30,9 +38,9 @@ def SelectScoresFile(BaseDir):
     # filename = tkinter.filedialog.askopenfilename() 
     #BaseDir = '/Users/jasonsteffener'
     NIHPath = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/NIHToolboxExports')
-    FileNameData = os.path.join(NIHPath, '2018-09-23 21.16.07 Assessment Data.csv')
-    FileNameScore = os.path.join(NIHPath, '2018-09-23 21.16.07 Assessment Scores.csv')
-    FileNameReg = os.path.join(NIHPath, '2018-09-23 21.16.07 Registration Data.csv')
+    FileNameData = os.path.join(NIHPath, '2019-01-17 13.03.04 Assessment Data.csv')
+    FileNameScore = os.path.join(NIHPath, '2019-01-17 13.03.04 Assessment Scores.csv')
+    FileNameReg = os.path.join(NIHPath, '2019-01-17 13.03.04 Registration Data.csv')
     return FileNameData, FileNameScore, FileNameReg
     
 def LoadAssessments(FileNameData, FileNameScore, FileNameReg):

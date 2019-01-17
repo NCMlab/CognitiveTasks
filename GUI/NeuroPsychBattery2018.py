@@ -543,7 +543,7 @@ class Mywin(wx.Frame):
       self.DMSTag = self.DMSTag + 1
       btnR5C6Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C6Label))
-      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'BehRun%d'%(self.DMSTag)])  
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4NP.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'BehRun%d'%(self.DMSTag)])  
       self.cbR5C6.SetValue(True)  
    
    def OnClickedR6C2(self, event):

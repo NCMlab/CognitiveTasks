@@ -4,7 +4,7 @@ import sys
 import datetime
 
 BaseDir = '/home/jsteffen'
-BaseDir = '/Users/jasonsteffener'
+#BaseDir = '/Users/jasonsteffener'
 sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','DataHandlingScripts'))
 
 
@@ -14,8 +14,9 @@ importlib.reload(DataHandlingScriptsPart1)
 AllOutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/')
 
 df = DataHandlingScriptsPart1.CycleOverDataFolders(AllOutDataFolder)
+
 FN = DataHandlingScriptsPart1.LocateOutDataFile()
-df.to_csv(FN)
+df.to_csv(FN, index = False)
 
 
 # 
