@@ -108,7 +108,7 @@ NowString = now.strftime("_updated_%b-%d-%Y_%H-%M.csv")
 NewOutFileName = BaseFileName + NowString
 OutFile = os.path.join(AllOutDataFolder, NewOutFileName)
 
-dfAll.to_csv(OutFile)
+dfAll.to_csv(OutFile, index = False)
 
 dfOld = LoadExistingData(OutDataFolder, BaseFileName)
 
@@ -124,26 +124,30 @@ def SeeIfDataHasBeenChecked(dfAll, dfOld):
     NewPartList = ScoreNIHToolbox.ExtractUniquePartIDs(dfAll['AAsubid'])
     OldPartList = ScoreNIHToolbox.ExtractUniquePartIDs(dfOld['AAsubid'])    
     for i in NewPartList:
-        # is the sub from dfAll in dfOld
-        if len(find(OldPartList==i)) > 0:
-            # this subject IS in the old table
-            # pull out their new data
-#            indexOld = dfOld.index[dfOld['AAsubid']==i].tolist()              
-            tempOld = dfOld[dfOld['AAsubid'] == i]
-            if tempOld['Checked'] == 0:
-               # update old DF with the new data
-               tempNew = dfAll[dfAll['AAsubid'] == i]
-               #replace old with new
-               indexNew = dfAll.index[dfAll['AAsubid']==i].tolist()
-               indexOld = dfOld.index[dfOld['AAsubid']==i].tolist()              
-               dfOld.loc[indexOld] = dfAll.loc[indexNew] 
+        print(i)
+        try:
+            # is the sub from dfAll in dfOld
+            if len(find(OldPartList==i)) > 0:
+                # this subject IS in the old table
+                # pull out their new data
+    #            indexOld = dfOld.index[dfOld['AAsubid']==i].tolist()              
+                tempOld = dfOld[dfOld['AAsubid'] == i]
+                if (tempOld['Checked'] == 0).all():
+                # update old DF with the new data
+                    tempNew = dfAll[dfAll['AAsubid'] == i]
+                    #replace old with new
+                    indexNew = dfAll.index[dfAll['AAsubid']==i].tolist()
+                    indexOld = dfOld.index[dfOld['AAsubid']==i].tolist()              
+                    dfOld.loc[indexOld[0]] = dfAll.loc[indexNew[0]] 
+                else:
+                    # do not change old data
+                    pass
             else:
-                # do not change old data
-                pass
-        else:
-            # no .. add them to dfOld
-            indexNew = dfAll.index[dfAll['AAsubid']==i].tolist()
-            dfOld.append(dfAll.loc[indexAll])
+                # no .. add them to dfOld
+                indexNew = dfAll.index[dfAll['AAsubid']==i].tolist()
+                dfOld = dfOld.append(dfAll.loc[indexNew])
+        except:
+            print("problem with: %s"%(i))
     return dfOld
             #
     # yes
