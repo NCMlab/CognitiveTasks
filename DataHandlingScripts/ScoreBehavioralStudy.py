@@ -11,7 +11,7 @@ importlib.reload(ScoreNIHToolbox)
 importlib.reload(NCMPartv2)
 
 BaseDir = '/home/jsteffen'
-BaseDir = '/Users/jasonsteffener'
+#BaseDir = '/Users/jasonsteffener'
 sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','DataHandlingScripts'))
 
 
@@ -20,22 +20,21 @@ importlib.reload(DataHandlingScriptsPart1)
 import DataHandlingBehavioral
 importlib.reload(DataHandlingBehavioral)
 
-AllOutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/')
+OutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/')
 
-df = DataHandlingBehavioral.CycleOverBehDataFolders(AllOutDataFolder)
+df = DataHandlingBehavioral.CycleOverBehDataFolders(OutDataFolder)
 
     
 # Load the NIH data
-dfNIH = ScoreNIHToolbox.Run()
+dfNIH = ScoreNIHToolbox.Run(BaseDir)
 
 
 
 
 
-
-inputFileName = [u'/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/SurveyMonkeyExports/Participant Questionnaire.csv']
+inputFileName = os.path.join(BaseDir,'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/SurveyMonkeyExports/Participant Questionnaire.csv')
 # open the file  
-fid = open(inputFileName[0],'r', encoding="ISO-8859-1")
+fid = open(inputFileName,'r', encoding="ISO-8859-1")
 
 data = csv.reader(fid)
 #data = pandas.read_csv(fid, sep=',', encoding='latin-1')
@@ -113,6 +112,8 @@ dfAll.to_csv(OutFile)
 
 dfOld = LoadExistingData(OutDataFolder, BaseFileName)
 
+dfUpdated = SeeIfDataHasBeenChecked(dfAll, dfOld)
+
 def LoadExistingData(OutDataFolder, BaseFileName):
     Files = glob.glob(os.path.join(OutDataFolder, BaseFileName + '*.csv'))
     df = pd.read_csv(Files[-1]) 
@@ -125,14 +126,25 @@ def SeeIfDataHasBeenChecked(dfAll, dfOld):
     for i in NewPartList:
         # is the sub from dfAll in dfOld
         if len(find(OldPartList==i)) > 0:
-            # is Checked in dfOld == 1?
-            temp = dfAll[dfAll['AAsubid'] == i]
-            if temp['Checked'] == 0:
-                
+            # this subject IS in the old table
+            # pull out their new data
+#            indexOld = dfOld.index[dfOld['AAsubid']==i].tolist()              
+            tempOld = dfOld[dfOld['AAsubid'] == i]
+            if tempOld['Checked'] == 0:
+               # update old DF with the new data
+               tempNew = dfAll[dfAll['AAsubid'] == i]
+               #replace old with new
+               indexNew = dfAll.index[dfAll['AAsubid']==i].tolist()
+               indexOld = dfOld.index[dfOld['AAsubid']==i].tolist()              
+               dfOld.loc[indexOld] = dfAll.loc[indexNew] 
+            else:
+                # do not change old data
+                pass
         else:
             # no .. add them to dfOld
-            dfOld.append(dfAll[dfAll['AAsubid'] == i])
-            
+            indexNew = dfAll.index[dfAll['AAsubid']==i].tolist()
+            dfOld.append(dfAll.loc[indexAll])
+    return dfOld
             #
     # yes
     # is Checked in dfOld == 1?

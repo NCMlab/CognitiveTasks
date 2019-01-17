@@ -8,8 +8,8 @@ import tkinter
 
 
 
-def Run():
-    FNData, FNScore, FNReg = SelectScoresFile()
+def Run(BaseDir):
+    FNData, FNScore, FNReg = SelectScoresFile(BaseDir)
     Data, Score, Reg = LoadAssessments(FNData, FNScore, FNReg)
     PartIDList = ExtractUniquePartIDs(Data['PIN'])
     
@@ -26,9 +26,9 @@ def Run():
     df = pd.DataFrame(ListOfDict)
     return df
 
-def SelectScoresFile():
+def SelectScoresFile(BaseDir):
     # filename = tkinter.filedialog.askopenfilename() 
-    BaseDir = '/Users/jasonsteffener'
+    #BaseDir = '/Users/jasonsteffener'
     NIHPath = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/NIHToolboxExports')
     FileNameData = os.path.join(NIHPath, '2018-09-23 21.16.07 Assessment Data.csv')
     FileNameScore = os.path.join(NIHPath, '2018-09-23 21.16.07 Assessment Scores.csv')
