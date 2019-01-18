@@ -109,7 +109,7 @@ win = visual.Window(
     units=FontSizeUnits)
 
 LoadList = range(0,12)
-dataFile.write('Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList,')
+dataFile.write('Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,')
 for i in np.arange(max(LoadList)):
     dataFile.write('StimLoc%02d,'%(i+1))
 dataFile.write('\n')
@@ -118,7 +118,7 @@ dataFile.write('\n')
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-    savePickle=False, saveWideText=True,
+    savePickle=False, saveWideText=False,
     dataFileName=filename)
 
 globalClock = core.Clock()

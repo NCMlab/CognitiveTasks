@@ -7,11 +7,12 @@ import datetime
 import NCMPartv2
 import ScoreNIHToolbox
 import glob
+import numpy as np
 importlib.reload(ScoreNIHToolbox)
 importlib.reload(NCMPartv2)
 
 BaseDir = '/home/jsteffen'
-#BaseDir = '/Users/jasonsteffener'
+BaseDir = '/Users/jasonsteffener'
 sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','DataHandlingScripts'))
 
 
