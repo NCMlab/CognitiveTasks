@@ -108,6 +108,7 @@ win = visual.Window(
     blendMode='avg', useFBO=True,
     units=FontSizeUnits)
 
+LoadList = range(0,12)
 dataFile.write('Trial,Load,Resp,RT,CorrectRT,ProbeType,ProbeLoc,ProbeList,')
 for i in np.arange(max(LoadList)):
     dataFile.write('StimLoc%02d,'%(i+1))
