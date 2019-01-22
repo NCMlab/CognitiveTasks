@@ -114,7 +114,7 @@ WaitText = visual.TextStim(win=win, name='WaitText',
     text='Press [LEFT] if the letter WAS in the set.\nPress [DOWN] if the letter WAS NOT in the set.\nYou will NOT receive feedback after each trial.\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',units=FontSizeUnits, 
     pos=(0, 0), height=40, wrapWidth=1200, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 CountDownText = visual.TextStim(win=win, name='CountDown',
     text='CountDown',units=FontSizeUnits, 
@@ -211,7 +211,13 @@ greenITI = visual.TextStim(win=win, name='greenITI',
     color='green', colorSpace='rgb', opacity=1,
     depth=0.0);
 
-    
+textThankyou = visual.TextStim(win=win, name='textThankyou',
+    text='Thank you for participating!',
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color='white', colorSpace='rgb', opacity=1,
+    depth=0.0);    
+        
 # Number of trials in the file
 
 # Each trial is extracted like this.
@@ -427,6 +433,14 @@ for thisStep in staircase:
         staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
 print EndFlag
+
+# Thank you
+textThankyou.setAutoDraw(True)
+countDown.add(5)
+win.flip()
+while countDown.getTime() > 0:
+    pass   
+win.flip()
 
 Capacity = 10-np.mean(staircase.reversalIntensities)
 Capacity = Capacity

@@ -202,7 +202,7 @@ image4An = visual.ImageStim(
 # Initialize components for Routine "practInstruct4"
 practInstruct4Clock = core.Clock()
 textInstr6 = visual.TextStim(win=win, name='textInstr6',
-    text='Respond with the keys;\n[LEFT] if the two faces are from the SAME PERSON\n[RIGHT] if the two faces are from DIFFERENT PEOPLE\n\nThere will be a number of practice trials in which you will be given feedback.  Try to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.\n',
+    text='Respond with the keys:\n[LEFT] if the two faces are from the SAME PERSON\n[RIGHT] if the two faces are from DIFFERENT PEOPLE\n\nThere will be a number of practice trials in which you will be given feedback.  Try to respond as quickly and as accurately as possible.\n\nWhen you are ready to proceed press any key.\n',
     font='Times New Roman',
     units='pix', pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
@@ -384,6 +384,14 @@ textInstr9 = visual.TextStim(win=win, name='textInstr9',
     units='pix', pos=(256, -300), height=40, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-13.0);
+
+textThankyou = visual.TextStim(win=win, name='textThankyou',
+    text='Thank you for participating!',
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color='white', colorSpace='rgb', opacity=1,
+    depth=0.0);    
+    
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
@@ -1313,10 +1321,18 @@ for thisComponent in mainInstruct2Components:
         thisComponent.setAutoDraw(False)
 # the Routine "mainInstruct2" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
+# Thank you
+textThankyou.setAutoDraw(True)
+countDown.add(5)
+win.flip()
+while countDown.getTime() > 0:
+    pass   
+win.flip()
+
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
-thisExp.saveAsPickle(filename)
+#thisExp.saveAsPickle(filename)
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
 win.close()

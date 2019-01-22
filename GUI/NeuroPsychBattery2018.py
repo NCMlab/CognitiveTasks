@@ -222,8 +222,8 @@ class Mywin(wx.Frame):
       #self.cbR9C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))      
 
 # ##########
-      self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (Col4,Row10), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
+      #self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (Col4,Row10), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
 
       self.btnClose = wx.Button(self.panel,-1,"Close", pos = (Col1,Row10), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 

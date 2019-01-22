@@ -501,7 +501,7 @@ textThankYou = visual.TextStim(win=win, name='textThankYou',
     text='Thank you for participating!\n\nWhen you are ready to proceed press any key.',
     font='Times New Roman',
     units='pix', pos=[0, 0], height=40, wrapWidth=None, ori=0, 
-    color='yellow', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers

@@ -570,6 +570,8 @@ for thisBlock in Blocks:
     BlockCount += 1    
 
 dataFile.write(',,%s\n'%(RunningClock.getTime()))
+
+# Thank you
 textThankyou.setAutoDraw(True)
 countDown.add(5)
 win.flip()

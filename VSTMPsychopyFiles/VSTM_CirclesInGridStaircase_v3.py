@@ -500,6 +500,13 @@ for thisStep in staircase:
         #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
 print EndFlag
+# Thank you screen
+textThankyou.setAutoDraw(True)
+countDown.add(5)
+win.flip()
+while countDown.getTime() > 0:
+    pass   
+win.flip()
 
 Capacity = NLoads + 1-np.mean(staircase.reversalIntensities)
 Capacity = Capacity

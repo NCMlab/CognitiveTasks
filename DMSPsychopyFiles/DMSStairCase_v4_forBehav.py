@@ -224,6 +224,12 @@ greenITI = visual.TextStim(win=win, name='greenITI',
     color='green', colorSpace='rgb', opacity=1,
     depth=0.0);
 
+textThankyou = visual.TextStim(win=win, name='textThankyou',
+    text='Thank you for participating!',
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
+    depth=0.0);    
     
 # Number of trials in the file
 
@@ -466,6 +472,13 @@ for thisStep in staircase:
         staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
 print EndFlag
+
+textThankyou.setAutoDraw(True)
+countDown.add(5)
+win.flip()
+while countDown.getTime() > 0:
+    pass   
+win.flip()
 
 Capacity = 10-np.mean(staircase.reversalIntensities)
 Capacity = Capacity

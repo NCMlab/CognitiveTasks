@@ -207,6 +207,13 @@ textProbe = visual.TextStim(win=win, name='textProbe',
     color=ProbeColor, colorSpace='rgb', opacity=1,
     depth=-11.0);
 
+textThankyou = visual.TextStim(win=win, name='textThankyou',
+    text='Thank you for participating!',
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color='white', colorSpace='rgb', opacity=1,
+    depth=0.0);    
+    
 # Initialize components for Routine "feedback"
 feedbackClock = core.Clock()
 #msg variable just needs some value at start
@@ -732,6 +739,14 @@ for thisPracTrial in pracTrials:
     
 # completed 1.0 repeats of 'pracTrials'
 
+# Thank you
+textThankyou.setAutoDraw(True)
+countDown.add(5)
+win.flip()
+while countDown.getTime() > 0:
+    pass   
+win.flip()
+
 # get names of stimulus parameters
 if pracTrials.trialList in ([], [None], None):
     params = []
@@ -813,7 +828,7 @@ pracTrials.saveAsExcel(filename + '.xlsx', sheetName='pracTrials',
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
-thisExp.saveAsPickle(filename)
+#thisExp.saveAsPickle(filename)
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
 win.close()

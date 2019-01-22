@@ -124,6 +124,14 @@ whiteITI = visual.TextStim(win=win, name='whiteITI',
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
     
+
+textThankyou = visual.TextStim(win=win, name='textThankyou',
+    text='Thank you for participating!',
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
+    depth=0.0);        
+    
 staircase = data.StairHandler(startVal = 1,
                           stepType = 'lin', stepSizes=[0.1],
                           nUp=1, nDown=3,  # will home in on the 80% threshold
@@ -296,6 +304,13 @@ for thisStep in staircase:
     #
 print EndFlag
 
+# Thank you
+textThankyou.setAutoDraw(True)
+countDown.add(5)
+win.flip()
+while countDown.getTime() > 0:
+    pass   
+win.flip()
 
 Capacity = 1-numpy.mean(staircase.reversalIntensities)
 dataFile1.write('%0.4f'%(Capacity))
