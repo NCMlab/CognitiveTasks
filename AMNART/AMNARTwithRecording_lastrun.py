@@ -1,8 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.90.1),
+<<<<<<< Updated upstream
     on Sun Jan 20 13:52:04 2019
+=======
+    on Sun Jan 20 17:59:41 2019
+>>>>>>> Stashed changes
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -11,7 +15,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, clock, microphone
+from psychopy import locale_setup, gui, visual, core, data, event, logging, sound, microphone
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -40,7 +44,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/AMNART/AMNARTwithRecording.psyexp',
+    originPath=u'/Users/jason/Documents/GITHUBReposOutsideDropBox/CognitiveTasks/AMNART/AMNARTwithRecording.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -199,15 +203,15 @@ thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
 if thisTrial != None:
-    for paramName in thisTrial:
-        exec('{} = thisTrial[paramName]'.format(paramName))
+    for paramName in thisTrial.keys():
+        exec(paramName + '= thisTrial.' + paramName)
 
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
-        for paramName in thisTrial:
-            exec('{} = thisTrial[paramName]'.format(paramName))
+        for paramName in thisTrial.keys():
+            exec(paramName + '= thisTrial.' + paramName)
     
     # ------Prepare to start Routine "trial"-------
     t = 0
