@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.90.1),
-    on Thu Jan 31 21:10:25 2019
+    on Thu Jan 31 21:10:48 2019
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -37,7 +37,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/SelectiveReminding/SelectiveReminding.psyexp',
+    originPath=None,
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
@@ -188,6 +188,8 @@ thisBlock = Blocks.trialList[0]  # so we can initialise stimuli with some values
 if thisBlock != None:
     for paramName in thisBlock:
         exec('{} = thisBlock[paramName]'.format(paramName))
+SelectionList = list(range(0,12,1))
+ThisBlockSelList = ",".join(str(i) for i in SelectionList)
 
 for thisBlock in Blocks:
     currentLoop = Blocks
@@ -195,11 +197,13 @@ for thisBlock in Blocks:
     if thisBlock != None:
         for paramName in thisBlock:
             exec('{} = thisBlock[paramName]'.format(paramName))
+    # For each block the word list will change based on the previous block's responses
+    
     
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='sequential', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('../SelectiveReminding/WordList.csv', selection=u'1,2,3,4'),
+        trialList=data.importConditions('../SelectiveReminding/WordList.csv', selection=ThisBlockSelList),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
