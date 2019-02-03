@@ -34,6 +34,7 @@ Row7 = Top + 6*RowWidth
 Row8 = Top + 7*RowWidth
 Row9 = Top + 8*RowWidth
 Row10 = Top + 9*RowWidth
+Row11 = Top + 10*RowWidth
 
 Col1 = Left
 Col2 = Left + ColWidth
@@ -107,7 +108,7 @@ class Mywin(wx.Frame):
 #      self.cbR2C3 = wx.CheckBox(panel, -1, label = "", pos = (Col3 + ButtonWidth+5,Row2))
 #      self.cbR2C4 = wx.CheckBox(panel, -1, label = "", pos = (Col4 + ButtonWidth+5,Row2))
 # ###################
-      CurrentRow = Row9
+      CurrentRow = Row10
 #      # #### Row 3
       self.titleR3 = wx.StaticText(self.panel, -1, label = "Spatial/Dots", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
@@ -135,7 +136,7 @@ class Mywin(wx.Frame):
       self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
       self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (Col6 + ButtonWidth+5,CurrentRow))
 # ###################
-      CurrentRow = Row8
+      CurrentRow = Row9
 #      # #### Row 3
       self.titleR5 = wx.StaticText(self.panel, -1, label = "DMS/Letters", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
@@ -163,7 +164,7 @@ class Mywin(wx.Frame):
       self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (Col6 + ButtonWidth+5,CurrentRow))
 
 # #### Row 
-      CurrentRow = Row4
+      CurrentRow = Row5
       self.titleR6 = wx.StaticText(self.panel, -1, label = "Vocabulary", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
       self.btnR6C2 = wx.Button(self.panel,-1,"Antonyms", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -172,9 +173,29 @@ class Mywin(wx.Frame):
       Row6BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
       self.cbR6C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
+      
+      # Buttons
+      self.btnR6C3 = wx.Button(self.panel,-1,"Reading", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR6C3.Bind(wx.EVT_BUTTON,self.OnClickedR6C3) 
+      # Checkboxes
+      self.cbR6C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
 
 # #### Row 
-      CurrentRow = Row5
+      CurrentRow = Row4
+      self.titleRMem = wx.StaticText(self.panel, -1, label = "Memory", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+      # Buttons
+      self.btnRMemC2 = wx.Button(self.panel,-1,"Immediate", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnRMemC2.Bind(wx.EVT_BUTTON,self.OnClickedRMemC2) 
+      self.btnRMemC3 = wx.Button(self.panel,-1,"Delayed", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnRMemC3.Bind(wx.EVT_BUTTON,self.OnClickedRMemC3) 
+    # Box
+      RowMemBoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
+      # Checkboxes
+      self.cbRMemC2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
+      self.cbRMemC3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
+      
+# #### Row 
+      CurrentRow = Row6
       self.titleR7 = wx.StaticText(self.panel, -1, label = "Digit Span", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
       self.btnR7C2 = wx.Button(self.panel,-1,"Forward", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -188,7 +209,7 @@ class Mywin(wx.Frame):
       self.cbR7C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
       
 # #### Row 
-      CurrentRow = Row6
+      CurrentRow = Row7
       self.titleR8 = wx.StaticText(self.panel, -1, label = "Speed", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
       self.btnR8C2 = wx.Button(self.panel,-1,"Patt. Comp", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -201,7 +222,7 @@ class Mywin(wx.Frame):
       self.cbR8C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
       #self.cbR8C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))      
 # #### Row 
-      CurrentRow = Row7
+      CurrentRow = Row8
       self.titleR9 = wx.StaticText(self.panel, -1, label = "Fluid", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
       #self.btnR9C2 = wx.Button(self.panel,-1,"Paper Folding", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -225,7 +246,7 @@ class Mywin(wx.Frame):
       #self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (Col4,Row10), size = ((ButtonWidth, ButtonHeight))) 
       #self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
 
-      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (Col1,Row10), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (Col1,Row11), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
       
       self.Centre() 
@@ -552,6 +573,12 @@ class Mywin(wx.Frame):
       core.shellCall([sys.executable, "../Antonyms/Antonyms_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR6C2.SetValue(True)
 
+   def OnClickedR6C3(self, event):
+      btnR6C3Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR6C3Label))
+      #core.shellCall([sys.executable, "../Antonyms/Antonyms_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      self.cbR6C3.SetValue(True)
+
    def OnClickedR7C2(self, event):
       btnR7C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR7C2Label))
@@ -584,6 +611,19 @@ class Mywin(wx.Frame):
       print("Label of pressed button = %s"%(btnR9C3Label))
       core.shellCall([sys.executable, "../Matrices/MatricesWClockMainv2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR9C3.SetValue(True)
+
+   def OnClickedRMemC2(self, event):
+      btnMemC2Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnMemC2Label))
+      #core.shellCall([sys.executable, "../Matrices/MatricesWClockMainv2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      self.cbRMemC2.SetValue(True)
+      
+   def OnClickedRMemC3(self, event):
+      btnMemC3Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnMemC3Label))
+      #core.shellCall([sys.executable, "../Matrices/MatricesWClockMainv2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      self.cbRMemC3.SetValue(True)      
+      
       
    def CloseGUI(self,event):
         self.Close()
