@@ -29,7 +29,7 @@ os.chdir(_thisDir)
 # #################
 # Store info about the experiment session
 expName = u'SRT'  # from the Builder filename that created this script
-task = 'ImmRecall'
+task = 'DelayedRecall'
 expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
@@ -98,7 +98,8 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 instr = visual.TextStim(win=win, name='instr',
-    text=u'You will see a list of 12 words, presented one by one. \n\nAfter you see the list you will have to recall as many words as you can\nby speaking them out loud.\n\nFor those items that were not recalled during the current trial, the words will be repeated and you  \nare to again recall as many of the original list words as they can. \nThis procedure is repeated for 5 trials.\n \nPress [return] to begin',
+    text=u'Please think back to the list of words you studied before.\nYou will need to recall as many words as you can by speaking them out loud.\n\nPress [return] to begin',
+ #   You will see a list of 12 words, presented one by one. \n\nAfter you see the list you will have to recall as many words as you can\nby speaking them out loud.\n\nFor those items that were not recalled during the current trial, the words will be repeated and you  \nare to again recall as many of the original list words as they can. \nThis procedure is repeated for 5 trials.\n \nPress [return] to begin',
     font=u'Arial',
     units='pix', pos=(0, 0), height=45, wrapWidth=1000, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
@@ -214,7 +215,7 @@ for thisComponent in InstructionsComponents:
 routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
-Blocks = data.TrialHandler(nReps=5, method='sequential', 
+Blocks = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
     trialList=[None],
     seed=None, name='Blocks')
@@ -227,9 +228,12 @@ if thisBlock != None:
 
 # create a selection list for the words
 # use tjis to decide which word to present
+
 SelectionList = list(range(0,12,1))
 ThisBlockSelList = ",".join(str(i) for i in SelectionList)
-    # set up handler to look after randomisation of conditions etc
+
+
+# set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
     trialList=data.importConditions('../SelectiveReminding/WordList.csv', selection=ThisBlockSelList),
@@ -245,6 +249,8 @@ for i in trials.trialList:
     WordList.append(i['Word'])
     CorrList.append(i['corr'])
 
+ThisBlockSelList = []
+ThisBlockSelList.append(12)
 
 BlockCount = 0
 for thisBlock in Blocks:
