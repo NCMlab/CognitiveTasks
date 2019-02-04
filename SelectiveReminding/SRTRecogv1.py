@@ -26,14 +26,45 @@ import pandas as pd
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
+
+# #################
 # Store info about the experiment session
-expName = u'SRTRecog'  # from the Builder filename that created this script
-expInfo = {u'session': u'001', u'participant': u''}
+expName = u'SRT'  # from the Builder filename that created this script
+task = 'Recog'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
+if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
+    expInfo['Participant ID'] = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
 
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
+    PartDataFolder = OutDir
+ 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+BGColor = 'grey'
+FontColor = 'white'
+FontSize = 60
+InstrFontSize = 35
+
+# #################
+# Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 dataFile = open(filename+'.csv', 'w')#a simple text file with 'comma-separated-values'
 dataFile.write('NRecognized, Word01, Word02, Word03, Word04, Word05, Word06, Word07, Word08, Word09, Word10, Word11, Word12, Word13, Word14, Word15, Word16, Word17, Word18, Word19, Word20\n')
 
