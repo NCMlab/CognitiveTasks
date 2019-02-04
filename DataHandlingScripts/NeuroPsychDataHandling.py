@@ -67,6 +67,14 @@ class NeuroPsychData():
         TaskList['Speed_PatternComp']['Completed'] = False  
         TaskList['Vocab_Antonyms'] = {}
         TaskList['Vocab_Antonyms']['Completed'] = False  
+        TaskList['Vocab_NART'] = {}
+        TaskList['Vocab_NART']['Completed'] = False
+        TaskList['SRT_ImmRecall'] = {}
+        TaskList['SRT_ImmRecall']['Completed'] = False  
+        TaskList['SRT_DelayedRecall'] = {}
+        TaskList['SRT_DelayedRecall']['Completed'] = False  
+        TaskList['SRT_Recog'] = {}
+        TaskList['SRT_Recog']['Completed'] = False          
         self.TaskList = TaskList
     
     def AssignCheckBoxValues(self):
@@ -84,6 +92,11 @@ class NeuroPsychData():
         self.TaskList['DMS_Block']['CBLoc'] = 'cbR5C6'
         self.TaskList['Speed_PatternComp']['CBLoc'] = 'cbR8C2'
         self.TaskList['Vocab_Antonyms']['CBLoc'] = 'cbR6C2'
+        self.TaskList['Vocab_NART']['CBLoc'] = 'cbR6C3'
+        self.TaskList['SRT_ImmRecall']['CBLoc'] = 'cbRMemC2'
+        self.TaskList['SRT_DelayedRecall']['CBLoc'] = 'cbRMemC3'
+        self.TaskList['SRT_Recog']['CBLoc'] = 'cbRMemC4'
+        
         
             
     def FindParticipantID(self):

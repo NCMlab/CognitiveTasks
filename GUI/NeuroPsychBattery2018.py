@@ -188,11 +188,14 @@ class Mywin(wx.Frame):
       self.btnRMemC2.Bind(wx.EVT_BUTTON,self.OnClickedRMemC2) 
       self.btnRMemC3 = wx.Button(self.panel,-1,"Delayed", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnRMemC3.Bind(wx.EVT_BUTTON,self.OnClickedRMemC3) 
-    # Box
+      self.btnRMemC4 = wx.Button(self.panel,-1,"Recog", pos = (Col4,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnRMemC4.Bind(wx.EVT_BUTTON,self.OnClickedRMemC4) 
+      # Box
       RowMemBoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
       # Checkboxes
       self.cbRMemC2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
       self.cbRMemC3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
+      self.cbRMemC4 = wx.CheckBox(self.panel, -1, label = "", pos = (Col4 + ButtonWidth+5,CurrentRow))
       
 # #### Row 
       CurrentRow = Row6
@@ -576,7 +579,7 @@ class Mywin(wx.Frame):
    def OnClickedR6C3(self, event):
       btnR6C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR6C3Label))
-      #core.shellCall([sys.executable, "../Antonyms/Antonyms_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../AMNART/AMNARTv3.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR6C3.SetValue(True)
 
    def OnClickedR7C2(self, event):
@@ -615,15 +618,20 @@ class Mywin(wx.Frame):
    def OnClickedRMemC2(self, event):
       btnMemC2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC2Label))
-      #core.shellCall([sys.executable, "../Matrices/MatricesWClockMainv2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC2.SetValue(True)
       
    def OnClickedRMemC3(self, event):
       btnMemC3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC3Label))
-      #core.shellCall([sys.executable, "../Matrices/MatricesWClockMainv2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingDelayedv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC3.SetValue(True)      
-      
+
+   def OnClickedRMemC4(self, event):
+      btnMemC4Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnMemC4Label))
+      core.shellCall([sys.executable, "../SelectiveReminding/SRTRecogv1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      self.cbRMemC4.SetValue(True)  
       
    def CloseGUI(self,event):
         self.Close()

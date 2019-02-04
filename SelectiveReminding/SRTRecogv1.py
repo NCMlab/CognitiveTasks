@@ -65,7 +65,6 @@ InstrFontSize = 35
 
 # #################
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
 dataFile = open(filename+'.csv', 'w')#a simple text file with 'comma-separated-values'
 dataFile.write('NRecognized, Word01, Word02, Word03, Word04, Word05, Word06, Word07, Word08, Word09, Word10, Word11, Word12, Word13, Word14, Word15, Word16, Word17, Word18, Word19, Word20\n')
 
