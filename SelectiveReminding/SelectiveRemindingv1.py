@@ -214,7 +214,7 @@ for thisComponent in InstructionsComponents:
 routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
-Blocks = data.TrialHandler(nReps=5, method='sequential', 
+Blocks = data.TrialHandler(nReps=6, method='sequential', 
     extraInfo=expInfo, originPath=-1,
     trialList=[None],
     seed=None, name='Blocks')
