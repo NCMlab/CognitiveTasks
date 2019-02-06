@@ -3,6 +3,9 @@ from psychopy.tools.filetools import fromFile, toFile
 import time, numpy, random
 import os
 import sys
+# Ensure that relative paths start from the same directory as this script
+_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+os.chdir(_thisDir)
 
 task = 'FRTstair_'
 expInfo = {'Max Trials':150, 'Participant ID':'', 'Session':'001'}
@@ -20,6 +23,8 @@ expInfo['expName'] = task
 
 FontColor = 'white'
 BGColor = 'grey'
+FontSizeUnits = 'pix'
+FontSize = 40
 
 #make a text file to save data
 #OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
@@ -54,7 +59,7 @@ win = visual.Window(
     blendMode='avg', useFBO=True, units = 'pix')
     
 trials1 = data.TrialHandler(nReps=1, method='random', 
-    trialList=data.importConditions('FRTPsychopyFiles/FRTStairCaseTrials.csv'),
+    trialList=data.importConditions(os.path.join(_thisDir,'FRTStairCaseTrials.csv')),
     seed=None, name='trials1')
 
 #and some handy clocks to keep track of time
@@ -186,13 +191,13 @@ for thisStep in staircase:
     # update component parameters for each repeat
 
     LEFTimage.setOpacity(FaceOpacity)
-    LEFTimage.setImage(os.path.join('FRTPsychopyFiles',imageL))
+    LEFTimage.setImage(os.path.join(_thisDir,imageL))
     LEFTnoiseimage.setOpacity(NoiseOpacity)
-    LEFTnoiseimage.setImage(os.path.join('FRTPsychopyFiles',imageLn))
+    LEFTnoiseimage.setImage(os.path.join(_thisDir, imageLn))
     RIGHTimage.setOpacity(FaceOpacity)
-    RIGHTimage.setImage(os.path.join('FRTPsychopyFiles',imageR))
+    RIGHTimage.setImage(os.path.join(_thisDir, imageR))
     RIGHTnoiseimage.setOpacity(NoiseOpacity)
-    RIGHTnoiseimage.setImage(os.path.join('FRTPsychopyFiles',imageRn))
+    RIGHTnoiseimage.setImage(os.path.join(_thisDir, imageRn))
     
     LEFTimage.draw()
     LEFTnoiseimage.draw()
@@ -243,6 +248,15 @@ for thisStep in staircase:
     # Check for an overall elapsed time and a total trial count
     # If either of these are exceeded, then end the experiment
     if len(staircase.data) > MaxTrials:
+        # Thank you
+        countDown = core.CountdownTimer()
+        textThankyou.setAutoDraw(True)
+        countDown.add(3)
+        win.flip()
+        while countDown.getTime() > 0:
+            pass   
+        win.flip()
+        
         win.close()
         EndFlag = 'MaxTrialsExceeded'
         dataFile.write('%s\n'%(EndFlag))
@@ -259,9 +273,18 @@ for thisStep in staircase:
         # write capacity to a file so it can be read from the main program
         #tempDataFile.write('%0.4f'%(Capacity))
         #tempDataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if globalClock.getTime() > MaxTime*60:
+                # Thank you
+        countDown = core.CountdownTimer()
+        textThankyou.setAutoDraw(True)
+        countDown.add(3)
+        win.flip()
+        while countDown.getTime() > 0:
+            pass   
+        win.flip()
+
         win.close()
         EndFlag = 'TimeExceeded'
         dataFile.write('%s\n'%(EndFlag))
@@ -278,9 +301,18 @@ for thisStep in staircase:
         # write capacity to a file so it can be read from the main program
         #tempDataFile.write('%0.4f'%(Capacity))
         #tempDataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if "escape" in k:
+                # Thank you
+        countDown = core.CountdownTimer()
+        textThankyou.setAutoDraw(True)
+        countDown.add(3)
+        win.flip()
+        while countDown.getTime() > 0:
+            pass   
+        win.flip()
+        
         win.close()
         EndFlag = 'UserEscape'
         dataFile.write('%s\n'%(EndFlag))
@@ -297,33 +329,26 @@ for thisStep in staircase:
         # write capacity to a file so it can be read from the main program
         #tempDataFile.write('%0.4f'%(Capacity))
         #tempDataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
         
     TrialCount += 1
     #
 print EndFlag
 
-# Thank you
-textThankyou.setAutoDraw(True)
-countDown.add(5)
-win.flip()
-while countDown.getTime() > 0:
-    pass   
-win.flip()
-
-Capacity = 1-numpy.mean(staircase.reversalIntensities)
-dataFile1.write('%0.4f'%(Capacity))
-print
-print "Capacity is: %0.4f"%(Capacity)     
-print "Number of reversals: %i"%(len(staircase.reversalPoints))
-dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
-dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
-dataFile.close()
-# write capacity to a file so it can be read from the main program
-# tempDataFile.write('%0.4f'%(Capacity))
-# tempDataFile.close()
-
-staircase.saveAsText(StairCasefileName,delim=',')
-win.close()
-core.quit()
+#
+#Capacity = 1-numpy.mean(staircase.reversalIntensities)
+#dataFile1.write('%0.4f'%(Capacity))
+#print
+#print "Capacity is: %0.4f"%(Capacity)     
+#print "Number of reversals: %i"%(len(staircase.reversalPoints))
+#dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
+#dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
+#dataFile.close()
+## write capacity to a file so it can be read from the main program
+## tempDataFile.write('%0.4f'%(Capacity))
+## tempDataFile.close()
+#
+#staircase.saveAsText(StairCasefileName,delim=',')
+#win.close()
+#core.quit()

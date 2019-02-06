@@ -424,6 +424,14 @@ for thisStep in staircase:
     # Check for an overall elapsed time and a total trial count
     # If either of these are exceeded, then end the experiment
     if len(staircase.data) > MaxTrials:
+        # Thank you
+        countDown = core.CountdownTimer()
+        textThankyou.setAutoDraw(True)
+        countDown.add(3)
+        win.flip()
+        while countDown.getTime() > 0:
+            pass   
+        win.flip()
         win.close()
         EndFlag = 'MaxTrialsExceeded'
         dataFile.write('%s\n'%(EndFlag))
@@ -437,9 +445,18 @@ for thisStep in staircase:
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if globalClock.getTime() > MaxTime*60:
+        # Thank you
+        countDown = core.CountdownTimer()
+        textThankyou.setAutoDraw(True)
+        countDown.add(3)
+        win.flip()
+        while countDown.getTime() > 0:
+            pass   
+        win.flip()
+
         win.close()
         EndFlag = 'TimeExceeded'
         dataFile.write('%s\n'%(EndFlag))
@@ -453,9 +470,19 @@ for thisStep in staircase:
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if "escape" in k:
+        # Thank you
+        countDown = core.CountdownTimer()
+        textThankyou.setAutoDraw(True)
+        countDown.add(3)
+        win.flip()
+        while countDown.getTime() > 0:
+            pass   
+        win.flip()
+
+
         win.close()
         EndFlag = 'UserEscape'
         dataFile.write('%s\n'%(EndFlag))
@@ -469,26 +496,27 @@ for thisStep in staircase:
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
 print EndFlag
-
-textThankyou.setAutoDraw(True)
-countDown.add(5)
-win.flip()
-while countDown.getTime() > 0:
-    pass   
-win.flip()
-
-Capacity = 10-np.mean(staircase.reversalIntensities)
-Capacity = Capacity
-dataFile1.write('%0.4f'%(Capacity))
-print
-print "Capacity is: %0.4f"%(Capacity)     
-print "Number of reversals: %i"%(len(staircase.reversalPoints))
-dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
-dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
-dataFile.close()
-staircase.saveAsText(StairCasefileName,delim=',')
-win.close()
-core.quit()
+## Thank you
+#countDown = core.CountdownTimer()
+#textThankyou.setAutoDraw(True)
+#countDown.add(3)
+#win.flip()
+#while countDown.getTime() > 0:
+#    pass   
+#win.flip()
+#
+#Capacity = 10-np.mean(staircase.reversalIntensities)
+#Capacity = Capacity
+#dataFile1.write('%0.4f'%(Capacity))
+#print
+#print "Capacity is: %0.4f"%(Capacity)     
+#print "Number of reversals: %i"%(len(staircase.reversalPoints))
+#dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
+#dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
+#dataFile.close()
+#staircase.saveAsText(StairCasefileName,delim=',')
+#win.close()
+#core.quit()

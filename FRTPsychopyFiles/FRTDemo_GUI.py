@@ -38,7 +38,8 @@ else:
         core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
-
+FontSizeUnits = 'pix'
+FontSize = 40
 
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
