@@ -630,7 +630,7 @@ class Mywin(wx.Frame):
    def OnClickedRMemC4(self, event):
       btnMemC4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC4Label))
-      core.shellCall([sys.executable, "../SelectiveReminding/SRTRecogv1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../SelectiveReminding/SRTRecogSequentialPres.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC4.SetValue(True)  
       
    def CloseGUI(self,event):
