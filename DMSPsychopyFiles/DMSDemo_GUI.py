@@ -744,9 +744,9 @@ if pracTrials.trialList in ([], [None], None):
 else:
     params = pracTrials.trialList[0].keys()
 # save data for this loop
-pracTrials.saveAsExcel(filename + '.xlsx', sheetName='pracTrials',
-    stimOut=params,
-    dataOut=['n','all_mean','all_std', 'all_raw'])
+#pracTrials.saveAsExcel(filename + '.xlsx', sheetName='pracTrials',
+#    stimOut=params,
+#    dataOut=['n','all_mean','all_std', 'all_raw'])
 
 # ------Prepare to start Routine "mainInstruct"-------
 #t = 0
@@ -819,7 +819,7 @@ pracTrials.saveAsExcel(filename + '.xlsx', sheetName='pracTrials',
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
-thisExp.saveAsPickle(filename)
+#thisExp.saveAsPickle(filename)
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
 win.close()
