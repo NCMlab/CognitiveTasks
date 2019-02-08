@@ -67,11 +67,11 @@ InstrFontSize = 35
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-    savePickle=False, saveWideText=False,
+    savePickle=False, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
-logFile = logging.LogFile(filename+'.log', level=logging.EXP)
-logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
+#logFile = logging.LogFile(filename+'.log', level=logging.EXP)
+#logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
@@ -93,9 +93,9 @@ else:
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 Instr = visual.TextStim(win=win, name='Instr',
-    text='Please read each word and state yes or no out loud whether or not each word part of the word list you studied.\n\nPress any key to begin',
+    text='Please read each word and state yes or no whether it was in the word list you studied.\n\nPress any key to begin',
     font='Arial',
-    units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=45, wrapWidth=1000, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -417,7 +417,7 @@ for thisComponent in ThankYouComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
 # these shouldn't be strictly necessary (should auto-save)
-#thisExp.saveAsWideText(filename+'.csv')
+thisExp.saveAsWideText(filename+'.csv')
 #thisExp.saveAsPickle(filename)
 #logging.flush()
 # make sure everything is closed down
