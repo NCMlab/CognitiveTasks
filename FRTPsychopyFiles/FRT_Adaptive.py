@@ -61,7 +61,7 @@ BGColor = 'grey'
 DropBoxFolder = BehavioralDataFolder
 #os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
 # OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
+OutDir = os.path.join(DropBoxFolder, PartDataFolder)
 
 
 filename = OutDir + os.sep + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])

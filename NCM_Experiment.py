@@ -39,7 +39,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # import parameters from a config file
-sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+sys.path.append(os.path.join(_thisDir, 'ConfigFiles'))
 
 # Check to see if the output data folder has been identified
 try:
@@ -52,7 +52,7 @@ try:
         
 except:
     DDapp = wx.PySimpleApp()
-    dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+    dialog = wx.DirDialog(None, "Choose a top level data outut directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
     if dialog.ShowModal() == wx.ID_OK:
         print(dialog.GetPath())
     dialog.Destroy()
@@ -211,7 +211,7 @@ class Mywin(wx.Frame):
         DropBoxFolder = BehavioralDataFolder
 #        os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
         # OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-        OutDir = os.path.join(DropBoxFolder, 'data',PartID)
+        OutDir = os.path.join(DropBoxFolder, PartID)
         # OutDir = '..' + os.sep + 'data' + os.sep + PartID + os.sep
         CapFile=open(OutDir + os.sep+'CAPACITY_%s%s_%s.txt' % (task, PartID, dateStr),'r')
         
@@ -254,7 +254,7 @@ class Mywin(wx.Frame):
         DropBoxFolder = BehavioralDataFolder
 #        os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
         # OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-        OutDir = os.path.join(DropBoxFolder, 'data',PartID)
+        OutDir = os.path.join(DropBoxFolder, PartID)
         # OutDir = '..' + os.sep + 'data' + os.sep + PartID + os.sep
         CapFile=open(OutDir + os.sep+'CAPACITY_%s%s_%s.txt' % (task, PartID, dateStr),'r')
       
@@ -285,7 +285,7 @@ class Mywin(wx.Frame):
       
       DropBoxFolder = BehavioralDataFolder
 #      os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
-      PartDataFolder = os.path.join(DropBoxFolder,'data', self.PartID.GetValue())
+      PartDataFolder = os.path.join(DropBoxFolder, self.PartID.GetValue())
       print('Saving data to:\n\t%s'%(PartDataFolder))
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])
       core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive5Load_v4.py", self.PartID.GetValue(), PartDataFolder, self.DMSBlockLoadLevels, '60', 'BehRun1'])

@@ -35,7 +35,7 @@ FontSize = 40
 DropBoxFolder = BehavioralDataFolder
 #os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
 # OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
+OutDir = os.path.join(DropBoxFolder, PartDataFolder)
 
 # If the subject path does not exist, than make it
 if not os.path.exists(OutDir):
