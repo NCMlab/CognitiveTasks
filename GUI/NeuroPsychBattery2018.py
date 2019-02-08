@@ -16,9 +16,37 @@ import glob
 sys.path.insert(0, '../DataHandlingScripts')
 import NeuroPsychDataHandling
 
+
+# Ensure that relative paths start from the same directory as this script
+_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+os.chdir(_thisDir)
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NCM_NeuroPsych_Config import *
+# Check to see if the output data folder has been identified
+try:
+    # try to lod the config file
+    from NeuropsychDataFolder import *
+    # See if the variable is in it
+    print('Data being saved to: %s'%(NeuropsychDataFolder))
+    if not os.path.exists(NeuropsychDataFolder):
+        raise ValueError('Folder does not exist.')
+        
+except:
+    DDapp = wx.PySimpleApp()
+    dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+    if dialog.ShowModal() == wx.ID_OK:
+        print(dialog.GetPath())
+    dialog.Destroy()
+    # write the selected folder to the config file
+    fid = open(os.path.join(_thisDir, '..','ConfigFiles','NeuropsychDataFolder.py'),'w')
+    fid.write('NeuropsychDataFolder = \'%s\''%(dialog.GetPath()))
+    fid.close()
+    NeuropsychDataFolder = dialog.GetPath()
+    
+#    from tkinter  
+#    ed = filedialog.askdirectory()
+
 
 Top = 20
 Left = 20
@@ -55,7 +83,8 @@ class Mywin(wx.Frame):
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
       
-      self.DataFolder = OutputDataFolder
+      self.DataFolder = NeuropsychDataFolder
+      print(NeuropsychDataFolder)
       if not os.path.exists(self.DataFolder):
         # If my specified folder does not exist, then put the data up two folders.
             self.DataFolder = "../../data"
@@ -631,11 +660,11 @@ class Mywin(wx.Frame):
       core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingDelayedv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC5.SetValue(True)      
 
-   def OnClickedRMemC4(self, event):
-      btnMemC4Label = event.GetEventObject().GetLabel() 
-      print("Label of pressed button = %s"%(btnMemC4Label))
+   def OnClickedRMemC6(self, event):
+      btnMemC6Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnMemC6Label))
       core.shellCall([sys.executable, "../SelectiveReminding/SRTRecogSequentialPres.py", self.PartID.GetValue(), self.VisitFolderPath])
-      self.cbRMemC4.SetValue(True)  
+      self.cbRMemC6.SetValue(True)  
 
    def CloseGUI(self,event):
         self.Close()
