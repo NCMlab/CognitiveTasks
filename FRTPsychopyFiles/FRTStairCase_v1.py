@@ -21,6 +21,10 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = task
 #expInfo['Participant ID'] = 'TestGUI'
 
+# import parameters from a config file
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from BehavioralDataFolder import *
+
 FontColor = 'white'
 BGColor = 'grey'
 FontSizeUnits = 'pix'
@@ -28,7 +32,8 @@ FontSize = 40
 
 #make a text file to save data
 #OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+DropBoxFolder = BehavioralDataFolder
+#os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
 # OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
 OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
 

@@ -38,6 +38,32 @@ import numpy as np
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
+# import parameters from a config file
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+
+# Check to see if the output data folder has been identified
+try:
+    # try to lod the config file
+    from BehavioralDataFolder import *
+    # See if the variable is in it
+    print('Data being saved to: %s'%(BehavioralDataFolder))
+    if not os.path.exists(BehavioralDataFolder):
+        raise ValueError('Folder does not exist.')
+        
+except:
+    DDapp = wx.PySimpleApp()
+    dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+    if dialog.ShowModal() == wx.ID_OK:
+        print(dialog.GetPath())
+    dialog.Destroy()
+    # write the selected folder to the config file
+    fid = open(os.path.join(_thisDir, 'ConfigFiles','BehavioralDataFolder.py'),'w')
+    fid.write('BehavioralDataFolder = \'%s\''%(dialog.GetPath()))
+    fid.close()
+    BehavioralDataFolder = dialog.GetPath()
+ 
+
+
 # https://www.tutorialspoint.com/wxpython/wxpython_buttons.htm
 # https://groups.google.com/forum/#!topic/psychopy-users/3V8YUAwsdIs
 
@@ -182,7 +208,8 @@ class Mywin(wx.Frame):
         PartID = self.PartID.GetValue()
         #fileName = task + PartID + "_"+ dateStr
         
-        DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+        DropBoxFolder = BehavioralDataFolder
+#        os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
         # OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
         OutDir = os.path.join(DropBoxFolder, 'data',PartID)
         # OutDir = '..' + os.sep + 'data' + os.sep + PartID + os.sep
@@ -224,7 +251,8 @@ class Mywin(wx.Frame):
         PartID = self.PartID.GetValue()
         #fileName = task + PartID + "_"+ dateStr
         
-        DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+        DropBoxFolder = BehavioralDataFolder
+#        os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
         # OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
         OutDir = os.path.join(DropBoxFolder, 'data',PartID)
         # OutDir = '..' + os.sep + 'data' + os.sep + PartID + os.sep
@@ -255,7 +283,8 @@ class Mywin(wx.Frame):
       print self.PartID.GetValue()
       print self.DMSBlockLoadLevels
       
-      DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+      DropBoxFolder = BehavioralDataFolder
+#      os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
       PartDataFolder = os.path.join(DropBoxFolder,'data', self.PartID.GetValue())
       print('Saving data to:\n\t%s'%(PartDataFolder))
       #core.shellCall([sys.executable, "DMSPsychopyFiles/DMS_Adaptive_v2.py", self.PartID.GetValue(), self.DMSBlockLoadLevels])

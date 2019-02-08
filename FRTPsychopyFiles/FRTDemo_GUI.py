@@ -38,6 +38,11 @@ else:
         core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 
+
+# import parameters from a config file
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from BehavioralDataFolder import *
+
 FontSizeUnits = 'pix'
 FontSize = 40
 
@@ -45,7 +50,8 @@ FontSize = 40
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 #filename = _thisDir + os.sep + u'data' + os.sep + '%s_%s_%s' % (expName, expInfo['Participant ID'], expInfo['date'])
 #OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
-DropBoxFolder = os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
+DropBoxFolder = BehavioralDataFolder
+#os.path.join('/Users','jasonsteffener','Dropbox','steffenercolumbia','Projects','MyProjects','NeuralCognitiveMapping')
 # OutDir = '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
 OutDir = os.path.join(DropBoxFolder, 'data',PartDataFolder)
 
@@ -54,7 +60,7 @@ filename = OutDir + os.sep+'%s_%s_%s' % (expName, expInfo['Participant ID'], exp
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/Users/jasonsteffener/Dropbox/NeuralCognitiveMapping/FRTPsychopyFiles/FRTDemo.psyexp',
+    originPath=os.path.join(_thisDir, 'FRTDemo.psyexp'),
     savePickle=False, saveWideText=True,
     dataFileName=filename)
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
