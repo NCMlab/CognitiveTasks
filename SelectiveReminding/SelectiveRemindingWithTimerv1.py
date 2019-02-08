@@ -25,8 +25,11 @@ import sys  # to get file system encoding
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
-
 # #################
+# import parameters from a config file
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from NCM_NeuroPsych_Config import *
+
 # Store info about the experiment session
 expName = u'SRT'  # from the Builder filename that created this script
 task = 'ImmRecall'
@@ -147,6 +150,7 @@ Clock = visual.TextStim(win=win, name='Clock',
     pos=(400, -400), height=30, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-19.0);
+    
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 

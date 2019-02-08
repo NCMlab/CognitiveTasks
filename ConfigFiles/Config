@@ -1,0 +1,4 @@
+# Config Parameters
+
+# SRT Task
+ResponseTimeAllowed = 60 # seconds
