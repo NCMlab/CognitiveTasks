@@ -16,6 +16,10 @@ import glob
 sys.path.insert(0, '../DataHandlingScripts')
 import NeuroPsychDataHandling
 
+# import parameters from a config file
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from NCM_NeuroPsych_Config import *
+
 Top = 20
 Left = 20
 RowWidth = 50
@@ -51,7 +55,7 @@ class Mywin(wx.Frame):
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
       
-      self.DataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
+      self.DataFolder = OutputDataFolder
       if not os.path.exists(self.DataFolder):
         # If my specified folder does not exist, then put the data up two folders.
             self.DataFolder = "../../data"
