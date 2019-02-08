@@ -92,7 +92,7 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/home/jsteffe/Dropbox/SteffenerColumbia/Projects/MyProjects/NeuralCognitiveMapping/DMSPsychopyFiles/DMS_Adaptive.psyexp',
+    originPath=os.path.join(_thisDir, 'DMS_Adaptive.psyexp'),
     savePickle=False, saveWideText=True,
     dataFileName=filename)
 # Which input file to use

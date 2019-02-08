@@ -19,6 +19,8 @@ The second is the staircase adaptive difficulty version of the two tasks. The th
 ### NCM_fMRI_GUI.py
 This is a GUI which runs the DMS task and the WORD tasks and will be used for the MRI aspect of this experiment.
 
+This file looks for a file named BehavioralDataFolder.py in the folder ConfigFiles. This file contains a variable name of the location for all the behavioral data to be saved to. If this file does not exist, does not contain the expected info or contains the path of a folder that does not exist, a dialog box asks the user to select a folder. Once selected, this file is updated. Therefore, the user is only prompted once for this folder.
+
 ## Tasks
 ### Degraded Face Matching (FACE) Task
 This experiment is  trial based where image pairs are presented and the participant determines whether the two images are of the same person. Face pairs are presented for 2500 milliseconds with a 500 ms intertrial interval in blocks of twelve trials each. Within a block of trials, all face pairs will have the same level of degradation. Blocks will be separated by 5 seconds of rest where the participant views a fixation cross-hair at the center of the screen. Successive blocks will present images with larger levels of degradation. Responses are recorded via a keyboard press.
