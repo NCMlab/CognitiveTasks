@@ -25,7 +25,6 @@ import sys  # to get file system encoding
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
-
 # #################
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
@@ -33,7 +32,7 @@ from NCM_NeuroPsych_Config import *
 
 # Store info about the experiment session
 expName = u'SRT'  # from the Builder filename that created this script
-task = 'DelayedRecall'
+task = 'ImmRecall'
 expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
@@ -61,10 +60,10 @@ else:
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-BGColor = 'grey'
-FontColor = 'white'
-FontSize = 60
-InstrFontSize = 35
+#BGColor = 'grey'
+#FontColor = 'white'
+#FontSize = 60
+#InstrFontSize = 35
 
 # #################
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
@@ -83,8 +82,6 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
 
-WordOnTime = 2.0
-
 countDown = core.CountdownTimer()
 # Setup the Window
 win = visual.Window(
@@ -102,8 +99,7 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 instr = visual.TextStim(win=win, name='instr',
-    text=u'Please think back to the list of words you studied before.\nYou will need to recall as many words as you can by speaking them out loud.\n\nPress [return] to begin',
- #   You will see a list of 12 words, presented one by one. \n\nAfter you see the list you will have to recall as many words as you can\nby speaking them out loud.\n\nFor those items that were not recalled during the current trial, the words will be repeated and you  \nare to again recall as many of the original list words as they can. \nThis procedure is repeated for 5 trials.\n \nPress [return] to begin',
+    text=u'You will see a list of 12 words, presented one by one. \n\nAfter you see the list you will have to recall as many words as you can\nby speaking them out loud.\n\nFor those items that were not recalled during the current trial, the words will be repeated and you  \nare to again recall as many of the original list words as they can. \nThis procedure is repeated for 5 trials.\n \nPress [return] to begin',
     font=u'Arial',
     units='pix', pos=(0, 0), height=45, wrapWidth=1000, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
@@ -120,13 +116,13 @@ text = visual.TextStim(win=win, name='text',
 
 # Initialize components for Routine "EnterResponses"
 EnterResponsesClock = core.Clock()
-ResponseText = visual.TextStim(win=win, name='ResponseText',
+
+ResponseText = visual.TextStim(win=win, name='text_2',
     text=u'Please repeat the word list',
     font=u'Arial',
     units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
-
 # Get the count down clock going
 countDownStarted = False
 ResponseTimer = visual.TextStim(win=win, name='ResponseTimer',
@@ -142,8 +138,6 @@ RemainingTime = visual.TextStim(win=win, name='RemainingTime',
     units='pix', pos=(-100, -200), height=30, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=-5.0);    
-#
-
 # Initialize components for Routine "Wait"
 WaitClock = core.Clock()
 WaitText = visual.TextStim(win=win, name='WaitText',
@@ -161,7 +155,8 @@ textThankyou = visual.TextStim(win=win, name='Thanks',
     units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
-
+    
+    
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
@@ -236,7 +231,7 @@ for thisComponent in InstructionsComponents:
 routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
-Blocks = data.TrialHandler(nReps=1, method='sequential', 
+Blocks = data.TrialHandler(nReps=5, method='sequential', 
     extraInfo=expInfo, originPath=-1,
     trialList=[None],
     seed=None, name='Blocks')
@@ -249,15 +244,12 @@ if thisBlock != None:
 
 # create a selection list for the words
 # use tjis to decide which word to present
-
 SelectionList = list(range(0,12,1))
 ThisBlockSelList = ",".join(str(i) for i in SelectionList)
-
-
-# set up handler to look after randomisation of conditions etc
+    # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('../SelectiveReminding/WordList.csv', selection=ThisBlockSelList),
+    trialList=data.importConditions(os.path.join(_thisDir,'WordList.csv'), selection=ThisBlockSelList),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -270,8 +262,6 @@ for i in trials.trialList:
     WordList.append(i['Word'])
     CorrList.append(i['corr'])
 
-ThisBlockSelList = []
-ThisBlockSelList.append(12)
 
 BlockCount = 0
 for thisBlock in Blocks:
@@ -287,7 +277,7 @@ for thisBlock in Blocks:
         # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='sequential',    
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('../SelectiveReminding/WordList.csv', selection=ThisBlockSelList),
+        trialList=data.importConditions(os.path.join(_thisDir,'WordList.csv'), selection=ThisBlockSelList),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -310,7 +300,7 @@ for thisBlock in Blocks:
         trialClock.reset()  # clock
         frameN = -1
         continueRoutine = True
-        routineTimer.add(WordOnTime)
+        routineTimer.add(SRT_WordOnTime)
         # update component parameters for each repeat
         text.setText(Word)
         # keep track of which components have finished
@@ -332,7 +322,7 @@ for thisBlock in Blocks:
                 text.tStart = t
                 text.frameNStart = frameN  # exact frame index
                 text.setAutoDraw(True)
-            frameRemains = 0.0 + WordOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
+            frameRemains = 0.0 + SRT_WordOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
             if text.status == STARTED and t >= frameRemains:
                 text.setAutoDraw(False)
             
@@ -373,7 +363,6 @@ for thisBlock in Blocks:
     if not countDownStarted:
         countDownClock = core.CountdownTimer(SRT_ResponseTimeAllowed)
         countDownStarted = True
-
     # keep track of which components have finished
     EnterResponsesComponents = [ResponseText, key_resp_2, key_resp_3, ResponseTimer, RemainingTime]
     for thisComponent in EnterResponsesComponents:
@@ -387,7 +376,7 @@ for thisBlock in Blocks:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *ResponseText* updates
+        # *text_2* updates
         if t >= 0.0 and ResponseText.status == NOT_STARTED:
             # keep track of start time/frame for later
             ResponseText.tStart = t
@@ -429,8 +418,6 @@ for thisBlock in Blocks:
             if len(theseKeys) > 0:  # at least one key was pressed
                 # a response ends the routine
                 continueRoutine = False
-        
-        
         # This is for the countdown timer
         timeRemaining = countDownClock.getTime()
         if timeRemaining <= 0.0:
@@ -457,7 +444,7 @@ for thisBlock in Blocks:
             RemainingTime.tStart = t
             RemainingTime.frameNStart = frameN  # exact frame index
             RemainingTime.setAutoDraw(True)
-
+            
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
             break
@@ -485,6 +472,8 @@ for thisBlock in Blocks:
     Blocks.addData('key_resp_2.keys',key_resp_2.keys)
     if key_resp_2.keys != None:  # we had a response
         Blocks.addData('key_resp_2.rt', key_resp_2.rt)
+    # reset the timer for each recall attempt    
+    countDownStarted = False
     # the Routine "EnterResponses" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     

@@ -139,7 +139,14 @@ textThankyou = visual.TextStim(win=win, name='Thanks',
     units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
-
+    
+# on screen timer
+Clock = visual.TextStim(win=win, name='Clock',
+    text='default text',
+    font='Arial',
+    pos=(400, -400), height=30, wrapWidth=None, ori=0, 
+    color='white', colorSpace='rgb', opacity=1,
+    depth=-19.0);
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
