@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.90.1),
-    on Fri Feb  8 10:36:08 2019
+    on Fri Feb  8 11:14:14 2019
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -50,7 +50,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=[1440, 900], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
@@ -89,9 +89,15 @@ countDownStarted = False
 ResponseTimer = visual.TextStim(win=win, name='ResponseTimer',
     text='default text',
     font=u'Arial',
-    units='pix', pos=(40, -40), height=45, wrapWidth=None, ori=0, 
+    units='pix', pos=(40, -200), height=30, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=-4.0);
+RemainingTime = visual.TextStim(win=win, name='RemainingTime',
+    text=u'Remaining Time:',
+    font=u'Arial',
+    units='pix', pos=(-100, -200), height=30, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=-5.0);
 
 # Initialize components for Routine "Wait"
 WaitClock = core.Clock()
@@ -291,7 +297,7 @@ for thisBlock in Blocks:
         countDownClock = core.CountdownTimer(10)
         countDownStarted = True
     # keep track of which components have finished
-    EnterResponsesComponents = [ResponseText, key_resp_2, key_resp_3, ResponseTimer]
+    EnterResponsesComponents = [ResponseText, key_resp_2, key_resp_3, ResponseTimer, RemainingTime]
     for thisComponent in EnterResponsesComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -363,6 +369,13 @@ for thisBlock in Blocks:
             ResponseTimer.setAutoDraw(True)
         if ResponseTimer.status == STARTED:  # only update if drawing
             ResponseTimer.setText(timeText, log=False)
+        
+        # *RemainingTime* updates
+        if t >= 0.0 and RemainingTime.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            RemainingTime.tStart = t
+            RemainingTime.frameNStart = frameN  # exact frame index
+            RemainingTime.setAutoDraw(True)
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine

@@ -60,10 +60,10 @@ else:
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-BGColor = 'grey'
-FontColor = 'white'
-FontSize = 60
-InstrFontSize = 35
+#BGColor = 'grey'
+#FontColor = 'white'
+#FontSize = 60
+#InstrFontSize = 35
 
 # #################
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
@@ -82,13 +82,11 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
 
-WordOnTime = 2.0
-
 countDown = core.CountdownTimer()
 # Setup the Window
 win = visual.Window(
     size=[800, 600], fullscr=True, screen=0,
-    allowGUI=True, allowStencil=False,
+    allowGUI=False, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
@@ -118,13 +116,28 @@ text = visual.TextStim(win=win, name='text',
 
 # Initialize components for Routine "EnterResponses"
 EnterResponsesClock = core.Clock()
-text_2 = visual.TextStim(win=win, name='text_2',
+
+ResponseText = visual.TextStim(win=win, name='text_2',
     text=u'Please repeat the word list',
     font=u'Arial',
     units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
-
+# Get the count down clock going
+countDownStarted = False
+ResponseTimer = visual.TextStim(win=win, name='ResponseTimer',
+    text='default text',
+    font=u'Arial',
+    units='pix', pos=(40, -200), height=30, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=-4.0);
+    
+RemainingTime = visual.TextStim(win=win, name='RemainingTime',
+    text=u'Remaining Time:',
+    font=u'Arial',
+    units='pix', pos=(-100, -200), height=30, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=-5.0);    
 # Initialize components for Routine "Wait"
 WaitClock = core.Clock()
 WaitText = visual.TextStim(win=win, name='WaitText',
@@ -243,7 +256,7 @@ ThisBlockSelList = ",".join(str(i) for i in SelectionList)
     # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('../SelectiveReminding/WordList.csv', selection=ThisBlockSelList),
+    trialList=data.importConditions(os.path.join(_thisDir,'WordList.csv'), selection=ThisBlockSelList),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -271,7 +284,7 @@ for thisBlock in Blocks:
         # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='sequential',    
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('../SelectiveReminding/WordList.csv', selection=ThisBlockSelList),
+        trialList=data.importConditions(os.path.join(_thisDir,'WordList.csv'), selection=ThisBlockSelList),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -294,7 +307,7 @@ for thisBlock in Blocks:
         trialClock.reset()  # clock
         frameN = -1
         continueRoutine = True
-        routineTimer.add(WordOnTime)
+        routineTimer.add(SRT_WordOnTime)
         # update component parameters for each repeat
         text.setText(Word)
         # keep track of which components have finished
@@ -316,7 +329,7 @@ for thisBlock in Blocks:
                 text.tStart = t
                 text.frameNStart = frameN  # exact frame index
                 text.setAutoDraw(True)
-            frameRemains = 0.0 + WordOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
+            frameRemains = 0.0 + SRT_WordOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
             if text.status == STARTED and t >= frameRemains:
                 text.setAutoDraw(False)
             
@@ -354,8 +367,11 @@ for thisBlock in Blocks:
     # update component parameters for each repeat
     key_resp_2 = event.BuilderKeyResponse()
     key_resp_3 = event.BuilderKeyResponse()
+    if not countDownStarted:
+        countDownClock = core.CountdownTimer(SRT_ResponseTimeAllowed)
+        countDownStarted = True
     # keep track of which components have finished
-    EnterResponsesComponents = [text_2, key_resp_2, key_resp_3]
+    EnterResponsesComponents = [ResponseText, key_resp_2, key_resp_3, ResponseTimer, RemainingTime]
     for thisComponent in EnterResponsesComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -368,11 +384,11 @@ for thisBlock in Blocks:
         # update/draw components on each frame
         
         # *text_2* updates
-        if t >= 0.0 and text_2.status == NOT_STARTED:
+        if t >= 0.0 and ResponseText.status == NOT_STARTED:
             # keep track of start time/frame for later
-            text_2.tStart = t
-            text_2.frameNStart = frameN  # exact frame index
-            text_2.setAutoDraw(True)
+            ResponseText.tStart = t
+            ResponseText.frameNStart = frameN  # exact frame index
+            ResponseText.setAutoDraw(True)
         
         # *key_resp_2* updates
         if t >= 0.0 and key_resp_2.status == NOT_STARTED:
@@ -409,7 +425,33 @@ for thisBlock in Blocks:
             if len(theseKeys) > 0:  # at least one key was pressed
                 # a response ends the routine
                 continueRoutine = False
+        # This is for the countdown timer
+        timeRemaining = countDownClock.getTime()
+        if timeRemaining <= 0.0:
+            continueRoutine = False
+            ResponseText.finished = True
+            countDownStarted = False
+        else:
+            seconds = int(timeRemaining)
+            timeText = "%02d"%(seconds)
         
+        
+        # *ResponseTimer* updates
+        if t >= 0.0 and ResponseTimer.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            ResponseTimer.tStart = t
+            ResponseTimer.frameNStart = frameN  # exact frame index
+            ResponseTimer.setAutoDraw(True)
+        if ResponseTimer.status == STARTED:  # only update if drawing
+            ResponseTimer.setText(timeText, log=False)
+        
+        # *RemainingTime* updates
+        if t >= 0.0 and RemainingTime.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            RemainingTime.tStart = t
+            RemainingTime.frameNStart = frameN  # exact frame index
+            RemainingTime.setAutoDraw(True)
+            
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
             break
@@ -437,6 +479,8 @@ for thisBlock in Blocks:
     Blocks.addData('key_resp_2.keys',key_resp_2.keys)
     if key_resp_2.keys != None:  # we had a response
         Blocks.addData('key_resp_2.rt', key_resp_2.rt)
+    # reset the timer for each recall attempt    
+    countDownStarted = False
     # the Routine "EnterResponses" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     

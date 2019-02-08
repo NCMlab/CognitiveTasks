@@ -94,8 +94,8 @@ class NeuroPsychData():
         self.TaskList['Vocab_Antonyms']['CBLoc'] = 'cbR6C2'
         self.TaskList['Vocab_NART']['CBLoc'] = 'cbR6C3'
         self.TaskList['SRT_ImmRecall']['CBLoc'] = 'cbRMemC2'
-        self.TaskList['SRT_DelayedRecall']['CBLoc'] = 'cbRMemC3'
-        self.TaskList['SRT_Recog']['CBLoc'] = 'cbRMemC4'
+        self.TaskList['SRT_DelayedRecall']['CBLoc'] = 'cbRMemC5'
+        self.TaskList['SRT_Recog']['CBLoc'] = 'cbRMemC6'
         
         
             
