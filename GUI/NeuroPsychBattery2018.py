@@ -651,7 +651,7 @@ class Mywin(wx.Frame):
    def OnClickedRMemC2(self, event):
       btnMemC2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC2Label))
-      core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingWithTimerv1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingWithTimerSoundsv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC2.SetValue(True)
       
    def OnClickedRMemC5(self, event):
@@ -663,7 +663,8 @@ class Mywin(wx.Frame):
    def OnClickedRMemC6(self, event):
       btnMemC6Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC6Label))
-      core.shellCall([sys.executable, "../SelectiveReminding/SRTRecogSequentialPres.py", self.PartID.GetValue(), self.VisitFolderPath])
+      #core.shellCall([sys.executable, "../SelectiveReminding/SRTRecogSequentialPres.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../SelectiveReminding/SRTRecogSequentialPresSounds.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC6.SetValue(True)  
 
    def CloseGUI(self,event):

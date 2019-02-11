@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.90.1),
-
     on Mon Feb 11 10:12:14 2019
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
@@ -12,7 +11,9 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, clock
+
+from psychopy import sound
+from psychopy import locale_setup, gui, visual, core, data, event, logging, clock
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -27,6 +28,10 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # #################
+# import parameters from a config file
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from NCM_NeuroPsych_Config import *
+
 # Store info about the experiment session
 expName = u'SRT'  # from the Builder filename that created this script
 task = 'Recog'
@@ -57,25 +62,21 @@ else:
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-BGColor = 'grey'
-FontColor = 'white'
-FontSize = 60
-InstrFontSize = 35
+#BGColor = 'grey'
+#FontColor = 'white'
+#FontSize = 60
+#InstrFontSize = 35
 
 # #################
-
-
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-
-    savePickle=False, saveWideText=True,
+    savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
-#logFile = logging.LogFile(filename+'.log', level=logging.EXP)
-#logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
-
+logFile = logging.LogFile(filename+'.log', level=logging.EXP)
+logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
@@ -83,7 +84,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1024, 768), fullscr=True, screen=0,
+    size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
@@ -97,11 +98,9 @@ else:
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 Instr = visual.TextStim(win=win, name='Instr',
-
-    text='Please read each word and state yes or no whether it was in the word list you studied.\n\nPress any key to begin',
+    text='Please read each word and state yes or no out loud whether or not each word part of the word list you studied.\n\nPress any key to begin',
     font='Arial',
-    units='pix', pos=(0, 0), height=45, wrapWidth=1000, ori=0, 
-
+    units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -113,7 +112,8 @@ text = visual.TextStim(win=win, name='text',
     units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
-
+sound_1 = sound.Sound(u'A', secs=1.0)
+sound_1.setVolume(1)
 
 # Initialize components for Routine "Crosshair"
 CrosshairClock = core.Clock()
@@ -209,9 +209,7 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-
-    trialList=data.importConditions(_thisDir,'..','..', SRTPath, 'RecogWordList.csv'),
-
+    trialList=data.importConditions(os.path.join(_thisDir,'..','..', SRTPath, 'RecogWordList.csv')),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -219,7 +217,6 @@ thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 if thisTrial != None:
     for paramName in thisTrial:
         exec('{} = thisTrial[paramName]'.format(paramName))
-
 
 # Make list of sound files
 SoundList = []
@@ -230,12 +227,15 @@ for i in trials.trialList:
     SoundList.append(TempSound)
 print('Loaded sound files')
 
+TrialCount = 0
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
         for paramName in thisTrial:
             exec('{} = thisTrial[paramName]'.format(paramName))
+    
+    sound_1 = SoundList[TrialCount]
     
     # ------Prepare to start Routine "word"-------
     t = 0
@@ -246,9 +246,7 @@ for thisTrial in trials:
     text.setText(Word)
     key_resp_3 = event.BuilderKeyResponse()
     # keep track of which components have finished
-
     wordComponents = [text, key_resp_3, sound_1]
-
     for thisComponent in wordComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -292,7 +290,6 @@ for thisTrial in trials:
                     key_resp_3.corr = 0
                 # a response ends the routine
                 continueRoutine = False
-
         # start/stop sound_1
         if t >= 0.0 and sound_1.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -334,9 +331,7 @@ for thisTrial in trials:
     trials.addData('key_resp_3.corr', key_resp_3.corr)
     if key_resp_3.keys != None:  # we had a response
         trials.addData('key_resp_3.rt', key_resp_3.rt)
-
     sound_1.stop()  # ensure sound has stopped at end of routine
-
     # the Routine "word" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
@@ -386,6 +381,8 @@ for thisTrial in trials:
         # refresh the screen
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
+    
+    TrialCount += 1
     
     # -------Ending Routine "Crosshair"-------
     for thisComponent in CrosshairComponents:
@@ -449,7 +446,8 @@ for thisComponent in ThankYouComponents:
         thisComponent.setAutoDraw(False)
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
-
+thisExp.saveAsPickle(filename)
+logging.flush()
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
 win.close()

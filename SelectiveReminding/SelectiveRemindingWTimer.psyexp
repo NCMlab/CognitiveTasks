@@ -13,7 +13,7 @@
     <Param name="Window size (pixels)" updates="None" val="[1440, 900]" valType="code"/>
     <Param name="Full-screen window" updates="None" val="False" valType="bool"/>
     <Param name="blendMode" updates="None" val="avg" valType="str"/>
-    <Param name="Use version" updates="None" val="" valType="str"/>
+    <Param name="Use version" updates="None" val="latest" valType="str"/>
     <Param name="HTML path" updates="None" val="html" valType="str"/>
     <Param name="Save csv file" updates="None" val="False" valType="bool"/>
     <Param name="OSF Project ID" updates="None" val="" valType="str"/>
@@ -32,15 +32,15 @@
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
         <Param name="name" updates="None" val="WaitText" valType="code"/>
-        <Param name="color" updates="constant" val="white" valType="str"/>
         <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="+" valType="str"/>
         <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
         <Param name="flip" updates="constant" val="" valType="str"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="text" updates="constant" val="+" valType="str"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="ori" updates="constant" val="0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
@@ -54,15 +54,15 @@
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
         <Param name="name" updates="None" val="Thanks" valType="code"/>
-        <Param name="color" updates="constant" val="white" valType="str"/>
         <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="Thank You" valType="str"/>
         <Param name="stopVal" updates="constant" val="3" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
         <Param name="flip" updates="constant" val="" valType="str"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="text" updates="constant" val="Thank You" valType="str"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="ori" updates="constant" val="0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
@@ -76,15 +76,15 @@
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
         <Param name="name" updates="None" val="instr" valType="code"/>
-        <Param name="color" updates="constant" val="white" valType="str"/>
         <Param name="wrapWidth" updates="constant" val="1000" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="You will see a list of 12 words, presented one by one. &amp;#10;&amp;#10;After you see the list you will have to recall as many words as you can&amp;#10;by speaking them out loud.&amp;#10;&amp;#10;For those items that were not recalled during the current trial, the words will be repeated and you  &amp;#10;are to again recall as many of the original list words as they can. &amp;#10;This procedure is repeated for 5 trials.&amp;#10; &amp;#10;Press [return] to begin" valType="str"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
         <Param name="flip" updates="constant" val="" valType="str"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="text" updates="constant" val="You will see a list of 12 words, presented one by one. &amp;#10;&amp;#10;After you see the list you will have to recall as many words as you can&amp;#10;by speaking them out loud.&amp;#10;&amp;#10;For those items that were not recalled during the current trial, the words will be repeated and you  &amp;#10;are to again recall as many of the original list words as they can. &amp;#10;This procedure is repeated for 5 trials.&amp;#10; &amp;#10;Press [return] to begin" valType="str"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="ori" updates="constant" val="0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
@@ -114,15 +114,15 @@
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
         <Param name="name" updates="None" val="ResponseText" valType="code"/>
-        <Param name="color" updates="constant" val="white" valType="str"/>
         <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="Please repeat the word list" valType="str"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
         <Param name="flip" updates="constant" val="" valType="str"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="text" updates="constant" val="Please repeat the word list" valType="str"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="ori" updates="constant" val="0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
@@ -165,24 +165,24 @@
       <CodeComponent name="CounterCode">
         <Param name="Begin Experiment" updates="constant" val="countDownStarted = False" valType="extendedCode"/>
         <Param name="name" updates="None" val="CounterCode" valType="code"/>
-        <Param name="Each Frame" updates="constant" val="timeRemaining = countDownClock.getTime()&amp;#10;if timeRemaining &lt;= 0.0:&amp;#10;    continueRoutine = False&amp;#10;    ResponseText.finished = True&amp;#10;    countDownStarted = False&amp;#10;else:&amp;#10;    seconds = int(timeRemaining)&amp;#10;    timeText = &quot;%02d&quot;%(seconds)&amp;#10;" valType="extendedCode"/>
         <Param name="Begin Routine" updates="constant" val="if not countDownStarted:&amp;#10;    countDownClock = core.CountdownTimer(10)&amp;#10;    countDownStarted = True" valType="extendedCode"/>
         <Param name="End Routine" updates="constant" val="countDownStarted = False" valType="extendedCode"/>
         <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="timeRemaining = countDownClock.getTime()&amp;#10;if timeRemaining &lt;= 0.0:&amp;#10;    continueRoutine = False&amp;#10;    ResponseText.finished = True&amp;#10;    countDownStarted = False&amp;#10;else:&amp;#10;    seconds = int(timeRemaining)&amp;#10;    timeText = &quot;%02d&quot;%(seconds)&amp;#10;" valType="extendedCode"/>
       </CodeComponent>
       <TextComponent name="ResponseTimer">
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
         <Param name="name" updates="None" val="ResponseTimer" valType="code"/>
-        <Param name="color" updates="constant" val="white" valType="str"/>
         <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="set every frame" val="$timeText" valType="str"/>
         <Param name="stopVal" updates="constant" val="" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="pos" updates="constant" val="(40, -200)" valType="code"/>
         <Param name="flip" updates="constant" val="" valType="str"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="text" updates="set every frame" val="$timeText" valType="str"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="ori" updates="constant" val="0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
@@ -216,15 +216,15 @@
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
         <Param name="name" updates="None" val="text" valType="code"/>
-        <Param name="color" updates="constant" val="white" valType="str"/>
         <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="set every repeat" val="$Word" valType="str"/>
         <Param name="stopVal" updates="constant" val="0.3" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
         <Param name="flip" updates="constant" val="" valType="str"/>
         <Param name="startEstim" updates="None" val="" valType="code"/>
         <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="text" updates="set every repeat" val="$Word" valType="str"/>
         <Param name="startType" updates="None" val="time (s)" valType="str"/>
         <Param name="ori" updates="constant" val="0" valType="code"/>
         <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
@@ -232,6 +232,17 @@
         <Param name="font" updates="constant" val="Arial" valType="str"/>
         <Param name="letterHeight" updates="constant" val="45" valType="code"/>
       </TextComponent>
+      <SoundComponent name="sound_1">
+        <Param name="sound" updates="constant" val="A" valType="str"/>
+        <Param name="volume" updates="constant" val="1" valType="code"/>
+        <Param name="name" updates="None" val="sound_1" valType="code"/>
+        <Param name="stopVal" updates="constant" val="0.3" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+      </SoundComponent>
     </Routine>
   </Routines>
   <Flow>
