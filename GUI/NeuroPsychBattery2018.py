@@ -328,7 +328,7 @@ class Mywin(wx.Frame):
    def LoadVSTMCapacity(self, event):
     expName = 'VSTM'
     Tag = '1'
-    CapacityFileName = os.path.join(self.VisitFolderPath, '%s_%s_%s_%s_%s.csv' % (self.PartID.GetValue(), expName, 'CAPACITY', Tag, '*'))
+    CapacityFileName = os.path.join(self.VisitFolderPath, '%s_%s_%s_%s_%s.txt' % (self.PartID.GetValue(), expName, 'CAPACITY', Tag, '*'))
     # Find the capacity file and only select the last one if there are more than one
     CapacityFileName = glob.glob(CapacityFileName)[-1]
     # Now open and read the file

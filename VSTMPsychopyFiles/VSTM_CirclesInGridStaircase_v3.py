@@ -98,7 +98,7 @@ AllowableKeys = ['1', '2', 'left','right']
 dataFile = open(filename+'.csv', 'w')
 # Create the file for the Capacity
 CapacityFileName = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, 'CAPACITY', Tag, expInfo['date']))
-dataFile1=open(CapacityFileName+'.csv', 'w')
+dataFile1=open(CapacityFileName+'.txt', 'w')
 
 # Setup the Window
 win = visual.Window(
