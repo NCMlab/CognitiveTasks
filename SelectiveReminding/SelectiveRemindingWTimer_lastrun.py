@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.90.1),
-    on Fri Feb  8 11:14:14 2019
+    on Sat Feb  9 17:13:49 2019
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -11,6 +11,10 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
+
+import psychopy
+psychopy.useVersion('latest')
+
 from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, clock
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
@@ -72,31 +76,31 @@ instr = visual.TextStim(win=win, name='instr',
 trialClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "EnterResponses"
 EnterResponsesClock = core.Clock()
 ResponseText = visual.TextStim(win=win, name='ResponseText',
-    text=u'Please repeat the word list',
-    font=u'Arial',
+    text='Please repeat the word list',
+    font='Arial',
     units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 countDownStarted = False
 ResponseTimer = visual.TextStim(win=win, name='ResponseTimer',
     text='default text',
-    font=u'Arial',
+    font='Arial',
     units='pix', pos=(40, -200), height=30, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-4.0);
 RemainingTime = visual.TextStim(win=win, name='RemainingTime',
-    text=u'Remaining Time:',
-    font=u'Arial',
+    text='Remaining Time:',
+    font='Arial',
     units='pix', pos=(-100, -200), height=30, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-5.0);
 
 # Initialize components for Routine "Wait"

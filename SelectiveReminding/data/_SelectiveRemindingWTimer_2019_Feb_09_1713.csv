@@ -1,0 +1,5 @@
+Word,corr,Blocks.thisRepN,Blocks.thisTrialN,Blocks.thisN,Blocks.thisIndex,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,date,frameRate,expName,session,participant,
+THROW,1,0,0,0,0,0,0,0,0,2019_Feb_09_1713,59.84689778964927,SelectiveRemindingWTimer,001,,
+LILY,2,0,0,0,0,0,1,1,1,2019_Feb_09_1713,59.84689778964927,SelectiveRemindingWTimer,001,,
+FILM,3,0,0,0,0,0,2,2,2,2019_Feb_09_1713,59.84689778964927,SelectiveRemindingWTimer,001,,
+DISCREET,4,0,0,0,0,0,3,3,3,2019_Feb_09_1713,59.84689778964927,SelectiveRemindingWTimer,001,,

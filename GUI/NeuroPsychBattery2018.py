@@ -618,7 +618,7 @@ class Mywin(wx.Frame):
    def OnClickedRMemC2(self, event):
       btnMemC2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC2Label))
-      core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingWithTimerv1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingWithTimerSoundsv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC2.SetValue(True)
       
    def OnClickedRMemC5(self, event):
