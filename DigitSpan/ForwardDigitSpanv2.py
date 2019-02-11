@@ -15,7 +15,8 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, gui, visual, core, data, event, logging, sound
+from psychopy import sound
+from psychopy import locale_setup, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -318,6 +319,13 @@ for thisStair in Stairs:
     Flag = True
     # Change the random numbers to all be different
     R = np.random.permutation(9) + 1
+   
+    # what if someone has a span more than 9!
+    if level > 9:
+        R1 = np.random.permutation(9) + 1
+        R2 = np.random.permutation(9) + 1
+        R = np.concatenate((R1,R2))
+    
     R = R[0:level]
     #while Flag:
     #    R = np.random.randint(1,10,level)

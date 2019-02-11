@@ -325,7 +325,7 @@ for thisComponent in GetReadyComponents:
 # set up handler to look after randomisation of conditions etc
 Practice = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('../../AntonymsTest - Sheet1.csv', selection='[0,1,2,3]'),
+    trialList=data.importConditions('../../CompanionFolderForCognitiveTasks/AntonymsTest - Sheet1.csv', selection='[0,1,2,3]'),
     seed=None, name='Practice')
 thisExp.addLoop(Practice)  # add the loop to the experiment
 thisPractice = Practice.trialList[0]  # so we can initialise stimuli with some values

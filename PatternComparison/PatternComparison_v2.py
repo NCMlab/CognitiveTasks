@@ -25,7 +25,7 @@ import sys  # to get file system encoding
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
-BaseDir = "../../PatternComparisonImages"
+BaseDir = "../../CompanionFolderForCognitiveTasks/PatternComparisonImages"
 
 # #################
 # Store info about the experiment session
