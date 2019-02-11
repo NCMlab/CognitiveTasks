@@ -251,7 +251,7 @@ ThisBlockSelList = SelectionList
     # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions(os.path.join(_thisDir,'WordList.csv'), selection=ThisBlockSelList),
+    trialList=data.importConditions(os.path.join(_thisDir,'..','..',SRTPath,'WordList.csv'), selection=ThisBlockSelList),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -292,7 +292,7 @@ for thisBlock in Blocks:
         # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='sequential',    
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions(os.path.join(_thisDir,'WordList.csv'), selection=ThisBlockSelList),
+        trialList=data.importConditions(os.path.join(_thisDir,'..','..', SRTPath, 'WordList.csv'), selection=ThisBlockSelList),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
