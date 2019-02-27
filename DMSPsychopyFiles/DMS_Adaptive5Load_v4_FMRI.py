@@ -164,7 +164,7 @@ if expInfo['frameRate'] != None:
 else:
     frameDur = 1.0 / 60.0  # could not measure, so guess
 
-InstrText1 = 'Press [LEFT] if the letter WAS in the set.\nPress [RIGHT] if the letter WAS NOT in the set.\n'
+InstrText1 = 'Press [INDEX FINGER] if the letter WAS in the set.\nPress [MIDDLE FINGER] if the letter WAS NOT in the set.\n'
 InstrText1 = InstrText1 + 'You will NOT receive feedback after each trial.\n\n'
 InstrText1 = InstrText1 + 'Remember that the letters to study will be in white and CAPITALIZED.\n'
 InstrText1 = InstrText1 + 'The test letter will be in blue and will be lowercase.\n'

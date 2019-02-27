@@ -451,6 +451,11 @@ for thisStep in staircase:
     TrialCount += 1
 
     if len(staircase.data) > MaxTrials:
+        # Thank you screen
+        textThankyou.setAutoDraw(True)
+        win.flip()
+        core.wait(3)
+
         win.close()
         EndFlag = 'MaxTrialsExceeded'
         dataFile.write('%s\n'%(EndFlag))
@@ -467,6 +472,11 @@ for thisStep in staircase:
         #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if globalClock.getTime() > MaxTime*60:
+        # Thank you screen
+        textThankyou.setAutoDraw(True)
+        win.flip()
+        core.wait(3)
+
         win.close()
         EndFlag = 'TimeExceeded'
         dataFile.write('%s\n'%(EndFlag))
@@ -483,6 +493,11 @@ for thisStep in staircase:
         #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if "escape" in theseKeys:
+        # Thank you screen
+        textThankyou.setAutoDraw(True)
+        win.flip()
+        core.wait(3)
+
         win.close()
         EndFlag = 'UserEscape'
         dataFile.write('%s\n'%(EndFlag))
@@ -500,13 +515,6 @@ for thisStep in staircase:
         #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
 print EndFlag
-# Thank you screen
-textThankyou.setAutoDraw(True)
-countDown.add(5)
-win.flip()
-while countDown.getTime() > 0:
-    pass   
-win.flip()
 
 Capacity = NLoads + 1-np.mean(staircase.reversalIntensities)
 Capacity = Capacity

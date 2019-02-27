@@ -123,7 +123,7 @@ win = visual.Window(
 #and some handy clocks to keep track of time
 globalClock = core.Clock()
 trialClock = core.Clock()
-
+countDown = core.CountdownTimer()
 Nloads =  9
 # How to shuffle the lists?
 
@@ -239,7 +239,12 @@ greenITI = visual.TextStim(win=win, name='greenITI',
     color='green', colorSpace='rgb', opacity=1,
     depth=0.0);
 
-    
+textThankyou = visual.TextStim(win=win, name='textThankyou',
+    text='Thank you for participating!',
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
+    depth=0.0);        
 # Number of trials in the file
 
 # Each trial is extracted like this.
@@ -418,6 +423,10 @@ for thisStep in staircase:
     # Check for an overall elapsed time and a total trial count
     # If either of these are exceeded, then end the experiment
     if len(staircase.data) > MaxTrials:
+        # Thank you screen
+        textThankyou.setAutoDraw(True)
+        win.flip()
+        core.wait(3)
         win.close()
         EndFlag = 'MaxTrialsExceeded'
         dataFile.write('%s\n'%(EndFlag))
@@ -434,7 +443,11 @@ for thisStep in staircase:
         staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if globalClock.getTime() > MaxTime*60:
-        win.close()
+        # Thank you screen
+        textThankyou.setAutoDraw(True)
+        win.flip()
+        core.wait(3)
+        
         EndFlag = 'TimeExceeded'
         dataFile.write('%s\n'%(EndFlag))
         Capacity = 10-np.mean(staircase.reversalIntensities)
@@ -450,6 +463,11 @@ for thisStep in staircase:
         staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if "escape" in k:
+        # Thank you screen
+        textThankyou.setAutoDraw(True)
+        win.flip()
+        core.wait(3)
+        
         win.close()
         EndFlag = 'UserEscape'
         dataFile.write('%s\n'%(EndFlag))
