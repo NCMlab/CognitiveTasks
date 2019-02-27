@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """ 
 I need to add instructions and a pause at the beginning of this task along with some practive trials
-
+Two errors to get easier (shorter),
+One correct to get harder (longer)
 
 
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
@@ -298,12 +299,12 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 # set up handler to look after next chosen value etc
 # This is the FORWARD Span Task
 Stairs = data.StairHandler(startVal=3, extraInfo=expInfo,
-    stepSizes=-1, stepType='lin',
+    stepSizes=1, stepType='lin',
     nReversals=0, nTrials=NumberOfTrials, 
-    nUp=2, nDown=1,
+    nUp=1, nDown=2,
     minVal=2, maxVal=20,
     originPath=-1, name='Stairs')
-  
+
 thisExp.addLoop(Stairs)  # add the loop to the experiment
 level = thisStair = 3  # initialise some vals
 
@@ -356,7 +357,7 @@ for thisStair in Stairs:
             
         # check for quit:
         if "escape" in theseKeys:
-            thisExp.abort()  # or data files will save again on exit
+            #thisExp.abort()  # or data files will save again on exit
             win.close()
             core.quit()
         if len(theseKeys) > 0:  # at least one key was pressed
@@ -390,12 +391,13 @@ for thisStair in Stairs:
     if np.array_equiv(R,RespList):
         print('Correct')
         CorrectSound.play()
-        thisResp = 1
+        thisResp = -1 # << This is reversed to get the staircase to work better without using a 
+        # negative step size
         resp.corr = 1
     else:
         print('Incorrect')
         IncorrectSound.play()
-        thisResp = -1
+        thisResp = 1
         resp.corr = 0
         
     thisExp.addData('Digits',R)
@@ -416,7 +418,10 @@ for thisStair in Stairs:
             pass     
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
-    
+    # Make sure only the right number of trials are presented.
+    # Sometimes the loop does too many!
+    if count > NumberOfTrials:
+        break
     # staircase completed
 t = 0
 ThankYouClock.reset()  # clock

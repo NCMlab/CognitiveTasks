@@ -169,7 +169,7 @@ while WaitingForResponseFlag:
             
         # check for quit:
     if "escape" in theseKeys:
-        thisExp.abort()  # or data files will save again on exit
+        #thisExp.abort()  # or data files will save again on exit
         win.close()
         core.quit()
     if len(theseKeys) > 0:  # at least one key was pressed
@@ -206,7 +206,7 @@ while WaitingForResponseFlag:
         
     # check for quit:
     if "escape" in theseKeys:
-        thisExp.abort()  # or data files will save again on exit
+        #thisExp.abort()  # or data files will save again on exit
         win.close()
         core.quit()
     if len(theseKeys) > 0:  # at least one key was pressed
@@ -298,7 +298,7 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 # set up handler to look after next chosen value etc
 # This is the BACKWARD Span Task
 Stairs = data.StairHandler(startVal=2, extraInfo=expInfo,
-    stepSizes=-1, stepType='lin',
+    stepSizes=1, stepType='lin',
     nReversals=0, nTrials=NumberOfTrials, 
     nUp=2, nDown=1,
     minVal=2, maxVal=20,
@@ -307,7 +307,7 @@ Stairs = data.StairHandler(startVal=2, extraInfo=expInfo,
 thisExp.addLoop(Stairs)  # add the loop to the experiment
 level = thisStair = 3  # initialise some vals
 
-count = 1
+count = 0
 for thisStair in Stairs:
     resp.keys = []
     currentLoop = Stairs
@@ -348,7 +348,7 @@ for thisStair in Stairs:
             
         # check for quit:
         if "escape" in theseKeys:
-            thisExp.abort()  # or data files will save again on exit
+            #thisExp.abort()  # or data files will save again on exit
             win.close()
             core.quit()
         if len(theseKeys) > 0:  # at least one key was pressed
@@ -382,12 +382,12 @@ for thisStair in Stairs:
     if np.array_equiv(R[::-1],RespList):
         print('Correct')
         CorrectSound.play()
-        thisResp = 1
+        thisResp = -1
         resp.corr = 1
     else:
         print('Incorrect')
         IncorrectSound.play()
-        thisResp = -1
+        thisResp = 1
         resp.corr = 0
         
     thisExp.addData('Digits',R)
@@ -408,6 +408,11 @@ for thisStair in Stairs:
             pass     
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
+    
+    # Make sure only the right number of trials are presented.
+    # Sometimes the loop does too many!
+    if count == NumberOfTrials:
+        break
     
     # staircase completed
 t = 0
