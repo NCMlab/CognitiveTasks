@@ -46,7 +46,7 @@ INSTRUCTIONS = ('Select one of the four cards displayed at the top of the screen
                               +'or the shape of the objects they display. You will be given feedback whether the '
                               +'selected card was RIGHT or WRONG. Use the feedback to determine which '
                               +'dimension is targeted by feedback and based on it select the right card. The '
-                              +'targeted dimension may change from to time to time without notice.\n\nPress any key to begin')
+                              +'targeted dimension may change from time to time without notice.\n\nPress any key to begin')
 
 X = 0
 Y = 1

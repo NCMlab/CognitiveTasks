@@ -84,8 +84,8 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(800, 600), fullscr=True, screen=0,
-    allowGUI=False, allowStencil=False,
+    size=(1200, 800), fullscr=False, screen=0,
+    allowGUI=True, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
@@ -98,9 +98,10 @@ else:
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 Instr = visual.TextStim(win=win, name='Instr',
-    text='Please read each word and state yes or no out loud whether or not each word part of the word list you studied.\n\nPress any key to begin',
+    #text='Please read each word and state yes or no out loud whether or not each word part of the word list you studied.\n\nPress any key to begin',
+    text='Please listen to each word and state yes or no out loud whether or not it was part of the original list of words you studied.\n\nPress any key to begin',
     font='Arial',
-    units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
+    units='pix', pos=(0, 0), height=45, wrapWidth=1000, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
