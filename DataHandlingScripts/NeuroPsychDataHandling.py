@@ -3,6 +3,10 @@ import glob
 from datetime import datetime, timedelta
 import csv
 import numpy as np
+
+# THIS IS USED BY THE NP GUI
+
+
 # Create a list of expected results files
 # Check to see which result files are present.
 # Check for duplicate files and only keep the latest one. 

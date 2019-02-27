@@ -7,6 +7,8 @@ import numpy as np
 import glob
 import datetime
 
+
+print(os.path.realpath(__file__))
 def FindResults(TaskList, VisitFolder, PartID):
     for j in TaskList:
         TempFile = glob.glob(os.path.join(VisitFolder,(PartID+'_'+j+'*.csv')))
@@ -68,7 +70,7 @@ def ReadFile(VisitFolder, subid, TaskTag):
     count = 1
     if len(matching) > 1:
         # There are more than one file!
-        print('There are multiple files found for %s'%(SearchString))
+        print('There are multiple files found for %s in folder: %s'%(SearchString, VisitFolder))
         for i in matching:
             # print the name and size of files
             SizeOfFile = np.round(os.stat(os.path.join(VisitFolder,matching[0])).st_size/1048)
@@ -109,7 +111,7 @@ def ProcessVSTMBlock(Data):
     if len(Data) > 0:
         Out = {}
         # If there is an entry that is -99 it is a missing value and needs to be changed to NaN
-        Data = Data.replace(-99, nan)
+        Data = Data.replace(-99, np.nan)
         TabNResp = pd.pivot_table(Data, values = 'Corr', index = 'Load', aggfunc = 'count')
         TabRT = pd.pivot_table(Data, values = 'RT', index = 'Load', aggfunc = np.mean)    
         TabAcc = pd.pivot_table(Data, values = 'Corr', index = 'Load', aggfunc = np.mean)    
@@ -200,18 +202,27 @@ def CheckDMSDataFrameForLoad(Data):
     return Data
     
 def ProcessPattComp(Data):
-    if len(Data) > 0:
-        # First remove the practice rows from the data file
-        Data_Run = Data[Data['Run.thisN'].notnull()]
-        Out = {}
-        LevelsOfDiff = Data_Run['Difficulty'].unique()
-        LevelsOfDiff.sort()
-        for i in LevelsOfDiff:
-            temp = Data_Run[Data_Run['Difficulty'] == i]
-            Tag = 'Load%02d'%(i)
-            Out[Tag + '_Acc'] = temp['resp.corr'].mean()
-            Out[Tag + '_RT'] = temp['resp.rt'].mean()
-            Out[Tag + '_NResp'] = temp['resp.corr'].count()            
+
+    if len(Data) > 10:
+        try:
+            # First remove the practice rows from the data file
+            Data_Run = Data[Data['Run.thisN'].notnull()]
+            Out = {}
+            LevelsOfDiff = Data_Run['Difficulty'].unique()
+            LevelsOfDiff.sort()
+            for i in LevelsOfDiff:
+                temp = Data_Run[Data_Run['Difficulty'] == i]
+                Tag = 'Load%02d'%(i)
+                Out[Tag + '_Acc'] = temp['resp.corr'].mean()
+                Out[Tag + '_RT'] = temp['resp.rt'].mean()
+                Out[Tag + '_NResp'] = temp['resp.corr'].count()          
+        except:
+            Out = {}
+            for i in range(1,4):
+                Tag = 'Load%02d'%(i)
+                Out[Tag + '_Acc'] = -9999
+                Out[Tag + '_RT'] = -9999
+                Out[Tag + '_NResp'] = -9999  
     else:
         Out = {}
         for i in range(1,4):
@@ -223,13 +234,14 @@ def ProcessPattComp(Data):
     return Out
     
 def ProcessAntonym(Data):
-    if len(Data) > 0:
+    if len(Data) > 10:
         # First remove the practice rows from the data file
         Data_Run = Data[Data['trials.thisN'].notnull()]
         Out = {}
         Out['NResp'] = Data_Run['resp.corr'].count()
         Out['Acc'] = Data_Run['resp.corr'].mean()    
         Out['RT'] = Data_Run['resp.rt'].mean()
+
     else:
         Out = {}
         Out['NResp'] = -9999
@@ -260,39 +272,46 @@ def CheckWCSTErrors(CurrentRow, CurrentRule, PreviousRule):
     return Error, PersError, Sel, Probe
 
 def ProcessWCST(Data):
-    if len(Data) > 0:
+    if len(Data) > 10:
         # Remove the practice trials
-        FindTask = Data[Data['TrialNum'].str.match('TrialNum')].index[0]
-        Data_Run = Data.iloc[FindTask+1:]
-        PreviousRule = -1
-        # Start counters for the number of errors
-        NumTrials = 0
-        NumErrors = 0
-        NumPersErrors = 0
-        # Cycle over each data row
-        for i, CurrentRow in Data_Run.iterrows():
-            NumTrials += 1
-            # extrcat the current rule
-            CurrentRule = int(CurrentRow['Rule'])
-            if (PreviousRule != -1) and (CurrentRule != LastTrialRule):
-                # If previous rule is -1 then leave it
-                # if the current rule is different from the rule on the last trial, then change the previous rule
-                # Then update the previous rule because the rules have changed
-                PreviousRule = LastTrialRule
-            # Check for errors on this row
-            (Error, PersError, Sel, Probe) = CheckWCSTErrors(CurrentRow, CurrentRule, PreviousRule)
-            # update error counters
-            if Error: 
-                NumErrors += 1
-            if PersError:
-                NumPersErrors += 1
-            LastTrialRule = CurrentRule
-            #print('%d, CurrentRule = %d, Probe = %d, Sel = %d, Error = %r, PerError = %r'%(i, CurrentRule, Probe, Sel, Error, PersError))    
-        #print('Number of Trials: %d, Number of Errors: %d, Number Pers Errors: %d'%(NumTrials, NumErrors, NumPersErrors))
-        Out = {}
-        Out['NTrials'] = NumTrials
-        Out['NErrors'] = NumErrors
-        Out['NPersErrors'] = NumPersErrors
+        # The data file has two parts, one for practice and one for the actual task
+        try:
+            FindTask = Data[Data['TrialNum'].str.match('TrialNum')].index[0]
+            Data_Run = Data.iloc[FindTask+1:]
+            PreviousRule = -1
+            # Start counters for the number of errors
+            NumTrials = 0
+            NumErrors = 0
+            NumPersErrors = 0
+            # Cycle over each data row
+            for i, CurrentRow in Data_Run.iterrows():
+                NumTrials += 1
+                # extrcat the current rule
+                CurrentRule = int(CurrentRow['Rule'])
+                if (PreviousRule != -1) and (CurrentRule != LastTrialRule):
+                    # If previous rule is -1 then leave it
+                    # if the current rule is different from the rule on the last trial, then change the previous rule
+                    # Then update the previous rule because the rules have changed
+                    PreviousRule = LastTrialRule
+                # Check for errors on this row
+                (Error, PersError, Sel, Probe) = CheckWCSTErrors(CurrentRow, CurrentRule, PreviousRule)
+                # update error counters
+                if Error: 
+                    NumErrors += 1
+                if PersError:
+                    NumPersErrors += 1
+                LastTrialRule = CurrentRule
+                #print('%d, CurrentRule = %d, Probe = %d, Sel = %d, Error = %r, PerError = %r'%(i, CurrentRule, Probe, Sel, Error, PersError))    
+            #print('Number of Trials: %d, Number of Errors: %d, Number Pers Errors: %d'%(NumTrials, NumErrors, NumPersErrors))
+            Out = {}
+            Out['NTrials'] = NumTrials
+            Out['NErrors'] = NumErrors
+            Out['NPersErrors'] = NumPersErrors
+        except:
+            Out = {}
+            Out['NTrials'] = NumTrials
+            Out['NErrors'] = NumErrors
+            Out['NPersErrors'] = NumPersErrors
     else:
         Out = {}
         Out['NTrials'] = -9999
@@ -634,7 +653,7 @@ def LoadRawData(VisitFolder, subid):
     Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
 
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
-    Results['VSTMBeh1'] = ProcessDMSBlockv2(Data)
+    Results['VSTMBeh1'] = ProcessVSTMBlock(Data)
     
 #     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
 #     Data = CheckDMSDataFrameForLoad(Data)
