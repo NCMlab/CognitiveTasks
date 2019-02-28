@@ -3,8 +3,9 @@ import importlib
 import sys
 import datetime
 
+
 BaseDir = '/home/jsteffen'
-#BaseDir = '/Users/jasonsteffener'
+BaseDir = '/Users/jasonsteffener'
 sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','DataHandlingScripts'))
 
 
