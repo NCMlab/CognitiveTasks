@@ -1,7 +1,7 @@
 import numpy as np
 # Create stimuli
 def CreateStim(LoadLevel,TrialPerBlock,NumCorrectPerBlock):
-    print "Load level: %d, with %d correct in %d trials"%(LoadLevel,NumCorrectPerBlock,TrialPerBlock)
+    print("Load level: %d, with %d correct in %d trials"%(LoadLevel,NumCorrectPerBlock,TrialPerBlock))
     # pick NumCorPerBlock unique numbers between 1 and TrialPerBlock
     # make sure that the numbers are seperated by at least the load level number of items 
     if LoadLevel != 0: 
@@ -27,10 +27,10 @@ def CreateStim(LoadLevel,TrialPerBlock,NumCorrectPerBlock):
             #print "Count = %d"%(count)
             
         if AllTrue == True:
-            print "It took %d attempts to create this list"%count
+            print("It took %d attempts to create this list"%(count))
             return test
         else:
-            print "Could not find a solution in %d attempts"%count
+            print("Could not find a solution in %d attempts"%(count))
             return -99
     else:
         test = CreateListZero(TrialPerBlock,NumCorrectPerBlock)
@@ -69,10 +69,12 @@ def AssignStimuli(CorrectLocations,TrialPerBlock,Stimuli,LoadLevel):
                 List[i] = UnusedStimuli[RandomPick-1]
                 UnusedStimuli.pop(RandomPick-1)
         if LoadLevel == 0:
-            print "ZERO LOAD LEVEL"
+            print("ZERO LOAD LEVEL")
             # load level zero is a specifal condition
             List = np.array(List)
-            List[list(CorrectLocations-1)] = 'X'
+            for i in CorrectLocations-1:
+                List[int(i)] = 'X'
+            # List[list(CorrectLocations-1)] = 'X'
             List = list(List)
             GoodFlag = True
         # Double check to make sure the list is correct and no correct trials are made accidently.
@@ -90,9 +92,9 @@ def AssignStimuli(CorrectLocations,TrialPerBlock,Stimuli,LoadLevel):
             if sum(np.diff(NumList[0::LoadLevel]) == 0) == NCor:
                 GoodFlag = True
         count = count + 1
-        print "Assign letters count: %d"%(count)
+        print("Assign letters count: %d"%(count))
     if GoodFlag == False:
-        print "Could not assign letters"
+        print("Could not assign letters")
         List = -99
     return List
         
