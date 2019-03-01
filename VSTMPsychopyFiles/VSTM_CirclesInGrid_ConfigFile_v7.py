@@ -4,56 +4,20 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 import random
 
-# Visual Task components
-# circle5
-# countdown 3
-# countdown 2
-# countdown 1
-# instructions
-# thank you
-# white plus sign
-# green plus sign
-# red plus sign
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from VSTM_Config import *
 
-#
-# Timers
-# overall timer
-# component timer
-
-ProbeColor = 'blue'
-
-# Timings
-FontSize = 60
-FontSizeUnits = 'pix'
-GridCount = 6 # Number of circles to have on each row
-GridSize = 52*GridCount + 1 # The size of the grid for which the circles on on
-CircleSize = (GridSize*2)/GridCount # The circle size so that they are all just touching
+GridSize = VSTM_GridSizeScale*VSTM_GridCount + 1 # The size of the grid for which the circles on on
 OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(CircleSize))
 MaskLocations = np.arange(0,1+GridCount**2)
-# units=FontSizeUnits
-# height=FontSize
-StimOnTime = 1.5
-RetOnTime = 3.0
-ProbeOnTime= 2.0
-MaskOnTime = 0.3
-# This is the intertrial interval. This experimental component is part of the trial.
-ITITime = 1.0 #1.0
-# This is the time between blocks. Note that between each block of trials there
-# is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
-# the countdown time, which is 3 seconds.
-InterBlockTime = 20.0
-# This is a delay component for use after instructions and before the first Block and at the
-# the end before the thank you screen
-ShortDelayTime = 16.0
-NumberOfBlocks = 5
-NTrialsPerBlock = 6
+
 
 ## These are great for testing quickly
 #  StimOnTime = .25
 #RetOnTime = .25
 #ProbeOnTime= .25
 #ITITime = .25
-TotalTrialTime = StimOnTime + RetOnTime + ProbeOnTime + ITITime
+TotalTrialTime = VSTM_StimOnTime + VSTM_RetOnTime + VSTM_ProbeOnTime + VSTM_ITITime
 
 countDown = core.CountdownTimer()
 # Store info about the experiment session
@@ -96,8 +60,7 @@ else:
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 CounterBalFlag = 'False'
-BGColor = 'grey'
-FontColor = 'white'
+
 # #################
 
 
@@ -113,7 +76,7 @@ win = visual.Window(
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
-    units=FontSizeUnits)
+    units=VSTM_FontSizeUnits)
     
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
@@ -166,19 +129,19 @@ ProbeCircle = visual.Polygon(
 RedCross = visual.TextStim(win=win, name='RedCross',
     text='+',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize, wrapWidth=None, ori=0, 
     color='red', colorSpace='rgb', opacity=1,
     depth=-9.0);
 WhiteCross = visual.TextStim(win=win, name='RedCross',
     text='+',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-9.0);
 GreenCross = visual.TextStim(win=win, name='RedCross',
     text='+',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize, wrapWidth=None, ori=0, 
     color='green', colorSpace='rgb', opacity=1,
     depth=-9.0);
     
@@ -186,35 +149,35 @@ GreenCross = visual.TextStim(win=win, name='RedCross',
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text='Press [INDEX FINGER] if the circle WAS in the set.\nPress [MIDDLE FINGER] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize*0.75, wrapWidth=1200, ori=0, 
+    color=VSTM_FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);   
     
 # Initialize components for Routine "Countdown"
 text3 = visual.TextStim(win=win, name='text3',
     text='3',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize, wrapWidth=None, ori=0, 
+    color=VSTM_FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 text2 = visual.TextStim(win=win, name='text2',
     text='2',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize, wrapWidth=None, ori=0, 
+    color=VSTM_FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 text1 = visual.TextStim(win=win, name='text1',
     text='1',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize, wrapWidth=None, ori=0, 
+    color=VSTM_FontColor, colorSpace='rgb', opacity=1,
     depth=-2.0);
     
 textThankyou = visual.TextStim(win=win, name='textThankyou',
     text='Thank you for participating!',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
+    units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize, wrapWidth=None, ori=0, 
+    color=VSTM_FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);    
     
 RunningClock = core.Clock()
@@ -252,7 +215,7 @@ WhiteCross.setAutoDraw(True)
 win.flip()
 countDown.reset() 
 WhiteCross.setAutoDraw(True)
-countDown.add(InterBlockTime)
+countDown.add(VSTM_InterBlockTime)
 while countDown.getTime() > 0:
     pass
 win.flip()
@@ -284,12 +247,12 @@ for thisBlock in Blocks:
     
     # Prepare the stimuli
     # Make sure there are an equal number of probe pos and Neg
-    ProbeList = np.concatenate((np.zeros(int(NTrialsPerBlock/2)),np.ones(int(NTrialsPerBlock/2))))
+    ProbeList = np.concatenate((np.zeros(int(VSTM_NTrialsPerBlock/2)),np.ones(int(VSTM_NTrialsPerBlock/2))))
     # Shuffle the list
-    ProbeList = ProbeList[np.random.permutation(NTrialsPerBlock)]
+    ProbeList = ProbeList[np.random.permutation(VSTM_NTrialsPerBlock)]
     
     # prepare the trials
-    trials = data.TrialHandler(nReps=NTrialsPerBlock, method='sequential', 
+    trials = data.TrialHandler(nReps=VSTM_NTrialsPerBlock, method='sequential', 
     extraInfo=expInfo, originPath=-1,trialList=[None],
     seed=None, name='trials')
     
