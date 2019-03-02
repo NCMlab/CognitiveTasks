@@ -1,15 +1,41 @@
+
+# https://docs.python.org/3/library/configparser.html
+
 from psychopy import locale_setup, gui, visual, core, data, event, logging
 import numpy as np  # whole numpy lib is available, prepend 'np.'
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import random
+import wx
 
+# Ensure that relative paths start from the same directory as this script
+_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+# import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
-from VSTM_Config import *
+#from VSTM_Config import *
+
+
+app = wx.App()
+frame = wx.Frame(None, -1, 'win.py')
+frame.SetDimensions(0,0,200,50)
+ 
+# Create open file dialog
+openFileDialog = wx.FileDialog(frame, "Open", "", "", 
+                                      "Python files (*.py)|*.py", 
+                                       wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+ 
+openFileDialog.ShowModal()
+ConfigFilePath = openFileDialog.GetPath()
+print(openFileDialog.GetPath())
+openFileDialog.Destroy()
+
+core.shellCall([sys.executable, ConfigFilePath])
 
 GridSize = VSTM_GridSizeScale*VSTM_GridCount + 1 # The size of the grid for which the circles on on
+CircleSize = (GridSize*2)/VSTM_GridCount # The circle size so that they are all just touching
+
 OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(CircleSize))
-MaskLocations = np.arange(0,1+GridCount**2)
+MaskLocations = np.arange(0,1+VSTM_GridCount**2)
 
 
 ## These are great for testing quickly
@@ -74,7 +100,7 @@ CounterBalFlag = 'False'
 win = visual.Window(
     size=(800, 600), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=BGColor, colorSpace='rgb',
+    monitor='testMonitor', color=VSTM_BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units=VSTM_FontSizeUnits)
     
@@ -121,8 +147,8 @@ ProbeCircle = visual.Polygon(
     win=win, name='polygon',units='pix', 
     edges=128, size=(CircleSize, CircleSize),
     ori=0, pos=(0, 0),
-    lineWidth=1, lineColor=ProbeColor, lineColorSpace='rgb',
-    fillColor=ProbeColor, fillColorSpace='rgb',
+    lineWidth=1, lineColor=VSTM_ProbeColor, lineColorSpace='rgb',
+    fillColor=VSTM_ProbeColor, fillColorSpace='rgb',
     opacity=1, depth=0.0, interpolate=True)
 
 # Cross hairs
@@ -202,7 +228,7 @@ while WaitingFlag is True:
         pass        
 
 # set up handler to look after randomisation of conditions etc
-Blocks = data.TrialHandler(nReps=NumberOfBlocks, method='sequential', 
+Blocks = data.TrialHandler(nReps=VSTM_NumberOfBlocks, method='sequential', 
     extraInfo=expInfo, originPath=-1,trialList=[None],
     seed=None, name='Blocks')
 
@@ -278,15 +304,15 @@ for thisBlock in Blocks:
 
     TrialCount = 0
     for thisTrial in trials:
-        countDown.add(StimOnTime)
+        countDown.add(VSTM_StimOnTime)
         GreenCross.setAutoDraw(True)
         TrialStartTime = RunningClock.getTime()
         theseKeys = event.getKeys()
-        Locations = np.random.permutation(GridCount**2)[0:CurrentLoad]
+        Locations = np.random.permutation(VSTM_GridCount**2)[0:CurrentLoad]
         print(thisTrial)
         # Create the probe Locations    
         PosProbeLocation = Locations[np.random.permutation(CurrentLoad)[0]]
-        NotLocations = np.arange(0,GridCount**2)
+        NotLocations = np.arange(0,VSTM_GridCount**2)
         NotLocations = [x for x in NotLocations if x not in Locations]
         #NegProbeLocation = np.random.randint(0,len(NotLocations),1)[0]
         NegProbeLocation = NotLocations[np.random.permutation(len(NotLocations))[0]]
@@ -327,7 +353,7 @@ for thisBlock in Blocks:
         # Put the mask dots on the screen
         #GreenCross.setAutoDraw(False)
         win.flip()
-        countDown.add(MaskOnTime)
+        countDown.add(VSTM_MaskOnTime)
         while countDown.getTime() > 0:
             pass
         
@@ -342,7 +368,7 @@ for thisBlock in Blocks:
         
         # Take the dots off the screen and put the cross hair up 
         win.flip()       
-        countDown.add(RetOnTime)
+        countDown.add(VSTM_RetOnTime)
         
         # Prepare the probe dot during the retention time
         ProbeLoc = -99
@@ -376,7 +402,7 @@ for thisBlock in Blocks:
         win.flip()
         thisResp.clock.reset()
         # Start the probe timer
-        countDown.add(ProbeOnTime)
+        countDown.add(VSTM_ProbeOnTime)
         event.clearEvents(eventType='keyboard')
         print(countDown.getTime())
         thisResp.keys = -99
@@ -488,7 +514,7 @@ for thisBlock in Blocks:
 #        print("Remove dots")
 #        win.flip()
 #        print(countDown.getTime())
-        countDown.add(ITITime)
+        countDown.add(VSTM_ITITime)
 
         RedCross.setAutoDraw(False)
         
@@ -524,7 +550,7 @@ for thisBlock in Blocks:
     RedCross.setAutoDraw(False)        
     WhiteCross.setAutoDraw(True)
     win.flip()
-    countDown.add(InterBlockTime - 3)
+    countDown.add(VSTM_InterBlockTime - 3)
     while countDown.getTime() > 0:
         pass
     WhiteCross.setAutoDraw(False)    
@@ -535,7 +561,7 @@ for thisBlock in Blocks:
 
 dataFile.write(',,%s\n'%(RunningClock.getTime()))
 textThankyou.setAutoDraw(True)
-countDown.add(5)
+countDown.add(VSTM_ThankYouOnTime)
 win.flip()
 while countDown.getTime() > 0:
     pass   
