@@ -8,6 +8,8 @@ If you publish work using this script please cite the PsychoPy publications:
         Journal of Neuroscience Methods, 162(1-2), 8-13.
     Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy.
         Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
+
+Preserve order of responses
 """
 
 from __future__ import absolute_import, division
@@ -86,7 +88,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 countDown = core.CountdownTimer()
 # Setup the Window
 win = visual.Window(
-    size=[1200, 800], fullscr=True, screen=0,
+    size=[1200, 800], fullscr=False, screen=0,
     allowGUI=False, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
@@ -566,6 +568,10 @@ for thisBlock in Blocks:
     #print(key_resp_2.keys)
     if key_resp_2.keys != None:
         uniqueResp = list(set(key_resp_2.keys))
+        print('Recorded Key presses')
+        print(key_resp_2.keys)
+        print('Unique list')
+        print(uniqueResp)
         uniqueResp.sort()
         UpdatedWordList = list(WordList)
         # find words to remove    
