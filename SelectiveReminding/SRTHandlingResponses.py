@@ -1,36 +1,75 @@
-List1 = ['9', '7', '5', '9', '7', '5', '3', '1', 'b', 'b']
-List2 = ['1','2','4','5','6','7','a','x']
-List3 = ['1','2','3','4','5','6','9','c','a','3']
-List4 = ['1','2','3','5','6','7','9','c','3','b','8']
-List5 = ['1','2','3','5','6','7','9','c','a','b','4']
-List6 = ['1','2','3','5','6','7','c','a','b','4','8']
+# List1 = ['9', '7', '5', '9', '7', '5', '3', '1', 'b', 'b']
+# List2 = ['1','2','4','5','6','7','a','x']
+# List3 = ['1','2','3','4','5','6','9','c','a','3']
+# List4 = ['1','2','3','5','x','6','7','9','c','3','b','8']
+# List5 = ['1','2','3','5','6','7','9','c','a','b','4']
+# List6 = ['1','2','x','x','3','5','6','7','c','a','b','4','8']
+# 
+# # Make an array that reflects the response table
+# 
+# cList1 = CleanSRTResponses(List1)
+# cList2 = CleanSRTResponses(List2)
+# cList3 = CleanSRTResponses(List3)
+# cList4 = CleanSRTResponses(List4)
+# cList5 = CleanSRTResponses(List5)
+# cList6 = CleanSRTResponses(List6)
+# 
+# ResponseArray = FillResponseArray(ResponseArray, cList1, 0)
+# print(CheckForTwoCorrectTrials(ResponseArray))
+# ResponseArray = FillResponseArray(ResponseArray, cList2, 1)
+# print(CheckForTwoCorrectTrials(ResponseArray))
+# ResponseArray = FillResponseArray(ResponseArray, cList3, 2)
+# print(CheckForTwoCorrectTrials(ResponseArray))
+# ResponseArray = FillResponseArray(ResponseArray, cList4, 3)
+# print(CheckForTwoCorrectTrials(ResponseArray))
+# ResponseArray = FillResponseArray(ResponseArray, cList5, 4)
+# print(CheckForTwoCorrectTrials(ResponseArray))
+# ResponseArray = FillResponseArray(ResponseArray, cList6, 5)
+# print(CheckForTwoCorrectTrials(ResponseArray))
+# 
+NIntrusionArray = np.zeros(6)
+NIntrusionArray[0] = 1
+NIntrusionArray[4] = 2
 
-# Make an array that reflects the response table
-ResponseArray = np.zeros((12,6))
-cList1 = CleanSRTResponses(List1)
-cList2 = CleanSRTResponses(List2)
-cList3 = CleanSRTResponses(List3)
-cList4 = CleanSRTResponses(List4)
-cList5 = CleanSRTResponses(List5)
-cList6 = CleanSRTResponses(List6)
-
-ResponseArray = FillResponseArray(ResponseArray, cList1, 1)
-print(CheckForTwoCorrectTrials(ResponseArray))
-ResponseArray = FillResponseArray(ResponseArray, cList2, 2)
-print(CheckForTwoCorrectTrials(ResponseArray))
-ResponseArray = FillResponseArray(ResponseArray, cList3, 3)
-print(CheckForTwoCorrectTrials(ResponseArray))
-ResponseArray = FillResponseArray(ResponseArray, cList4, 4)
-print(CheckForTwoCorrectTrials(ResponseArray))
-ResponseArray = FillResponseArray(ResponseArray, cList5, 5)
-print(CheckForTwoCorrectTrials(ResponseArray))
-ResponseArray = FillResponseArray(ResponseArray, cList6, 6)
-print(CheckForTwoCorrectTrials(ResponseArray))
-
-ResponseArray
-print(CalcTotalRecall(ResponseArray))
+# ResponseArray
+TotalRecall, TRarray = CalcTotalRecall(ResponseArray)
 LTS, LTSarray = CalcLongTermStorage(ResponseArray)
+LTR, LTRarray = CalcLongTermRecall(ResponseArray, LTSarray)
 
+WordList = [u'THROW', u'LILY', u'FILM', u'DISCREET', u'LOFT', u'BEEF', u'STREET', u'HELMET', u'SNAKE', u'DUG', u'PACK', u'TIN']
+uniqueResp = ['a', 'c', 'b', '1', '3', '5', '7', '9', 'x']
+uniqueRespNoX = uniqueResp
+NIntrusions = np.count_nonzero(np.array(uniqueResp) == 'x')
+for i in range(0, len(uniqueResp)):
+    if uniqueResp[i] == 'x':
+        del uniqueRespNoX[i]
+
+OutFile = open('testOutput.csv','w')
+WriteOutResults(OutFile, ResponseArray, NIntrusionArray, WordList)
+OutFile.close()
+
+def WriteOutResults(OutFile, ResponseArray, NIntrusionArray, WordList):
+    WriteHeader(OutFile)
+    for i in range(0,12):
+        OutFile.write('%s,'%(WordList[i]))
+        for j in range(0,6):
+            OutFile.write('%d,'%(ResponseArray[i,j]))
+        OutFile.write('%s\n'%(WordList[i]))
+
+def WriteIntrusions(OutFile, NIntrusionArray):
+    OutFile.write('NIntrusions,')
+    for j in range(0,6):
+        OutFile.write('%d,'%(NIntrusionArray[i]))
+    OutFile.write('NIntrusions\n')    
+    
+    
+    
+def WriteHeader(OutFile):
+    OutFile.write(',')
+    for i in range(0,6):
+        OutFile.write('%s%02d,'%('Trial',i+1))
+    OutFile.write(',\n')
+    
 def CheckForTwoCorrectTrials(ResponseArray):
     PrevColumn = ResponseArray[:,0]
     Flag = False
@@ -62,7 +101,7 @@ def FillResponseArray(ResponseArray, CleanList, TrialNumber):
             ResponseValue = 10
         elif i == 'c':
             ResponseValue = 11
-        ResponseArray[ResponseValue, TrialNumber - 1] = ResponseCount
+        ResponseArray[ResponseValue, TrialNumber] = ResponseCount
         ResponseCount += 1
     return ResponseArray
 
@@ -71,7 +110,12 @@ def CalcTotalRecall(ResponseArray):
         TotalRecall = 72
     else:
         TotalRecall = np.sum(ResponseArray != 0)
-    return TotalRecall
+    # Create total recall for each trial
+    TRarray = np.zeros(6)
+    for i in range(0,6):
+        row = ResponseArray[i,:]
+        TRarray[i] = np.sum(row != 0)
+    return TotalRecall, TRarray
             
 def CalcLongTermStorage(ResponseArray):
     # Calculate long term storage based on the when a word is recalled two trials in a row
@@ -91,7 +135,6 @@ def CalcLongTermStorage(ResponseArray):
             PrevTrial = CurrentTrial
     LTS = sum(LTSList)
     return LTS, LTSarray
-
     
 def CalcLongTermRecall(ResponseArray, LTSarray):
     # Point wise multiply the two arrays

@@ -24,6 +24,7 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
 
+import SRTHandlingResponses as SRT
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
@@ -280,6 +281,8 @@ for i in trials.trialList:
     WordList.append(i['Word'])
     CorrList.append(i['corr'])
 
+# Initialize the response array
+ResponseArray = np.zeros((12,6))
 
 BlockCount = 0
 for thisBlock in Blocks:
@@ -425,7 +428,7 @@ for thisBlock in Blocks:
             # keyboard checking is just starting
             key_resp_2.clock.reset()  # now t=0
         if key_resp_2.status == STARTED:
-            theseKeys = event.getKeys(keyList=['1', '2', '3', '4', '5', '6','7','8','9','a','b','c'])
+            theseKeys = event.getKeys(keyList=['1', '2', '3', '4', '5', '6','7','8','9','a','b','c','x'])
             
             # check for quit:
             if "escape" in theseKeys:
@@ -563,11 +566,16 @@ for thisBlock in Blocks:
             thisComponent.setAutoDraw(False)
             
             
-            
+    # Add these responses to the response array
+    cList = SRT.CleanSRTResponses(key_resp_2.keys)
+    ResponseArray = SRT.FillResponseArray(ResponseArray, cList, BlockCount - 1)
+    print(ResponseArray)
+    print(WordList)
     # Identify the recalled words and create the new list of words
     #print(key_resp_2.keys)
     if key_resp_2.keys != None:
         uniqueResp = list(set(key_resp_2.keys))
+        # Count and remove the intrusions ('x')
         print('Recorded Key presses')
         print(key_resp_2.keys)
         print('Unique list')
@@ -576,7 +584,14 @@ for thisBlock in Blocks:
         UpdatedWordList = list(WordList)
         # find words to remove    
         WordsToRemove = []
-        for i in uniqueResp:
+        # Remove the intrusions from the list
+        uniqueRespNoX = uniqueResp
+        NIntrusions = np.count_nonzero(np.array(uniqueResp) == 'x')
+        for i in range(0, len(uniqueResp)):
+            if uniqueResp[i] == 'x':
+                del uniqueRespNoX[i]
+                
+        for i in uniqueRespNoX:
             #print(i)
             index = CorrList.index(i)
             WordsToRemove.append(index)
@@ -592,7 +607,7 @@ for thisBlock in Blocks:
                 if i == j:
                     ThisBlockSelList.append(count)
             count += 1
-        # if all words were recalled, present jus a blank
+        # if all words were recalled, present just a blank
         if len(ThisBlockSelList) == 0:
             ThisBlockSelList.append(12)
         #print(ThisBlockSelList)
