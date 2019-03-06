@@ -72,7 +72,7 @@ filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant
 # #################
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 dataFile = open(filename+'.csv', 'w')#a simple text file with 'comma-separated-values'
-dataFile.write('Trial, NRecall, Word01, Word2, Word3, Word4, Word5, Word6, Word7, Word8, Word9, Word10, Word11, Word12\n')
+#dataFile.write('Trial, NRecall, Word01, Word2, Word3, Word4, Word5, Word6, Word7, Word8, Word9, Word10, Word11, Word12\n')
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
@@ -283,7 +283,8 @@ for i in trials.trialList:
 
 # Initialize the response array
 ResponseArray = np.zeros((12,6))
-
+NIntrusionArray = np.zeros(6)
+print(Blocks)
 BlockCount = 0
 for thisBlock in Blocks:
     BlockCount += 1
@@ -566,31 +567,29 @@ for thisBlock in Blocks:
             thisComponent.setAutoDraw(False)
             
             
-    # Add these responses to the response array
-    cList = SRT.CleanSRTResponses(key_resp_2.keys)
-    ResponseArray = SRT.FillResponseArray(ResponseArray, cList, BlockCount - 1)
-    print(ResponseArray)
-    print(WordList)
+
     # Identify the recalled words and create the new list of words
     #print(key_resp_2.keys)
     if key_resp_2.keys != None:
+        
+        # Add these responses to the response array
+        cList = SRT.CleanSRTResponses(key_resp_2.keys)        
+        ResponseArray = SRT.FillResponseArray(ResponseArray, cList, BlockCount - 1)
+        
+        # Create the word list for the next trial
         uniqueResp = list(set(key_resp_2.keys))
-        # Count and remove the intrusions ('x')
-        print('Recorded Key presses')
-        print(key_resp_2.keys)
-        print('Unique list')
-        print(uniqueResp)
         uniqueResp.sort()
-        UpdatedWordList = list(WordList)
-        # find words to remove    
-        WordsToRemove = []
         # Remove the intrusions from the list
         uniqueRespNoX = uniqueResp
         NIntrusions = np.count_nonzero(np.array(uniqueResp) == 'x')
+        NIntrusionArray[BlockCount -1] = NIntrusions
         for i in range(0, len(uniqueResp)):
             if uniqueResp[i] == 'x':
                 del uniqueRespNoX[i]
-                
+        
+        UpdatedWordList = list(WordList)
+        # find words to remove    
+        WordsToRemove = []        
         for i in uniqueRespNoX:
             #print(i)
             index = CorrList.index(i)
@@ -616,13 +615,14 @@ for thisBlock in Blocks:
         uniqueResp = []
         WordsToRemove = []
         ThisBlockSelList = list(range(0,12,1))
+        
 #        ThisBlockSelList = ",".join(str(i) for i in SelectionList)
     # Write the words to the file
-    dataFile.write('%d,%d,'%(BlockCount, len(uniqueResp)))
-    for i in WordsToRemove:
-        dataFile.write('%s,'%(WordList[i]))
-    dataFile.write('\n') 
-    # completed 5 repeats of 'Blocks'
+    # dataFile.write('%d,%d,'%(BlockCount, len(uniqueResp)))
+#    for i in WordsToRemove:
+#        dataFile.write('%s,'%(WordList[i]))
+#    dataFile.write('\n') 
+#    # completed 5 repeats of 'Blocks'
 
 Blocks.addData('key_resp_2.keys',key_resp_2.keys)
 
@@ -635,6 +635,14 @@ while countDown.getTime() > 0:
 win.flip()
 # these shouldn't be strictly necessary (should auto-save)
 #thisExp.saveAsWideText(filename+'.csv')
+
+print(ResponseArray)
+print(WordList)
+print(NIntrusionArray)
+print('Writing results')
+
+SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList)
+
 dataFile.close()
 #thisExp.saveAsPickle(filename)
 # make sure everything is closed down
