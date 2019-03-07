@@ -110,7 +110,7 @@ def WriteOutScores(OutFile, ResponseArray):
     OutFile.write('LTR,')
     for i in range(0,6):
         OutFile.write('%d,'%(LTRarray[i,:].sum()))
-    OutFile.write('%d\n'%(LTR))   
+    OutFile.write('%d\n'%(9999))   # LTR
     
     # write out consistent long term retrieval
     # As of right now I need to figure out how to calculate CLTR for each trial
@@ -192,10 +192,10 @@ def CalcLongTermRecall(ResponseArray, LTSarray):
     # Point wise multiply the two arrays
     LTRarray = np.multiply(ResponseArray, LTSarray)
     # this will highight which words were in LTS and recalled
-    LTRarray = LTRarray != 0
+    LTRarray = 1*(LTRarray != 0) # This autoconverts the array to ints
     LTR = (sum(LTRarray))
     # Convert the array to binary for use calculating the CLTR
-    LTRarray = LTRarray.astype(int)
+    #LTRarray = LTRarray.astype(int)
     return LTR, LTRarray
 
 def CalcConsistentLongTermRetrieval(ResponseArray, LTRarray):
@@ -228,5 +228,10 @@ def CalculatePrimacy():
     """
     pass
 
+def CalculateShortTermRecall():
+    """ 
+    
+    """
+    pass
     
         

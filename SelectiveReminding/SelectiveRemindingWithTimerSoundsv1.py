@@ -64,6 +64,8 @@ else:
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+# The number of trials, or repeats
+NBlocks = 6
 #BGColor = 'grey'
 #FontColor = 'white'
 #FontSize = 60
@@ -235,24 +237,26 @@ for thisComponent in InstructionsComponents:
 # the Routine "Instructions" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
-# set up handler to look after randomisation of conditions etc
-Blocks = data.TrialHandler(nReps=5, method='sequential', 
-    extraInfo=expInfo, originPath=-1,
-    trialList=[None],
-    seed=None, name='Blocks')
-thisExp.addLoop(Blocks)  # add the loop to the experiment
-thisBlock = Blocks.trialList[0]  # so we can initialise stimuli with some values
-# abbreviate parameter names if possible (e.g. rgb = thisBlock.rgb)
-if thisBlock != None:
-    for paramName in thisBlock:
-        exec('{} = thisBlock[paramName]'.format(paramName))
+## set up handler to look after randomisation of conditions etc
+#Blocks = data.TrialHandler(nReps=5, method='sequential', 
+#    extraInfo=expInfo, originPath=-1,
+#    trialList=[None],
+#    seed=None, name='Blocks')
+#thisExp.addLoop(Blocks)  # add the loop to the experiment
+#thisBlock = Blocks.trialList[0]  # so we can initialise stimuli with some values
+## abbreviate parameter names if possible (e.g. rgb = thisBlock.rgb)
+#if thisBlock != None:
+#    for paramName in thisBlock:
+#        exec('{} = thisBlock[paramName]'.format(paramName))
 
 # create a selection list for the words
 # use tjis to decide which word to present
 SelectionList = list(range(0,12,1))
-#ThisBlockSelList = ",".join(str(i) for i in SelectionList)
+ThisBlockSelList = ",".join(str(i) for i in SelectionList)
 ThisBlockSelList = SelectionList
-    # set up handler to look after randomisation of conditions etc
+
+
+# set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
     trialList=data.importConditions(os.path.join(_thisDir,'..','..',SRTPath,'WordList.csv'), selection=ThisBlockSelList),
@@ -284,17 +288,17 @@ for i in trials.trialList:
 # Initialize the response array
 ResponseArray = np.zeros((12,6))
 NIntrusionArray = np.zeros(6)
-print(Blocks)
+#print(Blocks)
 BlockCount = 0
-for thisBlock in Blocks:
+for thisBlock in range(0,NBlocks):
     BlockCount += 1
-    currentLoop = Blocks
+#    currentLoop = Blocks
     #print(BlockCount)
  
     # abbreviate parameter names if possible (e.g. rgb = thisBlock.rgb)
-    if thisBlock != None:
-        for paramName in thisBlock:
-            exec('{} = thisBlock[paramName]'.format(paramName))
+#    if thisBlock != None:
+#        for paramName in thisBlock:
+#            exec('{} = thisBlock[paramName]'.format(paramName))
     
         # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=1, method='sequential',    
@@ -506,9 +510,9 @@ for thisBlock in Blocks:
     # check responses
     if key_resp_2.keys in ['', [], None]:  # No response was made
         key_resp_2.keys=None
-    Blocks.addData('key_resp_2.keys',key_resp_2.keys)
-    if key_resp_2.keys != None:  # we had a response
-        Blocks.addData('key_resp_2.rt', key_resp_2.rt)
+#    Blocks.addData('key_resp_2.keys',key_resp_2.keys)
+#    if key_resp_2.keys != None:  # we had a response
+#        Blocks.addData('key_resp_2.rt', key_resp_2.rt)
     # reset the timer for each recall attempt    
     countDownStarted = False
     # the Routine "EnterResponses" was not non-slip safe, so reset the non-slip timer
@@ -624,7 +628,7 @@ for thisBlock in Blocks:
 #    dataFile.write('\n') 
 #    # completed 5 repeats of 'Blocks'
 
-Blocks.addData('key_resp_2.keys',key_resp_2.keys)
+#Blocks.addData('key_resp_2.keys',key_resp_2.keys)
 
 # Thank you
 textThankyou.setAutoDraw(True)
