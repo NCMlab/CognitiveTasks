@@ -63,16 +63,10 @@ def WriteOutResults(OutFile, ResponseArray, NIntrusionArray, WordList):
         OutFile.write('%s\n'%(WordList[i]))
     # Write out the intrusions
     OutFile.write('\n')
-    WriteIntrusions(OutFile, NIntrusionArray)
     # Make the table of scores
-    WriteOutScores(OutFile, ResponseArray)
+    WriteOutScores(OutFile, ResponseArray, NIntrusionArray)
     #OutFile.close()
-    
-def WriteIntrusions(OutFile, NIntrusionArray):
-    OutFile.write('NIntrusions,')
-    for j in range(0,6):
-        OutFile.write('%d,'%(NIntrusionArray[j]))
-    OutFile.write('NIntrusions\n')    
+      
     
 def WriteHeader(OutFile):
     OutFile.write(',')
@@ -80,7 +74,7 @@ def WriteHeader(OutFile):
         OutFile.write('%s%02d,'%('Trial',i+1))
     OutFile.write(',\n')
     
-def WriteOutScores(OutFile, ResponseArray):
+def WriteOutScores(OutFile, ResponseArray, NIntrusionArray):
     # header row
     OutFile.write('\n\n,')
     for i in range(0,6):
@@ -101,26 +95,32 @@ def WriteOutScores(OutFile, ResponseArray):
     # write out results
     OutFile.write('LTS,')
     for i in range(0,6):
-        OutFile.write('%d,'%(LTSarray[i,:].sum()))
+        OutFile.write('%d,'%(LTSarray[:,i].sum()))
     OutFile.write('%d\n'%(LTS))
     
     # Write out long term recall
-    LTR, LTRarray = CalcLongTermRecall(ResponseArray, LTSarray) 
+    SRT_LTR, LTRarray = CalcLongTermRecall(ResponseArray, LTSarray) 
     # write out results
     OutFile.write('LTR,')
     for i in range(0,6):
-        OutFile.write('%d,'%(LTRarray[i,:].sum()))
-    OutFile.write('%d\n'%(9999))   # LTR
+        OutFile.write('%d,'%(LTRarray[:,i].sum()))    
+    OutFile.write('%d\n'%(SRT_LTR))   # LTR
     
     # write out consistent long term retrieval
     # As of right now I need to figure out how to calculate CLTR for each trial
     # and not for each word
-    CLTR = CalcConsistentLongTermRetrieval(ResponseArray, LTRarray)
+    CLTR, CLTRarray = CalcConsistentLongTermRetrieval(ResponseArray, LTRarray)
     # write out results
     OutFile.write('CLTR,')
     for i in range(0,6):
-        OutFile.write(',')
-    OutFile.write('%d\n'%(CLTR))  
+        OutFile.write('%d,'%(sum(CLTRarray[:,i])))
+    OutFile.write('%d\n'%(CLTR))      
+    
+    # Write out intrusions
+    OutFile.write('NIntrusions,')
+    for j in range(0,6):
+        OutFile.write('%d,'%(NIntrusionArray[j]))
+    OutFile.write('%d\n'%(int(np.sum(NIntrusionArray))))  
 
 def CheckForTwoCorrectTrials(ResponseArray):
     PrevColumn = ResponseArray[:,0]
@@ -165,8 +165,8 @@ def CalcTotalRecall(ResponseArray):
     # Create total recall for each trial
     TRarray = np.zeros(6)
     for i in range(0,6):
-        row = ResponseArray[i,:]
-        TRarray[i] = np.sum(row != 0)
+        col = ResponseArray[:,i]
+        TRarray[i] = np.sum(col != 0)
     return TotalRecall, TRarray
             
 def CalcLongTermStorage(ResponseArray):
@@ -193,14 +193,32 @@ def CalcLongTermRecall(ResponseArray, LTSarray):
     LTRarray = np.multiply(ResponseArray, LTSarray)
     # this will highight which words were in LTS and recalled
     LTRarray = 1*(LTRarray != 0) # This autoconverts the array to ints
-    LTR = (sum(LTRarray))
+    LTR = int(np.sum(LTRarray))
     # Convert the array to binary for use calculating the CLTR
     #LTRarray = LTRarray.astype(int)
     return LTR, LTRarray
 
 def CalcConsistentLongTermRetrieval(ResponseArray, LTRarray):
-    CLTR = 0 
-    CLTRarray = np.zeros(6)
+    # find words consistenty recalled from long term storage
+    CLTRarray = np.zeros((12,6))
+    for i in range(12):
+        # check the last two trials
+        if (LTRarray[i,4] == 1) and (LTRarray[i,5] == 1):
+            # If the last two trials were recalled then they are considered
+            # consistent. 
+            CLTRarray[i,4] = 1
+            CLTRarray[i,5] = 1            
+            # Now check previous trials            
+            for j in range(4,0,-1):
+                print(j)
+                if LTRarray[i,j-1] == 1:
+                    CLTRarray[i,j-1] = 1
+    CLTR = int(np.sum(CLTRarray))
+    return CLTR, CLTRarray
+                      
+            
+            
+    
     for i in range(0,12):
         # take one row
         row = LTRarray[i,:]
@@ -230,7 +248,7 @@ def CalculatePrimacy():
 
 def CalculateShortTermRecall():
     """ 
-    
+    Look at the original paper for all the measures
     """
     pass
     

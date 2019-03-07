@@ -585,7 +585,7 @@ for thisBlock in range(0,NBlocks):
         uniqueResp.sort()
         # Remove the intrusions from the list
         uniqueRespNoX = uniqueResp
-        NIntrusions = np.count_nonzero(np.array(uniqueResp) == 'x')
+        NIntrusions = np.count_nonzero(np.array(key_resp_2.keys) == 'x')
         NIntrusionArray[BlockCount -1] = NIntrusions
         for i in range(0, len(uniqueResp)):
             if uniqueResp[i] == 'x':
