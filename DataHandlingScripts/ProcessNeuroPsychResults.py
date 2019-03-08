@@ -400,3 +400,60 @@ def CalculateCapacity(StairLoad):
     NReversals = len(RevLoads)
     Capacity = RevLoads.mean()
     return Capacity, NReversals
+    
+def ProcessSRTImm(Data):
+    # Prepare the results dictionary
+    Out = {}
+    if len(Data) > 0:
+        # # set the index    
+        InData = Data.set_index('Index')
+        # extract the total values
+        # convert the extracted dataframe values to single interger values
+        Out['TotRecall'] = int(InData.loc[['Total Recall']]['Totals'][0])
+        Out['LTR'] = int(InData.loc[['LTS']]['Totals'][0])
+        Out['LTS'] = int(InData.loc[['LTR']]['Totals'][0])
+        Out['CLTR'] = int(InData.loc[['CLTR']]['Totals'][0])
+        Out['Nintr'] = int(InData.loc[['NIntrusions']]['Totals'][0])
+    else:
+        Out['TotRecall'] = -9999
+        Out['LTR'] = -9999 
+        Out['LTS'] = -9999 
+        Out['CLTR'] = -9999 
+        Out['Nintr'] = -9999 
+    return Out
+    
+def ProcessSRTRecog(Data):
+    # The saved results score hits and correct rejections as correct.
+    # What scores should be kept?
+    # Misses
+    # Correct Rejection
+    # False Alarms
+    # Hits
+    # dL
+    # dPrime
+    Out = {}
+    if len(Data) > 0:
+        Hits = 0
+        FA = 0
+        CR = 0
+        Miss = 0
+        for index, row in Data.iterrows():
+            ExpectedResponse = row['Corr']
+            Correct = row['key_resp_3.corr']
+            if (ExpectedResponse == 'left') & (Correct == 1):
+                Hits += 1
+            elif (ExpectedResponse == 'left') & (Correct == 0):
+                Miss += 1
+            elif (ExpectedResponse == 'right') & (Correct == 1):
+                CR += 1
+            elif (ExpectedResponse == 'right') & (Correct == 0):
+                FA += 1
+        Out['Recog'] = Hits
+    else:
+        Out['Recog'] = -9999
+    return Out
+    
+    
+def ProcessSRTDelRecall(Data):
+    
+    pass

@@ -121,13 +121,18 @@ def LoadRawData(VisitFolder, subid):
     # Matrics
     Data = ReadFile(VisitFolder, subid, 'Matrices_Main')
     Results['Matr'] = ProcessNeuroPsychResults.ProcessMatrices(Data)
-
+    # DMS
     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
     Data = ProcessNeuroPsychResults.CheckDMSDataFrameForLoad(Data)
     Results['DMSBeh1'] = ProcessNeuroPsychResults.ProcessDMSBlockv2(Data)
-
+    # VSTM
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
     Results['VSTMBeh1'] = ProcessNeuroPsychResults.ProcessVSTMBlock(Data)
+    # SRT
+    Data = ReadFile(VisitFolder, subid, 'SRT_ImmRecall')
+    Results['SRT'] = ProcessNeuroPsychResults.ProcessSRTImm(Data)
+    Data = ReadFile(VisitFolder, subid, 'SRT_Recog')
+    Results['SRT'] = ProcessNeuroPsychResults.ProcessSRTRecog(Data)    
     
 #     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
 #     Data = CheckDMSDataFrameForLoad(Data)
