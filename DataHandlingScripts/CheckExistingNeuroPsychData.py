@@ -6,25 +6,6 @@ import numpy as np
 
 # THIS IS USED BY THE NP GUI
 
-
-# Create a list of expected results files
-# Check to see which result files are present.
-# Check for duplicate files and only keep the latest one. 
-# Move or rename the old ones
-# 
-# DMS 
-# # Capacity 
-# # Beh Runs (List)
-    # 1
-    # 2
-# # MRI Runs
-    # 1
-    # 2
-
-
-#InputFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/99012345/2018_Dec_12_1044_V001'
-#LL = NeuroPsychData(InputFolder) 
-
 class NeuroPsychData():
     def __init__(self, InputFolder):
         self.InputFolder = InputFolder
@@ -101,13 +82,19 @@ class NeuroPsychData():
         self.TaskList['SRT_DelayedRecall']['CBLoc'] = 'cbRMemC5'
         self.TaskList['SRT_Recog']['CBLoc'] = 'cbRMemC6'
         
-        
-            
     def FindParticipantID(self):
         self.VisitFolder = os.path.split(self.InputFolder)[1]
         BaseDir = os.path.split(self.InputFolder)[0]
         self.PartID = os.path.split(BaseDir)[1]
 
+    def FindResults(self):
+        for j in self.TaskList:
+            TempFile = glob.glob(os.path.join(self.InputFolder,(self.PartID+'_'+j+'*.csv')))
+             # Ideally the file names shoudl be checked to pick the latest one   
+            if len(TempFile) > 0:
+                self.TaskList[j]['DataFile'] = TempFile[-1]
+                self.TaskList[j]['Completed'] = True
+                
     def CheckDuplicateFiles(InputFiles, TaskName):
         # If there are multiple files pick the most recent
         # Dates = []
@@ -125,68 +112,60 @@ class NeuroPsychData():
         #     
         pass
         
-    def FindResults(self):
-        for j in self.TaskList:
-            TempFile = glob.glob(os.path.join(self.InputFolder,(self.PartID+'_'+j+'*.csv')))
-             # Ideally the file names shoudl be checked to pick the latest one   
-            if len(TempFile) > 0:
-                self.TaskList[j]['DataFile'] = TempFile[-1]
-                self.TaskList[j]['Completed'] = True
-            
-    def ReadVSTMData(self):
-        j = 'VSTM_Block'
-        TempFile = glob.glob(os.path.join(self.InputFolder,(self.PartID+'_'+j+'*.csv')))
-        # Load the file
-        fid = open(TempFile[0],'r')
-        data = csv.reader(fid)
-        # Read whole file into a list
-        LL = list(data)
-        fid.close()
-        HeaderLine = LL[0]
-        
-    def ReadDMSData(self):
-        # Find all of the block data files
-        j = 'DMS_Block'
-        TempFile = glob.glob(os.path.join(self.InputFolder,(self.PartID+'_'+j+'*.csv')))
-        # Load the file
-        fid = open(TempFile[0],'r')
-        data = csv.reader(fid)
-        # Read whole file into a list
-        LL = list(data)
-        fid.close()
-        HeaderLine = LL[0]
-        # find column containing accuracy/RT
-        AccCol = HeaderLine.index("resp.corr")
-        RTCol = HeaderLine.index("resp.rt")
-        Acc = []
-        for i in LL:
-            Acc.append(i[AccCol])
-        # remove the header line
-        Acc.pop(0)
-        Acc = np.array(Acc)
-        # This next line does not work with the new files because of the blank lines after every block
-        ##Acc = Acc.astype(np.float)
-        RT = []
-        for i in LL:
-            RT.append(i[RTCol])
-        # remove the header line
-        RT.pop(0)   
-        for i in range(0,self.LoadLevels):
-            # The plus i at the end works with the new files because there is a blank line after 
-            # every block
-            if NewDMSFlag is True:
-                LoadRows = np.array(range(RowsPerLoad*i,RowsPerLoad*i+RowsPerLoad))+i
-            else:
-                LoadRows = np.array(range(RowsPerLoad*i,RowsPerLoad*i+RowsPerLoad))
-            loadRT = [RT[j] for j in LoadRows]
 
+            
+    # def ReadVSTMData(self):
+    #     j = 'VSTM_Block'
+    #     TempFile = glob.glob(os.path.join(self.InputFolder,(self.PartID+'_'+j+'*.csv')))
+    #     # Load the file
+    #     fid = open(TempFile[0],'r')
+    #     data = csv.reader(fid)
+    #     # Read whole file into a list
+    #     LL = list(data)
+    #     fid.close()
+    #     HeaderLine = LL[0]
         
-        
-    def ReadCapacity(self):
-        pass
-    
-    def ReadBlockData(self):
-        pass
-        
-    def ReadFile(VisitFolder, subid, TaskTag):
-        pass
+#     def ReadDMSData(self):
+#         # Find all of the block data files
+#         j = 'DMS_Block'
+#         TempFile = glob.glob(os.path.join(self.InputFolder,(self.PartID+'_'+j+'*.csv')))
+#         # Load the file
+#         fid = open(TempFile[0],'r')
+#         data = csv.reader(fid)
+#         # Read whole file into a list
+#         LL = list(data)
+#         fid.close()
+#         HeaderLine = LL[0]
+#         # find column containing accuracy/RT
+#         AccCol = HeaderLine.index("resp.corr")
+#         RTCol = HeaderLine.index("resp.rt")
+#         Acc = []
+#         for i in LL:
+#             Acc.append(i[AccCol])
+#         # remove the header line
+#         Acc.pop(0)
+#         Acc = np.array(Acc)
+#         # This next line does not work with the new files because of the blank lines after every block
+#         ##Acc = Acc.astype(np.float)
+#         RT = []
+#         for i in LL:
+#             RT.append(i[RTCol])
+#         # remove the header line
+#         RT.pop(0)   
+#         for i in range(0,self.LoadLevels):
+#             # The plus i at the end works with the new files because there is a blank line after 
+#             # every block
+#             if NewDMSFlag is True:
+#                 LoadRows = np.array(range(RowsPerLoad*i,RowsPerLoad*i+RowsPerLoad))+i
+#             else:
+#                 LoadRows = np.array(range(RowsPerLoad*i,RowsPerLoad*i+RowsPerLoad))
+#             loadRT = [RT[j] for j in LoadRows]
+# 
+#     def ReadCapacity(self):
+#         pass
+#     
+#     def ReadBlockData(self):
+#         pass
+#         
+#     def ReadFile(VisitFolder, subid, TaskTag):
+#         pass
