@@ -1,3 +1,13 @@
+"""
+Use this scoring program in other programs as:
+    
+    import ScoreNeuroPsych
+    ScoreNeuroPsych.ScoreAll()
+    
+    This could be added to the end of the GUI program, so that when the GUI is closed
+    the data os scored and updated.
+
+"""
 import os
 import sys
 import fnmatch
@@ -15,10 +25,25 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 print(dir_path)
 sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
 import NeuropsychDataFolder
-
+# Load up the data location as a global variable
 AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
 
-def CycleOverDataFolders(AllOutDataFolder):
+def ScoreAll():
+    # Cycle over all data folders and load them up
+    NewData = CycleOverDataFolders()
+    # find teh name of the existing results file
+    ExistingDataFileName = LocateOutDataFile()
+    # Load the existing results file
+    OldData = LoadOutDataFile(ExistingDataFileName)
+    # created an updated results datafram, respectivein the "locked down" 
+    # data rows
+    UpdatedData = CreateUpdatedDataFrameOfResults(NewData, OldData)
+    # Create an updated output file name
+    UpdatedDataFileName = CreateOutFileName()
+    # write out the updated data and move the old data file
+    WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName)
+
+def CycleOverDataFolders():
     # Take as input the folder that contains folders of data
     #cycle over folders
     # Enter each folder and identify the visit folders in them. 
@@ -204,7 +229,7 @@ def LoadOutDataFile(OutDataFilePathName):
     OutDF = pd.read_csv(OutDataFilePathName)
     return OutDF   
     
-def CreateOutFileName(AllOutDataFolder):
+def CreateOutFileName():
     # Create a file to hold processed data using the time and date
     # to indicate when it was made
     BaseFileName = 'NCM_Master_NP'
@@ -213,7 +238,7 @@ def CreateOutFileName(AllOutDataFolder):
     NewOutFileName = os.path.join(AllOutDataFolder, BaseFileName + NowString)
     return NewOutFileName
     
-def LocateOutDataFile(AllOutDataFolder):
+def LocateOutDataFile():
     # Locate an existing processed data file and if it does not exist, then make it.
     BaseFileName = 'NCM_Master_NP'
     # What files exist with this name?
@@ -266,7 +291,17 @@ def CreateUpdatedDataFrameOfResults(NewData, OldData):
         OutDataFrame = OutDataFrame.append(OutDataRow)
     return OutDataFrame
    
-    
+def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName):
+    # Move the old file 
+    OldDataFolder = os.path.join(AllOutDataFolder, 'OldResultFiles')
+    # if the folder for old data does not exist, then make it
+    if not os.path.exists(OldDataFolder):
+        os.mkdir(OldDataFolder)
+    # change the name of the results file so it is not confused with current data
+    MovedDataFile = os.path.join(OldDataFolder, 'X_'+os.path.basename(ExistingDataFileName))
+    shutil.move(ExistingDataFileName, MovedDataFile)
+    # Now that the old data is moved, write out the updated data
+    UpdatedData.to_csv(UpdatedDataFileName, index = False)    
       
 # def ListOfExpectedResults():
 #     # This list could be a structure
