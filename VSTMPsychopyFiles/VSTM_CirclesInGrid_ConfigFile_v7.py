@@ -12,24 +12,24 @@ import wx
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
-#from VSTM_Config import *
+from VSTM_Config import *
 
 
-app = wx.App()
-frame = wx.Frame(None, -1, 'win.py')
-frame.SetDimensions(0,0,200,50)
- 
-# Create open file dialog
-openFileDialog = wx.FileDialog(frame, "Open", "", "", 
-                                      "Python files (*.py)|*.py", 
-                                       wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
- 
-openFileDialog.ShowModal()
-ConfigFilePath = openFileDialog.GetPath()
-print(openFileDialog.GetPath())
-openFileDialog.Destroy()
-
-core.shellCall([sys.executable, ConfigFilePath])
+#app = wx.App()
+#frame = wx.Frame(None, -1, 'win.py')
+#frame.SetDimensions(0,0,200,50)
+# 
+## Create open file dialog
+#openFileDialog = wx.FileDialog(frame, "Open", "", "", 
+#                                      "Python files (*.py)|*.py", 
+#                                       wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+# 
+#openFileDialog.ShowModal()
+#ConfigFilePath = openFileDialog.GetPath()
+#print(openFileDialog.GetPath())
+#openFileDialog.Destroy()
+#
+#core.shellCall([sys.executable, ConfigFilePath])
 
 GridSize = VSTM_GridSizeScale*VSTM_GridCount + 1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/VSTM_GridCount # The circle size so that they are all just touching
