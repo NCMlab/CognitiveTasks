@@ -20,7 +20,7 @@ from numpy.random import random, randint, normal, shuffle
 
 from psychopy.hardware.emulator import launchScan
 import numpy as np
-from NBackFunctions import *
+import NBackFunctions
 
 
 
@@ -87,14 +87,18 @@ for BlockNumber in range(0,NBlocks,1):
 #    print(NBack_Beh1_TrialPerBlock)
 #    print(NBack_Beh1_NumCorrectPerBlock)
     
-    CorrectLocations = CreateStim(CurrentLoadLevel, NBack_Beh1_TrialPerBlock, NBack_Beh1_NumCorrectPerBlock)
+    CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Beh1_TrialPerBlock, NBack_Beh1_NumCorrectPerBlock)
 #    print(CorrectLocations)
     # Try to assign letters to the list of correct locations
     # If it is not possible then -99 is returned
-    List = AssignStimuli(CorrectLocations, NBack_Beh1_TrialPerBlock, NBack_Beh1_StimList, CurrentLoadLevel)
+    print(NBack_Beh1_TrialPerBlock)
+    print(NBack_Beh1_StimList)
+    print(CurrentLoadLevel)
+    List = NBackFunctions.AssignStimuliv2(CorrectLocations,NBack_Beh1_TrialPerBlock,NBack_Beh1_StimList,CurrentLoadLevel)
+#    List = AssignStimuli(CorrectLocations, NBack_Beh1_TrialPerBlock, NBack_Beh1_StimList, CurrentLoadLevel)
     while not isinstance(List,(list,tuple,np.ndarray)):
-        CorrectLocations = CreateStim(CurrentLoadLevel, NBack_Beh1_TrialPerBlock, NBack_Beh1_NumCorrectPerBlock)
-        List = AssignStimuli(CorrectLocations, NBack_Beh1_TrialPerBlock, NBack_Beh1_StimList, CurrentLoadLevel)
+        CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Beh1_TrialPerBlock, NBack_Beh1_NumCorrectPerBlock)
+        List = NBackFunctions.AssignStimuliv2(CorrectLocations, NBack_Beh1_TrialPerBlock, NBack_Beh1_StimList, CurrentLoadLevel)
     AllLists.append(List)
 
 #TotalDurDLG = gui.Dlg(title='Time')
