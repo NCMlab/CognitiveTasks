@@ -2,12 +2,12 @@ import os
 # Config Parameters
 # N-Back task
 # Behavioral Run 1
-NBack_Beh1_LoadLevel = '02' # each number refers to the load level for a block
+NBack_Beh1_LoadLevel = '01' # each number refers to the load level for a block
 # Timing parameters
 NBack_Beh1_TimePerTrial = 1.5
 NBack_Beh1_InterStimulusDelay = 0.5
-NBack_Beh1_TrialPerBlock = 48
-NBack_Beh1_NumCorrectPerBlock = 16
+NBack_Beh1_TrialPerBlock = 4
+NBack_Beh1_NumCorrectPerBlock = 1
 NBack_Beh1_StimList = 'ABCDEFGHJKLMNPRSTVYZ'
 NBack_Beh1_ResponseKeys = ['left','right']
 NBack_Beh1_IntroOffDuration = 5

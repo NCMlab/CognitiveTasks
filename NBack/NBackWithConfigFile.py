@@ -81,6 +81,7 @@ thisExp = data.ExperimentHandler(name=expName, version='',
 
 # Make a list of stimuli, one for each block
 AllLists = []
+AllCorrectLocations = []
 for BlockNumber in range(0,NBlocks,1):
     CurrentLoadLevel = int(NBack_Beh1_LoadLevel[BlockNumber])
 #    print(CurrentLoadLevel)
@@ -96,10 +97,11 @@ for BlockNumber in range(0,NBlocks,1):
     print(CurrentLoadLevel)
     List = NBackFunctions.AssignStimuliv2(CorrectLocations,NBack_Beh1_TrialPerBlock,NBack_Beh1_StimList,CurrentLoadLevel)
 #    List = AssignStimuli(CorrectLocations, NBack_Beh1_TrialPerBlock, NBack_Beh1_StimList, CurrentLoadLevel)
-    while not isinstance(List,(list,tuple,np.ndarray)):
-        CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Beh1_TrialPerBlock, NBack_Beh1_NumCorrectPerBlock)
-        List = NBackFunctions.AssignStimuliv2(CorrectLocations, NBack_Beh1_TrialPerBlock, NBack_Beh1_StimList, CurrentLoadLevel)
+#    while not isinstance(List,(list,tuple,np.ndarray)):
+#        CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Beh1_TrialPerBlock, NBack_Beh1_NumCorrectPerBlock)
+#        List = NBackFunctions.AssignStimuliv2(CorrectLocations, NBack_Beh1_TrialPerBlock, NBack_Beh1_StimList, CurrentLoadLevel)
     AllLists.append(List)
+    AllCorrectLocations.append(CorrectLocations)
 
 #TotalDurDLG = gui.Dlg(title='Time')
 #TotalDurDLG.addText('Total Duration of Experiment')
@@ -213,6 +215,7 @@ for BlockNumber in range(0,NBlocks,1):
     # Use a list of load levels. The number of blocks is the list length and the load is the value in the List
     #
     CurrentLoadLevel = int(NBack_Beh1_LoadLevel[BlockNumber])
+    CorrectLocations = AllCorrectLocations[BlockNumber]
     if CurrentLoadLevel == 0:
         Instructions = InstrLevel0
     elif CurrentLoadLevel == 1:
@@ -224,8 +227,7 @@ for BlockNumber in range(0,NBlocks,1):
     List = AllLists[BlockNumber]
     print("Using block number %d, with load %d"%(BlockNumber,CurrentLoadLevel)) 
     # CorrectLocations = CreateStim(CurrentLoadLevel,ExpParameters['TrialPerBlock'],ExpParameters['NumCorrectPerBlock'])
-    # List = AssignStimuli(CorrectLocations,ExpParameters['TrialPerBlock'],ExpParameters['StimList'],CurrentLoadLevel)
-    print List                        
+    # List = AssignStimuli(CorrectLocations,ExpParameters['TrialPerBlock'],ExpParameters['StimList'],CurrentLoadLevel)                  
     # Instructions
     CountDownClock.add(NBack_Beh1_InstructionTime)
     thisExp.addData('Stimulus','Instructions')
@@ -282,19 +284,24 @@ for BlockNumber in range(0,NBlocks,1):
                 thisExp.addData('RT',CurrentRT)
                 if (count + 1) in CorrectLocations:
                     print "TRUE"
-                    thisExp.addData('Correct','Y')
+                    thisExp.addData('Correct','1')
                 else:
-                    thisExp.addData('Correct','N')
+                    thisExp.addData('Correct','0')
                 resp.KeyPress = theseKeys[-1]
                 resp.RT = CurrentRT
                 CurrentRT = TrialClock.getTime()
                 print "%02d: %s Key press: %s in %0.4f sec"%(count,item,theseKeys[-1],CurrentRT)
-        count += 1
+
         thisExp.addData('count',count)
         thisExp.addData('Block',BlockNumber+1)
         thisExp.addData('Stimulus',item)
         thisExp.addData('LoadLevel', NBack_Beh1_LoadLevel) 
+        if (count + 1) in CorrectLocations:
+            thisExp.addData('Expected',1)
+        else:
+            thisExp.addData('Expected',0)
         thisExp.nextEntry()
+        count += 1
 
                 
     CountDownClock.add(NBack_Beh1_InterBlockTime)        
@@ -316,7 +323,7 @@ while CountDownClock.getTime() > 0:
         win.flip()
         core.quit() 
 
-thisExp.saveAsWideText(filename+'.csv') 
+#thisExp.saveAsWideText(filename+'.csv') 
 win.close()
 core.quit()
         
