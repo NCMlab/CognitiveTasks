@@ -16,7 +16,8 @@ import pandas as pd
 import numpy as np
 import glob
 import datetime
-import ProcessNeuroPsychResults
+import ProcessNeuroPsychFunctions
+import ProcessBehavioralFunctions
 # What folder is this file in?
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # This will load the config file containing the location of the data folder
@@ -31,10 +32,15 @@ AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
 def ScoreAll():
     # Cycle over all data folders and load them up
     NewData = CycleOverDataFolders()
-    # find teh name of the existing results file
+    # find the name of the existing results file
     ExistingDataFileName = LocateOutDataFile()
     # Load the existing results file
-    OldData = LoadOutDataFile(ExistingDataFileName)
+    if os.path.exists(ExistingDataFileName):
+        # Found the existing data file
+        OldData = LoadOutDataFile(ExistingDataFileName)
+    else:
+        # There is no old data file
+        OldData = []
     # created an updated results datafram, respectivein the "locked down" 
     # data rows
     UpdatedData = CreateUpdatedDataFrameOfResults(NewData, OldData)
@@ -58,25 +64,57 @@ def CycleOverDataFolders():
         CurDir = os.path.split(CurDir)[-1]
         if CurDir.isdigit():
             #enter the directory and find visit folders
+
             VisitFolders = glob.glob(os.path.join(subdir,'*/'))
-            for visFold in VisitFolders:
-                CurVis = os.path.split(visFold)[0]
-                CurVis = os.path.split(CurVis)[-1]
-                if CurVis[-4:-2] == 'V0':
-                    # From the directory structre extract the subject ID and teh visit ID
-                    subid = CurDir
-                    Visid = CurVis
-                    print('%s, %s'%(subid, Visid))
-                    # Load up the raw data from the files in the visit folder
-                    Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
-                    FlatResults = FlattenDict(Results)
-                    # add subid and visitid
-                    FlatResults['AAsubid'] = subid
-                    FlatResults['AAVisid'] = Visid
-                    FlatResults['AAChecked'] = 0
-                    ListOfDict.append(FlatResults)
+            # What if there are no visit folders?
+            # Then define teh visit as V001 and use a filename to idetify the visitid
+            # Check to see if there is a visiti folder in the subject folder and if there is 
+            # no visit folder, check to see if there are data files
+            if (len(VisitFolders) > 0): 
+                for visFold in VisitFolders:
+                    CurVis = os.path.split(visFold)[0]
+                    CurVis = os.path.split(CurVis)[-1]
+                    if CurVis[-4:-2] == 'V0':
+                        # From the directory structre extract the subject ID and the visit ID
+                        subid = CurDir
+                        Visid = CurVis
+                        print('%s, %s'%(subid, Visid))
+                        # Load up the raw data from the files in the visit folder
+                        Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
+                        FlatResults = FlattenDict(Results)
+                        # add subid and visitid
+                        FlatResults['AAsubid'] = subid
+                        FlatResults['AAVisid'] = Visid
+                        FlatResults['AAChecked'] = 0
+                        ListOfDict.append(FlatResults)
+            elif len(os.listdir(subdir)) > 0:
+                # This seems to be data in a subject folder with no visit folder
+                # Create the visit ID
+                subid = CurDir
+                Visid = FindVisitIDFromFileNames(subdir)
+                
+                # Load up the raw data from the files in the visit folder
+                Results = LoadRawData(os.path.join(AllOutDataFolder, subid),subid)
+                FlatResults = FlattenDict(Results)
+                # add subid and visitid
+                FlatResults['AAsubid'] = subid
+                FlatResults['AAVisid'] = Visid
+                FlatResults['AAChecked'] = 0
+                ListOfDict.append(FlatResults)
+                
     df = pd.DataFrame(ListOfDict)
     return df
+
+def FindVisitIDFromFileNames(subdir):
+    # Make a list of the files in the folder
+    ListOfFiles = glob.glob(os.path.join(subdir,'*.csv'))
+    # Find the date and time stamps encoded in teh file names
+    for filePath in ListOfFiles:
+        Visid = ProcessBehavioralFunctions.ParseFileNamesForDateTime(filePath)
+        break
+    return Visid
+
+    
 
 def LoadRawData(VisitFolder, subid):
     # Given a visit folder, check for the existance of specific files
@@ -87,52 +125,52 @@ def LoadRawData(VisitFolder, subid):
     Results = {}
     # Stroop
     Data = ReadFile(VisitFolder, subid, 'Stroop_Color_')
-    Results['StrpC'] = ProcessNeuroPsychResults.ProcessStroopColor(Data)
+    Results['StrpC'] = ProcessNeuroPsychFunctions.ProcessStroopColor(Data)
     
     Data = ReadFile(VisitFolder, subid, 'Stroop_Word_')
-    Results['StrpW'] = ProcessNeuroPsychResults.ProcessStroopWord(Data)
+    Results['StrpW'] = ProcessNeuroPsychFunctions.ProcessStroopWord(Data)
     
     Data = ReadFile(VisitFolder, subid, 'Stroop_ColorWord')
-    Results['StrpCW'] = ProcessNeuroPsychResults.ProcessStroopColorWord(Data)
+    Results['StrpCW'] = ProcessNeuroPsychFunctions.ProcessStroopColorWord(Data)
     
     # Wisconsin Card Sort
     Data = ReadFile(VisitFolder, subid, 'WCST')
-    Results['WCST'] = ProcessNeuroPsychResults.ProcessWCST(Data)
+    Results['WCST'] = ProcessNeuroPsychFunctions.ProcessWCST(Data)
     
     # Antonyms
     Data = ReadFile(VisitFolder, subid, 'Vocab_Antonyms')
-    Results['Ant'] = ProcessNeuroPsychResults.ProcessAntonym(Data)
+    Results['Ant'] = ProcessNeuroPsychFunctions.ProcessAntonym(Data)
     
     # Digit Span
     # Forward
     Data = ReadFile(VisitFolder, subid, 'DigitSpan_Forward')
     Dir = 'Forward'
-    Results['DSFor'] = ProcessNeuroPsychResults.ProcessDigitSpan(Data, Dir)
+    Results['DSFor'] = ProcessNeuroPsychFunctions.ProcessDigitSpan(Data, Dir)
     
     # Backward
     Data = ReadFile(VisitFolder, subid, 'DigitSpan_Backward')
     Dir = 'Backward'
-    Results['DSBack'] = ProcessNeuroPsychResults.ProcessDigitSpan(Data, Dir)
+    Results['DSBack'] = ProcessNeuroPsychFunctions.ProcessDigitSpan(Data, Dir)
     
     # Pattern Comparison
     Data = ReadFile(VisitFolder, subid, 'Speed_PatternComp')
-    Results['PComp'] = ProcessNeuroPsychResults.ProcessPattComp(Data)
+    Results['PComp'] = ProcessNeuroPsychFunctions.ProcessPattComp(Data)
     
     # Matrics
     Data = ReadFile(VisitFolder, subid, 'Matrices_Main')
-    Results['Matr'] = ProcessNeuroPsychResults.ProcessMatrices(Data)
+    Results['Matr'] = ProcessNeuroPsychFunctions.ProcessMatrices(Data)
     # DMS
     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
-    Data = ProcessNeuroPsychResults.CheckDMSDataFrameForLoad(Data)
-    Results['DMSBeh1'] = ProcessNeuroPsychResults.ProcessDMSBlockv2(Data)
+    Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
+    Results['DMSBeh1'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
     # VSTM
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
-    Results['VSTMBeh1'] = ProcessNeuroPsychResults.ProcessVSTMBlock(Data)
+    Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlock(Data)
     # SRT
     Data = ReadFile(VisitFolder, subid, 'SRT_ImmRecall')
-    Results['SRT'] = ProcessNeuroPsychResults.ProcessSRTImm(Data)
+    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTImm(Data)
     Data = ReadFile(VisitFolder, subid, 'SRT_Recog')
-    Results['SRT'] = ProcessNeuroPsychResults.ProcessSRTRecog(Data)    
+    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)    
     
 #     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
 #     Data = CheckDMSDataFrameForLoad(Data)

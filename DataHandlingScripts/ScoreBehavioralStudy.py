@@ -9,21 +9,22 @@ import ScoreNIHToolbox
 import glob
 import numpy as np
 importlib.reload(ScoreNIHToolbox)
-importlib.reload(NCMPartv2)
+# importlib.reload(NCMPartv2)
 
 BaseDir = '/home/jsteffen'
 BaseDir = '/Users/jasonsteffener'
 sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','DataHandlingScripts'))
 
 
-import DataHandlingScriptsPart1
-importlib.reload(DataHandlingScriptsPart1)
-import DataHandlingBehavioral
-importlib.reload(DataHandlingBehavioral)
+import ProcessBehavioralFunctions
+importlib.reload(ProcessBehavioralFunctions)
+# importlib.reload(DataHandlingScriptsPart1)
+# import DataHandlingBehavioral
+# importlib.reload(DataHandlingBehavioral)
 
 OutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/')
 
-df = DataHandlingBehavioral.CycleOverBehDataFolders(OutDataFolder)
+df = ProcessBehavioralFunctions.CycleOverBehDataFolders(OutDataFolder)
 
 # subid = '1001003'
 # VisitFolder = os.path.join(OutDataFolder,subid)
