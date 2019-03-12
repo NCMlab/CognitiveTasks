@@ -17,12 +17,13 @@ sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','Data
 
 
 import ProcessBehavioralFunctions
+
 importlib.reload(ProcessBehavioralFunctions)
 # importlib.reload(DataHandlingScriptsPart1)
 # import DataHandlingBehavioral
 # importlib.reload(DataHandlingBehavioral)
 
-OutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/')
+OutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/CassParticipantData/data')
 
 df = ProcessBehavioralFunctions.CycleOverBehDataFolders(OutDataFolder)
 

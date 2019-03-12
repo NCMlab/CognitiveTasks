@@ -9,6 +9,7 @@ import datetime
 
 
 print(os.path.realpath(__file__))
+
 def FindResults(TaskList, VisitFolder, PartID):
     for j in TaskList:
         TempFile = glob.glob(os.path.join(VisitFolder,(PartID+'_'+j+'*.csv')))

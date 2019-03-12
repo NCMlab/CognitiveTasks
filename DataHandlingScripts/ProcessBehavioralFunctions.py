@@ -4,6 +4,10 @@
 import os
 import glob
 import pandas as pd
+import fnmatch
+import ProcessNeuroPsychFunctions
+import numpy as np
+from ScoreNeuroPsych import FlattenDict
 
 def CycleOverBehDataFolders(AllOutDataFolder):
     #cycle over folders
@@ -21,7 +25,7 @@ def CycleOverBehDataFolders(AllOutDataFolder):
             print(CurDir)
             Results = LoadRawBehData(subdir, subid)
             
-            FlatResults = DataHandlingScriptsPart1.FlattenDict(Results)
+            FlatResults = FlattenDict(Results)
                     # add subid and visitid
             FlatResults['AAsubid'] = subid
             ListOfDict.append(FlatResults)
@@ -48,15 +52,32 @@ def ParseFileNamesForDateTime(filePath):
     
 def LoadRawBehData(VisitFolder, subid):
     Results = {} 
+    # THere may be more than one run of the DMS task
+    # Read each file and create a list of the dataframes containing the data
     Data = ReadBehFile(VisitFolder, subid, 'DMS_Block')
-    Data = DataHandlingScriptsPart1.CheckDMSDataFrameForLoad(Data)
-    Results['DMSBeh1'] = DataHandlingScriptsPart1.ProcessDMSBlockv2(Data)
+    RunNames = []
+    if len(Data) > 0:
+    
+        print(">>>>>>>>>>>>> %d <<<<<<<<<<<<<<<"%(len(Data)))
+        for i in range(0,len(Data)):
+            Data[i] = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data[i])
+            # For each run that was found make a name for it    
+            RunNames.append("DMSRun%02d"%(i + 1))
+            # Score eahc run and add it to the dictionary of results
+            Results[RunNames[i]] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data[i])
+    else:
+        # Just in case there is a capacity file found
+        RunNames.append('DMSRun01')
+        Results[RunNames[0]] = {}
+    # Read the capacity file    
     DMSCap = ReadCapacity(VisitFolder, 'CAPACITY_DMSstair')
-    Results['DMSBeh1']['Cap'] = DMSCap
+    # Associate the Capacity with run 1, but it could be either run, if there are more than one
+    Results[RunNames[0]]['Cap'] = DMSCap
     Data = ReadBehFile(VisitFolder, subid, 'FRT_Block')
     FRTCap = ReadCapacity(VisitFolder, 'CAPACITY_FRTstair')
     Results['FRTBeh1'] = ProcessFRTBlock(Data, FRTCap)
     Results['FRTBeh1']['Cap'] = FRTCap
+    
     return Results
     
 def ReadBehFile(VisitFolder, subid, TaskTag):
@@ -69,12 +90,83 @@ def ReadBehFile(VisitFolder, subid, TaskTag):
         NewDMSFlag = True
             
     matching = set(matching) - set(matchingBlock)
-    matching = list(set(matching) - set(matchingTrial))             
+    matching = list(set(matching) - set(matchingTrial))      
+    # Check to see if there are more than one data file.
+    # If so extract the time stamps and create a list of dataframes       
+    Data = []
     if len(matching) > 0:
-        matching = matching[-1]
-        InputFile = os.path.join(VisitFolder, matching)
-        print(matching)
-        Data = pd.read_csv(InputFile)
+        for i in matching:
+            print(i)
+            # for each file check to see how big it is. It should be at least 1kB
+            statinfo = os.stat(os.path.join(VisitFolder, i))
+            if statinfo.st_size > 1000:
+                InputFile = os.path.join(VisitFolder, i)
+        
+                Data.append(pd.read_csv(InputFile))            
     else:
         Data = []
     return Data
+
+def ReadCapacity(SubDir, SearchString):
+    ll = os.listdir(SubDir)
+    matching = fnmatch.filter(ll,SearchString+'*')
+    if len(matching) > 0:
+        InFile = os.path.join(SubDir,matching[0])
+        print(InFile)
+        fid = open(InFile,'r')
+        Capacity = float(fid.readline())
+        fid.close()
+    else:
+        Capacity = -9999
+    return Capacity
+
+def ProcessFRTBlock(Data, CAP):
+    # big note on this. The load is not entered in the ouput file!!
+    #CAP = ReadCapacity(VisitFolder, 'CAPACITY_FRTstair')
+    FRTLoads = CreateFRTList(CAP)
+    FRTLoads = [float(s) for s in FRTLoads.split()] 
+    Out = {}
+    if len(Data) > 0:
+        #cycle over load levels and save as relative load and absolute load
+        UniqueLoad = Data['imageLnop'].unique()
+        UniqueLoad = UniqueLoad[~np.isnan(UniqueLoad)]
+        UniqueLoad.sort()
+        count = 1
+        for i in UniqueLoad:
+            # recalculate load and use
+            ActLoad = FRTLoads[count-1]
+            temp = Data[Data['imageLnop']==i]
+            # find acc
+            Acc = (temp['resp.corr'].mean())
+            RT = (temp['resp.rt'].mean())
+            NResp = (temp['resp.corr'].count())
+            Tag1 = 'RelLoad%02d'%(count)
+            #Tag2 = 'AbsLoad%02f'%(ActLoad)
+            Out[Tag1+'_Acc'] = Acc
+            #Out[Tag2+'_Acc'] = Acc
+            Out[Tag1+'_RT'] = RT
+            #Out[Tag2+'_RT'] = RT
+            Out[Tag1+'_NResp'] = NResp
+            #Out[Tag2+'_NResp'] = NResp
+            count += 1
+
+    else:
+        for i in range(1,6):
+            Tag1 = 'RelLoad%02d'%(i)
+            Tag2 = 'AbsLoad%02d'%(i)
+            Out[Tag1+'_Acc'] = -9999
+            #Out[Tag2+'_Acc'] = -9999
+            Out[Tag1+'_RT'] = -9999
+            #Out[Tag2+'_RT'] = -9999
+            Out[Tag1+'_NResp'] = -9999
+            #Out[Tag2+'_NResp'] = -9999
+    return Out
+    
+def CreateFRTList(FRTCapacity):
+    Limit = np.float(FRTCapacity)*1.25
+    #FRTList = range(0,6,1)Limit,Limit/(6-1))
+    FRTList = np.array(range(0,6,1))/(6.0-1)*Limit
+    # Convert this array to a string so it can be passed as an argument
+    FRTList = ' '.join(str(e) for e in FRTList)
+    return FRTList 
+         
