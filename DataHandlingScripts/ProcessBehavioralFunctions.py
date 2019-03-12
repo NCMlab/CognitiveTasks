@@ -20,7 +20,7 @@ def CycleOverBehDataFolders(AllOutDataFolder):
         # check subdir based on some criteria
         CurDir = os.path.split(subdir)[0]
         CurDir = os.path.split(CurDir)[-1]
-        if CurDir.isdigit() and CurDir[0] == '1':
+        if CurDir.isdigit():# and CurDir[0] == '1':
             subid = CurDir
             print(CurDir)
             Results = LoadRawBehData(subdir, subid)
