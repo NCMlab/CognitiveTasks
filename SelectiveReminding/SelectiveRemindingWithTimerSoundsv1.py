@@ -64,6 +64,7 @@ else:
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+print(filename)
 # The number of trials, or repeats
 NBlocks = 6
 #BGColor = 'grey'

@@ -32,9 +32,16 @@ else:
     if not os.path.exists(OutDir):
         os.mkdir(OutDir)
     Tag = '1'
+    PartDataFolder = OutDir
+    
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+print(filename)
 FontSize = 40
+
+DisplayChoiceTime = 0.25 # Was 1
+FeedbackDisplayTime = 1.5 # Was 2
+InstructTime = 2 
 # #################
 #V Load up the Card Order
 FileName = '../WCST/CardOrder.csv'
@@ -237,7 +244,7 @@ class Experiment():
         
         self.win.flip()
         
-        core.wait(1)
+        core.wait(DisplayChoiceTime)
         # write self.output and display feedback
         self.output.write('%d,%d,%d,%0.3f,' % ( t+1, card+1, self.rule, mtime))
         if target[self.rule]==choice[card][self.rule]:
@@ -262,7 +269,7 @@ class Experiment():
         self.cards[5].draw()
         self.elems[5].draw()
         self.win.flip()
-        core.wait(2)
+        core.wait(FeedbackDisplayTime)
 
 #    def run(self, num_trials, rule_delta=10):
 #        # Pick a number between 0 and 2: 0,1,2
@@ -316,7 +323,7 @@ class Experiment():
         self.win.flip()
                 
         
-        core.wait(2)
+        core.wait(InstructTime)
         inst.setText('')
         inst.draw()
         self.win.flip()
@@ -360,7 +367,7 @@ class Experiment():
         inst.setText('Starting the test...')
         inst.draw()
         self.win.flip()
-        core.wait(2)
+        core.wait(1)
         inst.setText('')
         inst.draw()
         self.win.flip()
