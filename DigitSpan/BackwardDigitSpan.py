@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """ 
@@ -179,6 +180,9 @@ while WaitingForResponseFlag:
         pass
 Instruct1.setAutoDraw(False)        
 win.flip()
+
+# START OF PRACTICE TRIAL
+CorrectPracticeFlag = False
 # Create a list of three numbers drawn from the numbers 1 to 9
 R = np.random.permutation(9) + 1
 R = R[0:3]
@@ -247,6 +251,8 @@ else:
     IncorrectSound.play()
     thisResp = -1
     resp.corr = 0
+
+# END OF PRACTICE TRIAL
 
 #WaitingForResponseFlag = True
 #while WaitingForResponseFlag:
@@ -318,13 +324,21 @@ for thisStair in Stairs:
     # Generate random numbers and make sure no consecutive numbers are the same
     Flag = True
     # Change the random numbers to all be different
+    
     R = np.random.permutation(9) + 1
+    
+    # what if someone has a span more than 9!
+    if level > 9:
+        R1 = np.random.permutation(9) + 1
+        R2 = np.random.permutation(9) + 1
+        R = np.concatenate((R1,R2))
+    
     R = R[0:level]
     #while Flag:
     #    R = np.random.randint(1,10,level)
     #    Flag = any(np.diff(R) == 0)
     print(R)    
-    Answer.text = 'Backward: %s\n\n\nTrial Number %d of %d'%(R[::-1],count, NumberOfTrials)
+    Answer.text = 'Backward: %s\n\n\nTrial Number %d of %d\n\nIf you make a mistake entering the person\'s response, press [x]. This will clear what you entered so you can restart.'%(R[::-1],count+1, NumberOfTrials)
     # cycle over the numbers and play them
     for i in range(level):
         countDown.reset()    
