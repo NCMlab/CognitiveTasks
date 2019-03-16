@@ -183,74 +183,104 @@ win.flip()
 
 # START OF PRACTICE TRIAL
 CorrectPracticeFlag = False
-# Create a list of three numbers drawn from the numbers 1 to 9
-R = np.random.permutation(9) + 1
-R = R[0:3]
-Answer.text = 'Ask the person to repeat the three digits BACKWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R[::-1])
-# cycle over the numbers and play them
-for i in range(3):
-    countDown.reset()    
-    countDown.add(TrialDuration)
-    #print('index: %d, Number: %d'%(i,R[i]))
-    Index = R[i]-1
-    SoundFileList[Index].play()
-    #sound_1.play()  # start the sound (it finishes automatically)
-    # store data for Stairs (StairHandler)
-    while countDown.getTime() > 0:
-        pass        
-    
-    event.clearEvents(eventType='keyboard')
-# -------Start Routine "trial"-------
-Answer.setAutoDraw(True)
-win.flip()
-
-WaitingForResponseFlag = True
-while WaitingForResponseFlag:
-    theseKeys = event.getKeys()
+while not CorrectPracticeFlag:
+    resp.keys = []
+    # Create a list of three numbers drawn from the numbers 1 to 9
+    R = np.random.permutation(9) + 1
+    R = R[0:3]
+    Answer.text = 'Ask the person to repeat the three digits BACKWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R[::-1])
+    # cycle over the numbers and play them
+    for i in range(3):
+        countDown.reset()    
+        countDown.add(TrialDuration)
+        #print('index: %d, Number: %d'%(i,R[i]))
+        Index = R[i]-1
+        SoundFileList[Index].play()
+        #sound_1.play()  # start the sound (it finishes automatically)
+        # store data for Stairs (StairHandler)
+        while countDown.getTime() > 0:
+            pass        
         
-    # check for quit:
-    if "escape" in theseKeys:
-        #thisExp.abort()  # or data files will save again on exit
-        win.close()
-        core.quit()
-    if len(theseKeys) > 0:  # at least one key was pressed
-        resp.keys.extend(theseKeys)  # storing all keys
-        resp.rt.append(resp.clock.getTime())
+        event.clearEvents(eventType='keyboard')
+    # -------Start Routine "trial"-------
+    Answer.setAutoDraw(True)
+    win.flip()
 
-    if 'return' in theseKeys:
-        # remove the return before continuing
-        resp.keys = resp.keys[:-1]
-        WaitingForResponseFlag = False
-        break
+    WaitingForResponseFlag = True
+    while WaitingForResponseFlag:
+        theseKeys = event.getKeys(keyList=['1', '2', '3', '4', '5', '6','7','8','9','x','return'])
+            
+        # check for quit:
+        if "escape" in theseKeys:
+            #thisExp.abort()  # or data files will save again on exit
+            win.close()
+            core.quit()
+        if len(theseKeys) > 0:  # at least one key was pressed
+            resp.keys.extend(theseKeys)  # storing all keys
+            resp.rt.append(resp.clock.getTime())
+
+        if 'return' in theseKeys:
+            # remove the return before continuing
+            resp.keys = resp.keys[:-1]
+            WaitingForResponseFlag = False
+            break
+        else:
+            pass
+        
+    if 'x' in resp.keys:
+        print('Found a mistake')
+        # A mistake as made entering the digits
+        # take all values after the LAST x   
+        resp.keys = resp.keys[''.join(resp.keys).rindex('x')+1:]
+
+    print('Responses: %s'%(resp.keys))
+    Answer.setAutoDraw(False)
+    win.flip()
+    # Convert responses to an array
+    RespList = []
+    for i in resp.keys:
+        RespList.append(int(i))
+    RespList = np.array(RespList)
+    print(RespList)
+    # This is the BACKWARD Span Task
+    if np.array_equiv(R[::-1],RespList):
+        print('Correct')
+        CorrectSound.play()
+        thisResp = 1
+        resp.corr = 1
+        CorrectPracticeFlag = True
     else:
-        pass
-    
-if 'x' in resp.keys:
-    print('Found a mistake')
-    # A mistake as made entering the digits
-    # take all values after the LAST x   
-    resp.keys = resp.keys[''.join(resp.keys).rindex('x')+1:]
+        print('Incorrect')
+        IncorrectSound.play()
+        thisResp = -1
+        resp.corr = 0
+        
+        # Present a screen asking for another practice trial.
+        Instruct1.text = 'That was incorrect, let\'s try again.\n\nPress return to continue'
+        Instruct1.setAutoDraw(True)
+        win.flip()
+        core.wait(0.5)
+        WaitingForResponseFlag = True
+        
+        while WaitingForResponseFlag:
+            theseKeys = event.getKeys()
+                    
+                # check for quit:
+            if "escape" in theseKeys:
+                #thisExp.abort()  # or data files will save again on exit
+                win.close()
+                core.quit()
+            if len(theseKeys) > 0:  # at least one key was pressed
+                WaitingForResponseFlag = False
+                break
+            else:
+                pass
+        
+        Instruct1.setAutoDraw(False)        
+        win.flip()
+        
+        WaitingForResponseFlag = True
 
-print('Responses: %s'%(resp.keys))
-Answer.setAutoDraw(False)
-win.flip()
-# Convert responses to an array
-RespList = []
-for i in resp.keys:
-    RespList.append(int(i))
-RespList = np.array(RespList)
-print(RespList)
-# This is the BACKWARD Span Task
-if np.array_equiv(R[::-1],RespList):
-    print('Correct')
-    CorrectSound.play()
-    thisResp = 1
-    resp.corr = 1
-else:
-    print('Incorrect')
-    IncorrectSound.play()
-    thisResp = -1
-    resp.corr = 0
 
 # END OF PRACTICE TRIAL
 
@@ -338,7 +368,7 @@ for thisStair in Stairs:
     #    R = np.random.randint(1,10,level)
     #    Flag = any(np.diff(R) == 0)
     print(R)    
-    Answer.text = 'Backward: %s\n\n\nTrial Number %d of %d\n\nIf you make a mistake entering the person\'s response, press [x]. This will clear what you entered so you can restart.'%(R[::-1],count+1, NumberOfTrials)
+    Answer.text = 'Backward: %s\n\n\nTrial Number %d of %d\n\nIf you make a mistake entering the person\'s response, press [x]. This will clear what you entered so you can restart.'%(R[::-1],count, NumberOfTrials)
     # cycle over the numbers and play them
     for i in range(level):
         countDown.reset()    
@@ -358,7 +388,7 @@ for thisStair in Stairs:
 
     WaitingForResponseFlag = True
     while WaitingForResponseFlag:
-        theseKeys = event.getKeys()
+        theseKeys = event.getKeys(keyList=['1', '2', '3', '4', '5', '6','7','8','9','x','return'])
             
         # check for quit:
         if "escape" in theseKeys:
