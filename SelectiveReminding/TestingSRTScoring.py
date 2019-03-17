@@ -64,8 +64,17 @@ SRTHandlingResponses.WriteOutResults(OutFile, ResponseArray, NIntrusionArray, Wo
 
 OutFile.close()
 
-OutFile = open('tester.csv','r')
-OutFile.readlines()
 
+InFileName = 'tester.csv'
+InData = pd.read_csv(InFileName)
+
+InData = InData.set_index('Index')
+
+# Extract just responses from the table.
+# I am doing this just in case some modifications to the file take place which 
+# would move the exact cells where the derived measures are.
+ResponseArray = np.array(InData.iloc[1:12,1:7])
+LTS, LTSarray = SRTHandlingResponses.CalcLongTermStorage(ResponseArray) 
+LTR, LTRarray = SRTHandlingResponses.CalcLongTermRecall(ResponseArray, LTSarray) 
 
 # OutFile.close()

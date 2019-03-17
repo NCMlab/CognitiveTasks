@@ -64,6 +64,7 @@ else:
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+print(filename)
 # The number of trials, or repeats
 NBlocks = 6
 #BGColor = 'grey'
@@ -91,7 +92,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 countDown = core.CountdownTimer()
 # Setup the Window
 win = visual.Window(
-    size=[1200, 800], fullscr=False, screen=0,
+    size=[1200, 800], fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
@@ -125,7 +126,7 @@ text = visual.TextStim(win=win, name='text',
 EnterResponsesClock = core.Clock()
 
 ResponseText = visual.TextStim(win=win, name='text_2',
-    text=u'Please repeat the word list',
+    text=u'Please repeat the entire word list',
     font=u'Arial',
     units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,

@@ -12,24 +12,24 @@ import wx
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
-#from VSTM_Config import *
+from VSTM_Config import *
 
 
-app = wx.App()
-frame = wx.Frame(None, -1, 'win.py')
-frame.SetDimensions(0,0,200,50)
- 
-# Create open file dialog
-openFileDialog = wx.FileDialog(frame, "Open", "", "", 
-                                      "Python files (*.py)|*.py", 
-                                       wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
- 
-openFileDialog.ShowModal()
-ConfigFilePath = openFileDialog.GetPath()
-print(openFileDialog.GetPath())
-openFileDialog.Destroy()
-
-core.shellCall([sys.executable, ConfigFilePath])
+#app = wx.App()
+#frame = wx.Frame(None, -1, 'win.py')
+#frame.SetDimensions(0,0,200,50)
+# 
+## Create open file dialog
+#openFileDialog = wx.FileDialog(frame, "Open", "", "", 
+#                                      "Python files (*.py)|*.py", 
+#                                       wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+# 
+#openFileDialog.ShowModal()
+#ConfigFilePath = openFileDialog.GetPath()
+#print(openFileDialog.GetPath())
+#openFileDialog.Destroy()
+#
+#core.shellCall([sys.executable, ConfigFilePath])
 
 GridSize = VSTM_GridSizeScale*VSTM_GridCount + 1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/VSTM_GridCount # The circle size so that they are all just touching
@@ -173,7 +173,7 @@ GreenCross = visual.TextStim(win=win, name='RedCross',
     
 # Instructions
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Press [INDEX FINGER] if the circle WAS in the set.\nPress [MIDDLE FINGER] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
+    text='Press [INDEX FINGER] if the circle WAS in the set.\nPress [MIDDLE FINGER] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress [5] to begin.',
     font='Times New Roman',
     units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize*0.75, wrapWidth=1200, ori=0, 
     color=VSTM_FontColor, colorSpace='rgb', opacity=1,

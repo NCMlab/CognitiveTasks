@@ -1,113 +1,10 @@
-import os
-import fnmatch
-import shutil
-import csv
 import pandas as pd
 import numpy as np
-import glob
-import datetime
-
-
-print(os.path.realpath(__file__))
-
-def FindResults(TaskList, VisitFolder, PartID):
-    for j in TaskList:
-        TempFile = glob.glob(os.path.join(VisitFolder,(PartID+'_'+j+'*.csv')))
-         # Ideally the file names shoudl be checked to pick the latest one   
-        if len(TempFile) > 0:
-            TaskList[j]['DataFile'] = TempFile[-1]
-            TaskList[j]['Completed'] = True
-    return TaskList
-
-def ListOfExpectedResults():
-    # This list could be a structure
-    # This list is the list of names in the structure
-    # Then each would have a flag as to whether it was found
-    # It can each have the results
-    TaskList = {}
-    TaskList['Stroop_Color'] = {}
-    TaskList['Stroop_Color']['Completed'] = False
-    
-    TaskList['Stroop_Word'] = {}
-    TaskList['Stroop_Word']['Completed'] = False  
-    TaskList['Stroop_ColorWord'] = {}
-    TaskList['Stroop_ColorWord']['Completed'] = False  
-    TaskList['WCST'] = {}
-    TaskList['WCST']['Completed'] = False  
-    TaskList['DigitSpan_Forward'] = {}
-    TaskList['DigitSpan_Forward']['Completed'] = False              
-    TaskList['DigitSpan_Backward'] = {}
-    TaskList['DigitSpan_Backward']['Completed'] = False  
-    TaskList['Matrices_Main'] = {}
-    TaskList['Matrices_Main']['Completed'] = False  
-    TaskList['DMS_Stair'] = {}
-    TaskList['DMS_Stair']['Completed'] = False  
-    TaskList['DMS_Block'] = {}
-    TaskList['DMS_Block']['Completed'] = False  
-    TaskList['VSTM_Stair'] = {}
-    TaskList['VSTM_Stair']['Completed'] = False                  
-    TaskList['VSTM_Block'] = {}
-    TaskList['VSTM_Block']['Completed'] = False  
-    TaskList['Speed_PatternComp'] = {}
-    TaskList['Speed_PatternComp']['Completed'] = False  
-    TaskList['Vocab_Antonyms'] = {}
-    TaskList['Vocab_Antonyms']['Completed'] = False  
-    return TaskList
-                                                                                     
-def ReadFile(VisitFolder, subid, TaskTag):
-    # Find the file that matches the TaskTag
-    # If multiple CSV files are found then the user is prompted to pick one.
-    # Un selected files are renamed with XXX at their beginning.
-    # The next time this program is run on this folder there will now only be one file 
-    # available and the user will not be prompted again
-    Data = []
-    # List all files in the visit folder
-    ll = os.listdir(VisitFolder)
-    # create the string you are looking for which is a combo of the subid and the task name
-    SearchString = subid + '_' + TaskTag
-    matching = fnmatch.filter(ll,SearchString+'*.csv')
-    # It is possible that there are multipel files with similar names.
-    # The following asks the user for the correct one and then renames the others
-    count = 1
-    if len(matching) > 1:
-        # There are more than one file!
-        print('There are multiple files found for %s in folder: %s'%(SearchString, VisitFolder))
-        for i in matching:
-            # print the name and size of files
-            SizeOfFile = np.round(os.stat(os.path.join(VisitFolder,matching[0])).st_size/1048)
-            print('\t%d) %s, size = %0.0f kB'%(count, i,SizeOfFile))
-            count += 1
-        sel = input('Which one should be kept?  (Press return to skip)')
-        if len(sel) > 0:
-            SelectedFile = matching[int(sel)-1]
-            # Rename the unselected files so they will hopefully not be selected the next time!
-            count = 1
-            for i in matching:
-                if not count == int(sel):
-                    OutName = 'XXX_' + i
-                    print(OutName)
-                    shutil.move(os.path.join(VisitFolder,i), os.path.join(VisitFolder, OutName))
-                count += 1    
-        else:
-            SelectedFile = False
-    elif len(matching) == 1:
-        SelectedFile= matching[0]
-    else:
-        SelectedFile = False
-        print('Did not find any files!!!')
-    if SelectedFile != False:
-        # Now open the file
-        InputFile = os.path.join(VisitFolder, SelectedFile)
-        # Read whole file into a dataframe
-        # Note, in order for the data to be read as a dataframe all columns need to have headings.
-        # If not an error is thrown
-        Data = pd.read_csv(InputFile)
-        # If the data is to be read into a big list use this:
-        #    fid = open(InputFile, 'r')
-        #    Data = csv.reader(fid)
-        #    Data = list(Data)
-    return Data
-    
+# This script only contains the processing functions for each different 
+# neuropsych test.
+# This keeps the fiunctions from the separate functions for handling the file readings
+# and checking whether the data has been scored yet.
+#
 def ProcessVSTMBlock(Data):
     if len(Data) > 0:
         Out = {}
@@ -504,169 +401,59 @@ def CalculateCapacity(StairLoad):
     Capacity = RevLoads.mean()
     return Capacity, NReversals
     
-def PutDataIntoOutputFile():
-    # There will be a single output resultsvfile
-    # it will have these columns:
-    #   partID
-    #   visitID, which will often be 1,2,3
-    #   data checked, this cannot be changed by the program but only by a human
-    #   data completeness flag
-    #
-    # 
-    # First, the part id and visit id are read from the folder names.
-    # Then the output data is checked to find this person. If found the data checked flag is TRUE
-    # if yes, check to see if data is complete in out file. 
-    # if not, then load all data and see if the missing data is now available
-    df2 = pd.DataFrame.from_dict(FlatResults, orient='index')
-    pass
-
-def FlattenDict(Results):
-    # cycle over tasks
-    FlatResults = {}
-    for i in Results.keys():
-        for j in Results[i].keys():
-            FlatResults['%s_%s'%(i,j)] = Results[i][j]
-            # print('%s_%s: %0.2f'%(i,j,Results[i][j]))
-    return FlatResults
-
-def CycleOverDataFolders(AllOutDataFolder):
-    #cycle over folders
-    df = pd.DataFrame()
-    ListOfDict = []
-    # get all sub dirs
-    subdirs = glob.glob(os.path.join(AllOutDataFolder,'*/'))
-    for subdir in subdirs:
-        # check subdir based on some criteria
-        CurDir = os.path.split(subdir)[0]
-        CurDir = os.path.split(CurDir)[-1]
-        if CurDir.isdigit():
-            #enter the directory and find visit folders
-            VisitFolders = glob.glob(os.path.join(subdir,'*/'))
-            for visFold in VisitFolders:
-                CurVis = os.path.split(visFold)[0]
-                CurVis = os.path.split(CurVis)[-1]
-                if CurVis[-4:-2] == 'V0':
-                    subid = CurDir
-                    Visid = CurVis
-                    print('%s, %s'%(subid, Visid))
-                    Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
-                    FlatResults = FlattenDict(Results)
-                    # add subid and visitid
-                    FlatResults['AAsubid'] = subid
-                    FlatResults['AAVisid'] = Visid
-                    FlatResults['AAChecked'] = 0
-                    ListOfDict.append(FlatResults)
-    df = pd.DataFrame(ListOfDict)
-    return df
-
-        
-def LoadOutDataFile(OutDataFilePathName):
-    # Make a data frame from CSV file
-    OutDF = pd.read_csv(OutDataFilePathName)
-    return OutDF   
-
-def IsVisitInOutDataFile(DF, subid, Visid):
-    Flag = False
-    index = -1
-    SubIndex = DF.index[DF['AAsubid'] == int(subid)]
-    VisIndex = DF.index[DF['AAVisid'] == Visid] 
-    
-    if (len(SubIndex) > 0) and (len(VisIndex) > 0):
-        if SubIndex[0] == VisIndex[0]:
-            Flag = True 
-            index = SubIndex[0]    
-    return Flag, index
-    
-    
-def IsDataChecked(DF, index):
-    # has a user checked this data?
-    Flag = False
-    if DD.loc[index]['AAChecked'] == 1:
-        Flag = True
-    return Flag
-    
-def WriteOneSubjToOutDataFile(OneSubData, OutFile):
-    pass
-    
-def WriteHeaderToOutDataFile(OneSubData, OutFileFID):
-    pass
-
-def LocateOutDataFile():
-    BaseDir = '/Users/jasonsteffener'
-    OutDataFolder = os.path.join(BaseDir, 'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData')
-    BaseFileName = 'NCM_Master_NP'
-    # What files exist with this name?
-    Files = glob.glob(os.path.join(OutDataFolder, BaseFileName + '*.csv'))
-    now = datetime.datetime.now()
-    NowString = now.strftime("_updated_%b-%d-%Y_%H-%M.csv")
-    NewOutFileName = BaseFileName + NowString
-    
-    if len(Files) == 0:
-        FileName = os.path.join(OutDataFolder,NewOutFileName)
+def ProcessSRTImm(Data):
+    # Prepare the results dictionary
+    Out = {}
+    if len(Data) > 0:
+        # # set the index    
+        InData = Data.set_index('Index')
+        # extract the total values
+        # convert the extracted dataframe values to single interger values
+        Out['TotRecall'] = int(InData.loc[['Total Recall']]['Totals'][0])
+        Out['LTR'] = int(InData.loc[['LTS']]['Totals'][0])
+        Out['LTS'] = int(InData.loc[['LTR']]['Totals'][0])
+        Out['CLTR'] = int(InData.loc[['CLTR']]['Totals'][0])
+        Out['Nintr'] = int(InData.loc[['NIntrusions']]['Totals'][0])
     else:
-        # this will open an existing file
-        FileName = Files[-1] 
-    return FileName
+        Out['TotRecall'] = -9999
+        Out['LTR'] = -9999 
+        Out['LTS'] = -9999 
+        Out['CLTR'] = -9999 
+        Out['Nintr'] = -9999 
+    return Out
     
-def LoadRawData(VisitFolder, subid):
-    print('working on %s'%(subid))
-    Results = {}
-    # Stroop
-    Data = ReadFile(VisitFolder, subid, 'Stroop_Color_')
-    Results['StrpC'] = ProcessStroopColor(Data)
+def ProcessSRTRecog(Data):
+    # The saved results score hits and correct rejections as correct.
+    # What scores should be kept?
+    # Misses
+    # Correct Rejection
+    # False Alarms
+    # Hits
+    # dL
+    # dPrime
+    Out = {}
+    if len(Data) > 0:
+        Hits = 0
+        FA = 0
+        CR = 0
+        Miss = 0
+        for index, row in Data.iterrows():
+            ExpectedResponse = row['Corr']
+            Correct = row['key_resp_3.corr']
+            if (ExpectedResponse == 'left') & (Correct == 1):
+                Hits += 1
+            elif (ExpectedResponse == 'left') & (Correct == 0):
+                Miss += 1
+            elif (ExpectedResponse == 'right') & (Correct == 1):
+                CR += 1
+            elif (ExpectedResponse == 'right') & (Correct == 0):
+                FA += 1
+        Out['Recog'] = Hits
+    else:
+        Out['Recog'] = -9999
+    return Out
     
-    Data = ReadFile(VisitFolder, subid, 'Stroop_Word_')
-    Results['StrpW'] = ProcessStroopWord(Data)
     
-    Data = ReadFile(VisitFolder, subid, 'Stroop_ColorWord')
-    Results['StrpCW'] = ProcessStroopColorWord(Data)
+def ProcessSRTDelRecall(Data):
     
-    # Wisconsin Card Sort
-    Data = ReadFile(VisitFolder, subid, 'WCST')
-    Results['WCST'] = ProcessWCST(Data)
-    
-    # Antonyms
-    Data = ReadFile(VisitFolder, subid, 'Vocab_Antonyms')
-    Results['Ant'] = ProcessAntonym(Data)
-    
-    # Digit Span
-    # Forward
-    Data = ReadFile(VisitFolder, subid, 'DigitSpan_Forward')
-    Dir = 'Forward'
-    Results['DSFor'] = ProcessDigitSpan(Data, Dir)
-    
-    # Backward
-    Data = ReadFile(VisitFolder, subid, 'DigitSpan_Backward')
-    Dir = 'Backward'
-    Results['DSBack'] = ProcessDigitSpan(Data, Dir)
-    
-    
-    # Pattern Comparison
-    Data = ReadFile(VisitFolder, subid, 'Speed_PatternComp')
-    Results['PComp'] = ProcessPattComp(Data)
-    
-    # Matrics
-    Data = ReadFile(VisitFolder, subid, 'Matrices_Main')
-    Results['Matr'] = ProcessMatrices(Data)
-
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
-    Data = CheckDMSDataFrameForLoad(Data)
-    Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
-
-    Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
-    Results['VSTMBeh1'] = ProcessVSTMBlock(Data)
-    
-#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
-#     Data = CheckDMSDataFrameForLoad(Data)
-#     Results['DMSMRI1'] = ProcessDMSBlockv2(Data)
-# 
-#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
-#     Data = CheckDMSDataFrameForLoad(Data)
-#     Results['DMSMRI2'] = ProcessDMSBlockv2(Data)
-# 
-#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
-#     Data = CheckDMSDataFrameForLoad(Data)
-#     Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
-#     
-    return Results
-
+    pass

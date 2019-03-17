@@ -14,7 +14,7 @@ import wx
 import numpy as np
 import glob
 sys.path.insert(0, '../DataHandlingScripts')
-import NeuroPsychDataHandling
+import CheckExistingNeuroPsychData
 
 
 # Ensure that relative paths start from the same directory as this script
@@ -485,7 +485,7 @@ class Mywin(wx.Frame):
                 dlg.Destroy()
                 
                 # If the visit folder exists, load the data in it and see what it has
-                self.CurrentData = NeuroPsychDataHandling.NeuroPsychData(self.VisitFolderPath)
+                self.CurrentData = CheckExistingNeuroPsychData.NeuroPsychData(self.VisitFolderPath)
                 self.CheckAvailableData()
                 
             else:

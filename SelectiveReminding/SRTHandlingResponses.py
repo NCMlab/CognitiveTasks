@@ -69,10 +69,10 @@ def WriteOutResults(OutFile, ResponseArray, NIntrusionArray, WordList):
       
     
 def WriteHeader(OutFile):
-    OutFile.write(',')
+    OutFile.write('Index,')
     for i in range(0,6):
         OutFile.write('%s%02d,'%('Trial',i+1))
-    OutFile.write(',\n')
+    OutFile.write('Totals,\n')
     
 def WriteOutScores(OutFile, ResponseArray, NIntrusionArray):
     # header row
@@ -210,15 +210,11 @@ def CalcConsistentLongTermRetrieval(ResponseArray, LTRarray):
             CLTRarray[i,5] = 1            
             # Now check previous trials            
             for j in range(4,0,-1):
-                print(j)
                 if LTRarray[i,j-1] == 1:
                     CLTRarray[i,j-1] = 1
     CLTR = int(np.sum(CLTRarray))
     return CLTR, CLTRarray
-                      
-            
-            
-    
+
     for i in range(0,12):
         # take one row
         row = LTRarray[i,:]
@@ -238,6 +234,20 @@ def CalcConsistentLongTermRetrieval(ResponseArray, LTRarray):
             count = 0
         CLTR += count
     return CLTR
+
+def ReadDataFile(FileIn):
+    # Read the file as a pandas data frame
+    InData = pd.read_csv(InFileName)
+    # set the index    
+    InData = InData.set_index('Index')
+    # extract the total values
+    # convert the extracted dataframe values to single interger values
+    TotRecall = int(InData.loc[['Total Recall']]['Totals'][0])
+    LTR = int(InData.loc[['LTS']]['Totals'][0])
+    LTS = int(InData.loc[['LTR']]['Totals'][0])
+    CLTR = int(InData.loc[['CLTR']]['Totals'][0])
+    Nintr = int(InData.loc[['NIntrusions']]['Totals'][0])
+    return TotRecall, LTR, LTS, CLTR, Nintr
 
 def CalculatePrimacy():
     """ Bruno D, Grothe MJ, Nierenberg J, Zetterberg H, Blennow K, Teipel SJ, Pomara N. 
