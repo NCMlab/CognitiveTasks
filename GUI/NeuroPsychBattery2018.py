@@ -25,7 +25,7 @@ sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NCM_NeuroPsych_Config import *
 # Check to see if the output data folder has been identified
 try:
-    # try to lod the config file
+    # try to load the config file
     from NeuropsychDataFolder import *
     # See if the variable is in it
     print('Data being saved to: %s'%(NeuropsychDataFolder))
