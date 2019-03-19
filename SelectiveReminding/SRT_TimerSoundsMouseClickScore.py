@@ -33,7 +33,7 @@ os.chdir(_thisDir)
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NCM_NeuroPsych_Config import *
-import SRT_Functions
+
 SRT_WordOnTime = 1 # <<< Just for testing
 
 # Store info about the experiment session
@@ -181,7 +181,11 @@ FontSize = 30
 WordColor = 'white'
 SelectedColor = 'blue'
 inputFile = '../SelectiveReminding/WordListScoring.csv'
-trials = pd.read_csv(inputFile)
+FullWordScoringList = pd.read_csv(inputFile)
+
+inputFile = '../SelectiveReminding/WordList.csv'
+FullWordList = pd.read_csv(inputFile)
+
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 mouse = event.Mouse(win=win)
@@ -190,7 +194,7 @@ x, y = [None, None]
 # For every word in the word list do the following
 WordListObjects = []
 count = 1
-for word in trials['Word']:
+for word in FullWordScoringList['Word']:
     print(count)
     # Make a unique name
     WordCount = 'text%02d'%(count)
@@ -284,7 +288,8 @@ routineTimer.reset()
 SelectionList = list(range(0,12,1))
 ThisBlockSelList = ",".join(str(i) for i in SelectionList)
 ThisBlockSelList = SelectionList
-
+print("Original")
+print(ThisBlockSelList)
 
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
@@ -428,10 +433,11 @@ for thisBlock in range(0,NBlocks):
     WordListObjects, mouse = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core)
     # Check to see if any intrusions were recalled
     # Have the tester type in the intrusion words
-    SRT.CheckForIntrusions(mouse)      
+    RecalledWordList = SRT.CheckForIntrusions(mouse) 
+
 #   Change the list for the next trial
-    
-                
+    ThisBlockSelList = SRT.MakeListOfRecalledWords(FullWordList, RecalledWordList)
+    print(ThisBlockSelList)            
     print("Mouse Clicked text:%s"%(mouse.clicked_text))
 #    print("Correct Recog: %s"%(CorrectRecog))
 

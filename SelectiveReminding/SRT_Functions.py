@@ -1,6 +1,32 @@
 import numpy as np
 import wx
 
+
+
+def MakeListOfRecalledWords(FullWordList, RecalledWordList):
+    # How many words are in the list?
+    NWords = int(FullWordList['Index'].max() + 1)
+    # Make array to keep recalled words
+    RecallList = np.arange(NWords)
+    # If a word is recalled, remove it from the array
+    # cycle over each recalled word
+    for word in RecalledWordList:
+        count = 0
+        # cycle over each word in the full list
+        for j in FullWordList['Word']:
+            # If the word was recalled
+            if word == j:
+                # set the value to -99
+                RecallList[count] = -99
+            count += 1
+    # remove all the -99
+    MissedList = list(RecallList[RecallList > -1])
+#    # Change teh array to a string
+#    MissedList = ','.join(str(i) for i in MissedList)
+    return MissedList
+    
+    
+
 def MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows):
     # Make grid of locations for where to put words on the screen
     # Create a list of column locations
