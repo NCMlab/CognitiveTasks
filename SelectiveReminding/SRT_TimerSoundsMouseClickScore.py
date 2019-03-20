@@ -124,6 +124,14 @@ text = visual.TextStim(win=win, name='text',
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
+
+WaitText = visual.TextStim(win=win, name='text',
+    text='Please turn the computer to your tester.\n\nPress [return] to start recall and scoring',
+    font=u'Arial',
+    units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=0.0);
+    
 # Initialize components for Routine "EnterResponses"
 EnterResponsesClock = core.Clock()
 
@@ -150,12 +158,7 @@ RemainingTime = visual.TextStim(win=win, name='RemainingTime',
     depth=-5.0);    
 # Initialize components for Routine "Wait"
 WaitClock = core.Clock()
-WaitText = visual.TextStim(win=win, name='WaitText',
-    text=u'+',
-    font=u'Arial',
-    units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
-    depth=0.0);
+
 
 # Initialize components for Routine "ThankYou"
 ThankYouClock = core.Clock()
@@ -299,7 +302,7 @@ trials = data.TrialHandler(nReps=1, method='sequential',
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 
-# Make a listxvb of all of the sounds
+# Make a list of all of the sounds
 SoundList = []
 for i in trials.trialList:
     print(i['Word'])
@@ -320,6 +323,10 @@ for i in trials.trialList:
     WordList.append(i['Word'])
     CorrList.append(i['corr'])
 
+
+
+    
+    
 # Initialize the response array
 ResponseArray = np.zeros((12,6))
 NIntrusionArray = np.zeros(6)
@@ -430,6 +437,23 @@ for thisBlock in range(0,NBlocks):
     # completed 1 repeats of 'trials'
     
     print("Finished presenting words")
+
+        # Now wait until the screen is turned to the tester
+    # Add the wait block
+    # Put the wait text on the screen
+    WaitText.setAutoDraw(True)
+    win.flip()
+    WaitingFlag = True
+    while WaitingFlag is True:
+        theseKeys = event.getKeys(keyList=['escape','return'])
+        if 'escape' in theseKeys:
+            core.quit()
+        elif 'return' in theseKeys:
+            WaitingFlag = False
+            WaitText.setAutoDraw(False)
+        else:
+            pass       
+    
     WordListObjects, mouse = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core)
     # Check to see if any intrusions were recalled
     # Have the tester type in the intrusion words
