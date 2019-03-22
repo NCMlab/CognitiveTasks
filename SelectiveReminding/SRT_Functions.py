@@ -42,10 +42,13 @@ def MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows):
     return ColLocsList, RowLocsList
 
 
-def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core):
+def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords):
     
     from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
+    
+    # Output the words that are recalled for entry into the Response Array
+    RecallList = np.zeros(NWords)
     
     SelectedColor = 'blue'                                
     # ------Prepare to start Routine "trial"-------
@@ -125,10 +128,15 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
                 word.tStart = t
                 word.frameNStart = frameN  # exact frame index
                 word.setAutoDraw(True)
-       
+       # This cycls over the full list and checks to see which word is selected
+        count = 0
         for word in WordListObjects:
             if mouse.isPressedIn(word):
+                # Check only the words in teh list and not the intrusions
+                if count < NWords:
+                    RecallList[count] = 1
                 word.setColor(SelectedColor, 'rgb255')
+            count += 1
                 
        
     # *key_resp_2* updates
@@ -168,7 +176,7 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     for word in WordListObjects:
         word.setAutoDraw(False)
     win.flip()
-    return WordListObjects, mouse
+    return WordListObjects, mouse, RecallList
 
 def CheckForIntrusions(mouse):
     # Go through the list of clicked words and see if any intrusions were said.
@@ -289,6 +297,9 @@ def CleanSRTResponses(InitialList):
 def FillResponseArray(ResponseArray, CleanList, TrialNumber):
     # For each response enter them in the Response array
     ResponseCount  = 1 # What order were responses made?
+    print("Clean List:")
+    print(CleanList)
+    print(ResponseArray)
     for i in CleanList:
         # check whether it is a number or a letter
         if i.isdigit():
@@ -408,4 +419,5 @@ def CalculateShortTermRecall():
     """
     pass
     
-        
+
+                
