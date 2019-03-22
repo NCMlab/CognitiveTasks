@@ -34,7 +34,7 @@ os.chdir(_thisDir)
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NCM_NeuroPsych_Config import *
 
-SRT_WordOnTime = 1 # <<< Just for testing
+SRT_WordOnTime = 2 # <<< Just for testing
 
 # Store info about the experiment session
 expName = u'SRT'  # from the Builder filename that created this script
@@ -69,6 +69,16 @@ filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant
 print(filename)
 # The number of trials, or repeats
 NBlocks = 6
+# Define how the words should appear on the screen
+GridWidth = 300
+GridHeight = 300
+NRows = 6
+NCols = 3
+FontSize = 30
+WordColor = 'white'
+SelectedColor = 'blue'
+
+
 #BGColor = 'grey'
 #FontColor = 'white'
 #FontSize = 60
@@ -124,6 +134,12 @@ text = visual.TextStim(win=win, name='text',
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
+CrossHair = visual.TextStim(win=win, name='CrossHair1',
+    text='+',
+    font=u'Arial',
+    units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=0.0);
 
 WaitText1 = visual.TextStim(win=win, name='text',
     text='Please turn the computer to your tester.\n\nPress [return] to start recall and scoring',
@@ -177,22 +193,17 @@ textThankyou = visual.TextStim(win=win, name='Thanks',
     depth=0.0);
     
 # ##############################
-# Define how the words should appear on the screen
-GridWidth = 400
-GridHeight = 400
-NRows = 6
-NCols = 3
+
 # Make lists of screen locations for the words
 ColLocsList, RowLocsList = SRT.MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows)
 
 
-
-FontSize = 30
-WordColor = 'white'
-SelectedColor = 'blue'
+# Load up the list of words used for scoring. The only difference is that this list has 
+# a bunch of [intrusion] options in it.
 inputFile = '../SelectiveReminding/WordListScoring.csv'
 FullWordScoringList = pd.read_csv(inputFile)
 
+# Load up the original word list
 inputFile = '../SelectiveReminding/WordList.csv'
 FullWordList = pd.read_csv(inputFile)
 
@@ -337,116 +348,122 @@ for i in trials.trialList:
 # Initialize the response array
 ResponseArray = np.zeros((12,NBlocks))
 NIntrusionArray = np.zeros(NBlocks)
-
+AllIntrusionList = []
 #print(Blocks)
 BlockCount = 0
 for thisBlock in range(0,NBlocks):
     routineTimer.reset()
     BlockCount += 1
-#    currentLoop = Blocks
-    #print(BlockCount)
- 
-    # abbreviate parameter names if possible (e.g. rgb = thisBlock.rgb)
-#    if thisBlock != None:
-#        for paramName in thisBlock:
-#            exec('{} = thisBlock[paramName]'.format(paramName))
-    
-        # set up handler to look after randomisation of conditions etc
-    trials = data.TrialHandler(nReps=1, method='sequential',    
-        extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions(os.path.join(_thisDir,'..','..', SRTPath, 'WordList.csv'), selection=ThisBlockSelList),
-        seed=None, name='trials')
-    thisExp.addLoop(trials)  # add the loop to the experiment
-    thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 
-        
-    # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
-    if thisTrial != None:
-        for paramName in thisTrial:
-            exec('{} = thisTrial[paramName]'.format(paramName))
     
-    
-    routineTimer.add(SRT_FudgeTime)
-    TrialCount = 0
-    for thisTrial in trials:
-        currentLoop = trials
+    # Check to see if all words were recalled. If so then skip the word presentation 
+    # and go straight too recall
+    if len(ThisBlockSelList) > 0:
+        # set up handler to look after randomisation of conditions etc
+        trials = data.TrialHandler(nReps=1, method='sequential',    
+            extraInfo=expInfo, originPath=-1,
+            trialList=data.importConditions(os.path.join(_thisDir,'..','..', SRTPath, 'WordList.csv'), selection=ThisBlockSelList),
+            seed=None, name='trials')
+        thisExp.addLoop(trials)  # add the loop to the experiment
+        thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
+
+            
         # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
         if thisTrial != None:
             for paramName in thisTrial:
                 exec('{} = thisTrial[paramName]'.format(paramName))
         
-        # ------Prepare to start Routine "trial"-------
-        t = 0
-        trialClock.reset()  # clock
-        frameN = -1
-        continueRoutine = True
-        routineTimer.add(SRT_WordOnTime)
-        # update component parameters for each repeat
         
-        text.setText(Word)
-        print(ThisBlockSelList[TrialCount])
-        sound_1 = SoundList[ThisBlockSelList[TrialCount]]
-        
-        
-        # keep track of which components have finished
-        trialComponents = [text, sound_1]
-        for thisComponent in trialComponents:
-            if hasattr(thisComponent, 'status'):
-                thisComponent.status = NOT_STARTED
-        
-        # -------Start Routine "trial"-------
-        while continueRoutine and routineTimer.getTime() > 0:
-            # get current time
-            t = trialClock.getTime()
-            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            # update/draw components on each frame
+        routineTimer.add(SRT_FudgeTime)
+        TrialCount = 0
+        for thisTrial in trials:
+            currentLoop = trials
+            # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
+            if thisTrial != None:
+                for paramName in thisTrial:
+                    exec('{} = thisTrial[paramName]'.format(paramName))
             
-            # *text* updates
-            if t >= 0.0 and text.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                text.tStart = t
-                text.frameNStart = frameN  # exact frame index
-                text.setAutoDraw(True)
-            frameRemains = 0.0 + SRT_WordOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
-            if text.status == STARTED and t >= frameRemains:
-                text.setAutoDraw(False)
+            # ------Prepare to start Routine "trial"-------
+            t = 0
+
+            trialClock.reset()  # clock
+            frameN = -1
+            continueRoutine = True
+            routineTimer.add(SRT_WordOnTime)
+            # update component parameters for each repeat
+            
+            text.setText(Word)
+            print(ThisBlockSelList[TrialCount])
+            sound_1 = SoundList[ThisBlockSelList[TrialCount]]
             
             
-            # start/stop sound_1
-            if t >= 0.0 and sound_1.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                sound_1.tStart = t
-                sound_1.frameNStart = frameN  # exact frame index
-                sound_1.play()  # start the sound (it finishes automatically)
-            
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
-                break
-            continueRoutine = False  # will revert to True if at least one component still running
+            # keep track of which components have finished
+            trialComponents = [text, sound_1]
             for thisComponent in trialComponents:
-                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                    continueRoutine = True
-                    break  # at least one component has not yet finished
+                if hasattr(thisComponent, 'status'):
+                    thisComponent.status = NOT_STARTED
             
-            # check for quit (the Esc key)
-            if endExpNow or event.getKeys(keyList=["escape"]):
-                core.quit()
+            # -------Start Routine "trial"-------
+            while continueRoutine and routineTimer.getTime() > 0:
+                # get current time
+                t = trialClock.getTime()
+                frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+                # update/draw components on each frame
+                
+                # *text* updates
+                if t >= 0.0 and text.status == NOT_STARTED:
+                    # keep track of start time/frame for later
+                    text.tStart = t
+                    text.frameNStart = frameN  # exact frame index
+                    text.setAutoDraw(True)
+                frameRemains = 0.0 + SRT_WordOnTime- win.monitorFramePeriod * 0.75  # most of one frame period left
+                if text.status == STARTED and t >= frameRemains:
+                    text.setAutoDraw(False)
+                
+                
+                # start/stop sound_1
+                if t >= 0.0 and sound_1.status == NOT_STARTED:
+                    # keep track of start time/frame for later
+                    sound_1.tStart = t
+                    sound_1.frameNStart = frameN  # exact frame index
+                    sound_1.play()  # start the sound (it finishes automatically)
+                
+                # check if all components have finished
+                if not continueRoutine:  # a component has requested a forced-end of Routine
+                    break
+                continueRoutine = False  # will revert to True if at least one component still running
+                for thisComponent in trialComponents:
+                    if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                        continueRoutine = True
+                        break  # at least one component has not yet finished
+                
+                # check for quit (the Esc key)
+                if endExpNow or event.getKeys(keyList=["escape"]):
+                    core.quit()
+                
+                # refresh the screen
+                if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                    win.flip()
             
-            # refresh the screen
-            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                win.flip()
-        
-        # -------Ending Routine "trial"-------
-        for thisComponent in trialComponents:
-            if hasattr(thisComponent, "setAutoDraw"):
-                thisComponent.setAutoDraw(False)
-        thisExp.nextEntry()
-        TrialCount += 1
-    # completed 1 repeats of 'trials'
+            # -------Ending Routine "trial"-------
+            for thisComponent in trialComponents:
+                if hasattr(thisComponent, "setAutoDraw"):
+                    thisComponent.setAutoDraw(False)
+            thisExp.nextEntry()
+            TrialCount += 1
+        # completed 1 repeats of 'trials'
+    else:
+        # IF all words were recalled during the last trialClock
+        # present just a cross hair for one second to differentiate the two TURN screens
+        CrossHair.setAutoDraw(True)
+        win.flip()
+        core.wait(1)
+        CrossHair.setAutoDraw(False)
+        win.flip()
     
     print("Finished presenting words")
 
-        # Now wait until the screen is turned to the tester
+    # Now wait until the screen is turned to the tester
     # Add the wait block
     # Put the wait text on the screen
     WaitText1.setAutoDraw(True)
@@ -461,24 +478,34 @@ for thisBlock in range(0,NBlocks):
             WaitText1.setAutoDraw(False)
         else:
             pass       
-    
+    # Put all the words on the screen and have the tester click the recalled words and enter any intrusions
     WordListObjects, mouse, RecallList = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords)
+    print("Recall List:")
     print(RecallList)
     ResponseArray[:,BlockCount - 1] = RecallList
-    print(ResponseArray)
+#    print(ResponseArray)
+    
     # Check to see if any intrusions were recalled
     # Have the tester type in the intrusion words
-    RecalledWordList = SRT.CheckForIntrusions(mouse) 
-
-#   Change the list for the next trial
-    ThisBlockSelList = SRT.MakeListOfRecalledWords(FullWordList, RecalledWordList)
+    ResponseList, IntrusionCount, IntrusionList = SRT.CheckForIntrusions(mouse) 
+    NIntrusionArray[BlockCount - 1] = IntrusionCount
+    AllIntrusionList.append(IntrusionList)
     
+    
+    
+#   Change the list for the next trial
+    ThisBlockSelList = SRT.MakeListOfRecalledWords(FullWordList, RecallList)
+    print("This Block Sel List:")
+    print(ThisBlockSelList)
     # Fill in the list of words recalled to be saved to the data file
     # ResponseArray = SRT.FillResponseArray(ResponseArray, mouse.clicked_text, BlockCount - 1)
     
-    print(ThisBlockSelList)            
-    print("Mouse Clicked text:%s"%(mouse.clicked_text))
-    
+#    print(ThisBlockSelList)            
+#    print("Mouse Clicked text:%s"%(mouse.clicked_text))
+#    print(IntrusionCount)
+#    print(IntrusionList)
+    print(NIntrusionArray)
+    print(AllIntrusionList)
     # Now wait until the screen is turned to the PARTICIPANT
     # Add the wait block
     # Put the wait text on the screen
@@ -735,6 +762,7 @@ for thisBlock in range(0,NBlocks):
 
 # Thank you
 textThankyou.setAutoDraw(True)
+countDown.reset()
 countDown.add(ThankYouOnTime)
 win.flip()
 while countDown.getTime() > 0:
@@ -750,7 +778,7 @@ print('Writing results')
 
 SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList)
 
-dataFile.close()
+#dataFile.close()
 #thisExp.saveAsPickle(filename)
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit

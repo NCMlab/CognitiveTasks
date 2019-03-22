@@ -3,26 +3,35 @@ import wx
 
 
 
-def MakeListOfRecalledWords(FullWordList, RecalledWordList):
-    # How many words are in the list?
-    NWords = int(FullWordList['Index'].max() + 1)
-    # Make array to keep recalled words
-    RecallList = np.arange(NWords)
-    # If a word is recalled, remove it from the array
-    # cycle over each recalled word
-    for word in RecalledWordList:
-        count = 0
-        # cycle over each word in the full list
-        for j in FullWordList['Word']:
-            # If the word was recalled
-            if word == j:
-                # set the value to -99
-                RecallList[count] = -99
-            count += 1
-    # remove all the -99
-    MissedList = list(RecallList[RecallList > -1])
-#    # Change teh array to a string
-#    MissedList = ','.join(str(i) for i in MissedList)
+def MakeListOfRecalledWords(FullWordList, RecallList):
+    # Make a list of word indices in the file of words loaded up
+    # These indices represent which ones were NOT recalled
+    MissedList = []
+    count = 0
+    for i in RecallList:
+        if i == 0:
+            MissedList.append(count)
+        count += 1
+#             # The word was missed, add it to the missing list
+#     # How many words are in the list?
+#     NWords = int(FullWordList['Index'].max() + 1)
+#     # Make array to keep recalled words
+#     RecallList = np.arange(NWords)
+#     # If a word is recalled, remove it from the array
+#     # cycle over each recalled word
+#     for word in RecalledWordList:
+#         count = 0
+#         # cycle over each word in the full list
+#         for j in FullWordList['Word']:
+#             # If the word was recalled
+#             if word == j:
+#                 # set the value to -99
+#                 RecallList[count] = -99
+#             count += 1
+#     # remove all the -99
+#     MissedList = list(RecallList[RecallList > -1])
+# #    # Change teh array to a string
+# #    MissedList = ','.join(str(i) for i in MissedList)
     return MissedList
     
     
@@ -49,6 +58,7 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     
     # Output the words that are recalled for entry into the Response Array
     RecallList = np.zeros(NWords)
+    IntrusionList = []
     
     SelectedColor = 'blue'                                
     # ------Prepare to start Routine "trial"-------
@@ -132,7 +142,7 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
         count = 0
         for word in WordListObjects:
             if mouse.isPressedIn(word):
-                # Check only the words in teh list and not the intrusions
+                # Check only the words in the list and not the intrusions
                 if count < NWords:
                     RecallList[count] = 1
                 word.setColor(SelectedColor, 'rgb255')
@@ -172,6 +182,7 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
         # refresh the screen
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
+            
     # Remove the words from the screen
     for word in WordListObjects:
         word.setAutoDraw(False)
@@ -183,19 +194,25 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
 def CheckForIntrusions(mouse):
     # Go through the list of clicked words and see if any intrusions were said.
     ResponseList = mouse.clicked_text
-    IntrusionCount = 1
+    # How many intrusions were there?
+    IntrusionCount = 0
+    # Make a list of the intrusion words
+    IntrusionList = []
     count = 0
     for word in ResponseList:
         if word == '[Intrusion]':      
             # Ask the tester to type in the intrusion word(s)
             IntrusionWord = TypeInWord(IntrusionCount)      
             IntrusionCount += 1
+            IntrusionList.append(IntrusionWord)
             ResponseList[count] = '[' + IntrusionWord + ']'
         count += 1
-    return ResponseList
+    return ResponseList, IntrusionCount, IntrusionList
     # Change the [intrusion] in the word list to the typed in word
             
 def TypeInWord(count): 
+    # When [intrusion] is clicked on teh screen by the tester, this fn will
+    # present a dialog box for the intusion word to be types in
     app = wx.App()
     
     frame = wx.Frame(None, -1, 'win.py')
@@ -212,17 +229,20 @@ def TypeInWord(count):
 def WriteOutResults(OutFile, ResponseArray, NIntrusionArray, WordList):
     # Writ eout the header
     WriteHeader(OutFile)
+    # Find the size of the data
+    NBlocks = ResponseArray.shape[1]
+    NWords = ResponseArray.shape[0]
     # Write out the word list and the responses
-    for i in range(0,12):
+    for i in range(0,NWords):
         OutFile.write('%s,'%(WordList[i]))
-        for j in range(0,6):
+        for j in range(0,NBlocks):
             OutFile.write('%d,'%(ResponseArray[i,j]))
         OutFile.write('%s\n'%(WordList[i]))
     # Write out the intrusions
     OutFile.write('\n')
     # Make the table of scores
     WriteOutScores(OutFile, ResponseArray, NIntrusionArray)
-    #OutFile.close()
+    OutFile.close()
     
 def WriteHeader(OutFile):
     OutFile.write('Index,')
@@ -231,9 +251,12 @@ def WriteHeader(OutFile):
     OutFile.write('Totals,\n')
     
 def WriteOutScores(OutFile, ResponseArray, NIntrusionArray):
+    # Find the size of the data
+    NBlocks = ResponseArray.shape[1]
+    NWords = ResponseArray.shape[0]
     # header row
     OutFile.write('\n\n,')
-    for i in range(0,6):
+    for i in range(0,NBlocks):
         OutFile.write(',')
     OutFile.write('Total\n')
 
@@ -242,7 +265,7 @@ def WriteOutScores(OutFile, ResponseArray, NIntrusionArray):
     TotalRecall, TRarray = CalcTotalRecall(ResponseArray)
     # write out results
     OutFile.write('Total Recall,')
-    for i in range(0,6):
+    for i in range(0,NBlocks):
         OutFile.write('%d,'%(TRarray[i]))
     OutFile.write('%d\n'%(TotalRecall))
 
@@ -250,7 +273,7 @@ def WriteOutScores(OutFile, ResponseArray, NIntrusionArray):
     LTS, LTSarray = CalcLongTermStorage(ResponseArray)    
     # write out results
     OutFile.write('LTS,')
-    for i in range(0,6):
+    for i in range(0,NBlocks):
         OutFile.write('%d,'%(LTSarray[:,i].sum()))
     OutFile.write('%d\n'%(LTS))
     
@@ -258,7 +281,7 @@ def WriteOutScores(OutFile, ResponseArray, NIntrusionArray):
     SRT_LTR, LTRarray = CalcLongTermRecall(ResponseArray, LTSarray) 
     # write out results
     OutFile.write('LTR,')
-    for i in range(0,6):
+    for i in range(0,NBlocks):
         OutFile.write('%d,'%(LTRarray[:,i].sum()))    
     OutFile.write('%d\n'%(SRT_LTR))   # LTR
     
@@ -268,22 +291,27 @@ def WriteOutScores(OutFile, ResponseArray, NIntrusionArray):
     CLTR, CLTRarray = CalcConsistentLongTermRetrieval(ResponseArray, LTRarray)
     # write out results
     OutFile.write('CLTR,')
-    for i in range(0,6):
+    for i in range(0,NBlocks):
         OutFile.write('%d,'%(sum(CLTRarray[:,i])))
     OutFile.write('%d\n'%(CLTR))      
     
     # Write out intrusions
     OutFile.write('NIntrusions,')
-    for j in range(0,6):
+    for j in range(0,NBlocks):
         OutFile.write('%d,'%(NIntrusionArray[j]))
     OutFile.write('%d\n'%(int(np.sum(NIntrusionArray))))  
+    return True
 
 def CheckForTwoCorrectTrials(ResponseArray):
+    # Find the size of the data
+    NBlocks = ResponseArray.shape[1]
+    NWords = ResponseArray.shape[0]
+    
     PrevColumn = ResponseArray[:,0]
     Flag = False
-    for i in range(1,6):
+    for i in range(1,NBlocks):
         CurrentColumn = ResponseArray[:,i]
-        if (np.sum(PrevColumn != 0) == 12) and (np.sum(CurrentColumn !=0 ) == 12):
+        if (np.sum(PrevColumn != 0) == NWords) and (np.sum(CurrentColumn !=0 ) == NWords):
             Flag = True
         PrevColumn = CurrentColumn
     return Flag
@@ -318,30 +346,36 @@ def FillResponseArray(ResponseArray, CleanList, TrialNumber):
     return ResponseArray
 
 def CalcTotalRecall(ResponseArray):
+    # Find the size of the data
+    NBlocks = ResponseArray.shape[1]
+    NWords = ResponseArray.shape[0]
     if CheckForTwoCorrectTrials(ResponseArray):
-        TotalRecall = 72
+        TotalRecall = NBlocks*NWords
     else:
         TotalRecall = np.sum(ResponseArray != 0)
     # Create total recall for each trial
-    TRarray = np.zeros(6)
-    for i in range(0,6):
+    TRarray = np.zeros(NBlocks)
+    for i in range(0,NBlocks):
         col = ResponseArray[:,i]
         TRarray[i] = np.sum(col != 0)
     return TotalRecall, TRarray
             
 def CalcLongTermStorage(ResponseArray):
+    # Find the size of the data
+    NBlocks = ResponseArray.shape[1]
+    NWords = ResponseArray.shape[0]
     # Calculate long term storage based on the when a word is recalled two trials in a row
-    LTSList = np.zeros(12)
+    LTSList = np.zeros(NWords)
     # Make an array based on whether or not a word is in LTS
-    LTSarray = np.zeros((12,6))
-    for i in range(0,12):
+    LTSarray = np.zeros((NWords,NBlocks))
+    for i in range(0,NWords):
         CurrentRow = ResponseArray[i,:]
         PrevTrial = CurrentRow[0]
-        for j in range(1,6):
+        for j in range(1,NBlocks):
             CurrentTrial = CurrentRow[j]
             if (PrevTrial != 0) and (CurrentTrial != 0):
                 # This word was recalled two trials in a row
-                LTSList[i] = 6 - (j - 1)
+                LTSList[i] = NBlocks - (j - 1)
                 LTSarray[i,j-1:] = 1
                 break
             PrevTrial = CurrentTrial
@@ -359,41 +393,44 @@ def CalcLongTermRecall(ResponseArray, LTSarray):
     return LTR, LTRarray
 
 def CalcConsistentLongTermRetrieval(ResponseArray, LTRarray):
+    # Find the size of the data
+    NBlocks = ResponseArray.shape[1]
+    NWords = ResponseArray.shape[0]
     # find words consistenty recalled from long term storage
-    CLTRarray = np.zeros((12,6))
-    for i in range(12):
+    CLTRarray = np.zeros((NWords,NBlocks))
+    for i in range(NWords):
         # check the last two trials
-        if (LTRarray[i,4] == 1) and (LTRarray[i,5] == 1):
+        if (LTRarray[i,NBlocks-2] == 1) and (LTRarray[i,NBlocks-1] == 1):
             # If the last two trials were recalled then they are considered
             # consistent. 
-            CLTRarray[i,4] = 1
-            CLTRarray[i,5] = 1            
+            CLTRarray[i,NBlocks-2] = 1
+            CLTRarray[i,NBlocks-1] = 1            
             # Now check previous trials            
-            for j in range(4,0,-1):
+            for j in range(NBlocks-2,0,-1):
                 if LTRarray[i,j-1] == 1:
                     CLTRarray[i,j-1] = 1
     CLTR = int(np.sum(CLTRarray))
     return CLTR, CLTRarray
 
-    for i in range(0,12):
-        # take one row
-        row = LTRarray[i,:]
-        # flip it to read from the last trial first
-        row = np.flip(row,0)
-        count = 0
-        # cycle over each row
-        for j in row:
-            # check to see if the word was recalled
-            if j == 1:
-                count += 1
-            else:
-                # stop when a word was not recalled for a trial
-                break
-        # if the count is less than 2
-        if count < 2:
-            count = 0
-        CLTR += count
-    return CLTR
+#    for i in range(0,12):
+#        # take one row
+#        row = LTRarray[i,:]
+#        # flip it to read from the last trial first
+#        row = np.flip(row,0)
+#        count = 0
+#        # cycle over each row
+#        for j in row:
+#            # check to see if the word was recalled
+#            if j == 1:
+#                count += 1
+#            else:
+#                # stop when a word was not recalled for a trial
+#                break
+#        # if the count is less than 2
+#        if count < 2:
+#            count = 0
+#        CLTR += count
+#    return CLTR
 
 def ReadDataFile(FileIn):
     # Read the file as a pandas data frame
