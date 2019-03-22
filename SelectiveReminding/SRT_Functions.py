@@ -176,6 +176,8 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     for word in WordListObjects:
         word.setAutoDraw(False)
     win.flip()
+    
+    # Make list of the intrusions and return it 
     return WordListObjects, mouse, RecallList
 
 def CheckForIntrusions(mouse):
@@ -295,6 +297,7 @@ def CleanSRTResponses(InitialList):
     return CleanList
     
 def FillResponseArray(ResponseArray, CleanList, TrialNumber):
+    # Not used now that scoring is done with clicking words
     # For each response enter them in the Response array
     ResponseCount  = 1 # What order were responses made?
     print("Clean List:")
