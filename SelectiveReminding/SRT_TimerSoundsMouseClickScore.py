@@ -34,7 +34,7 @@ os.chdir(_thisDir)
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NCM_NeuroPsych_Config import *
 
-SRT_WordOnTime = 2 # <<< Just for testing
+SRT_WordOnTime = 1 # <<< Just for testing
 
 # Store info about the experiment session
 expName = u'SRT'  # from the Builder filename that created this script
@@ -169,14 +169,14 @@ countDownStarted = False
 ResponseTimer = visual.TextStim(win=win, name='ResponseTimer',
     text='default text',
     font=u'Arial',
-    units='pix', pos=(40, -200), height=30, wrapWidth=None, ori=0, 
+    units='pix', pos=(40, -300), height=30, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=-4.0);
     
 RemainingTime = visual.TextStim(win=win, name='RemainingTime',
     text=u'Remaining Time:',
     font=u'Arial',
-    units='pix', pos=(-100, -200), height=30, wrapWidth=None, ori=0, 
+    units='pix', pos=(-100, -300), height=30, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=-5.0);    
 # Initialize components for Routine "Wait"
@@ -479,7 +479,7 @@ for thisBlock in range(0,NBlocks):
         else:
             pass       
     # Put all the words on the screen and have the tester click the recalled words and enter any intrusions
-    WordListObjects, mouse, RecallList = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords)
+    WordListObjects, mouse, RecallList = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime)
     print("Recall List:")
     print(RecallList)
     ResponseArray[:,BlockCount - 1] = RecallList
@@ -523,243 +523,6 @@ for thisBlock in range(0,NBlocks):
             pass  
 #    print("Correct Recog: %s"%(CorrectRecog))
 
-#    # ------Prepare to start Routine "EnterResponses"-------
-#    t = 0
-#    EnterResponsesClock.reset()  # clock
-#    frameN = -1
-#    continueRoutine = True
-#    # update component parameters for each repeat
-#    key_resp_2 = event.BuilderKeyResponse()
-#    key_resp_3 = event.BuilderKeyResponse()
-#    if not countDownStarted:
-#        countDownClock = core.CountdownTimer(SRT_ResponseTimeAllowed)
-#        countDownStarted = True
-#    # keep track of which components have finished
-#    EnterResponsesComponents = [ResponseText, key_resp_2, key_resp_3, ResponseTimer, RemainingTime]
-#    for thisComponent in EnterResponsesComponents:
-#        if hasattr(thisComponent, 'status'):
-#            thisComponent.status = NOT_STARTED
-#    
-#    # -------Start Routine "EnterResponses"-------
-#    while continueRoutine:
-#        # get current time
-#        t = EnterResponsesClock.getTime()
-#        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-#        # update/draw components on each frame
-#        
-#        # *text_2* updates
-#        if t >= 0.0 and ResponseText.status == NOT_STARTED:
-#            # keep track of start time/frame for later
-#            ResponseText.tStart = t
-#            ResponseText.frameNStart = frameN  # exact frame index
-#            ResponseText.setAutoDraw(True)
-#        
-#        # *key_resp_2* updates
-#        if t >= 0.0 and key_resp_2.status == NOT_STARTED:
-#            # keep track of start time/frame for later
-#            key_resp_2.tStart = t
-#            key_resp_2.frameNStart = frameN  # exact frame index
-#            key_resp_2.status = STARTED
-#            # keyboard checking is just starting
-#            key_resp_2.clock.reset()  # now t=0
-#        if key_resp_2.status == STARTED:
-#            theseKeys = event.getKeys(keyList=['1', '2', '3', '4', '5', '6','7','8','9','a','b','c','x'])
-#            
-#            # check for quit:
-#            if "escape" in theseKeys:
-#                endExpNow = True
-#            if len(theseKeys) > 0:  # at least one key was pressed
-#                key_resp_2.keys.extend(theseKeys)  # storing all keys
-#                key_resp_2.rt.append(key_resp_2.clock.getTime())
-#        
-#        # *key_resp_3* updates
-#        if t >= 0.0 and key_resp_3.status == NOT_STARTED:
-#            # keep track of start time/frame for later
-#            key_resp_3.tStart = t
-#            key_resp_3.frameNStart = frameN  # exact frame index
-#            key_resp_3.status = STARTED
-#            # keyboard checking is just starting
-#            event.clearEvents(eventType='keyboard')
-#        if key_resp_3.status == STARTED:
-#            theseKeys = event.getKeys(keyList=['return'])
-#            
-#            # check for quit:
-#            if "escape" in theseKeys:
-#                endExpNow = True
-#            if len(theseKeys) > 0:  # at least one key was pressed
-#                # a response ends the routine
-#                continueRoutine = False
-#        # This is for the countdown timer
-#        timeRemaining = countDownClock.getTime()
-#        if timeRemaining <= 0.0:
-#            continueRoutine = False
-#            ResponseText.finished = True
-#            countDownStarted = False
-#        else:
-#            seconds = int(timeRemaining)
-#            timeText = "%02d"%(seconds)
-#        
-#        
-#        # *ResponseTimer* updates
-#        if t >= 0.0 and ResponseTimer.status == NOT_STARTED:
-#            # keep track of start time/frame for later
-#            ResponseTimer.tStart = t
-#            ResponseTimer.frameNStart = frameN  # exact frame index
-#            ResponseTimer.setAutoDraw(True)
-#        if ResponseTimer.status == STARTED:  # only update if drawing
-#            ResponseTimer.setText(timeText, log=False)
-#        
-#        # *RemainingTime* updates
-#        if t >= 0.0 and RemainingTime.status == NOT_STARTED:
-#            # keep track of start time/frame for later
-#            RemainingTime.tStart = t
-#            RemainingTime.frameNStart = frameN  # exact frame index
-#            RemainingTime.setAutoDraw(True)
-#            
-#        # check if all components have finished
-#        if not continueRoutine:  # a component has requested a forced-end of Routine
-#            break
-#        continueRoutine = False  # will revert to True if at least one component still running
-#        for thisComponent in EnterResponsesComponents:
-#            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-#                continueRoutine = True
-#                break  # at least one component has not yet finished
-#        
-#        # check for quit (the Esc key)
-#        if endExpNow or event.getKeys(keyList=["escape"]):
-#            core.quit()
-#        
-#        # refresh the screen
-#        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-#            win.flip()
-#
-#    # -------Ending Routine "EnterResponses"-------
-#    for thisComponent in EnterResponsesComponents:
-#        if hasattr(thisComponent, "setAutoDraw"):
-#            thisComponent.setAutoDraw(False)
-#    # check responses
-#    if key_resp_2.keys in ['', [], None]:  # No response was made
-#        key_resp_2.keys=None
-##    Blocks.addData('key_resp_2.keys',key_resp_2.keys)
-##    if key_resp_2.keys != None:  # we had a response
-##        Blocks.addData('key_resp_2.rt', key_resp_2.rt)
-#    # reset the timer for each recall attempt    
-#    countDownStarted = False
-#    # the Routine "EnterResponses" was not non-slip safe, so reset the non-slip timer
-#    routineTimer.reset()
-#    
-#    # ------Prepare to start Routine "Wait"-------
-#    t = 0
-#    WaitClock.reset()  # clock
-#    frameN = -1
-#    continueRoutine = True
-#    routineTimer.add(1.000000)
-#    # update component parameters for each repeat
-#    # keep track of which components have finished
-#    WaitComponents = [WaitText]
-#    for thisComponent in WaitComponents:
-#        if hasattr(thisComponent, 'status'):
-#            thisComponent.status = NOT_STARTED
-#    
-#    # -------Start Routine "Wait"-------
-#    while continueRoutine and routineTimer.getTime() > 0:
-#        # get current time
-#        t = WaitClock.getTime()
-#        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-#        # update/draw components on each frame
-#        
-#        # *WaitText* updates
-#        if t >= 0.0 and WaitText.status == NOT_STARTED:
-#            # keep track of start time/frame for later
-#            WaitText.tStart = t
-#            WaitText.frameNStart = frameN  # exact frame index
-#            WaitText.setAutoDraw(True)
-#        frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
-#        if WaitText.status == STARTED and t >= frameRemains:
-#            WaitText.setAutoDraw(False)
-#        
-#        # check if all components have finished
-#        if not continueRoutine:  # a component has requested a forced-end of Routine
-#            break
-#        continueRoutine = False  # will revert to True if at least one component still running
-#        for thisComponent in WaitComponents:
-#            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-#                continueRoutine = True
-#                break  # at least one component has not yet finished
-#        
-#        # check for quit (the Esc key)
-#        if endExpNow or event.getKeys(keyList=["escape"]):
-#            core.quit()
-#        
-#        # refresh the screen
-#        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-#            win.flip()
-#    
-#    # -------Ending Routine "Wait"-------
-#    for thisComponent in WaitComponents:
-#        if hasattr(thisComponent, "setAutoDraw"):
-#            thisComponent.setAutoDraw(False)
-#            
-#            
-#
-#    # Identify the recalled words and create the new list of words
-#    #print(key_resp_2.keys)
-#    if key_resp_2.keys != None:
-#        
-#        # Add these responses to the response array
-#        cList = SRT.CleanSRTResponses(key_resp_2.keys)        
-#        ResponseArray = SRT.FillResponseArray(ResponseArray, cList, BlockCount - 1)
-#        
-#        # Create the word list for the next trial
-#        uniqueResp = list(set(key_resp_2.keys))
-#        uniqueResp.sort()
-#        # Remove the intrusions from the list
-#        uniqueRespNoX = uniqueResp
-#        NIntrusions = np.count_nonzero(np.array(key_resp_2.keys) == 'x')
-#        NIntrusionArray[BlockCount -1] = NIntrusions
-#        for i in range(0, len(uniqueResp)):
-#            if uniqueResp[i] == 'x':
-#                del uniqueRespNoX[i]
-#        
-#        UpdatedWordList = list(WordList)
-#        # find words to remove    
-#        WordsToRemove = []        
-#        for i in uniqueRespNoX:
-#            #print(i)
-#            index = CorrList.index(i)
-#            WordsToRemove.append(index)
-#        # remove the words    
-#        for i in sorted(WordsToRemove, reverse=True): 
-#            del UpdatedWordList[i]
-#            
-#        # Create selection list
-#        ThisBlockSelList = []
-#        count = 0
-#        for i in WordList:
-#            for j in UpdatedWordList:
-#                if i == j:
-#                    ThisBlockSelList.append(count)
-#            count += 1
-#        # if all words were recalled, present just a blank
-#        if len(ThisBlockSelList) == 0:
-#            ThisBlockSelList.append(12)
-#        #print(ThisBlockSelList)
-#    else:
-#        # no responses
-#        uniqueResp = []
-#        WordsToRemove = []
-#        ThisBlockSelList = list(range(0,12,1))
-        
-#        ThisBlockSelList = ",".join(str(i) for i in SelectionList)
-    # Write the words to the file
-    # dataFile.write('%d,%d,'%(BlockCount, len(uniqueResp)))
-#    for i in WordsToRemove:
-#        dataFile.write('%s,'%(WordList[i]))
-#    dataFile.write('\n') 
-#    # completed 5 repeats of 'Blocks'
-
-#Blocks.addData('key_resp_2.keys',key_resp_2.keys)
-
 # Thank you
 textThankyou.setAutoDraw(True)
 countDown.reset()
@@ -776,7 +539,7 @@ print(WordList)
 print(NIntrusionArray)
 print('Writing results')
 
-SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList)
+SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList)
 
 #dataFile.close()
 #thisExp.saveAsPickle(filename)

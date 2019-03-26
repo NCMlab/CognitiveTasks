@@ -51,8 +51,9 @@ def MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows):
     return ColLocsList, RowLocsList
 
 
-def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords):
+def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime):
     
+    SRT_ResponseTimeAllowed = 60
     from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
     
@@ -60,7 +61,13 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     RecallList = np.zeros(NWords)
     IntrusionList = []
     
-    SelectedColor = 'blue'                                
+    SelectedColor = 'blue'  
+    # Set up the response timer clock
+    countDownStarted = False
+    countDownClock = core.CountdownTimer(SRT_ResponseTimeAllowed)            
+    # Put the response timer on the screen
+    ResponseTimer.setAutoDraw(True)
+    RemainingTime.setAutoDraw(True)                                                
     # ------Prepare to start Routine "trial"-------
     t = 0
     trialClock.reset()  # clock
@@ -140,15 +147,41 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
                 word.setAutoDraw(True)
        # This cycls over the full list and checks to see which word is selected
         count = 0
+        RecallOrder = 1
         for word in WordListObjects:
             if mouse.isPressedIn(word):
                 # Check only the words in the list and not the intrusions
                 if count < NWords:
-                    RecallList[count] = 1
+                    RecallList[count] = RecallOrder
+                    RecallOrder +=1
                 word.setColor(SelectedColor, 'rgb255')
             count += 1
                 
-       
+       # Add the countdown timer
+        timeRemaining = countDownClock.getTime()
+        if timeRemaining <= 0.0:
+            continueRoutine = False
+            countDownStarted = False
+        else:
+            seconds = int(timeRemaining)
+            timeText = "%02d"%(seconds)
+        
+        
+        # *ResponseTimer* updates
+        if t >= 0.0 and ResponseTimer.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            ResponseTimer.tStart = t
+            ResponseTimer.frameNStart = frameN  # exact frame index
+            ResponseTimer.setAutoDraw(True)
+        if ResponseTimer.status == STARTED:  # only update if drawing
+            ResponseTimer.setText(timeText, log=False)
+        
+        # *RemainingTime* updates
+        if t >= 0.0 and RemainingTime.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            RemainingTime.tStart = t
+            RemainingTime.frameNStart = frameN  # exact frame index
+            RemainingTime.setAutoDraw(True)
     # *key_resp_2* updates
         if t >= 0.0 and key_resp_2.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -184,6 +217,9 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
             win.flip()
             
     # Remove the words from the screen
+    ResponseTimer.setAutoDraw(False)
+    RemainingTime.setAutoDraw(False)
+    
     for word in WordListObjects:
         word.setAutoDraw(False)
     win.flip()
@@ -226,7 +262,7 @@ def TypeInWord(count):
     dlg.Destroy()
     return dlg.GetValue()
 
-def WriteOutResults(OutFile, ResponseArray, NIntrusionArray, WordList):
+def WriteOutResults(OutFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList):
     # Writ eout the header
     WriteHeader(OutFile)
     # Find the size of the data
@@ -240,9 +276,30 @@ def WriteOutResults(OutFile, ResponseArray, NIntrusionArray, WordList):
         OutFile.write('%s\n'%(WordList[i]))
     # Write out the intrusions
     OutFile.write('\n')
+    WriteIntrusion(OutFile, AllIntrusionList)
     # Make the table of scores
     WriteOutScores(OutFile, ResponseArray, NIntrusionArray)
     OutFile.close()
+
+def WriteIntrusion(OutFile, AllIntrusionList):
+    # First, find out the max number of intrusions in a trial
+    MaxIntrusions = 0
+    for trial in AllIntrusionList:
+        if len(trial) > MaxIntrusions:
+            MaxIntrusions = len(trial)
+    
+    OutFile.write('Intrusions,')
+    # Cycle over each trial since the intrusions are listed in rows under each column
+    # This makes writing a pain in the butt
+    for i in range(MaxIntrusions):
+        for trial in AllIntrusionList:
+            if len(trial) >= i + 1:
+                OutFile.write('%s,'%(trial[i]))
+            else:
+                OutFile.write(',')
+        OutFile.write('\n')
+        
+            
     
 def WriteHeader(OutFile):
     OutFile.write('Index,')

@@ -11,7 +11,7 @@ ThankYouOnTime = 3
 
 # SRT Task
 SRT_ResponseTimeAllowed = 60 # seconds
-SRT_WordOnTime = 2.0 # seconds
+SRT_WordOnTime = 1.0 # seconds
 # The first word in a block is a little too quck so this helps
 SRT_FudgeTime = 0.9
 SRTPath = os.path.join('CompanionFolderForCognitiveTasks','SRT')

@@ -653,12 +653,14 @@ class Mywin(wx.Frame):
       print("Label of pressed button = %s"%(btnMemC2Label))
       core.shellCall([sys.executable, "../SelectiveReminding/SRT_TimerSoundsMouseClickScore.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC2.SetValue(True)
+      # Add the timer to the recall
       
    def OnClickedRMemC5(self, event):
       btnMemC5Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC5Label))
       core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingDelayedv1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC5.SetValue(True)      
+      # Add the clickable scoring 
 
    def OnClickedRMemC6(self, event):
       btnMemC6Label = event.GetEventObject().GetLabel() 
