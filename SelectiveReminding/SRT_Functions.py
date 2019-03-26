@@ -52,7 +52,7 @@ def MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows):
 
 
 def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime):
-    
+    RecallOrder = 1
     SRT_ResponseTimeAllowed = 60
     from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
@@ -60,7 +60,11 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     # Output the words that are recalled for entry into the Response Array
     RecallList = np.zeros(NWords)
     IntrusionList = []
-    
+    WordList = []
+    for word in WordListObjects:
+        WordList.append(word.text)
+    print("WordList from function:")
+    print(WordList)
     SelectedColor = 'blue'  
     # Set up the response timer clock
     countDownStarted = False
@@ -145,17 +149,24 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
                 word.tStart = t
                 word.frameNStart = frameN  # exact frame index
                 word.setAutoDraw(True)
+
        # This cycls over the full list and checks to see which word is selected
         count = 0
-        RecallOrder = 1
+
         for word in WordListObjects:
             if mouse.isPressedIn(word):
-                # Check only the words in the list and not the intrusions
-                if count < NWords:
-                    RecallList[count] = RecallOrder
-                    RecallOrder +=1
                 word.setColor(SelectedColor, 'rgb255')
+                # if count < NWords:
+                #     # keep track of the order of words recalled
+                #     RecallList[count] = 1#WordList.index(word.text)+1
             count += 1
+        
+        
+    # count = 1
+    # for ClickedWord in mouse.clicked_text:
+    #     for word in WordListObjects:
+    #         if ClickedWord == word
+            
                 
        # Add the countdown timer
         timeRemaining = countDownClock.getTime()
@@ -223,9 +234,17 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     for word in WordListObjects:
         word.setAutoDraw(False)
     win.flip()
-    
+     
+    # For each word recalled and listed in mouse,
+    # find teh index for teh word and the order it was recalled
+    RecallOrder = 1
+    for word in mouse.clicked_text:
+        if word != '[Intrusion]':
+            RecallList[WordList.index(word)] = RecallOrder
+            RecallOrder += 1
+        
     # Make list of the intrusions and return it 
-    return WordListObjects, mouse, RecallList
+    return WordListObjects, mouse, RecallList, RecallOrder
 
 def CheckForIntrusions(mouse):
     # Go through the list of clicked words and see if any intrusions were said.
@@ -297,7 +316,7 @@ def WriteIntrusion(OutFile, AllIntrusionList):
                 OutFile.write('%s,'%(trial[i]))
             else:
                 OutFile.write(',')
-        OutFile.write('\n')
+        OutFile.write('\n,')
         
             
     

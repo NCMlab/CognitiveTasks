@@ -309,8 +309,8 @@ routineTimer.reset()
 SelectionList = list(range(0,12,1))
 ThisBlockSelList = ",".join(str(i) for i in SelectionList)
 ThisBlockSelList = SelectionList
-print("Original")
-print(ThisBlockSelList)
+#print("Original")
+#print(ThisBlockSelList)
 
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
@@ -479,11 +479,13 @@ for thisBlock in range(0,NBlocks):
         else:
             pass       
     # Put all the words on the screen and have the tester click the recalled words and enter any intrusions
-    WordListObjects, mouse, RecallList = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime)
+    WordListObjects, mouse, RecallList, RecallOrder = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime)
     print("Recall List:")
     print(RecallList)
     ResponseArray[:,BlockCount - 1] = RecallList
-#    print(ResponseArray)
+    print(RecallOrder)
+    print(mouse.clicked_text)
+    #    print(ResponseArray)
     
     # Check to see if any intrusions were recalled
     # Have the tester type in the intrusion words
