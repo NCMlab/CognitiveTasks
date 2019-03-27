@@ -281,6 +281,22 @@ def TypeInWord(count):
     dlg.Destroy()
     return dlg.GetValue()
 
+def WriteOutDelayedResults(OutFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList):
+    NWords = len(ResponseArray) - 1
+    # print(NWords)
+    # print(ResponseArray)
+    # Write out the header
+    WriteDelayedHeader(OutFile)
+    # Write out the word list and the responses
+    for i in range(0,NWords):
+        OutFile.write('%s,'%(WordList[i]))
+        OutFile.write('%d,'%(ResponseArray[i]))
+        OutFile.write('%s\n'%(WordList[i]))
+    # Write out the intrusions
+    OutFile.write('\n')
+    WriteIntrusion(OutFile, AllIntrusionList)
+    OutFile.close()
+    
 def WriteOutResults(OutFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList):
     # Writ eout the header
     WriteHeader(OutFile)
@@ -318,7 +334,10 @@ def WriteIntrusion(OutFile, AllIntrusionList):
                 OutFile.write(',')
         OutFile.write('\n,')
         
-            
+def WriteDelayedHeader(OutFile):
+    OutFile.write('Index,')
+    OutFile.write('%s%02d,'%('Trial',1))
+    OutFile.write('Totals,\n')            
     
 def WriteHeader(OutFile):
     OutFile.write('Index,')

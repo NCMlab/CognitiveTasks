@@ -658,7 +658,7 @@ class Mywin(wx.Frame):
    def OnClickedRMemC5(self, event):
       btnMemC5Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC5Label))
-      core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingDelayedv1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../SelectiveReminding/SRT_DelayedRecallTimerSoundsMouseClickScore.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC5.SetValue(True)      
       # Add the clickable scoring 
 
