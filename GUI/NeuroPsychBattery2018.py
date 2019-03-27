@@ -18,14 +18,14 @@ import CheckExistingNeuroPsychData
 
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NCM_NeuroPsych_Config import *
 # Check to see if the output data folder has been identified
 try:
-    # try to lod the config file
+    # try to load the config file
     from NeuropsychDataFolder import *
     # See if the variable is in it
     print('Data being saved to: %s'%(NeuropsychDataFolder))
@@ -672,14 +672,16 @@ class Mywin(wx.Frame):
    def OnClickedRMemC2(self, event):
       btnMemC2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC2Label))
-      core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingWithTimerSoundsv1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../SelectiveReminding/SRT_TimerSoundsMouseClickScore.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC2.SetValue(True)
+      # Add the timer to the recall
       
    def OnClickedRMemC5(self, event):
       btnMemC5Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnMemC5Label))
-      core.shellCall([sys.executable, "../SelectiveReminding/SelectiveRemindingDelayedv1.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../SelectiveReminding/SRT_DelayedRecallTimerSoundsMouseClickScore.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbRMemC5.SetValue(True)      
+      # Add the clickable scoring 
 
    def OnClickedRMemC6(self, event):
       btnMemC6Label = event.GetEventObject().GetLabel() 

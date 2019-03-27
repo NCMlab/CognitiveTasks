@@ -84,7 +84,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=[1200, 800], fullscr=False, screen=0,
+    size=[1400, 800], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,units='pix')
@@ -95,33 +95,25 @@ if expInfo['frameRate'] != None:
 else:
     frameDur = 1.0 / 60.0  # could not measure, so guess
 
-GridWidth = 1240
+# Define how the words should appear on the screen
+GridWidth = 600
 GridHeight = 500
-NVer = 6
-NHor = 4
-VerSpace = (GridHeight/2)/(NHor/2)
-HorSpace = (GridWidth/2)/(NVer/2)
-# plus to right
-# neg is up
-Row1 = VerSpace/2 + 2*VerSpace
-Row2 = VerSpace/2 + VerSpace
-Row3 = VerSpace/2
-Row4 = -VerSpace/2
-Row5 = -VerSpace/2 - VerSpace
-Row6 = -VerSpace/2 - 2*VerSpace
-Col1 = -HorSpace/2 - HorSpace
-Col2 = -HorSpace/2
-Col3 = HorSpace/2
-Col4 = HorSpace/2 + HorSpace
+NRows = 6
+NCols = 3
+# Make lists of screen locations for the words
+ColLocsList, RowLocsList = SRT_Functions.MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows)
+
 FontSize = 30
 WordColor = 'white'
 SelectedColor = 'blue'
-inputFile = '../SelectiveReminding/RecogWordList.csv'
+inputFile = '../SelectiveReminding/WordListScoring.csv'
 trials = pd.read_csv(inputFile)
+
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 mouse = event.Mouse(win=win)
 x, y = [None, None]
+
 # Initialize components for Routine "thanks"
 thanksClock = core.Clock()
 InstrClock = core.Clock()
@@ -139,198 +131,23 @@ text = visual.TextStim(win=win, name='text',
     color=WordColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
+# For every word in the word list do the following
 WordListObjects = []
-text1 = visual.TextStim(win=win, name='text1',
-    text=trials['Word'][0],
-    font=u'Arial',
-    units='pix', pos=(Col1, Row1), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-1.0);
-
-text2 = visual.TextStim(win=win, name='text2',
-    text=trials['Word'][1],
-    font=u'Arial',
-    units='pix', pos=(Col2, Row1), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-text3 = visual.TextStim(win=win, name='text3',
-    text=trials['Word'][2],
-    font=u'Arial',
-    units='pix', pos=(Col3, Row1), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-   
-text4 = visual.TextStim(win=win, name='text4',
-    text=trials['Word'][3],
-    font=u'Arial',
-    units='pix', pos=(Col4, Row1), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text5 = visual.TextStim(win=win, name='text5',
-    text=trials['Word'][4],
-    font=u'Arial',
-    units='pix', pos=(Col1, Row2), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text6 = visual.TextStim(win=win, name='text6',
-    text=trials['Word'][5],
-    font=u'Arial',
-    units='pix', pos=(Col2, Row2), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text7 = visual.TextStim(win=win, name='text7',
-    text=trials['Word'][6],
-    font=u'Arial',
-    units='pix', pos=(Col3, Row2), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text8 = visual.TextStim(win=win, name='text8',
-    text=trials['Word'][7],
-    font=u'Arial',
-    units='pix', pos=(Col4, Row2), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text9 = visual.TextStim(win=win, name='text9',
-    text=trials['Word'][8],
-    font=u'Arial',
-    units='pix', pos=(Col1, Row3), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text10 = visual.TextStim(win=win, name='text10',
-    text=trials['Word'][9],
-    font=u'Arial',
-    units='pix', pos=(Col2, Row3), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text11 = visual.TextStim(win=win, name='text11',
-    text=trials['Word'][10],
-    font=u'Arial',
-    units='pix', pos=(Col3, Row3), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text12 = visual.TextStim(win=win, name='text12',
-    text=trials['Word'][11],
-    font=u'Arial',
-    units='pix', pos=(Col4, Row3), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text13 = visual.TextStim(win=win, name='text13',
-    text=trials['Word'][12],
-    font=u'Arial',
-    units='pix', pos=(Col1,Row4), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text14 = visual.TextStim(win=win, name='text14',
-    text=trials['Word'][13],
-    font=u'Arial',
-    units='pix', pos=(Col2, Row4), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text15 = visual.TextStim(win=win, name='text15',
-    text=trials['Word'][14],
-    font=u'Arial',
-    units='pix', pos=(Col3,Row4), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text16 = visual.TextStim(win=win, name='text16',
-    text=trials['Word'][15],
-    font=u'Arial',
-    units='pix', pos=(Col4,Row4), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text17 = visual.TextStim(win=win, name='text17',
-    text=trials['Word'][16],
-    font=u'Arial',
-    units='pix', pos=(Col1,Row5), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text18 = visual.TextStim(win=win, name='text18',
-    text=trials['Word'][17],
-    font=u'Arial',
-    units='pix', pos=(Col2, Row5), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text19 = visual.TextStim(win=win, name='text19',
-    text=trials['Word'][18],
-    font=u'Arial',
-    units='pix', pos=(Col3, Row5), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text20 = visual.TextStim(win=win, name='text20',
-    text=trials['Word'][19],
-    font=u'Arial',
-    units='pix', pos=(Col4, Row5), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text21 = visual.TextStim(win=win, name='text21',
-    text=trials['Word'][20],
-    font=u'Arial',
-    units='pix', pos=(Col1,Row6), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text22 = visual.TextStim(win=win, name='text22',
-    text=trials['Word'][21],
-    font=u'Arial',
-    units='pix', pos=(Col2, Row6), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text23 = visual.TextStim(win=win, name='text23',
-    text=trials['Word'][22],
-    font=u'Arial',
-    units='pix', pos=(Col3, Row6), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);
-    
-text24 = visual.TextStim(win=win, name='text24',
-    text=trials['Word'][23],
-    font=u'Arial',
-    units='pix', pos=(Col4, Row6), height=FontSize, wrapWidth=None, ori=0, 
-    color=WordColor, colorSpace='rgb', opacity=1,
-    depth=-3.0);       
-    
-WordListObjects.append(text1)   
-WordListObjects.append(text2) 
-WordListObjects.append(text3) 
-WordListObjects.append(text4) 
-WordListObjects.append(text5) 
-WordListObjects.append(text6) 
-WordListObjects.append(text7) 
-WordListObjects.append(text8) 
-WordListObjects.append(text9) 
-WordListObjects.append(text10) 
-WordListObjects.append(text11) 
-WordListObjects.append(text12) 
-WordListObjects.append(text13) 
-WordListObjects.append(text14) 
-WordListObjects.append(text15) 
-WordListObjects.append(text16) 
-WordListObjects.append(text17) 
-WordListObjects.append(text18) 
-WordListObjects.append(text19)
-WordListObjects.append(text20) 
-WordListObjects.append(text21) 
-WordListObjects.append(text22) 
-WordListObjects.append(text23) 
-WordListObjects.append(text24) 
+count = 1
+for word in trials['Word']:
+    print(count)
+    # Make a unique name
+    WordCount = 'text%02d'%(count)
+    # Create a text stim object for Psychopy
+    textTemp = visual.TextStim(win=win, name = WordCount,
+        text=word,
+        font=u'Arial',
+        units='pix', pos=(ColLocsList[count-1][0], RowLocsList[count-1][0]), height=FontSize, wrapWidth=None, ori=0, 
+        color=WordColor, colorSpace='rgb', opacity=1,
+        depth=-1.0);
+    # Add this visual stim obkect to a list
+    WordListObjects.append(textTemp) 
+    count += 1
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
@@ -405,10 +222,18 @@ for thisComponent in InstrComponents:
 # the Routine "Instr" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
-
-WordListObjects, mouse = SRT_Functions.PresentWordSelection(WordListObjects,trialClock, mouse, event, endExpNow, win)
+# After tye word list is presented
+# Have the participant ecsll the list and the tester
+# click on the words recalled.
+#
+WordListObjects, mouse = SRT_Functions.PresentWordSelection(WordListObjects,trialClock, mouse, event, endExpNow, win, core)
+# Check to see if any intrusions were recalled
+# Hav ethe tester type in the intrusion words
+ThisTrialRecallList = SRT_Functions.CheckForIntrusions(mouse)      
+# Change the list for the next trial
         
 print("Mouse clicked text: %s"%(mouse.clicked_text))
+print(ThisTrialRecallList)
 #print(CorrectRecog)
 #dataFile.write('%d,'%(CorrectRecog))
 for i in mouse.clicked_text:
@@ -431,30 +256,7 @@ thisExp.nextEntry()
 
 # the Routine "trial" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
-text1.setAutoDraw(False) 
-text2.setAutoDraw(False) 
-text3.setAutoDraw(False) 
-text4.setAutoDraw(False) 
-text5.setAutoDraw(False) 
-text6.setAutoDraw(False) 
-text7.setAutoDraw(False) 
-text8.setAutoDraw(False) 
-text9.setAutoDraw(False) 
-text10.setAutoDraw(False) 
-text11.setAutoDraw(False) 
-text12.setAutoDraw(False) 
-text13.setAutoDraw(False) 
-text14.setAutoDraw(False) 
-text15.setAutoDraw(False) 
-text16.setAutoDraw(False) 
-text17.setAutoDraw(False) 
-text18.setAutoDraw(False) 
-text19.setAutoDraw(False) 
-text20.setAutoDraw(False) 
-text21.setAutoDraw(False) 
-text22.setAutoDraw(False) 
-text23.setAutoDraw(False) 
-text24.setAutoDraw(False) 
+
 # ------Prepare to start Routine "thanks"-------
 t = 0
 thanksClock.reset()  # clock
