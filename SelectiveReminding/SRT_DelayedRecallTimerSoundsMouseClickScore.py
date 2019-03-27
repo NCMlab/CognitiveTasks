@@ -26,7 +26,7 @@ import sys  # to get file system encoding
 import pandas as pd
 import SRT_Functions as SRT
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
 # #################
@@ -105,7 +105,7 @@ countDown = core.CountdownTimer()
 # Setup the Window
 win = visual.Window(
     size=[1200, 800], fullscr=False, screen=0,
-    allowGUI=False, allowStencil=False,
+    allowGUI=True, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it

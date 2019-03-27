@@ -268,6 +268,7 @@ def CheckForIntrusions(mouse):
 def TypeInWord(count): 
     # When [intrusion] is clicked on teh screen by the tester, this fn will
     # present a dialog box for the intusion word to be types in
+    print('Entered Intrusion Entry')
     app = wx.App()
     
     frame = wx.Frame(None, -1, 'win.py')
