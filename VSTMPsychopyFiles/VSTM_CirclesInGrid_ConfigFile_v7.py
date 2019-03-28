@@ -9,7 +9,7 @@ import random
 import wx
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from VSTM_Config import *

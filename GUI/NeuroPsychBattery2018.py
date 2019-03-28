@@ -122,6 +122,7 @@ class Mywin(wx.Frame):
       self.DMSFontSize = '60'
       self.DMSTag = 0
       self.VSTMTag = 0
+      self.NBackTag = 0
       # #### Row 
       # STROOP
       CurrentRow = RowPixel[1]
@@ -163,17 +164,19 @@ class Mywin(wx.Frame):
 #      # #### Row 3
       self.titleR3 = wx.StaticText(self.panel, -1, label = "Spatial/Dots", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
-      self.btnR3C2 = wx.Button(self.panel,-1,"Demo", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR3C2 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2) 
-      self.btnR3C3 = wx.Button(self.panel,-1,"Stair", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+#      self.btnR3C6 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      
+      self.btnR3C3 = wx.Button(self.panel,-1,"Stair", pos = (ColPixel[3],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR3C3.Bind(wx.EVT_BUTTON,self.OnClickedR3C3) 
-      self.btnR3C4 = wx.Button(self.panel,-1,"Block", pos = (ColPixel[5],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR3C4 = wx.Button(self.panel,-1,"Block", pos = (ColPixel[6],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
       # Text box for the capacity value
-      self.txtR3C4 = wx.StaticText(self.panel, -1, label = "Cap =", pos = (ColPixel[3]+5,CurrentRow+LabelOffset))
-      self.txtR3C5 = wx.StaticText(self.panel, -1, label = "000", pos = (ColPixel[4]-ColWidth/2+5,CurrentRow+LabelOffset))  
-      self.btnR3C5a = wx.Button(self.panel,-1,"Enter", pos = (ColPixel[4]-5,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
-      self.btnR3C5b = wx.Button(self.panel,-1,"Load", pos = (ColPixel[4]+40,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      self.txtR3C4 = wx.StaticText(self.panel, -1, label = "Cap =", pos = (ColPixel[4]+5,CurrentRow+LabelOffset))
+      self.txtR3C5 = wx.StaticText(self.panel, -1, label = "000", pos = (ColPixel[5]-ColWidth/2+5,CurrentRow+LabelOffset))  
+      self.btnR3C5a = wx.Button(self.panel,-1,"Enter", pos = (ColPixel[5]-5,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      self.btnR3C5b = wx.Button(self.panel,-1,"Load", pos = (ColPixel[5]+40,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
       self.btnR3C5a.Bind(wx.EVT_BUTTON, self.OnClickedVSTMCapEnter)
       self.btnR3C5b.Bind(wx.EVT_BUTTON, self.LoadVSTMCapacity)
       
@@ -183,17 +186,21 @@ class Mywin(wx.Frame):
 #      # Box
       Row1BoxR3 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
-      self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
-      self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
-      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))
+      self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
+#      self.cbR3C6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
+      
+      self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,CurrentRow))
+      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
 # ###################
       CurrentRow = RowPixel[8]
 #      # #### Row 3
       self.titleR5 = wx.StaticText(self.panel, -1, label = "DMS/Letters", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
-      self.btnR5C2 = wx.Button(self.panel,-1,"Demo", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR5C2 = wx.Button(self.panel,-1,"Demo", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR5C2.Bind(wx.EVT_BUTTON,self.OnClickedR5C2) 
+      
+      self.btnR5C2 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR5C2.Bind(wx.EVT_BUTTON,self.OnClickedR5C2) 
-      self.btnR5C6 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       
       self.btnR5C3 = wx.Button(self.panel,-1,"Stair", pos = (ColPixel[3],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR5C3.Bind(wx.EVT_BUTTON,self.OnClickedR5C3) 
@@ -212,10 +219,29 @@ class Mywin(wx.Frame):
 #      # Box
       Row1BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
-      self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
-      self.cbR5C7 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
+#      self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+      self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
       self.cbR5C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,CurrentRow))
       self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
+
+# ###################
+      CurrentRow = RowPixel[10]
+#      # #### Row 3
+      self.titleR5 = wx.StaticText(self.panel, -1, label = "N-Back", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
+#      # Buttons
+      self.btnR10C2 = wx.Button(self.panel,-1,"Demo", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR10C2.Bind(wx.EVT_BUTTON,self.OnClickedR10C2) 
+      self.btnR10C3 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR10C3.Bind(wx.EVT_BUTTON,self.OnClickedR10C3)
+      self.btnR10C4 = wx.Button(self.panel,-1,"Block", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR10C4.Bind(wx.EVT_BUTTON,self.OnClickedR10C4)
+      
+      self.cbR10C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+      self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
+      Row1BoxR10 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
+      
+
+
 
 # #### Row 
       CurrentRow = RowPixel[4]
@@ -303,7 +329,7 @@ class Mywin(wx.Frame):
       #self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (ColPixel[3],Row10), size = ((ButtonWidth, ButtonHeight))) 
       #self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
 
-      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (ColPixel[0],RowPixel[11]), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (ColPixel[0],RowPixel[11]-5), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
       
       self.Centre() 
@@ -519,7 +545,7 @@ class Mywin(wx.Frame):
         
         # Add the path name to the GUI
         # Add the new label
-        self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (ColPixel[3],Row1))
+        self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (ColPixel[3], RowPixel[0]))
         #self.PartIDLabel = wx.StaticText.setText(self.VisitFolderName)
         #(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (ColPixel[3],Row1))
         
@@ -603,6 +629,7 @@ class Mywin(wx.Frame):
       self.cbR3C4.SetValue(True)  
 
    # Row 5 Functions   
+   # Practice of the DMS
    def OnClickedR5C2(self, event): 
       btnR5C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C2Label))
@@ -624,6 +651,13 @@ class Mywin(wx.Frame):
       core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4NP.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'BehRun%d'%(self.DMSTag)])  
       self.cbR5C6.SetValue(True)  
    
+   def OnClickedR10C4(self, event):
+      self.NBackTag = self.NBackTag + 1
+      btnR10C4Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR10C4Label))
+      core.shellCall([sys.executable, "../NBack/NBackNeuroPsychGUI.py", self.PartID.GetValue(), self.VisitFolderPath, 'BehRun%d'%(self.NBackTag)])  
+      self.cbR5C6.SetValue(True)  
+ 
    def OnClickedR6C2(self, event):
       btnR6C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR6C2Label))

@@ -8,6 +8,11 @@ If you publish work using this script please cite the PsychoPy publications:
         Journal of Neuroscience Methods, 162(1-2), 8-13.
     Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy.
         Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
+        
+This should be updated to make the letters dynamically instead of reading 
+from a file.
+We should also make it so that a parameter may be set to determine what 
+practice trials ad loads to deliver instead of having it fixed in an EXCEL file
 """
 
 from __future__ import absolute_import, division
@@ -29,7 +34,7 @@ os.chdir(_thisDir)
 # #################
 # Store info about the experiment session
 expName = u'DMS'  # from the Builder filename that created this script
-task = 'Demo'
+task = 'Practice'
 expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp

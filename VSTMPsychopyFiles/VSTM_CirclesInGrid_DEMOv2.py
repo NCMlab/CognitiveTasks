@@ -3,6 +3,11 @@ import numpy as np  # whole numpy lib is available, prepend 'np.'
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import random
+# Ensure that relative paths start from the same directory as this script
+_thisDir = os.path.dirname(os.path.abspath(__file__))
+
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from NCM_NeuroPsych_Config import *
 
 # Visual Task components
 # circle5
@@ -25,19 +30,19 @@ ProbeColor = 'blue'
 # Timings
 FontSize = 60
 FontSizeUnits = 'pix'
-GridCount = 6 # Number of circles to have on each row
-GridSize = 52*GridCount + 1 # The size of the grid for which the circles on on
+#GridCount = 6 # Number of circles to have on each row
+#GridSize = 52*GridCount + 1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/GridCount # The circle size so that they are all just touching
 OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(CircleSize))
 MaskLocations = np.arange(0,1+GridCount**2)
 # units=FontSizeUnits
 # height=FontSize
-StimOnTime = 1.5
-RetOnTime = 3.0
-ProbeOnTime= 2.0
-MaskOnTime = 0.3
-# This is the intertrial interval. This experimental component is part of the trial.
-ITITime = 1.0 #1.0
+#StimOnTime = 1.5
+#RetOnTime = 3.0
+#ProbeOnTime= 2.0
+#MaskOnTime = 0.3
+## This is the intertrial interval. This experimental component is part of the trial.
+#ITITime = 1.0 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.

@@ -377,6 +377,9 @@ for thisStep in staircase:
     textProbe.draw()
     win.flip()
     trialClock.reset()
+    
+
+    while countDown.getTime() > 0:
     # Add the ITI during delay
     # Add the probe letter
 
