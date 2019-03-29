@@ -11,3 +11,5 @@ dlg = wx.TextEntryDialog(frame, 'Enter Intrusion %d'%(count),'Text Entry')
 if dlg.ShowModal() == wx.ID_OK:
     print('You entered: %s\n' % dlg.GetValue())
 dlg.Destroy()
+
+
