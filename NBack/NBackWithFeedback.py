@@ -30,10 +30,10 @@ import NBackFunctions
 
 
 
-NBlocks = len(NBack_Beh1_LoadLevel)
+NBlocks = len(NBack_Prac1_LoadLevel)
 # DISPLAY PARAMETERS FOR THE USER TO CONFIRM
-ExpectedTotalTime = NBack_Beh1_IntroOffDuration + NBlocks * (NBack_Beh1_InterBlockTime + NBack_Beh1_InstructionTime + NBack_Beh1_InterStimulusDelay + NBack_Beh1_TimePerTrial + NBack_Beh1_TrialPerBlock)
-print("\n>> Blocks: %s"%(NBack_Beh1_LoadLevel))
+ExpectedTotalTime = NBack_Prac1_IntroOffDuration + NBlocks * (NBack_Prac1_InterBlockTime + NBack_Prac1_InstructionTime + NBack_Prac1_InterStimulusDelay + NBack_Prac1_TimePerTrial + NBack_Beh1_TrialPerBlock)
+print("\n>> Blocks: %s"%(NBack_Prac1_LoadLevel))
 print(">> Expected Duration: %d\n"%(ExpectedTotalTime))
 
 # NOTES
@@ -46,7 +46,7 @@ print(">> Expected Duration: %d\n"%(ExpectedTotalTime))
 # #################
 # Store info about the experiment session
 expName = u'NBack'  # from the Builder filename that created this script
-task = '012012'
+task = 'Prac012'
 expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
@@ -90,23 +90,23 @@ thisExp = data.ExperimentHandler(name=expName, version='',
 AllLists = []
 AllCorrectLocations = []
 for BlockNumber in range(0,NBlocks,1):
-    CurrentLoadLevel = int(NBack_Beh1_LoadLevel[BlockNumber])
+    CurrentLoadLevel = int(NBack_Prac1_LoadLevel[BlockNumber])
 #    print(CurrentLoadLevel)
-#    print(NBack_Beh1_TrialPerBlock)
-#    print(NBack_Beh1_NumCorrectPerBlock)
+#    print(NBack_Prac1_TrialPerBlock)
+#    print(NBack_Prac1_NumCorrectPerBlock)
     
-    CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Beh1_TrialPerBlock, NBack_Beh1_NumCorrectPerBlock)
+    CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Prac1_TrialPerBlock, NBack_Prac1_NumCorrectPerBlock)
 #    print(CorrectLocations)
     # Try to assign letters to the list of correct locations
     # If it is not possible then -99 is returned
-    print(NBack_Beh1_TrialPerBlock)
-    print(NBack_Beh1_StimList)
+    print(NBack_Prac1_TrialPerBlock)
+    print(NBack_Prac1_StimList)
     print(CurrentLoadLevel)
-    List = NBackFunctions.AssignStimuliv2(CorrectLocations,NBack_Beh1_TrialPerBlock,NBack_Beh1_StimList,CurrentLoadLevel)
-#    List = AssignStimuli(CorrectLocations, NBack_Beh1_TrialPerBlock, NBack_Beh1_StimList, CurrentLoadLevel)
+    List = NBackFunctions.AssignStimuliv2(CorrectLocations,NBack_Prac1_TrialPerBlock,NBack_Prac1_StimList,CurrentLoadLevel)
+#    List = AssignStimuli(CorrectLocations, NBack_Prac1_TrialPerBlock, NBack_Prac1_StimList, CurrentLoadLevel)
 #    while not isinstance(List,(list,tuple,np.ndarray)):
-#        CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Beh1_TrialPerBlock, NBack_Beh1_NumCorrectPerBlock)
-#        List = NBackFunctions.AssignStimuliv2(CorrectLocations, NBack_Beh1_TrialPerBlock, NBack_Beh1_StimList, CurrentLoadLevel)
+#        CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Prac1_TrialPerBlock, NBack_Prac1_NumCorrectPerBlock)
+#        List = NBackFunctions.AssignStimuliv2(CorrectLocations, NBack_Prac1_TrialPerBlock, NBack_Prac1_StimList, CurrentLoadLevel)
     AllLists.append(List)
     AllCorrectLocations.append(CorrectLocations)
 
@@ -126,47 +126,53 @@ else:
 
 # Instructions
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text=NBack_Beh1_Instructions,
+    text=NBack_Prac1_Instructions,
     font='Times New Roman',
-    units='pix', pos=(0, 0), height=NBack_Beh1_InstructFontSize, wrapWidth=1200, ori=0, 
+    units='pix', pos=(0, 0), height=NBack_Prac1_InstructFontSize, wrapWidth=1200, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);   
     
 StimulusText = visual.TextStim(win=win, ori=0, name='text',
     text=u'+',    font=u'Times New Roman',
-    pos=[0, 0], height=NBack_Beh1_TextSize, wrapWidth=None,
+    pos=[0, 0], height=NBack_Prac1_TextSize, wrapWidth=None,
     color=u'white', colorSpace=u'rgb', opacity=1,
     depth=0.0)
 
 CrossHair = visual.TextStim(win=win, ori=0, name='text',
     text=u'+',    font=u'Times New Roman',
-    pos=[0, 0], height=NBack_Beh1_TextSize, wrapWidth=None,
+    pos=[0, 0], height=NBack_Prac1_TextSize, wrapWidth=None,
     color=u'red', colorSpace=u'rgb', opacity=1,
     depth=0.0)
   
 InstrLevel0 = visual.ImageStim(win,image=os.path.join(ThisFolder,'ZeroBackInstructions.png'),
     mask=None,
     pos=(0.0,0.0),
-    size=(NBack_Beh1_InstructionFigureSize, NBack_Beh1_InstructionFigureSize))
+    size=(NBack_Prac1_InstructionFigureSize, NBack_Prac1_InstructionFigureSize))
 InstrLevel1 = visual.ImageStim(win,image=os.path.join(ThisFolder,'OneBackInstructions.png'),
     mask=None,
     pos=(0.0,0.0),
-    size=(NBack_Beh1_InstructionFigureSize,NBack_Beh1_InstructionFigureSize))
+    size=(NBack_Prac1_InstructionFigureSize,NBack_Prac1_InstructionFigureSize))
 InstrLevel2 = visual.ImageStim(win,image=os.path.join(ThisFolder,'TwoBackInstructions.png'),
     mask=None,
     pos=(0.0,0.0),
-    size=(NBack_Beh1_InstructionFigureSize,NBack_Beh1_InstructionFigureSize))
+    size=(NBack_Prac1_InstructionFigureSize,NBack_Prac1_InstructionFigureSize))
 InstrLevel3 = visual.ImageStim(win,image=os.path.join(ThisFolder,'ThreeBackInstructions.png'),
     mask=None,
     pos=(0.0,0.0),
-    size=(NBack_Beh1_InstructionFigureSize,NBack_Beh1_InstructionFigureSize))
+    size=(NBack_Prac1_InstructionFigureSize,NBack_Prac1_InstructionFigureSize))
     
 ThankYouScreen = visual.TextStim(win=win, ori=0, name='text',
     text=u'Thank You',    font=u'Times New Roman',
-    pos=[0, 0], height = NBack_Beh1_TextSize, wrapWidth=None,
+    pos=[0, 0], height = NBack_Prac1_TextSize, wrapWidth=None,
     color=u'white', colorSpace=u'rgb', opacity=1,
     depth=0.0)
 
+Feedback = visual.TextStim(win=win, ori=0, name='text',
+    text=u'text',    font=u'Times New Roman',
+    pos=[0, 100], height = NBack_Prac1_TextSize, wrapWidth=None,
+    color=u'white', colorSpace=u'rgb', opacity=1,
+    depth=0.0)
+    
 resp = event.BuilderKeyResponse()  # create an object of type KeyResponse
 
 # Set up the clocks
@@ -197,7 +203,7 @@ while WaitingFlag is True:
 # Cross hair
 ElapsedTimeClock.reset()
 CountDownClock.reset()
-CountDownClock.add(NBack_Beh1_IntroOffDuration)
+CountDownClock.add(NBack_Prac1_IntroOffDuration)
 CrossHair.draw()
 win.flip()
 while CountDownClock.getTime() > 0:
@@ -211,7 +217,7 @@ for BlockNumber in range(0,NBlocks,1):
     # Change this so that it delivers very specific blocks
     # Use a list of load levels. The number of blocks is the list length and the load is the value in the List
     #
-    CurrentLoadLevel = int(NBack_Beh1_LoadLevel[BlockNumber])
+    CurrentLoadLevel = int(NBack_Prac1_LoadLevel[BlockNumber])
     CorrectLocations = AllCorrectLocations[BlockNumber]
     if CurrentLoadLevel == 0:
         Instructions = InstrLevel0
@@ -226,7 +232,7 @@ for BlockNumber in range(0,NBlocks,1):
     # CorrectLocations = CreateStim(CurrentLoadLevel,ExpParameters['TrialPerBlock'],ExpParameters['NumCorrectPerBlock'])
     # List = AssignStimuli(CorrectLocations,ExpParameters['TrialPerBlock'],ExpParameters['StimList'],CurrentLoadLevel)                  
     # Instructions
-    CountDownClock.add(NBack_Beh1_InstructionTime)
+    CountDownClock.add(NBack_Prac1_InstructionTime)
     thisExp.addData('Stimulus','Instructions')
     thisExp.addData('ElapsedTime',ElapsedTimeClock.getTime())
     thisExp.nextEntry()
@@ -247,7 +253,7 @@ for BlockNumber in range(0,NBlocks,1):
     print CorrectLocations
     StimulusText = visual.TextStim(win=win, ori=0, name='text',
         text='temp',    font=u'Times New Roman',
-        pos=[0, 0], height = NBack_Beh1_TextSize, wrapWidth=None,
+        pos=[0, 0], height = NBack_Prac1_TextSize, wrapWidth=None,
         color=u'white', colorSpace=u'rgb', opacity=1,
         depth=0.0)   
     
@@ -263,12 +269,13 @@ for BlockNumber in range(0,NBlocks,1):
         
         # Add Letter time and ITI to timer
         LetterOnCountDownClock.reset()
-        CountDownClock.add(NBack_Beh1_InterStimulusDelay + NBack_Beh1_TimePerTrial)   
-        LetterOnCountDownClock.add(NBack_Beh1_TimePerTrial)
+        CountDownClock.add(NBack_Prac1_InterStimulusDelay + NBack_Prac1_TimePerTrial)   
+        LetterOnCountDownClock.add(NBack_Prac1_TimePerTrial)
         # Present the stimulus
         StimulusText.text = item
         CrossHair.setAutoDraw(False)
         StimulusText.setAutoDraw(True)
+        Feedback.setAutoDraw(False)
         win.flip()
         # Now that the letter is on the screen reset the timer used for recording RTs
         TrialClock.reset()
@@ -301,11 +308,14 @@ for BlockNumber in range(0,NBlocks,1):
                 if (count + 1) in CorrectLocations:
                     print "TRUE"
                     thisExp.addData('Correct','1')
+                    Feedback.text = 'Correct'
                 else:
                     thisExp.addData('Correct','0')
+                    Feedback.text = 'Wrong'
                 resp.KeyPress = theseKeys[-1]
                 resp.RT = CurrentRT
                 CurrentRT = TrialClock.getTime()
+                Feedback.setAutoDraw(True)
                 print "%02d: %s Key press: %s in %0.4f sec"%(count,item,theseKeys[-1],CurrentRT)
 
         thisExp.addData('ElapsedTime',ElapsedTimeClock.getTime())
@@ -313,7 +323,7 @@ for BlockNumber in range(0,NBlocks,1):
         thisExp.addData('count',count)
         thisExp.addData('Block',BlockNumber+1)
         thisExp.addData('Stimulus',item)
-        thisExp.addData('LoadLevel', NBack_Beh1_LoadLevel) 
+        thisExp.addData('LoadLevel', NBack_Prac1_LoadLevel) 
         if (count + 1) in CorrectLocations:
             thisExp.addData('Expected',1)
         else:
@@ -322,7 +332,7 @@ for BlockNumber in range(0,NBlocks,1):
         count += 1
     # Make sure the cross hair is not shown
     CrossHair.setAutoDraw(False)            
-    CountDownClock.add(NBack_Beh1_InterBlockTime)        
+    CountDownClock.add(NBack_Prac1_InterBlockTime)        
     CrossHair.draw()
     win.flip()
     while CountDownClock.getTime() > 0:
@@ -332,7 +342,7 @@ for BlockNumber in range(0,NBlocks,1):
             core.quit() 
 
 # Thank you screen
-CountDownClock.add(NBack_Beh1_ThankYouOnTime)
+CountDownClock.add(NBack_Prac1_ThankYouOnTime)
 ThankYouScreen.draw()
 win.flip()
 while CountDownClock.getTime() > 0:

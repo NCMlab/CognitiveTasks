@@ -39,12 +39,28 @@ NBack_Beh1_TrialPerBlock = 24
 NBack_Beh1_NumCorrectPerBlock = 8
 NBack_Beh1_StimList = 'ABCDEFGHJKLMNPRSTVYZ'
 NBack_Beh1_ResponseKeys = ['left','right']
-NBack_Beh1_IntroOffDuration = 14
-NBack_Beh1_InterBlockTime = 14
-NBack_Beh1_InstructionTime = 6 #
+NBack_Beh1_IntroOffDuration = 4#14
+NBack_Beh1_InterBlockTime = 4#14
+NBack_Beh1_InstructionTime = 3#6 #
 NBack_Beh1_TextSize = 60 # This is in pixels
 NBack_Beh1_InstructionFigureSize = 800 # in pixels
-NBack_Beh1_Instructions = 'Press the [left] key if the current letter is a match.\n\nPress [5] key to continue.'
+NBack_Beh1_Instructions = 'Press the [left] key if the current letter is a match.\n\nPress [return] key to continue.'
 NBack_Beh1_InstructFontSize = 45 # in pixels
 NBack_Beh1_ThankYouOnTime = 3
-# MRI Run 1
+# Practice With Feedback
+NBack_Prac1_LoadLevel = '012' # each number refers to the load level for a block
+# Timing parameters
+NBack_Prac1_TimePerTrial = 0.5
+NBack_Prac1_InterStimulusDelay = 1.5
+NBack_Prac1_TrialPerBlock = 12
+NBack_Prac1_NumCorrectPerBlock = 4
+NBack_Prac1_StimList = 'ABCDEFGHJKLMNPRSTVYZ'
+NBack_Prac1_ResponseKeys = ['left','right']
+NBack_Prac1_IntroOffDuration = 4#14
+NBack_Prac1_InterBlockTime = 4#14
+NBack_Prac1_InstructionTime = 3#6 #
+NBack_Prac1_TextSize = 60 # This is in pixels
+NBack_Prac1_InstructionFigureSize = 800 # in pixels
+NBack_Prac1_Instructions = 'Press the [left] key if the current letter is a match.\n\nPress [return] key to continue.'
+NBack_Prac1_InstructFontSize = 45 # in pixels
+NBack_Prac1_ThankYouOnTime = 3
