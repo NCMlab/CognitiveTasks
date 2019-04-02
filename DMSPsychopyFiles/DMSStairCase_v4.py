@@ -379,7 +379,7 @@ for thisStep in staircase:
     trialClock.reset()
     
 
-    while countDown.getTime() > 0:
+#    while countDown.getTime() > 0:
     # Add the ITI during delay
     # Add the probe letter
 
