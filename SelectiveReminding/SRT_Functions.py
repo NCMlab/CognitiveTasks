@@ -1,5 +1,6 @@
 import numpy as np
-import wx
+#import wx
+from psychopy import gui
 
 
 
@@ -257,7 +258,7 @@ def CheckForIntrusions(mouse):
     for word in ResponseList:
         if word == '[Intrusion]':      
             # Ask the tester to type in the intrusion word(s)
-            IntrusionWord = TypeInWord(IntrusionCount)      
+            IntrusionWord = TypeInWordv2(IntrusionCount)      
             IntrusionCount += 1
             IntrusionList.append(IntrusionWord)
             ResponseList[count] = '[' + IntrusionWord + ']'
@@ -266,22 +267,31 @@ def CheckForIntrusions(mouse):
     # Change the [intrusion] in the word list to the typed in word
             
 def TypeInWord(count): 
-    # When [intrusion] is clicked on teh screen by the tester, this fn will
+    """ This does not work for PsychoPy 3 and I do not know why"""
+    # When [intrusion] is clicked on the screen by the tester, this fn will
     # present a dialog box for the intusion word to be types in
-    print('Entered Intrusion Entry')
-    app = wx.App()
-    
-    frame = wx.Frame(None, -1, 'win.py')
+    app2 = gui.wx.App()
+
+    frame = gui.wx.Frame(None, -1, 'win.py')
     frame.SetDimensions(0,0,200,50)
-    
+
     # Create text input
-    dlg = wx.TextEntryDialog(frame, 'Enter Intrusion %d'%(count),'Text Entry')
+    dlg = gui.wx.TextEntryDialog(frame, 'Enter Intrusion %d'%(count),'Text Entry')
     # dlg.SetValue("Default")
-    if dlg.ShowModal() == wx.ID_OK:
+    if dlg.ShowModal() == gui.wx.ID_OK:
         print('You entered: %s\n' % dlg.GetValue())
     dlg.Destroy()
     return dlg.GetValue()
-
+    
+def TypeInWordv2(count):
+    # When [intrusion] is clicked on the screen by the tester, this fn will
+    # present a dialog box for the intusion word to be types in
+    expInfo = {'Intrusion Word':''}
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    print('From Dialog:')
+    print(expInfo['Intrusion Word'])
+    return expInfo['Intrusion Word']
+    
 def WriteOutDelayedResults(OutFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList):
     NWords = len(ResponseArray) - 1
     # print(NWords)

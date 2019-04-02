@@ -480,6 +480,7 @@ BlockCount = 0
 #        pass       
 # Put all the words on the screen and have the tester click the recalled words and enter any intrusions
 WordListObjects, mouse, RecallList, RecallOrder = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime)
+
 print("Recall List:")
 print(RecallList)
 ResponseArray = RecallList

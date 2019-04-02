@@ -24,7 +24,7 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
 # #################
