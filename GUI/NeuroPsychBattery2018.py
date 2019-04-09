@@ -701,13 +701,13 @@ class Mywin(wx.Frame):
    def OnClickedR7C2(self, event):
       btnR7C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR7C2Label))
-      core.shellCall([sys.executable, "../DigitSpan/ForwardDigitSpanv2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../DigitSpan/ForwardDigitSpanv3.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR7C2.SetValue(True)      
    
    def OnClickedR7C3(self, event):
       btnR7C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR7C3Label))
-      core.shellCall([sys.executable, "../DigitSpan/BackwardDigitSpan.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../DigitSpan/BackwardDigitSpanv2.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR7C3.SetValue(True)
    
    def OnClickedR8C2(self, event):
