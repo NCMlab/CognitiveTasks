@@ -671,7 +671,7 @@ class Mywin(wx.Frame):
    def OnClickedR6C2(self, event):
       btnR6C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR6C2Label))
-      core.shellCall([sys.executable, "../Antonyms/Antonyms_v2.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../Antonyms/Antonymsv3.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR6C2.SetValue(True)
 
    def OnClickedR6C3(self, event):

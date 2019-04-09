@@ -24,21 +24,47 @@ import sys  # to get file system encoding
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
-
+# #################
 # Store info about the experiment session
-expName = u'Antonymsv3'  # from the Builder filename that created this script
-expInfo = {u'session': u'001', u'participant': u''}
+expName = u'Vocab'  # from the Builder filename that created this script
+task = 'Antonyms'
+expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
+
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
+if len(sys.argv) > 1:
+    #tempFile.write("Entered if clause\n")
+    #tempFile.write('%s\n'%(sys.argv[2]))
+    expInfo['Participant ID'] = sys.argv[1]
+    #tempFile.write('%s\n'%(sys.argv[1]))
+    #tempFile.write('%s\n'%(sys.argv[2]))
 
+    PartDataFolder = sys.argv[2]
+    Tag = '1'
+else:
+    dlg = gui.DlgFromDict(dictionary=expInfo)
+    if dlg.OK == False:
+        core.quit()  # user pressed cancel
+    DataFolder = "../../data"
+    PartDataFolder = 'unorganized'
+    OutDir = os.path.join(DataFolder, PartDataFolder)
+    if not os.path.exists(OutDir):
+        os.mkdir(OutDir)
+    Tag = '1'
+    PartDataFolder = OutDir
+ 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
-
+filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
+CounterBalFlag = 'False'
+BGColor = 'grey'
+FontColor = 'white'
+FontSize = 60
+# #################
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-    savePickle=True, saveWideText=True,
+    savePickle=False, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
 logFile = logging.LogFile(filename+'.log', level=logging.EXP)
@@ -50,10 +76,11 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=[1000, 800], fullscr=False, screen=0,
+    size=[1000, 800], fullscr=True, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor='testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True)
+    
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
 if expInfo['frameRate'] != None:
@@ -64,10 +91,10 @@ else:
 # Initialize components for Routine "LongInstr"
 LongInstrClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
-    text='Antonyms Vocabulary\n\nEach item in this test consistes of a word in capital letters followed by four words. Press the number assoiated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nSince some of the items require you to distinguish fine shades of meaning, consider all the choices before deciding which is the best. Please guess if you are unsure since there is no penalty for incorrect responses.\n\nPress any key to begin.',
+    text='Antonyms Vocabulary\n\nEach item in this test consists of a word in capital letters followed by four words. Press the number associated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nSince some of the items require you to distinguish fine shades of meaning, consider all the choices before deciding which is the best. Please guess if you are unsure since there is no penalty for incorrect responses.\n\nPress any key to begin.',
     font='Arial',
-    units='pix', pos=(0, 0), height=30, wrapWidth=800, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "GetReady"
@@ -76,7 +103,7 @@ GetRead = visual.TextStim(win=win, name='GetRead',
     text='Get Ready',
     font='Arial',
     units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -92,61 +119,68 @@ TestWord = visual.TextStim(win=win, name='TestWord',
     text='default text',
     font=u'Arial',
     units='pix', pos=(0, 200), height=60, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 mouse = event.Mouse(win=win)
 x, y = [None, None]
+RespBoxWidth = 375
+RespBoxHeight = 100
+RespBoxX1 = -200
+RespBoxY1 = -50
+RespBoxX2 = 200
+RespBoxY2 = -160
+
 Resp1Box = visual.Rect(
     win=win, name='Resp1Box',
-    width=(290, 100)[0], height=(290, 100)[1],
-    ori=0, pos=(-150, -100),
+    width=(RespBoxWidth, RespBoxHeight)[0], height=(RespBoxWidth, RespBoxHeight)[1],
+    ori=0, pos=(RespBoxX1, RespBoxY1),
     lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',
     fillColor=[0,0,0], fillColorSpace='rgb',
     opacity=1, depth=-4.0, interpolate=True)
 Resp2Box = visual.Rect(
     win=win, name='Resp2Box',
-    width=(290, 100)[0], height=(290, 100)[1],
-    ori=0, pos=(150, -100),
+    width=(RespBoxWidth, RespBoxHeight)[0], height=(RespBoxWidth, RespBoxHeight)[1],
+    ori=0, pos=(RespBoxX2, RespBoxY1),
     lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',
     fillColor=[0,0,0], fillColorSpace='rgb',
     opacity=1, depth=-5.0, interpolate=True)
 Resp3Box = visual.Rect(
     win=win, name='Resp3Box',
-    width=(290, 100)[0], height=(290, 100)[1],
-    ori=0, pos=(-150, -250),
+    width=(RespBoxWidth, RespBoxHeight)[0], height=(RespBoxWidth, RespBoxHeight)[1],
+    ori=0, pos=(RespBoxX1, RespBoxY2),
     lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',
     fillColor=[0,0,0], fillColorSpace='rgb',
     opacity=1, depth=-6.0, interpolate=True)
 Resp4Box = visual.Rect(
     win=win, name='Resp4Box',
-    width=(290, 100)[0], height=(290, 100)[1],
-    ori=0, pos=(150, -250),
+    width=(RespBoxWidth, RespBoxHeight)[0], height=(RespBoxWidth, RespBoxHeight)[1],
+    ori=0, pos=(RespBoxX2, RespBoxY2),
     lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',
     fillColor=[0,0,0], fillColorSpace='rgb',
     opacity=1, depth=-7.0, interpolate=True)
 Resp1 = visual.TextStim(win=win, name='Resp1',
     text='default text',
     font=u'Arial',
-    units='pix', pos=(-150, -100), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(RespBoxX1, RespBoxY1), height=50, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-8.0);
 Resp2 = visual.TextStim(win=win, name='Resp2',
     text='default text',
     font=u'Arial',
-    units='pix', pos=(150, -100), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(RespBoxX2, RespBoxY1), height=50, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-9.0);
 Resp3 = visual.TextStim(win=win, name='Resp3',
     text='default text',
     font=u'Arial',
-    units='pix', pos=(-150, -250), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(RespBoxX1, RespBoxY2), height=50, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-10.0);
 Resp4 = visual.TextStim(win=win, name='Resp4',
     text='default text',
     font=u'Arial',
-    units='pix', pos=(150, -250), height=50, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    units='pix', pos=(RespBoxX2, RespBoxY2), height=50, wrapWidth=None, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-11.0);
 
 # Initialize components for Routine "Feedback"
@@ -156,7 +190,7 @@ text_3 = visual.TextStim(win=win, name='text_3',
     text='default text',
     font='Arial',
     units='pix', pos=(0, 0), height=50, wrapWidth=600, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 
 # Initialize components for Routine "ITI"
@@ -165,7 +199,7 @@ text_2 = visual.TextStim(win=win, name='text_2',
     text='+',
     font='Arial',
     units='pix', pos=(0, 0), height=60, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "ShortInstr"
@@ -174,7 +208,7 @@ Instruct = visual.TextStim(win=win, name='Instruct',
     text='Press the number associated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nPress any key to begin.',
     font='Arial',
     units='pix', pos=(0, 0), height=40, wrapWidth=600, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "GetReady"
@@ -183,7 +217,7 @@ GetRead = visual.TextStim(win=win, name='GetRead',
     text='Get Ready',
     font='Arial',
     units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial"
@@ -199,7 +233,7 @@ TestWord = visual.TextStim(win=win, name='TestWord',
     text='default text',
     font=u'Arial',
     units='pix', pos=(0, 200), height=60, wrapWidth=None, ori=0, 
-    color=u'black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=-1.0);
 mouse = event.Mouse(win=win)
 x, y = [None, None]
@@ -211,7 +245,7 @@ text_2 = visual.TextStim(win=win, name='text_2',
     text='+',
     font='Arial',
     units='pix', pos=(0, 0), height=60, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "ThankYou"
@@ -220,7 +254,7 @@ Merci = visual.TextStim(win=win, name='Merci',
     text='Thank you',
     font='Arial',
     units='pix', pos=(0, 0), height=50, wrapWidth=None, ori=0, 
-    color='black', colorSpace='rgb', opacity=1,
+    color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -361,7 +395,7 @@ for thisComponent in GetReadyComponents:
 # set up handler to look after randomisation of conditions etc
 Practice = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions(u'../../CompanionFolderForCognitiveTasks/AntonymsTest - Sheet1.csv', selection=u'[1,2,3,4]'),
+    trialList=data.importConditions(u'../../CompanionFolderForCognitiveTasks/AntonymsTest - Sheet1.csv', selection=u'[0,1,2,3]'),
     seed=None, name='Practice')
 thisExp.addLoop(Practice)  # add the loop to the experiment
 thisPractice = Practice.trialList[0]  # so we can initialise stimuli with some values
@@ -554,13 +588,10 @@ for thisPractice in Practice:
            resp.corr = 1  # correct non-response
         else:
            resp.corr = 0  # failed to respond (incorrectly)
-    # store data for Practice (TrialHandler)
-    Practice.addData('resp.keys',resp.keys)
-    Practice.addData('resp.corr', resp.corr)
-    if resp.keys != None:  # we had a response
-        Practice.addData('resp.rt', resp.rt)
+
     # store data for Practice (TrialHandler)
     if sum(buttons):
+        resp.rt = resp.clock.getTime()
         # check if the mouse was inside our 'clickable' objects
         for obj in [Resp1,Resp2,Resp3,Resp4]:
             if obj.contains(mouse):
@@ -569,11 +600,12 @@ for thisPractice in Practice:
     x, y = mouse.getPos()
     buttons = mouse.getPressed()
     mouse.time = trialClock.getTime()
-    Practice.addData('mouse.x', x)
-    Practice.addData('mouse.y', y)
-    Practice.addData('mouse.leftButton', buttons[0])
-    Practice.addData('mouse.midButton', buttons[1])
-    Practice.addData('mouse.rightButton', buttons[2])
+#    Practice.addData('mouse.x', x)
+#    Practice.addData('mouse.y', y)
+#    Practice.addData('mouse.leftButton', buttons[0])
+#    Practice.addData('mouse.midButton', buttons[1])
+#    Practice.addData('mouse.rightButton', buttons[2])
+    Practice.addData('mouse.RT', mouse.time)
     if len(mouse.clicked_name):
         Practice.addData('mouse.clicked_name', mouse.clicked_name[0])
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
@@ -595,11 +627,16 @@ for thisPractice in Practice:
             resp.corr = 1
         else:
             resp.corr = 0
+    # store data for Practice (TrialHandler)
+    Practice.addData('resp.keys',resp.keys)
+    Practice.addData('resp.corr', resp.corr)
+    if resp.keys != None:  # we had a response
+        Practice.addData('resp.rt', resp.rt)
     
     if resp.corr:#stored on last run routine
-      msg="Correct!%s"
+      msg="Correct!"
     else:
-      msg="Oops! That was wrong: %s"
+      msg="Oops! That was wrong"
     text_3.setText(msg)
     # keep track of which components have finished
     FeedbackComponents = [text_3]
@@ -746,6 +783,8 @@ while continueRoutine:
         if "escape" in theseKeys:
             endExpNow = True
         if len(theseKeys) > 0:  # at least one key was pressed
+            # A button press has occured
+            ButtonPressFlag = True
             key_resp_2.keys = theseKeys[-1]  # just the last key pressed
             key_resp_2.rt = key_resp_2.clock.getTime()
             # a response ends the routine
@@ -837,7 +876,7 @@ for thisComponent in GetReadyComponents:
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('AntonymsTest - Sheet1.csv', selection='[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]'),
+    trialList=data.importConditions('../../CompanionFolderForCognitiveTasks/AntonymsTest - Sheet1.csv', selection='[4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]'),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -847,6 +886,7 @@ if thisTrial != None:
         exec('{} = thisTrial[paramName]'.format(paramName))
 
 for thisTrial in trials:
+    ButtonPressFlag = False
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
@@ -911,6 +951,7 @@ for thisTrial in trials:
             if "escape" in theseKeys:
                 endExpNow = True
             if len(theseKeys) > 0:  # at least one key was pressed
+                
                 resp.keys = theseKeys[-1]  # just the last key pressed
                 resp.rt = resp.clock.getTime()
                 # was this 'correct'?
@@ -932,6 +973,7 @@ for thisTrial in trials:
             if buttons != prevButtonState:  # button state changed?
                 prevButtonState = buttons
                 if sum(buttons) > 0:  # state changed to a new click
+                    resp.rt = resp.clock.getTime()
                     # check if the mouse was inside our 'clickable' objects
                     for obj in [Resp1,Resp2,Resp3,Resp4]:
                         if obj.contains(mouse):
@@ -1025,11 +1067,7 @@ for thisTrial in trials:
            resp.corr = 1  # correct non-response
         else:
            resp.corr = 0  # failed to respond (incorrectly)
-    # store data for trials (TrialHandler)
-    trials.addData('resp.keys',resp.keys)
-    trials.addData('resp.corr', resp.corr)
-    if resp.keys != None:  # we had a response
-        trials.addData('resp.rt', resp.rt)
+
     # store data for trials (TrialHandler)
     if sum(buttons):
         # check if the mouse was inside our 'clickable' objects
@@ -1040,15 +1078,29 @@ for thisTrial in trials:
     x, y = mouse.getPos()
     buttons = mouse.getPressed()
     mouse.time = trialClock.getTime()
-    trials.addData('mouse.x', x)
-    trials.addData('mouse.y', y)
-    trials.addData('mouse.leftButton', buttons[0])
-    trials.addData('mouse.midButton', buttons[1])
-    trials.addData('mouse.rightButton', buttons[2])
+#    trials.addData('mouse.x', x)
+#    trials.addData('mouse.y', y)
+#    trials.addData('mouse.leftButton', buttons[0])
+#    trials.addData('mouse.midButton', buttons[1])
+#    trials.addData('mouse.rightButton', buttons[2])
+    trials.addData('mouse.RT', mouse.time)
     if len(mouse.clicked_name):
         trials.addData('mouse.clicked_name', mouse.clicked_name[0])
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
+    # If no keyboard response has been made, check the mouse for correct responses
+    if not ButtonPressFlag: 
+        if (CurrentResponse[-1] == str(Corr)) or (CurrentResponse[-1] == Corr):
+            resp.corr = 1
+        else:
+            resp.corr = 0
+    
+    # store data for trials (TrialHandler)
+    trials.addData('resp.keys',resp.keys)
+    trials.addData('resp.corr', resp.corr)
+    if resp.keys != None:  # we had a response
+        trials.addData('resp.rt', resp.rt)
+    
     
     # ------Prepare to start Routine "ITI"-------
     t = 0
@@ -1160,8 +1212,8 @@ for thisComponent in ThankYouComponents:
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
-thisExp.saveAsPickle(filename)
-logging.flush()
+#thisExp.saveAsPickle(filename)
+#logging.flush()
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
 win.close()
