@@ -216,7 +216,7 @@ Feedback1Clock = core.Clock()
 Prac1Feedback = visual.TextStim(win=win, name='Prac1Feedback',
     text='default text',
     font=u'Arial',
-    pos=(-350, -160), height=30, wrapWidth=660, ori=0, 
+    pos=(-280, -160), height=30, wrapWidth=560, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 Prac1Matrix = visual.ImageStim(

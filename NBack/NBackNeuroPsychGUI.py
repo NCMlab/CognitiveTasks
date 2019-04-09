@@ -112,7 +112,7 @@ for BlockNumber in range(0,NBlocks,1):
 
 
 # WINDOW
-win = visual.Window(size=(1200, 900), fullscr=False, screen=0, allowGUI=False, allowStencil=False,
+win = visual.Window(size=(1200, 900), fullscr=True, screen=0, allowGUI=False, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace=u'rgb',
     blendMode=u'avg', useFBO=True,units = 'pix'
     )

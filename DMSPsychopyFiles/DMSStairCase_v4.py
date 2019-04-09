@@ -443,7 +443,7 @@ for thisStep in staircase:
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if globalClock.getTime() > MaxTime*60:
         # Thank you screen
@@ -463,7 +463,7 @@ for thisStep in staircase:
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
     if "escape" in k:
         # Thank you screen
@@ -484,7 +484,7 @@ for thisStep in staircase:
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
-        staircase.saveAsText(StairCasefileName,delim=',')
+        #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
 print EndFlag
 
@@ -497,6 +497,6 @@ print "Number of reversals: %i"%(len(staircase.reversalPoints))
 dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
 dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
 dataFile.close()
-staircase.saveAsText(StairCasefileName,delim=',')
+#staircase.saveAsText(StairCasefileName,delim=',')
 win.close()
 core.quit()

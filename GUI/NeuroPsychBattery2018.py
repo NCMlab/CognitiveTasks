@@ -199,6 +199,8 @@ class Mywin(wx.Frame):
 #      # Buttons
       #self.btnR5C2 = wx.Button(self.panel,-1,"Demo", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       #self.btnR5C2.Bind(wx.EVT_BUTTON,self.OnClickedR5C2) 
+      self.btnR5C1 = wx.Button(self.panel,-1,"Instructions", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR5C1.Bind(wx.EVT_BUTTON,self.OnClickedR5C1) 
       
       self.btnR5C2 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR5C2.Bind(wx.EVT_BUTTON,self.OnClickedR5C2) 
@@ -221,6 +223,7 @@ class Mywin(wx.Frame):
       Row1BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
 #      self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+      self.cbR5C1 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))  
       self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
       self.cbR5C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,CurrentRow))
       self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
@@ -633,6 +636,14 @@ class Mywin(wx.Frame):
 
    # Row 5 Functions   
    # Practice of the DMS
+   
+   def OnClickedR5C1(self, event): 
+      btnR5C1Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR5C1Label))
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSInstruct.py"])
+      self.cbR5C1.SetValue(True)
+   
+   
    def OnClickedR5C2(self, event): 
       btnR5C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C2Label))
