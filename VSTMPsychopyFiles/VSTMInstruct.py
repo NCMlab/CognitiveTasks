@@ -50,7 +50,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=[1200, 800], fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor=u'testMonitor', color=[0.75,0.75,0.75], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
@@ -61,7 +61,7 @@ else:
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
-InstrFile = os.path.join(_thisDir, 'DMSInstructions.png')
+InstrFile = os.path.join(_thisDir, 'VSTMInstructions.png')
 image = visual.ImageStim(
     win=win, name='image',
     image=InstrFile, mask=None,
