@@ -110,7 +110,7 @@ class Experiment():
         #myDlg.show()#show dialog and wait for OK or Cancel
         #vpInfo = myDlg.data
         #self.vp = vpInfo[0]
-        self.win = visual.Window(size=SZ,units='deg',fullscr=True,monitor=MON)
+        self.win = visual.Window(size=SZ,units='deg',fullscr=True, winType = "pyglet",allowGUI=False, waitBlanking=True)
         self.mouse = event.Mouse(True,None,self.win)
         self.cards = []
         self.elems = []
@@ -399,7 +399,7 @@ TRIANGLE = drawTriangle(np.ones((N,N))*-1,[[0,0],[N,N/2-0.5],[0,N]])
 SZ = (1280,1024)
 
 # Settings
-MON=monitors.Monitor('dell', width=37.8, distance=50); MON.setSizePix(SZ)
+# MON=monitors.Monitor('dell', width=37.8, distance=50); MON.setSizePix(SZ)
 ##
 TPOS=(0,-9)# position of the target card
 FPOS=(0,3.8)# position of the feedback

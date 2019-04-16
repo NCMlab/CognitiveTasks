@@ -78,7 +78,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=[1000, 800], fullscr=True, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor='testMonitor', color=BGColor, colorSpace='rgb',
+    monitor='MacBookPro', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True)
     
 # store frame rate of monitor if we can measure it

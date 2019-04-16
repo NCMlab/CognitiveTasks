@@ -1,2 +1,1 @@
-NeuropsychDataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
-#NeuropsychDataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/CassParticipantData/data'
+NeuropsychDataFolder = '/Users/jason/Dropbox/SteffenerColumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
