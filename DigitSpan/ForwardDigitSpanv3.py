@@ -205,7 +205,7 @@ while not CorrectPracticeFlag:
     # Create a list of three numbers drawn from the numbers 1 to 9
     R = np.random.permutation(9) + 1
     R = R[0:3]
-    Answer.text = 'Ask the person to repeat the three digits FORWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R)
+    Answer.text = 'Ask the person to repeat the three digits FORWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." \nPress any key to start the actual experiment.'%(R)
     # cycle over the numbers and play them
     for i in range(3):
         countDown.reset()    

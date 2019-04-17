@@ -205,7 +205,7 @@ while not CorrectPracticeFlag:
     # Create a list of three numbers drawn from the numbers 1 to 9
     R = np.random.permutation(9) + 1
     R = R[0:3]
-    Answer.text = 'Ask the person to repeat the three digits BACKWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R[::-1])
+    Answer.text = 'Ask the person to repeat the three digits BACKWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." \nPress any key to start the actual experiment.'%(R[::-1])
     # cycle over the numbers and play them
     for i in range(3):
         countDown.reset()    
@@ -386,7 +386,7 @@ for thisStair in Stairs:
     #    R = np.random.randint(1,10,level)
     #    Flag = any(np.diff(R) == 0)
     print(R)    
-    Answer.text = 'Backward: %s\n\n\nTrial Number %d of %d\n\nIf you make a mistake entering the person\'s response, press [x]. This will clear what you entered so you can restart.'%(R[::-1],count, NumberOfTrials)
+    Answer.text = 'Backward: %s\n\n\nTrial Number %d of %d\n\n.'%(R[::-1],count, NumberOfTrials)
     # cycle over the numbers and play them
     for i in range(level):
         countDown.reset()    

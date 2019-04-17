@@ -15,7 +15,7 @@ import wx
 import numpy as np
 import glob
 sys.path.insert(0, '../DataHandlingScripts')
-import NeuroPsychDataHandling
+import CheckExistingNeuroPsychData
 
 Top = 20
 Left = 20
@@ -25,24 +25,19 @@ ColWidth = 100
 ButtonHeight = -1
 ButtonWidth = 80
 LabelOffset = 10
-Row1 = Top 
-Row2 = Top + RowWidth
-Row3 = Top + 2*RowWidth
-Row4 = Top + 3*RowWidth
-Row5 = Top + 4*RowWidth
-Row6 = Top + 5*RowWidth
-Row7 = Top + 6*RowWidth
-Row8 = Top + 7*RowWidth
-Row9 = Top + 8*RowWidth
-Row10 = Top + 9*RowWidth
+# Allow flexible number of rows
+NRows =  12
+# Create a list of what pixel each row is to be set to
+RowPixel = []
+for i in range(NRows):
+    RowPixel.append(Top + i*RowWidth)
+# Allow flexible number of columns
+NCols =  7
+# Create a list of what pixel each row is to be set to
+ColPixel = []
+for i in range(NCols):
+    ColPixel.append(Top + i*ColWidth)
 
-Col1 = Left
-Col2 = Left + ColWidth
-Col3 = Left + 2*ColWidth
-Col4 = Left + 3*ColWidth
-Col5 = Left + 4*ColWidth
-Col6 = Left + 5*ColWidth
-Col7 = Left + 6*ColWidth
 NColForBox = 7
 class Mywin(wx.Frame): 
    def __init__(self, parent, title): 
@@ -61,9 +56,9 @@ class Mywin(wx.Frame):
       
       self.VisitFolderPath = 'empty'
       # Setup the Participant ID entry
-      self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Participant ID:", pos = (Col1,Row1))
-      self.PartID = wx.TextCtrl(self.panel,-1,'9999999',size=(ButtonWidth,-1),pos = (Col2,Row1))
-      self.btnPartEntry = wx.Button(self.panel,-1,label = "Submit", pos = (Col3,Row1), size = ((ButtonWidth, ButtonHeight))) 
+      self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Participant ID:", pos = (ColPixel[0],RowPixel[0]))
+      self.PartID = wx.TextCtrl(self.panel,-1,'9999999',size=(ButtonWidth,-1),pos = (ColPixel[1],RowPixel[0]))
+      self.btnPartEntry = wx.Button(self.panel,-1,label = "Submit", pos = (ColPixel[2],RowPixel[0]), size = ((ButtonWidth, ButtonHeight))) 
       self.btnPartEntry.Bind(wx.EVT_BUTTON, self.OnCickPartEntry)
       # Create Default values for the load levels for the two tasks
       self.FRTBlockLoadLevels = '0.0 0.125 0.25 0.375 0.5'
@@ -72,75 +67,100 @@ class Mywin(wx.Frame):
       self.DMSFontSize = '60'
       self.DMSTag = 0
       self.VSTMTag = 0
+      self.NBackTag = 0
       self.VSTMCapacity = 4
       self.DMSCapacity = 5
       # ###################
-      CurrentRow = Row3
+      CurrentRow = RowPixel[2]
 #      # #### Row 3
-      self.titleR3 = wx.StaticText(self.panel, -1, label = "Spatial/Dots", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+      self.titleR3 = wx.StaticText(self.panel, -1, label = "Spatial/Dots", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
 #      self.btnR3C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
 #      self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2) 
 #      self.btnR3C3 = wx.Button(self.panel,-1,"Stair", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
 #      self.btnR3C3.Bind(wx.EVT_BUTTON,self.OnClickedR3C3) 
-      self.btnR3C4 = wx.Button(self.panel,-1,"Block1", pos = (Col6,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR3C3 = wx.Button(self.panel,-1,"Block1", pos = (ColPixel[5],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR3C3.Bind(wx.EVT_BUTTON,self.OnClickedR3C3) 
+      
+      self.btnR3C4 = wx.Button(self.panel,-1,"Block2", pos = (ColPixel[6],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
-      self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
-      self.btnR3C5 = wx.Button(self.panel,-1,"Block2", pos = (Col7,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR3C5.Bind(wx.EVT_BUTTON,self.OnClickedR3C5) 
       
       # Text box for the capacity value
-      self.txtR3C4 = wx.StaticText(self.panel, -1, label = "Cap =", pos = (Col4+5,CurrentRow+LabelOffset))
-      self.txtR3C5 = wx.StaticText(self.panel, -1, label = "000", pos = (Col5-ColWidth/2+5,CurrentRow+LabelOffset))  
-      self.btnR3C5a = wx.Button(self.panel,-1,"Enter", pos = (Col5-5,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
-      self.btnR3C5b = wx.Button(self.panel,-1,"Load", pos = (Col5+40,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      self.txtR3C4 = wx.StaticText(self.panel, -1, label = "Cap =", pos = (ColPixel[3]+5,CurrentRow+LabelOffset))
+      self.txtR3C5 = wx.StaticText(self.panel, -1, label = "000", pos = (ColPixel[4]-ColWidth/2+5,CurrentRow+LabelOffset))  
+      self.btnR3C5a = wx.Button(self.panel,-1,"Enter", pos = (ColPixel[4]-5,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      self.btnR3C5b = wx.Button(self.panel,-1,"Load", pos = (ColPixel[4]+40,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
       self.btnR3C5a.Bind(wx.EVT_BUTTON, self.OnClickedVSTMCapEnter)
       self.btnR3C5b.Bind(wx.EVT_BUTTON, self.LoadVSTMCapacity)
       
       # Make a box around the Capacity text and entry buttons
-      Row3BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (Col4,CurrentRow-5))
+      Row3BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (ColPixel[3],CurrentRow-5))
 
 #      # Box
-      Row1BoxR3 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
+      Row1BoxR3 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
  #     self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
  #     self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
-      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (Col6 + ButtonWidth+5,CurrentRow))
-      self.cbR3C5 = wx.CheckBox(self.panel, -1, label = "", pos = (Col7 + ButtonWidth+5,CurrentRow))
+      self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))
+      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
 # ###################
-      CurrentRow = Row2
+      CurrentRow = RowPixel[3]
 #      # #### Row 3
-      self.titleR5 = wx.StaticText(self.panel, -1, label = "DMS/Letters", pos = (Col1+LabelOffset/2,CurrentRow+LabelOffset))
+      self.titleR5 = wx.StaticText(self.panel, -1, label = "DMS/Letters", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
  #     self.btnR5C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
  #     self.btnR5C2.Bind(wx.EVT_BUTTON,self.OnClickedR5C2) 
  #     self.btnR5C3 = wx.Button(self.panel,-1,"Stair", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
  #     self.btnR5C3.Bind(wx.EVT_BUTTON,self.OnClickedR5C3) 
       # Text box for the capacity value
-      self.txtR5C4 = wx.StaticText(self.panel, -1, label = "Cap =", pos = (Col4+5,CurrentRow+LabelOffset))
-      self.txtR5C5 = wx.StaticText(self.panel, -1, label = "000", pos = (Col5-ColWidth/2+5,CurrentRow+LabelOffset))  
-      self.btnR5C5a = wx.Button(self.panel,-1,"Enter", pos = (Col5-5,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
-      self.btnR5C5b = wx.Button(self.panel,-1,"Load", pos = (Col5+40,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      self.txtR5C4 = wx.StaticText(self.panel, -1, label = "Cap =", pos = (ColPixel[3]+5,CurrentRow+LabelOffset))
+      self.txtR5C5 = wx.StaticText(self.panel, -1, label = "000", pos = (ColPixel[4]-ColWidth/2+5,CurrentRow+LabelOffset))  
+      self.btnR5C5a = wx.Button(self.panel,-1,"Enter", pos = (ColPixel[4]-5,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
+      self.btnR5C5b = wx.Button(self.panel,-1,"Load", pos = (ColPixel[4]+40,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
       self.btnR5C5a.Bind(wx.EVT_BUTTON, self.OnClickedDMSCapEnter)
       self.btnR5C5b.Bind(wx.EVT_BUTTON, self.LoadDMSCapacity)
       # Make a box around the Capacity text and entry buttons
-      Row5BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (Col4,CurrentRow-5))
+      Row5BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (ColPixel[3],CurrentRow-5))
       
-      self.btnR5C6 = wx.Button(self.panel,-1,"Block1", pos = (Col6,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR5C6 = wx.Button(self.panel,-1,"Block1", pos = (ColPixel[5],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR5C6.Bind(wx.EVT_BUTTON,self.OnClickedR5C6) 
-      self.btnR5C7 = wx.Button(self.panel,-1,"Block2", pos = (Col7,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR5C7 = wx.Button(self.panel,-1,"Block2", pos = (ColPixel[6],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR5C7.Bind(wx.EVT_BUTTON,self.OnClickedR5C7) 
 #     
 # Box
-      Row1BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (Col1,CurrentRow-5))
+      Row1BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
  #     self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
  #     self.cbR5C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
-      self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (Col6 + ButtonWidth+5,CurrentRow))
-      self.cbR5C7 = wx.CheckBox(self.panel, -1, label = "", pos = (Col7 + ButtonWidth+5,CurrentRow))
+      self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))
+      self.cbR5C7 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
+
+# #### N-BACK #########
+      CurrentRow = RowPixel[4]
+#      # #### Row 3
+      self.titleR5 = wx.StaticText(self.panel, -1, label = "N-Back", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
+#      # Buttons
+      self.btnR10C1 = wx.Button(self.panel,-1,"Instructions", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR10C1.Bind(wx.EVT_BUTTON,self.OnClickedR10C1)             
+      
+    #  self.btnR10C3 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+    #  self.btnR10C3.Bind(wx.EVT_BUTTON,self.OnClickedR10C3)
+      
+      self.btnR10C3 = wx.Button(self.panel,-1,"Block1", pos = (ColPixel[5],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR10C3.Bind(wx.EVT_BUTTON,self.OnClickedR10C3)
+      
+      self.btnR10C4 = wx.Button(self.panel,-1,"Block2", pos = (ColPixel[6],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR10C4.Bind(wx.EVT_BUTTON,self.OnClickedR10C4)
+      # Checkboxes
+      #self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
+      self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))      
+      self.cbR10C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))      
+      # Box around buttons
+      Row1BoxR10 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
 
       
-      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (Col1,Row10), size = ((ButtonWidth, ButtonHeight))) 
+      
+      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (ColPixel[0],RowPixel[9]), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
       
       self.Centre() 
@@ -333,7 +353,7 @@ class Mywin(wx.Frame):
                 dlg.Destroy()
                 
                 # If the visit folder exists, load the data in it and see what it has
-                self.CurrentData = NeuroPsychDataHandling.NeuroPsychData(self.VisitFolderPath)
+                self.CurrentData = CheckExistingNeuroPsychData.NeuroPsychData(self.VisitFolderPath)
                 #self.CheckAvailableData()
                 
             else:
@@ -345,7 +365,7 @@ class Mywin(wx.Frame):
         print(self.VisitFolderPath)
         
         # Add the path name to the GUI
-        self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (Col4,Row1))
+        self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (ColPixel[3],RowPixel[0]))
         
    def OnCickPartEntry(self, event):
       btnName = event.GetEventObject().GetLabel() 
@@ -371,10 +391,11 @@ class Mywin(wx.Frame):
       self.VSTMTag = self.VSTMTag + 1
       btnR3C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C3Label))
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGridStaircase_v3.py", self.PartID.GetValue(), self.VisitFolderPath])
-      # Once the staircase is run, load up the file that is created and display it
-      self.LoadVSTMCapacity(self)
-      self.cbR3C3.SetValue(True)
+      self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
+      print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
+      print( self.VSTMBlockLoadLevels)
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag),'VSTM_fMRI_Config'])  
+      self.cbR3C3.SetValue(True)  
       
    def OnClickedR3C4(self, event): 
       self.VSTMTag = self.VSTMTag + 1
@@ -383,19 +404,8 @@ class Mywin(wx.Frame):
       self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
       print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
       print( self.VSTMBlockLoadLevels)
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v6_FMRI.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag)])  
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag),'VSTM_fMRI_Config'])  
       self.cbR3C4.SetValue(True)  
-
-   def OnClickedR3C5(self, event): 
-      self.VSTMTag = self.VSTMTag + 1
-      btnR3C5Label = event.GetEventObject().GetLabel() 
-      print("Label of pressed button = %s"%(btnR3C5Label))
-      self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
-      print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
-      print( self.VSTMBlockLoadLevels)
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v6_FMRI.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag)])  
-      self.cbR3C5.SetValue(True)  
-   # Row 5 Functions   
    
    def OnClickedR5C6(self, event): 
       # Use the tag to keep track of the run number
@@ -413,6 +423,23 @@ class Mywin(wx.Frame):
       core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4_FMRI.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'MRIRun%d'%(self.DMSTag)])  
       self.cbR5C7.SetValue(True)  
       
+   def OnClickedR10C1(self, event):
+      pass
+      
+   def OnClickedR10C3(self, event):
+      self.NBackTag = self.NBackTag + 1
+      btnR10C3Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = NBack: %s"%(btnR10C3Label))
+      core.shellCall([sys.executable, "../NBack/NBackPassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, 'MRIRun%d'%(self.NBackTag), 'NBack_fMRI_Config'])  
+      self.cbR10C3.SetValue(True)  
+   
+   def OnClickedR10C4(self, event):
+      self.NBackTag = self.NBackTag + 1
+      btnR10C4Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = NBack: %s"%(btnR10C4Label))
+      core.shellCall([sys.executable, "../NBack/NBackPassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, 'MRIRun%d'%(self.NBackTag), 'NBack_fMRI_Config'])  
+      self.cbR10C4.SetValue(True)  
+   
    def CloseGUI(self,event):
         self.Close()
 
