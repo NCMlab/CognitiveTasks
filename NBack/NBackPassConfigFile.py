@@ -193,12 +193,15 @@ win.flip()
 
 WaitingFlag = True
 while WaitingFlag is True:
-    theseKeys = event.getKeys(keyList=['escape','return'])
+    theseKeys = event.getKeys(keyList=['escape','return','5'])
     if 'escape' in theseKeys:
         core.quit()
-    elif 'return' in theseKeys:
+    elif ('return') in theseKeys:
         WaitingFlag = False
         textInstr1.setAutoDraw(False)
+    elif ('5') in theseKeys:
+        WaitingFlag = False
+        textInstr1.setAutoDraw(False)    
     else:
         pass        
 

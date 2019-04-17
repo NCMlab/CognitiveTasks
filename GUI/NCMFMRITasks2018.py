@@ -23,7 +23,7 @@ RowWidth = 50
 ColWidth = 100
 # Button height cannot be changed
 ButtonHeight = -1
-ButtonWidth = 80
+ButtonWidth = 85
 LabelOffset = 10
 # Allow flexible number of rows
 NRows =  12
@@ -75,6 +75,8 @@ class Mywin(wx.Frame):
 #      # #### Row 3
       self.titleR3 = wx.StaticText(self.panel, -1, label = "Spatial/Dots", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
+      self.btnR3C1 = wx.Button(self.panel,-1,"Instructions", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR3C1.Bind(wx.EVT_BUTTON,self.OnClickedR3C1)        
 #      self.btnR3C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
 #      self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2) 
 #      self.btnR3C3 = wx.Button(self.panel,-1,"Stair", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -108,7 +110,9 @@ class Mywin(wx.Frame):
 #      # #### Row 3
       self.titleR5 = wx.StaticText(self.panel, -1, label = "DMS/Letters", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
- #     self.btnR5C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR5C1 = wx.Button(self.panel,-1,"Instructions", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR5C1.Bind(wx.EVT_BUTTON,self.OnClickedR5C1)        
+#     self.btnR5C2 = wx.Button(self.panel,-1,"Demo", pos = (Col2,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
  #     self.btnR5C2.Bind(wx.EVT_BUTTON,self.OnClickedR5C2) 
  #     self.btnR5C3 = wx.Button(self.panel,-1,"Stair", pos = (Col3,CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
  #     self.btnR5C3.Bind(wx.EVT_BUTTON,self.OnClickedR5C3) 
@@ -381,11 +385,10 @@ class Mywin(wx.Frame):
       os.mkdir(self.PartFolder)
 
    # Row 3 Functions   
-   def OnClickedR3C2(self, event): 
-      btnR3C2Label = event.GetEventObject().GetLabel() 
-      print("Label of pressed button = %s"%(btnR3C2Label))
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_DEMOv2.py", self.PartID.GetValue(), self.VisitFolderPath])
-      self.cbR3C2.SetValue(True)
+   def OnClickedR3C1(self, event):
+      btnR3C1Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR3C1Label))
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTMInstruct.py"])   
       
    def OnClickedR3C3(self, event): 
       self.VSTMTag = self.VSTMTag + 1
@@ -407,11 +410,20 @@ class Mywin(wx.Frame):
       core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag),'VSTM_fMRI_Config'])  
       self.cbR3C4.SetValue(True)  
    
+   def OnClickedR5C1(self, event):
+      btnR5C1Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR5C1Label))
+      core.shellCall([sys.executable, "../DMSPsychopyFiles/DMSInstruct.py"])
+   
+      
    def OnClickedR5C6(self, event): 
       # Use the tag to keep track of the run number
       self.DMSTag = self.DMSTag + 1
       btnR5C6Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C6Label))
+      self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSCapacity)
+      print('With a capacity of %0.1f, the load levels will be:'%(float(self.DMSCapacity)))
+      print( self.DMSBlockLoadLevels)
       core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4_FMRI.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'MRIRun%d'%(self.DMSTag)])  
       self.cbR5C6.SetValue(True)  
 
@@ -420,11 +432,16 @@ class Mywin(wx.Frame):
       self.DMSTag = self.DMSTag + 1
       btnR5C7Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR5C7Label))
+      self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSCapacity)
+      print('With a capacity of %0.1f, the load levels will be:'%(float(self.DMSCapacity)))
+      print( self.DMSBlockLoadLevels)
       core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4_FMRI.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'MRIRun%d'%(self.DMSTag)])  
       self.cbR5C7.SetValue(True)  
       
    def OnClickedR10C1(self, event):
-      pass
+      btnR10C1Label = event.GetEventObject().GetLabel() 
+      print("Label of pressed button = %s"%(btnR10C1Label))
+      core.shellCall([sys.executable, "../NBack/NBackInstruct.py"])  
       
    def OnClickedR10C3(self, event):
       self.NBackTag = self.NBackTag + 1
