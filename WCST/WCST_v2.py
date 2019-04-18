@@ -110,31 +110,37 @@ class Experiment():
         #myDlg.show()#show dialog and wait for OK or Cancel
         #vpInfo = myDlg.data
         #self.vp = vpInfo[0]
-        self.win = visual.Window(size=SZ,units='deg',fullscr=True, winType = "pyglet",allowGUI=False, waitBlanking=True)
-        self.mouse = event.Mouse(True,None,self.win)
+        self.win = visual.Window(size=SZ,units='deg',fullscr=True, monitor='testMonitor', winType = "pyglet",allowGUI=False, waitBlanking=True)
+#        self.win = visual.Window(
+#    size=[1000, 800], fullscr=True, screen=0,
+#    allowGUI=False, allowStencil=False,
+#    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+#    blendMode='avg', useFBO=True, units='height')
+        
+        self.mouse = event.Mouse(win=self.win)#(True,None,self.win)
         self.cards = []
         self.elems = []
         for i in range(4):
             self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='white',
-                        pos = ((i-1.5)*(CARDX+CARDW),CARDY),lineColor='black',interpolate=False))
+                        pos = ((i-1.5)*(CARDX+CARDW),CARDY),lineColor='black',interpolate=False, units = 'deg'))
             self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='black',
-                         fieldPos = ((i-1.5)*(CARDX+CARDW),CARDY),elementTex=None))
+                         fieldPos = ((i-1.5)*(CARDX+CARDW),CARDY),elementTex=None, units = 'deg'))
         
         # Add the probe card to the screen
         self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='white',
-            pos = TPOS,lineColor='black',interpolate=False))
+            pos = TPOS,lineColor='black',interpolate=False, units = 'deg'))
         self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='black',
-            fieldPos = TPOS,elementTex=None))            
+            fieldPos = TPOS,elementTex=None, units = 'deg'))            
         
         # Make the piles
         #for i in range(4):
         self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='grey',
-                        pos = DiscardPOS,lineColor='black',interpolate=False))
+                        pos = DiscardPOS,lineColor='black',interpolate=False, units = 'deg'))
         self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='grey',
-                        fieldPos = DiscardPOS,elementTex=None))
+                        fieldPos = DiscardPOS,elementTex=None, units = 'deg'))
             
 
-        self.text = visual.TextStim(self.win,pos=FPOS,height=2)
+        self.text = visual.TextStim(self.win,pos=FPOS,height=2, units = 'deg')
         #if not os.path.exists('data'):
         #    os.makedirs('data')
         #fname = os.path.join('data', 'wcst_s%03d_%s.csv' % (self.vp, time.strftime("%Y%m%d-%H%M%S")))
