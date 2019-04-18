@@ -110,7 +110,7 @@ class Experiment():
         #myDlg.show()#show dialog and wait for OK or Cancel
         #vpInfo = myDlg.data
         #self.vp = vpInfo[0]
-        self.win = visual.Window(size=SZ,units='deg',fullscr=True, winType = "pyglet",allowGUI=False, waitBlanking=True)
+        self.win = visual.Window(size=SZ,units='deg',monitor = 'testMonitor',fullscr=True, winType = "pyglet",allowGUI=False, waitBlanking=True)
         self.mouse = event.Mouse(True,None,self.win)
         self.cards = []
         self.elems = []
