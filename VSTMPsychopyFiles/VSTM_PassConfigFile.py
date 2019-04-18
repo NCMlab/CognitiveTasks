@@ -13,7 +13,6 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesysteme
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 
-TotalTrialTime = VSTM_StimOnTime + VSTM_RetOnTime + VSTM_ProbeOnTime + VSTM_ITITime
 
 countDown = core.CountdownTimer()
 # Store info about the experiment session
@@ -52,7 +51,7 @@ else:
     
     Tag = '1'
     PartDataFolder = OutDir
-    ConfigFile = 'VSTM_Config'
+    ConfigFile = 'VSTM_fMRI_Config'
 
 # Load up the config file
 print("Loading up the config file: %s"%(ConfigFile))
@@ -61,6 +60,7 @@ exec(Str)
 
 GridSize = VSTM_GridSizeScale*VSTM_GridCount + 1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/VSTM_GridCount # The circle size so that they are all just touching
+TotalTrialTime = VSTM_StimOnTime + VSTM_RetOnTime + VSTM_ProbeOnTime + VSTM_ITITime
 
 OffSet = range(-GridSize+int(CircleSize/2),GridSize-int(CircleSize/2),int(CircleSize))
 MaskLocations = np.arange(0,1+VSTM_GridCount**2)

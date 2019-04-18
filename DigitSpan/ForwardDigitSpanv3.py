@@ -27,11 +27,28 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import re
+def TypeInNumbers(): 
+    # When [intrusion] is clicked on teh screen by the tester, this fn will
+    # present a dialog box for the intusion word to be types in
+    print('Entered Intrusion Entry')
+    app = gui.wx.PySimpleApp()
+    
+    frame = gui.wx.Frame(None, -1, 'win.py')
+    frame.SetDimensions(0,0,200,50)
+    
+    # Create text input
+    dlg = gui.wx.TextEntryDialog(frame, 'Type in number list','Text Entry')
+    # dlg.SetValue("Default")
+    if dlg.ShowModal() == gui.wx.ID_OK:
+        print('You entered: %s\n' % dlg.GetValue())
+    dlg.Destroy()
+    return dlg.GetValue()
+
 FontSize = 30
 FontSizeUnits = 'pix'
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
 # #################
@@ -158,7 +175,7 @@ Instruct1 = visual.TextStim(win=win, name='Instruct1',
 Answer = visual.TextStim(win=win, name='Answer',
     text='+',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
+    units=FontSizeUnits, pos=(0, -200), height=FontSize, wrapWidth=1000, ori=0, 
     color='black', colorSpace='rgb', opacity=1,
     depth=-9.0);
 Instruct1.setAutoDraw(True)
@@ -188,7 +205,7 @@ while not CorrectPracticeFlag:
     # Create a list of three numbers drawn from the numbers 1 to 9
     R = np.random.permutation(9) + 1
     R = R[0:3]
-    Answer.text = 'Ask the person to repeat the three digits FORWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." If you make a mistake typing in the numbers press x and then retype in what the person said.\n\nPress any key to start the actual experiment.'%(R)
+    Answer.text = 'Ask the person to repeat the three digits FORWARDS from how they heard them.\nThe person should repeat: %s\n\nType in what the person said and press "return." \nPress any key to start the actual experiment.'%(R)
     # cycle over the numbers and play them
     for i in range(3):
         countDown.reset()    
@@ -209,38 +226,39 @@ while not CorrectPracticeFlag:
 
 
     WaitingForResponseFlag = True
-    while WaitingForResponseFlag:
-        theseKeys = event.getKeys()
-            
-        # check for quit:
-        if "escape" in theseKeys:
-            thisExp.abort()  # or data files will save again on exit
-            win.close()
-            core.quit()
-        if len(theseKeys) > 0:  # at least one key was pressed
-            resp.keys.extend(theseKeys)  # storing all keys
-            resp.rt.append(resp.clock.getTime())
+    response = TypeInNumbers()
+#    while WaitingForResponseFlag:
+#        theseKeys = event.getKeys()
+#            
+#        # check for quit:
+#        if "escape" in theseKeys:
+#            thisExp.abort()  # or data files will save again on exit
+#            win.close()
+#            core.quit()
+#        if len(theseKeys) > 0:  # at least one key was pressed
+#            resp.keys.extend(theseKeys)  # storing all keys
+#            resp.rt.append(resp.clock.getTime())
+#
+#        if 'return' in theseKeys:
+#            # remove the return before continuing
+#            resp.keys = resp.keys[:-1]
+#            WaitingForResponseFlag = False
+#            break
+#        else:
+#            pass
+#        
+#    if 'x' in resp.keys:
+#        print('Found a mistake')
+#        # A mistake as made entering the digits
+#        # take all values after the LAST x   
+#        resp.keys = resp.keys[''.join(resp.keys).rindex('x')+1:]
 
-        if 'return' in theseKeys:
-            # remove the return before continuing
-            resp.keys = resp.keys[:-1]
-            WaitingForResponseFlag = False
-            break
-        else:
-            pass
-        
-    if 'x' in resp.keys:
-        print('Found a mistake')
-        # A mistake as made entering the digits
-        # take all values after the LAST x   
-        resp.keys = resp.keys[''.join(resp.keys).rindex('x')+1:]
-
-    print('Responses: %s'%(resp.keys))
+    print('Responses: %s'%(response))
     Answer.setAutoDraw(False)
     win.flip()
     # Convert responses to an array
     RespList = []
-    for i in resp.keys:
+    for i in response:
         RespList.append(int(i))
     RespList = np.array(RespList)
     print(RespList)
@@ -387,39 +405,46 @@ for thisStair in Stairs:
     win.flip()
 
     WaitingForResponseFlag = True
-    while WaitingForResponseFlag:
-        theseKeys = event.getKeys(keyList=['1','2','3','4','5','6','7','8','9','x','return','escape'])
-            
-        # check for quit:
-        if "escape" in theseKeys:
-            #thisExp.abort()  # or data files will save again on exit
-            win.close()
-            core.quit()
-        if len(theseKeys) > 0:  # at least one key was pressed
-            resp.keys.extend(theseKeys)  # storing all keys
-            resp.rt.append(resp.clock.getTime())
-
-        if 'return' in theseKeys:
-            # remove the return before continuing
-            resp.keys = resp.keys[:-1]
-            WaitingForResponseFlag = False
-            break
-        else:
-            pass
-        
-    if 'x' in resp.keys:
-        print('Found a mistake')
-        # A mistake as made entering the digits
-        # take all values after the LAST x   
-        resp.keys = resp.keys[''.join(resp.keys).rindex('x')+1:]
-        
-    print('Responses: %s'%(resp.keys))
+    
+    response = TypeInNumbers()
+#    while WaitingForResponseFlag:
+#        theseKeys = event.getKeys(keyList=['1','2','3','4','5','6','7','8','9','x','return','escape'])
+#            
+#        # check for quit:
+#        if "escape" in theseKeys:
+#            #thisExp.abort()  # or data files will save again on exit
+#            win.close()
+#            core.quit()
+#        if len(theseKeys) > 0:  # at least one key was pressed
+#            resp.keys.extend(theseKeys)  # storing all keys
+#            resp.rt.append(resp.clock.getTime())
+#
+#        if 'return' in theseKeys:
+#            # remove the return before continuing
+#            resp.keys = resp.keys[:-1]
+#            WaitingForResponseFlag = False
+#            break
+#        else:
+#            pass
+#        
+#    if 'x' in resp.keys:
+#        print('Found a mistake')
+#        # A mistake as made entering the digits
+#        # take all values after the LAST x   
+#        resp.keys = resp.keys[''.join(resp.keys).rindex('x')+1:]
+#        
+    print('Responses: %s'%(response))
     Answer.setAutoDraw(False)
     win.flip()
     # Convert responses to an array
     RespList = []
-    for i in resp.keys:
-        RespList.append(int(i))
+    try:
+        for i in response:
+            RespList.append(int(i))
+    except:
+         win.close()
+         core.quit()
+         
     RespList = np.array(RespList)
     print(RespList)
     # This is the FORWARD Span Task
@@ -436,9 +461,9 @@ for thisStair in Stairs:
         resp.corr = 0
         
     thisExp.addData('Digits',R)
-    thisExp.addData('resp.keys',resp.keys)
-    if resp.keys != None:  # we had a response
-        thisExp.addData('resp.rt', resp.rt)
+    thisExp.addData('resp.keys',response)
+    if response != None:  # we had a response
+        thisExp.addData('resp.corr', resp.corr)
     thisExp.nextEntry()
     # these shouldn't be strictly necessary (should auto-save)
     

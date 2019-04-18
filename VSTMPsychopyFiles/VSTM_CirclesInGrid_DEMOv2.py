@@ -51,8 +51,6 @@ InterBlockTime = 2 #13.0
 # the end before the thank you screen
 ShortDelayTime = 5 #16.0
 
-NumberOfBlocks = 3
-NTrialsPerBlock = 2
 FeedbackTime = 2
 BGColor = 'grey'
 FontColor = 'white'
@@ -101,7 +99,9 @@ filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant
 CounterBalFlag = 'False'
 # #################
 # Since this is the DEMO override the Load List
-LoadList = [1,3,5]
+NumberOfBlocks = 5
+NTrialsPerBlock = 2
+LoadList = [1,2,3,4,5]
 
 # I don't think that I want to counterbalance the responses so I will overwrite any flag that is passed
 CounterBalance = False    
