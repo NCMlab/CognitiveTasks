@@ -110,14 +110,15 @@ class Experiment():
         #myDlg.show()#show dialog and wait for OK or Cancel
         #vpInfo = myDlg.data
         #self.vp = vpInfo[0]
-        self.win = visual.Window(size=SZ,units='deg',fullscr=True, monitor='testMonitor', winType = "pyglet",allowGUI=False, waitBlanking=True)
+        self.win = visual.Window(size=SZ,units='height',fullscr=True, monitor='testMonitor', winType = "pyglet",allowGUI=False, waitBlanking=True)
 #        self.win = visual.Window(
 #    size=[1000, 800], fullscr=True, screen=0,
 #    allowGUI=False, allowStencil=False,
 #    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
 #    blendMode='avg', useFBO=True, units='height')
+
         
-        self.mouse = event.Mouse(win=self.win)#(True,None,self.win)
+        self.mouse = event.Mouse(True, None, win=self.win)#(True,None,self.win)
         self.cards = []
         self.elems = []
         for i in range(4):
@@ -200,8 +201,10 @@ class Experiment():
             if sum(mkey)>0:
                 card = -1
                 mpos = self.mouse.getPos()
+                print(mpos)
                 for i in range(4):
-                    if self.cards[i].contains(mpos):
+                    #if self.cards[i].contains(mpos):
+                    if self.cards[i].contains(self.mouse):
                         card = i
                         mtime = mtime[0]
                 if card>-1: break
@@ -314,7 +317,7 @@ class Experiment():
 
             
     def instruct(self, inst_text, go_text):
-        inst = visual.TextStim(self.win, pos=(0,0), height=1.4, alignHoriz='center', wrapWidth=38)
+        inst = visual.TextStim(self.win, pos=(0,0), height=1.4, units = 'deg', alignHoriz='center', wrapWidth=38)
         inst.setText(inst_text)
         inst.draw()
         self.win.flip()
@@ -336,7 +339,7 @@ class Experiment():
         core.wait(1)
         
     def ThankYou(self):
-        ThankYou = visual.TextStim(self.win, pos = (0,0), height = 1.4)
+        ThankYou = visual.TextStim(self.win, pos = (0,0), height = 1.4, units = 'deg')
         ThankYou.setText('Thank You')
         ThankYou.draw()
         self.win.flip()
@@ -344,7 +347,7 @@ class Experiment():
         self.sin.flip()
         
     def CardInstruct(self):
-        inst = visual.TextStim(self.win, pos=(0,0), height=1, alignHoriz='center', wrapWidth=22)
+        inst = visual.TextStim(self.win, pos=(0,0), height=1, alignHoriz='center', wrapWidth=22, units = 'deg')
         # Display the cards on the screen to allow the experimenter to provide 
         # verbal instructions
         choice = [[0,1,0],[1,2,1],[3,3,2],[2,0,3]]
@@ -427,42 +430,6 @@ SPOS = [[[0,0],[np.nan,np.nan],[np.nan,np.nan],[np.nan,np.nan]],
          [CARDW/4.0,-CARDH/4.0],[CARDW/4.0,CARDH/4.0]]]
 
 # #################
-# Store info about the experiment session
-
-            
-#expName = u'WCST'  # from the Builder filename that created this script
-#task = ''
-#expInfo = { u'Participant ID': u'9999999'}
-#
-#expInfo['date'] = data.getDateStr()  # add a simple timestamp
-#expInfo['expName'] = expName
-#
-#if len(sys.argv) > 1:
-#        #tempFile.write("Entered if clause\n")
-#        #tempFile.write('%s\n'%(sys.argv[2]))
-#        expInfo['Participant ID'] = sys.argv[1]
-#        #tempFile.write('%s\n'%(sys.argv[1]))
-#        #tempFile.write('%s\n'%(sys.argv[2]))
-#
-#        PartDataFolder = sys.argv[2]
-#
-#    
-#        Tag = '1'
-#else:
-#        dlg = gui.DlgFromDict(dictionary=expInfo)
-#        if dlg.OK == False:
-#            core.quit()  # user pressed cancel
-#        DataFolder = "../../data"
-#        PartDataFolder = 'unorganized'
-#        PartDataFolder = os.path.join(DataFolder, PartDataFolder)
-#        if not os.path.exists(PartDataFolder):
-#            os.mkdir(OutDir)
-#        Tag = '1'
-#print(PartDataFolder)
-# PartDataFolder = '../../data'
-#filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s.csv' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-#filename = os.path.join(PartDataFolder,'text.csv')
-
 E = Experiment()
 E.output = open(filename, 'w')
 E.output.write('TrialNum,Card,Rule,RespTime,Correct,') 
