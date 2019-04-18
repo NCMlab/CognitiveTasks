@@ -16,8 +16,8 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import sound
-from psychopy import locale_setup, gui, visual, core, data, event, logging
+# from psychopy import sound
+from psychopy import locale_setup, sound, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -48,7 +48,7 @@ FontSize = 30
 FontSizeUnits = 'pix'
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
 # #################
@@ -123,36 +123,43 @@ countDown = core.CountdownTimer()
 trialClock = core.Clock()
 # Create a list of sound files
 SoundFileList = []
-sound_1 = sound.Sound('NumberSounds2/1b.wav', secs=-1,sampleRate=44100, bits=16)
-sound_1.setVolume(0.8)
+sound_1 = sound.Sound('NumberSounds2/1b.wav', secs=-1,stereo=False)
+sound_1.setVolume(0.8, log=False)
+sound_1.setSound('NumberSounds2/1b.wav', secs=1.0)
 SoundFileList.append(sound_1)
-sound_2 = sound.Sound('NumberSounds2/2b.wav', secs=-1,sampleRate=44100, bits=16)
-sound_2.setVolume(0.8)
+
+sound_2 = sound.Sound('NumberSounds2/2b.wav', secs=-1,stereo=False)
+sound_2.setVolume(0.8, log = False)
+sound_2.setSound('NumberSounds2/2b.wav', secs=1.0)
 SoundFileList.append(sound_2)
-sound_3 = sound.Sound('NumberSounds2/3b.wav', secs=-1,sampleRate=44100, bits=16)
-sound_3.setVolume(0.8)
+
+sound_3 = sound.Sound('NumberSounds2/3b.wav', secs=-1,stereo=False)
+sound_3.setVolume(0.8, log = False)
+sound_3.setSound('NumberSounds2/3b.wav', secs=1.0)
 SoundFileList.append(sound_3)
-sound_4 = sound.Sound('NumberSounds2/4b.wav', secs=-1,sampleRate=44100, bits=16)
+
+sound_4 = sound.Sound('NumberSounds2/4b.wav', secs=-1,stereo=False)
 sound_4.setVolume(0.8)
 SoundFileList.append(sound_4)
-sound_5 = sound.Sound('NumberSounds2/5b.wav', secs=-1,sampleRate=44100, bits=16)
+
+sound_5 = sound.Sound('NumberSounds2/5b.wav', secs=-1,stereo=False)
 sound_5.setVolume(0.8)
 SoundFileList.append(sound_5)
-sound_6 = sound.Sound('NumberSounds2/6b.wav', secs=-1,sampleRate=44100, bits=16)
+sound_6 = sound.Sound('NumberSounds2/6b.wav', secs=-1,stereo=False)
 sound_6.setVolume(0.8)
 SoundFileList.append(sound_6)
-sound_7 = sound.Sound('NumberSounds2/7b.wav', secs=-1,sampleRate=44100, bits=16)
+sound_7 = sound.Sound('NumberSounds2/7b.wav', secs=-1,stereo=False)
 sound_7.setVolume(0.8)
 SoundFileList.append(sound_7)
-sound_8 = sound.Sound('NumberSounds2/8b.wav', secs=-1,sampleRate=44100, bits=16)
+sound_8 = sound.Sound('NumberSounds2/8b.wav', secs=-1,stereo=False)
 sound_8.setVolume(0.8)
 SoundFileList.append(sound_8)
-sound_9 = sound.Sound('NumberSounds2/9b.wav', secs=-1,sampleRate=44100, bits=16)
+sound_9 = sound.Sound('NumberSounds2/9b.wav', secs=-1,stereo=False)
 sound_9.setVolume(0.8)
 SoundFileList.append(sound_9)
-CorrectSound = sound.Sound('NumberSounds/correct.wav', secs = -1)
+CorrectSound = sound.Sound('NumberSounds/correct.wav', secs = -1,stereo=False)
 CorrectSound.setVolume(0.8)
-IncorrectSound = sound.Sound('NumberSounds/incorrect.wav', secs = -1)
+IncorrectSound = sound.Sound('NumberSounds/incorrect.wav', secs = -1,stereo=False)
 IncorrectSound.setVolume(0.8)
 
 # Initialize components for Routine "ThankYou"

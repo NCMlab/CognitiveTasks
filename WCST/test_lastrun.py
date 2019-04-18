@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v3.0.5),
-    on Thu Apr 18 11:06:06 2019
+    on Thu Apr 18 12:05:24 2019
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -30,9 +30,6 @@ os.chdir(_thisDir)
 psychopyVersion = '3.0.5'
 expName = 'test'  # from the Builder filename that created this script
 expInfo = {'participant': '', 'session': '001'}
-dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
-if dlg.OK == False:
-    core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
 expInfo['psychopyVersion'] = psychopyVersion
@@ -56,8 +53,8 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1024, 768), fullscr=True, screen=0,
-    allowGUI=False, allowStencil=False,
+    size=[1200, 800], fullscr=False, screen=0,
+    allowGUI=True, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='height')
@@ -87,6 +84,8 @@ text = visual.TextStim(win=win, name='text',
 mouse = event.Mouse(win=win)
 x, y = [None, None]
 mouse.mouseClock = core.Clock()
+sound_1 = sound.Sound('4b.wav', secs=1.0, stereo=False)
+sound_1.setVolume(1)
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
@@ -101,8 +100,10 @@ continueRoutine = True
 # setup some python lists for storing info about the mouse
 mouse.clicked_name = []
 gotValidClick = False  # until a click is received
+sound_1.setSound('4b.wav', secs=1.0)
+sound_1.setVolume(1, log=False)
 # keep track of which components have finished
-trialComponents = [polygon, text, mouse]
+trialComponents = [polygon, text, mouse, sound_1]
 for thisComponent in trialComponents:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
@@ -148,6 +149,12 @@ while continueRoutine:
                         mouse.clicked_name.append(obj.name)
                 if gotValidClick:  # abort routine on response
                     continueRoutine = False
+    # start/stop sound_1
+    if t >= 0.0 and sound_1.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        sound_1.tStart = t
+        sound_1.frameNStart = frameN  # exact frame index
+        win.callOnFlip(sound_1.play)  # screen flip
     
     # check for quit (typically the Esc key)
     if endExpNow or event.getKeys(keyList=["escape"]):
@@ -188,6 +195,7 @@ thisExp.addData('mouse.rightButton', buttons[2])
 if len(mouse.clicked_name):
     thisExp.addData('mouse.clicked_name', mouse.clicked_name[0])
 thisExp.nextEntry()
+sound_1.stop()  # ensure sound has stopped at end of routine
 # the Routine "trial" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 # these shouldn't be strictly necessary (should auto-save)
