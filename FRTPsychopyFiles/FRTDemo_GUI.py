@@ -95,7 +95,7 @@ textInstr1 = visual.TextStim(win=win, name='textInstr1',
 # Initialize components for Routine "practInstruct2"
 practInstruct2Clock = core.Clock()
 textInstr2 = visual.TextStim(win=win, name='textInstr2',
-    text='For example;\nThese two faces are from the SAME PERSON',
+    text='For example:\nThese two faces are from the SAME PERSON',
     font='Times New Roman',
     units='pix', pos=(-256, 192), height=40, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
@@ -296,7 +296,7 @@ textInstr7 = visual.TextStim(win=win, name='textInstr7',
 # Initialize components for Routine "mainInstruct2"
 mainInstruct2Clock = core.Clock()
 textInstr8 = visual.TextStim(win=win, name='textInstr8',
-    text='Remember;\nFaces will be degraded to varying levels.',
+    text='Remember:\nFaces will be degraded to varying levels.',
     font='Times New Roman',
     units='pix', pos=(-256, -300), height=40, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
