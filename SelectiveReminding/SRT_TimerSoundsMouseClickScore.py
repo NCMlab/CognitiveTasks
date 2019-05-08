@@ -472,6 +472,7 @@ for thisBlock in range(0,NBlocks):
     while WaitingFlag is True:
         theseKeys = event.getKeys(keyList=['escape','return'])
         if 'escape' in theseKeys:
+            SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList)
             core.quit()
         elif 'return' in theseKeys:
             WaitingFlag = False
@@ -517,12 +518,15 @@ for thisBlock in range(0,NBlocks):
     while WaitingFlag is True:
         theseKeys = event.getKeys(keyList=['escape','return'])
         if 'escape' in theseKeys:
+            SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList)
             core.quit()
         elif 'return' in theseKeys:
             WaitingFlag = False
             WaitText2.setAutoDraw(False)
         else:
             pass  
+    # At the end of each trial write out results
+    #SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList)
 #    print("Correct Recog: %s"%(CorrectRecog))
 
 # Thank you
