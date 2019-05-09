@@ -42,7 +42,11 @@ def TypeInNumbers():
     if dlg.ShowModal() == gui.wx.ID_OK:
         print('You entered: %s\n' % dlg.GetValue())
     dlg.Destroy()
-    return dlg.GetValue()
+
+    response = dlg.GetValue()
+    # remove non numerics from the string
+    response = ''.join(c for c in response if c.isdigit())
+    return response
 
 FontSize = 30
 FontSizeUnits = 'pix'

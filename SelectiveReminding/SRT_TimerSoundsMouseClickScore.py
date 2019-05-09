@@ -104,7 +104,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 countDown = core.CountdownTimer()
 # Setup the Window
 win = visual.Window(
-    size=[1200, 800], fullscr=False, screen=0,
+    size=[1200, 800], fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
@@ -472,6 +472,7 @@ for thisBlock in range(0,NBlocks):
     while WaitingFlag is True:
         theseKeys = event.getKeys(keyList=['escape','return'])
         if 'escape' in theseKeys:
+            SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList)
             core.quit()
         elif 'return' in theseKeys:
             WaitingFlag = False
@@ -517,12 +518,15 @@ for thisBlock in range(0,NBlocks):
     while WaitingFlag is True:
         theseKeys = event.getKeys(keyList=['escape','return'])
         if 'escape' in theseKeys:
+            SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList)
             core.quit()
         elif 'return' in theseKeys:
             WaitingFlag = False
             WaitText2.setAutoDraw(False)
         else:
             pass  
+    # At the end of each trial write out results
+    #SRT.WriteOutResults(dataFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList)
 #    print("Correct Recog: %s"%(CorrectRecog))
 
 # Thank you
