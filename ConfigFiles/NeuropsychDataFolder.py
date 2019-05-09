@@ -1,1 +1,1 @@
-NeuropsychDataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
+NeuropsychDataFolder = '/Users/jason/Google Drive File Stream/Team Drives/NCMLab/NCM002/Data/NeuroPsych'

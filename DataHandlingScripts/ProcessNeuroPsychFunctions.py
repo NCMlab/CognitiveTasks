@@ -138,7 +138,7 @@ def ProcessAntonym(Data):
         Out = {}
         Out['NResp'] = Data_Run['resp.corr'].count()
         Out['Acc'] = Data_Run['resp.corr'].mean()    
-        Out['RT'] = Data_Run['resp.rt'].mean()
+#        Out['RT'] = Data_Run['resp.rt'].mean()
 
     else:
         Out = {}
@@ -330,6 +330,7 @@ def ProcessDigitSpan(Data, Dir):
     if len(Data) > 0:
         # cycle over each row 
         for i, CurrentRow in Data.iterrows():
+#            print(CurrentRow)
             match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
             StairLoad.append(Load)
             print(match)
@@ -360,7 +361,7 @@ def ProcessDigitSpanOneRow(Row, Dir):
         if i.isdigit():
             Test.append(int(i))
     # This is stored as a string
-    StrResp = Row['resp.keys']
+    StrResp = str(Row['resp.keys'])
     Resp = [];
     for i in StrResp:
         if i.isdigit():
