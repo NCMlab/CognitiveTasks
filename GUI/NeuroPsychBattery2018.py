@@ -760,7 +760,7 @@ class Mywin(wx.Frame):
       self.NBackPracticeTag = self.NBackPracticeTag + 1
       btnR10C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR10C3Label))
-      core.shellCall([sys.executable, "../NBack/NBackWithFeedback.py", self.PartID.GetValue(), self.VisitFolderPath, 'Practice%20d'%(self.NBackPracticeTag)])  
+      core.shellCall([sys.executable, "../NBack/NBackWithFeedback.py", self.PartID.GetValue(), self.VisitFolderPath, 'Practice%d'%(self.NBackPracticeTag)])  
       self.cbR10C3.SetValue(True)  
 
    def OnClickedR10C4(self, event):

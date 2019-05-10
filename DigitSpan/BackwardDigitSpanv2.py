@@ -126,12 +126,12 @@ SoundFileList = []
 
 sound_1 = sound.Sound('NumberSounds2/1c.wav', secs=1, stereo=-1, sampleRate=24000)
 sound_1.setVolume(0.8, log=False)
-
 SoundFileList.append(sound_1)
+
 sound_2 = sound.Sound('NumberSounds2/2c.wav', secs=1,stereo=-1, sampleRate=24000)
 sound_2.setVolume(0.8, log = False)
 SoundFileList.append(sound_2)
-print("Made it here 2")
+
 
 sound_3 = sound.Sound('NumberSounds2/3c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_3.setVolume(0.8, log = False)
