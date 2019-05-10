@@ -97,7 +97,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Start Code - component code to be run before the window creation
 
-TrialDuration = 2.0
+TrialDuration = 1.0
 RespDuration = 6
 ITI = 1
 corr = 1
@@ -161,9 +161,9 @@ sound_9 = sound.Sound('NumberSounds2/9c.wav', secs=1,stereo=False, sampleRate=24
 sound_9.setVolume(0.8)
 SoundFileList.append(sound_9)
 
-CorrectSound = sound.Sound('NumberSounds2/correctc.wav', secs = -1,stereo=True, sampleRate=24000)
+CorrectSound = sound.Sound('NumberSounds2/correctc.wav', secs = 1,stereo=False, sampleRate=24000)
 CorrectSound.setVolume(0.8)
-IncorrectSound = sound.Sound('NumberSounds2/incorrectc.wav', secs = -1,stereo=True, sampleRate=24000)
+IncorrectSound = sound.Sound('NumberSounds2/incorrectc.wav', secs = 1,stereo=False, sampleRate=24000)
 IncorrectSound.setVolume(0.8)
 
 # Initialize components for Routine "ThankYou"
