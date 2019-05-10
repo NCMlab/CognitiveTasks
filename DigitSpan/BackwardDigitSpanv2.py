@@ -27,22 +27,19 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import re
+import wx
 def TypeInNumbers(): 
     # When [intrusion] is clicked on teh screen by the tester, this fn will
     # present a dialog box for the intusion word to be types in
     print('Entered Intrusion Entry')
-    app = gui.wx.PySimpleApp()
-    
-    frame = gui.wx.Frame(None, -1, 'win.py')
-    frame.SetDimensions(0,0,200,50)
-    
-    # Create text input
-    dlg = gui.wx.TextEntryDialog(frame, 'Type in number list','Text Entry')
-    # dlg.SetValue("Default")
-    if dlg.ShowModal() == gui.wx.ID_OK:
-        print('You entered: %s\n' % dlg.GetValue())
-    dlg.Destroy()
-    return dlg.GetValue()
+    app = gui.Dlg(title = 'Response Entry')
+    app.addField('Number List:')
+    ok_data = app.show()
+    if app.OK:
+        print(ok_data)
+    else:
+        print('User canceled')
+    return ok_data
 
 FontSize = 30
 FontSizeUnits = 'pix'
@@ -103,7 +100,7 @@ ITI = 1
 corr = 1
 resp = event.BuilderKeyResponse()
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
-
+print("Made it here 1")
 # Setup the Window
 win = visual.Window(
     size=[1200, 800], fullscr=False, screen=0,
@@ -123,47 +120,44 @@ countDown = core.CountdownTimer()
 trialClock = core.Clock()
 # Create a list of sound files
 SoundFileList = []
-sound_1 = sound.Sound('NumberSounds2/1b.wav', secs=-1, sampleRate=24000, stereo=False)
+
+sound_1 = sound.Sound('NumberSounds2/1c.wav', secs=-1, stereo=-1, sampleRate=24000)
 sound_1.setVolume(0.8, log=False)
-sound_1.setSound('NumberSounds2/1b.wav', secs=1.0)
+
 SoundFileList.append(sound_1)
-
-sound_2 = sound.Sound('NumberSounds2/2b.wav', secs=-1,sampleRate=24000,stereo=False)
+sound_2 = sound.Sound('NumberSounds2/2c.wav', secs=-1,stereo=-1, sampleRate=24000)
 sound_2.setVolume(0.8, log = False)
-sound_2.setSound('NumberSounds2/2b.wav', secs=1.0)
 SoundFileList.append(sound_2)
+print("Made it here 2")
 
-sound_3 = sound.Sound('NumberSounds2/3b.wav', secs=-1,sampleRate=24000,
-stereo=False)
+sound_3 = sound.Sound('NumberSounds2/3c.wav', secs=-1,stereo=False, sampleRate=24000)
 sound_3.setVolume(0.8, log = False)
-sound_3.setSound('NumberSounds2/3b.wav', secs=1.0)
 SoundFileList.append(sound_3)
 
-sound_4 = sound.Sound('NumberSounds2/4b.wav', secs=-1,sampleRate=24000,
-stereo=False)
+sound_4 = sound.Sound('NumberSounds2/4c.wav', secs=-1,stereo=False, sampleRate=24000)
 sound_4.setVolume(0.8)
 SoundFileList.append(sound_4)
 
-sound_5 = sound.Sound('NumberSounds2/5b.wav', secs=-1,sampleRate=24000,
-stereo=False)
+sound_5 = sound.Sound('NumberSounds2/5c.wav', secs=-1,stereo=False, sampleRate=24000)
 sound_5.setVolume(0.8)
 SoundFileList.append(sound_5)
-sound_6 = sound.Sound('NumberSounds2/6b.wav', secs=-1,sampleRate=24000,
-stereo=False)
+
+sound_6 = sound.Sound('NumberSounds2/6c.wav', secs=-1,stereo=False, sampleRate=24000)
 sound_6.setVolume(0.8)
 SoundFileList.append(sound_6)
-sound_7 = sound.Sound('NumberSounds2/7b.wav', secs=-1,sampleRate=24000,
-stereo=False)
+
+sound_7 = sound.Sound('NumberSounds2/7c.wav', secs=-1,stereo=False, sampleRate=24000)
 sound_7.setVolume(0.8)
 SoundFileList.append(sound_7)
-sound_8 = sound.Sound('NumberSounds2/8b.wav', secs=-1,sampleRate=24000,
-stereo=False)
+
+sound_8 = sound.Sound('NumberSounds2/8c.wav', secs=-1,stereo=False, sampleRate=24000)
 sound_8.setVolume(0.8)
 SoundFileList.append(sound_8)
-sound_9 = sound.Sound('NumberSounds2/9b.wav', secs=-1,sampleRate=24000,
-stereo=False)
+
+sound_9 = sound.Sound('NumberSounds2/9c.wav', secs=-1,stereo=False, sampleRate=24000)
 sound_9.setVolume(0.8)
 SoundFileList.append(sound_9)
+
 CorrectSound = sound.Sound('NumberSounds/correct.wav', secs = -1,stereo=True)
 CorrectSound.setVolume(0.8)
 IncorrectSound = sound.Sound('NumberSounds/incorrect.wav', secs = -1,stereo=True)
@@ -275,6 +269,7 @@ while not CorrectPracticeFlag:
     RespList = np.array(RespList)
     print(RespList)
     # This is the BACKWARD Span Task
+    print(R[::-1])
     if np.array_equiv(R[::-1],RespList):
         print('Correct')
         CorrectSound.play()
