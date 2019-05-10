@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.1),
-    on Tue Nov  6 20:40:52 2018
+    on Tue Nov  6 14:17:34 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -27,7 +27,7 @@ os.chdir(_thisDir)
 # #################
 # Store info about the experiment session
 expName = u'Matrices'  # from the Builder filename that created this script
-task = 'Main'
+task = 'Practice'
 expInfo = {u'session': u'01', u'Participant ID': u'9999999'}
 
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
@@ -58,12 +58,12 @@ filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant
 BGColor = 'grey'
 FontColor = 'white'
 FontSize = 60
-AllowedTime = 600
+
 # #################
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=None,
+    originPath=u'/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/Matrices/MatricesPractice.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -91,27 +91,9 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 Instruct = visual.TextStim(win=win, name='Instruct',
-    text='Progressive Matrices\n\nThis is a test of observation and clear thinking.\nAt the top of the screen you will see a pattern with a bit cut out of it. You will look at the pattern, think what the piece must be that is needed to complete the pattern correctly both along and down. Then find the right piece out of the eight bits shown below.\nOnly one of these pieces is perfectly correct.\n\nYou will have 10 minutes to complete as many trials as possible.\nPress any key to continue.',
+    text='Progressive Matrices\n\nThis is a test of observation and clear thinking.\nAt the top of the screen you will see a pattern with a bit cut out of it. You will look at the pattern, think what the piece must be that is needed to complete the pattern correctly both along and down. Then find the right piece out of the eight bits shown below.\nOnly one of these pieces is perfectly correct.\n\nPress any key to perform practice trials.',
     font='Arial',
     pos=(0, 0), height=40, wrapWidth=1000, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
-    depth=0.0);
-
-# Initialize components for Routine "GetReady"
-GetReadyClock = core.Clock()
-GetReady2 = visual.TextStim(win=win, name='GetReady2',
-    text='Get ready to perform the task with no feedback.\nPlease try to respond as quickly and accurately as possible.\n\nPress any key to begin.',
-    font='Arial',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
-    color=FontColor, colorSpace='rgb', opacity=1,
-    depth=0.0);
-
-# Initialize components for Routine "crosshair"
-crosshairClock = core.Clock()
-text = visual.TextStim(win=win, name='text',
-    text='+',
-    font='Arial',
-    pos=(0, 0), height=40, wrapWidth=None, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -173,14 +155,14 @@ Opt1 = visual.TextStim(win=win, name='Opt1',
     color='black', colorSpace='rgb', opacity=1,
     depth=-7.0);
 Opt2 = visual.TextStim(win=win, name='Opt2',
-    text='2',
-    font='Arial',
+    text=u'2',
+    font=u'Arial',
     pos=(-20, -30), height=40, wrapWidth=None, ori=0, 
     color='black', colorSpace='rgb', opacity=1,
     depth=-8.0);
 Opt3 = visual.TextStim(win=win, name='Opt3',
-    text='3',
-    font='Arial',
+    text=u'3',
+    font=u'Arial',
     pos=(130, -30), height=40, wrapWidth=None, ori=0, 
     color='black', colorSpace='rgb', opacity=1,
     depth=-9.0);
@@ -228,13 +210,36 @@ Opt8 = visual.TextStim(win=win, name='Opt8',
     pos=(280, -180), height=40, wrapWidth=None, ori=0, 
     color='black', colorSpace='rgb', opacity=1,
     depth=-17.0);
-countdownStarted = False
-Clock = visual.TextStim(win=win, name='Clock',
+
+# Initialize components for Routine "Feedback1"
+Feedback1Clock = core.Clock()
+Prac1Feedback = visual.TextStim(win=win, name='Prac1Feedback',
     text='default text',
-    font='Arial',
-    pos=(400, -400), height=30, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
-    depth=-19.0);
+    font=u'Arial',
+    pos=(-325, -180), height=30, wrapWidth=610, ori=0, 
+    color=FontColor, colorSpace='rgb', opacity=1,
+    depth=0.0);
+    
+Prac1Matrix = visual.ImageStim(
+    win=win, name='Prac1Matrix',
+    image='sin', mask=None,
+    ori=0, pos=(0, 200), size=(430, 380),
+    color=[1,1,1], colorSpace='rgb', opacity=1,
+    flipHoriz=False, flipVert=False,
+    texRes=128, interpolate=True, depth=-1.0)
+Prac1Choice = visual.ImageStim(
+    win=win, name='Prac1Choice',
+    image='sin', mask=None,
+    ori=0, pos=(75, -75), size=(120,120),
+    color=[1,1,1], colorSpace='rgb', opacity=1,
+    flipHoriz=False, flipVert=False,
+    texRes=128, interpolate=True, depth=-2.0)
+CorrectAnswer = visual.TextStim(win=win, name='CorrectAnswer',
+    text='default text',
+    font=u'Arial',
+    pos=(130, -30), height=40, wrapWidth=None, ori=0, 
+    color='black', colorSpace='rgb', opacity=1,
+    depth=-4.0);
 
 # Initialize components for Routine "crosshair"
 crosshairClock = core.Clock()
@@ -337,155 +342,24 @@ thisExp.nextEntry()
 # the Routine "Instructions" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
-# ------Prepare to start Routine "GetReady"-------
-t = 0
-GetReadyClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-GetReadyResp = event.BuilderKeyResponse()
-# keep track of which components have finished
-GetReadyComponents = [GetReady2, GetReadyResp]
-for thisComponent in GetReadyComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "GetReady"-------
-while continueRoutine:
-    # get current time
-    t = GetReadyClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *GetReady2* updates
-    if t >= 0.0 and GetReady2.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        GetReady2.tStart = t
-        GetReady2.frameNStart = frameN  # exact frame index
-        GetReady2.setAutoDraw(True)
-    
-    # *GetReadyResp* updates
-    if t >= 0.0 and GetReadyResp.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        GetReadyResp.tStart = t
-        GetReadyResp.frameNStart = frameN  # exact frame index
-        GetReadyResp.status = STARTED
-        # keyboard checking is just starting
-        win.callOnFlip(GetReadyResp.clock.reset)  # t=0 on next screen flip
-        event.clearEvents(eventType='keyboard')
-    if GetReadyResp.status == STARTED:
-        theseKeys = event.getKeys()
-        
-        # check for quit:
-        if "escape" in theseKeys:
-            endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
-            GetReadyResp.keys = theseKeys[-1]  # just the last key pressed
-            GetReadyResp.rt = GetReadyResp.clock.getTime()
-            # a response ends the routine
-            continueRoutine = False
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in GetReadyComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "GetReady"-------
-for thisComponent in GetReadyComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# check responses
-if GetReadyResp.keys in ['', [], None]:  # No response was made
-    GetReadyResp.keys=None
-thisExp.addData('GetReadyResp.keys',GetReadyResp.keys)
-if GetReadyResp.keys != None:  # we had a response
-    thisExp.addData('GetReadyResp.rt', GetReadyResp.rt)
-thisExp.nextEntry()
-# the Routine "GetReady" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "crosshair"-------
-t = 0
-crosshairClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-routineTimer.add(0.500000)
-# update component parameters for each repeat
-# keep track of which components have finished
-crosshairComponents = [text]
-for thisComponent in crosshairComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "crosshair"-------
-while continueRoutine and routineTimer.getTime() > 0:
-    # get current time
-    t = crosshairClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *text* updates
-    if t >= 0.0 and text.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        text.tStart = t
-        text.frameNStart = frameN  # exact frame index
-        text.setAutoDraw(True)
-    frameRemains = 0.0 + 0.5- win.monitorFramePeriod * 0.75  # most of one frame period left
-    if text.status == STARTED and t >= frameRemains:
-        text.setAutoDraw(False)
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in crosshairComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "crosshair"-------
-for thisComponent in crosshairComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-
 # set up handler to look after randomisation of conditions etc
-trials_2 = data.TrialHandler(nReps=1, method='sequential', 
+trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('Matrices.csv'),
-    seed=None, name='trials_2')
-thisExp.addLoop(trials_2)  # add the loop to the experiment
-thisTrial_2 = trials_2.trialList[0]  # so we can initialise stimuli with some values
-# abbreviate parameter names if possible (e.g. rgb = thisTrial_2.rgb)
-if thisTrial_2 != None:
-    for paramName in thisTrial_2.keys():
-        exec('{} = thisTrial_2[paramName]'.format(paramName))
-
-for thisTrial_2 in trials_2:
-    currentLoop = trials_2
-    # abbreviate parameter names if possible (e.g. rgb = thisTrial_2.rgb)
-    if thisTrial_2 != None:
-        for paramName in thisTrial_2.keys():
-            exec('{} = thisTrial_2[paramName]'.format(paramName))
+    trialList=data.importConditions(u'MatricesPractice.csv'),
+    seed=None, name='trials')
+thisExp.addLoop(trials)  # add the loop to the experiment
+thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
+# abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
+if thisTrial != None:
+    for paramName in thisTrial.keys():
+        exec('{} = thisTrial[paramName]'.format(paramName))
+        
+for thisTrial in trials:
+    currentLoop = trials
+    # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
+    if thisTrial != None:
+        for paramName in thisTrial.keys():
+            exec('{} = thisTrial[paramName]'.format(paramName))
     
     # ------Prepare to start Routine "trial"-------
     t = 0
@@ -503,11 +377,8 @@ for thisTrial_2 in trials_2:
     key_resp_2 = event.BuilderKeyResponse()
     CFig7.setImage(Choice7)
     CFig8.setImage(Choice8)
-    if not countdownStarted:
-        countdownClock = core.CountdownTimer(AllowedTime)
-        countdownStarted = True
     # keep track of which components have finished
-    trialComponents = [image, CFig1, CFig2, CFig3, CFig4, CFig5, CFIg6, Opt1, Opt2, Opt3, Opt4, Opt5, key_resp_2, CFig7, CFig8, Opt6, Opt7, Opt8, Clock]
+    trialComponents = [image, CFig1, CFig2, CFig3, CFig4, CFig5, CFIg6, Opt1, Opt2, Opt3, Opt4, Opt5, key_resp_2, CFig7, CFig8, Opt6, Opt7, Opt8]
     for thisComponent in trialComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -665,25 +536,6 @@ for thisTrial_2 in trials_2:
             Opt8.tStart = t
             Opt8.frameNStart = frameN  # exact frame index
             Opt8.setAutoDraw(True)
-        timeRemaining = countdownClock.getTime()
-        if timeRemaining <= 0.0:
-            continueRoutine = False
-            trials_2.finished = True
-            countdownStarted = False
-        else:
-            minutes = int(timeRemaining/60.0)
-            seconds = int(timeRemaining - (minutes*60.0))
-            timeText = "%d:%02d"%(minutes, seconds)
-            #str(minutes) + ":" + str(seconds)
-        
-        # *Clock* updates
-        if t >= 0.0 and Clock.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            Clock.tStart = t
-            Clock.frameNStart = frameN  # exact frame index
-            Clock.setAutoDraw(True)
-        if Clock.status == STARTED:  # only update if drawing
-            Clock.setText(timeText, log=False)
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -714,13 +566,115 @@ for thisTrial_2 in trials_2:
            key_resp_2.corr = 1  # correct non-response
         else:
            key_resp_2.corr = 0  # failed to respond (incorrectly)
-    # store data for trials_2 (TrialHandler)
-    trials_2.addData('key_resp_2.keys',key_resp_2.keys)
-    trials_2.addData('key_resp_2.corr', key_resp_2.corr)
+    # store data for trials (TrialHandler)
+    trials.addData('key_resp_2.keys',key_resp_2.keys)
+    trials.addData('key_resp_2.corr', key_resp_2.corr)
     if key_resp_2.keys != None:  # we had a response
-        trials_2.addData('key_resp_2.rt', key_resp_2.rt)
-    
+        trials.addData('key_resp_2.rt', key_resp_2.rt)
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    
+    # ------Prepare to start Routine "Feedback1"-------
+    t = 0
+    Feedback1Clock.reset()  # clock
+    frameN = -1
+    continueRoutine = True
+    # update component parameters for each repeat
+    Prac1Feedback.setText(Feedback)
+    Prac1Matrix.setImage(Stimulus)
+    Prac1Choice.setImage(CorrectImage)
+    Prac1End = event.BuilderKeyResponse()
+    CorrectAnswer.setText(Corr)
+    # keep track of which components have finished
+    Feedback1Components = [Prac1Feedback, Prac1Matrix, Prac1Choice, Prac1End, CorrectAnswer]
+    for thisComponent in Feedback1Components:
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    
+    # -------Start Routine "Feedback1"-------
+    while continueRoutine:
+        # get current time
+        t = Feedback1Clock.getTime()
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # *Prac1Feedback* updates
+        if t >= 0.0 and Prac1Feedback.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            Prac1Feedback.tStart = t
+            Prac1Feedback.frameNStart = frameN  # exact frame index
+            Prac1Feedback.setAutoDraw(True)
+        
+        # *Prac1Matrix* updates
+        if t >= 0.0 and Prac1Matrix.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            Prac1Matrix.tStart = t
+            Prac1Matrix.frameNStart = frameN  # exact frame index
+            Prac1Matrix.setAutoDraw(True)
+        
+        # *Prac1Choice* updates
+        if t >= 0.0 and Prac1Choice.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            Prac1Choice.tStart = t
+            Prac1Choice.frameNStart = frameN  # exact frame index
+            Prac1Choice.setAutoDraw(True)
+        
+        # *Prac1End* updates
+        if t >= 0.0 and Prac1End.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            Prac1End.tStart = t
+            Prac1End.frameNStart = frameN  # exact frame index
+            Prac1End.status = STARTED
+            # keyboard checking is just starting
+            win.callOnFlip(Prac1End.clock.reset)  # t=0 on next screen flip
+            event.clearEvents(eventType='keyboard')
+        if Prac1End.status == STARTED:
+            theseKeys = event.getKeys()
+            
+            # check for quit:
+            if "escape" in theseKeys:
+                endExpNow = True
+            if len(theseKeys) > 0:  # at least one key was pressed
+                Prac1End.keys = theseKeys[-1]  # just the last key pressed
+                Prac1End.rt = Prac1End.clock.getTime()
+                # a response ends the routine
+                continueRoutine = False
+        
+        # *CorrectAnswer* updates
+        if t >= 0.0 and CorrectAnswer.status == NOT_STARTED:
+            # keep track of start time/frame for later
+            CorrectAnswer.tStart = t
+            CorrectAnswer.frameNStart = frameN  # exact frame index
+            CorrectAnswer.setAutoDraw(True)
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in Feedback1Components:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # check for quit (the Esc key)
+        if endExpNow or event.getKeys(keyList=["escape"]):
+            core.quit()
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # -------Ending Routine "Feedback1"-------
+    for thisComponent in Feedback1Components:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    # check responses
+    if Prac1End.keys in ['', [], None]:  # No response was made
+        Prac1End.keys=None
+    trials.addData('Prac1End.keys',Prac1End.keys)
+    if Prac1End.keys != None:  # we had a response
+        trials.addData('Prac1End.rt', Prac1End.rt)
+    # the Routine "Feedback1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
     # ------Prepare to start Routine "crosshair"-------
@@ -776,7 +730,7 @@ for thisTrial_2 in trials_2:
             thisComponent.setAutoDraw(False)
     thisExp.nextEntry()
     
-# completed 1 repeats of 'trials_2'
+# completed 1 repeats of 'trials'
 
 
 # ------Prepare to start Routine "ThankYou"-------
@@ -830,7 +784,6 @@ while continueRoutine and routineTimer.getTime() > 0:
 for thisComponent in ThankYouComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
-
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
 thisExp.saveAsPickle(filename)

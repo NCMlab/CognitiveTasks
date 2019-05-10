@@ -331,16 +331,19 @@ for BlockNumber in range(0,NBlocks,1):
         thisExp.nextEntry()
         count += 1
     # Make sure the cross hair is not shown
-    CrossHair.setAutoDraw(False)            
+    CrossHair.setAutoDraw(False)      
+    Feedback.setAutoDraw(False)  
     CountDownClock.add(NBack_Prac1_InterBlockTime)        
     CrossHair.draw()
+    
     win.flip()
     while CountDownClock.getTime() > 0:
         theseKeys = event.getKeys()
         if "escape" in theseKeys:
             win.flip()
             core.quit() 
-
+          
+Feedback.setAutoDraw(False)
 # Thank you screen
 CountDownClock.add(NBack_Prac1_ThankYouOnTime)
 ThankYouScreen.draw()

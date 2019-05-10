@@ -297,8 +297,8 @@ LastTrial = ''
 CurrentCount = 0
 for thisStep in staircase:
     CurrentCount += 1
-    print '--------------'
-    print 'ThisStep: '+str(thisStep)
+    print('--------------')
+    print('ThisStep: '+str(thisStep))
     # Reset clock
     t = 0
     trialClock.reset()
@@ -395,11 +395,11 @@ for thisStep in staircase:
     # Is this respone correct?
     if k[-1] == str(corr):
         # YES
-        print k[-1]
+        print(k[-1])
         thisResp = 1
     else:
         # NO
-        print k[-1]
+        print(k[-1])
         thisResp = -1
     staircase.addData(thisResp) 
     # Change the response to zero and one for later pivot tables
@@ -435,11 +435,11 @@ for thisStep in staircase:
         dataFile.write('%s\n'%(EndFlag))
         Capacity = 10-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
-        print 
-        print "Ending because the maximum number of trials was reached."
-        print
-        print "Capacity is: %0.4f"%(Capacity)        
-        print "Number of reversals: %i"%(len(staircase.reversalPoints))
+        print()
+        print("Ending because the maximum number of trials was reached.")
+        print()
+        print("Capacity is: %0.4f"%(Capacity))       
+        print("Number of reversals: %i"%(len(staircase.reversalPoints)))
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
@@ -455,11 +455,11 @@ for thisStep in staircase:
         dataFile.write('%s\n'%(EndFlag))
         Capacity = 10-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
-        print 
-        print "Ending because Time was exceeded."
-        print
-        print "Capacity is: %0.4f"%(Capacity)  
-        print "Number of reversals: %i"%(len(staircase.reversalPoints))        
+        print()
+        print("Ending because Time was exceeded.")
+        print()
+        print("Capacity is: %0.4f"%(Capacity)) 
+        print("Number of reversals: %i"%(len(staircase.reversalPoints)))       
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
@@ -476,24 +476,24 @@ for thisStep in staircase:
         dataFile.write('%s\n'%(EndFlag))
         Capacity = 10-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
-        print
-        print "Ending because Escape was pressed."
-        print
-        print "Capacity is: %0.4f"%(Capacity)  
-        print "Number of reversals: %i"%(len(staircase.reversalPoints))
+        print()
+        print("Ending because Escape was pressed.")
+        print()
+        print("Capacity is: %0.4f"%(Capacity))  
+        print("Number of reversals: %i"%(len(staircase.reversalPoints)))
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
         #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
-print EndFlag
+print(EndFlag)
 
-Capacity = 10-np.mean(staircase.reversalIntensities)
+Capacity = 10 - np.mean(staircase.reversalIntensities)
 Capacity = Capacity
 dataFile1.write('%0.4f'%(Capacity))
-print
-print "Capacity is: %0.4f"%(Capacity)     
-print "Number of reversals: %i"%(len(staircase.reversalPoints))
+print()
+print("Capacity is: %0.4f"%(Capacity))     
+print("Number of reversals: %i"%(len(staircase.reversalPoints)))
 dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
 dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
 dataFile.close()

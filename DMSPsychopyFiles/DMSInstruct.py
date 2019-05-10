@@ -22,7 +22,7 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
 # Store info about the experiment session
@@ -51,7 +51,7 @@ win = visual.Window(
     size=[1200, 800], fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
-    blendMode='avg', useFBO=True)
+    blendMode='avg', useFBO=True, units = 'pix')
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
 if expInfo['frameRate'] != None:

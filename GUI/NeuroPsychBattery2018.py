@@ -25,30 +25,30 @@ os.chdir(_thisDir)
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NCM_NeuroPsych_Config import *
 # Check to see if the output data folder has been identified
-#try:
-#    # try to load the config file
-#    from NeuropsychDataFolder import *
-#    # See if the variable is in it
-#    print('Data being saved to: %s'%(NeuropsychDataFolder))
-#    if not os.path.exists(NeuropsychDataFolder):
-#        raise ValueError('Folder does not exist.')
-#        
-#except:
-#    #DDapp = wx.PySimpleApp()
-#    dialog = gui.Dlg(None, "Choose a directory:")#,style=DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
-#    if dialog.ShowModal() == wx.ID_OK:
-#        print(dialog.GetPath())
-#    dialog.Destroy()
-#    # write the selected folder to the config file
-#    fid = open(os.path.join(_thisDir, '..','ConfigFiles','NeuropsychDataFolder.py'),'w')
-#    fid.write('NeuropsychDataFolder = \'%s\''%(dialog.GetPath()))
-#    fid.close()
-#    NeuropsychDataFolder = dialog.GetPath()
+try:
+    # try to load the config file
+    from NeuropsychDataFolder import *
+    # See if the variable is in it
+    print('Data being saved to: %s'%(NeuropsychDataFolder))
+    if not os.path.exists(NeuropsychDataFolder):
+        raise ValueError('Folder does not exist.')
+        
+except:
+    app = wx.App()
+    dlg = wx.DirDialog(None, "Choose data output directory", "", wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+    if dlg.ShowModal() == wx.ID_OK:
+        print(dlg.GetPath())
+    OutFolder = dlg.GetPath()
+    dlg.Destroy()    
+    # write the selected folder to the config file
+    fid = open(os.path.join(_thisDir, '..','ConfigFiles','NeuropsychDataFolder.py'),'w')
+    fid.write('NeuropsychDataFolder = \'%s\''%(OutFolder))
+    fid.close()
+    NeuropsychDataFolder = OutFolder
     
 #    from tkinter  
 #    ed = filedialog.askdirectory()
 
-NeuropsychDataFolder =''
 Top = 20
 Left = 20
 RowWidth = 50
@@ -813,7 +813,7 @@ class Mywin(wx.Frame):
    def OnClickedR9C2(self, event):
       btnR9C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR9C2Label))
-      core.shellCall([sys.executable, "../Matrices/MatricesPractice_lastrun.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../Matrices/MatricesPracticev1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR9C2.SetValue(True)
 
    def OnClickedR9C3(self, event):

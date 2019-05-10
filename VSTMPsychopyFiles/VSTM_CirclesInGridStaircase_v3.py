@@ -466,11 +466,11 @@ for thisStep in staircase:
         dataFile.write('%s\n'%(EndFlag))
         Capacity = NLoads+1-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
-        print 
-        print "Ending because the maximum number of trials was reached."
-        print
-        print "Capacity is: %0.4f"%(Capacity)        
-        print "Number of reversals: %i"%(len(staircase.reversalPoints))
+        print() 
+        print("Ending because the maximum number of trials was reached.")
+        print()
+        print("Capacity is: %0.4f"%(Capacity))        
+        print("Number of reversals: %i"%(len(staircase.reversalPoints)))
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
@@ -487,11 +487,11 @@ for thisStep in staircase:
         dataFile.write('%s\n'%(EndFlag))
         Capacity = NLoads+1-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
-        print 
-        print "Ending because Time was exceeded."
-        print
-        print "Capacity is: %0.4f"%(Capacity)  
-        print "Number of reversals: %i"%(len(staircase.reversalPoints))        
+        print() 
+        print("Ending because Time was exceeded.")
+        print()
+        print("Capacity is: %0.4f"%(Capacity))  
+        print("Number of reversals: %i"%(len(staircase.reversalPoints)))        
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
@@ -509,25 +509,25 @@ for thisStep in staircase:
         Capacity = NLoads+1-np.mean(staircase.reversalIntensities)
         #Capacity = NLoads+1-np.mean(staircase.reversalIntensities)
         dataFile1.write('%0.4f'%(Capacity))
-        print
-        print "Ending because Escape was pressed."
-        print
-        print "Capacity is: %0.4f"%(Capacity)  
-        print "Number of reversals: %i"%(len(staircase.reversalPoints))
+        print()
+        print("Ending because Escape was pressed.")
+        print()
+        print("Capacity is: %0.4f"%(Capacity)) 
+        print("Number of reversals: %i"%(len(staircase.reversalPoints)))
         dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
         dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
         dataFile.close()
         #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
-print EndFlag
+print(EndFlag)
 
 Capacity = NLoads + 1-np.mean(staircase.reversalIntensities)
 Capacity = Capacity
 dataFile1.write('%0.4f'%(Capacity))
 dataFile1.close()
-print
-print "Capacity is: %0.4f"%(Capacity)     
-print "Number of reversals: %i"%(len(staircase.reversalPoints))
+print()
+print("Capacity is: %0.4f"%(Capacity))     
+print("Number of reversals: %i"%(len(staircase.reversalPoints)))
 dataFile.write('%s,%s,%s\n'%('NumTrials','NumReversals','Capacity'))
 dataFile.write('%i,%i,%0.4f\n'%(len(staircase.data),len(staircase.reversalPoints),Capacity))
 dataFile.close()
