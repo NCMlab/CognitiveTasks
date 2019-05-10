@@ -34,13 +34,17 @@ def TypeInNumbers():
     print('Entered Intrusion Entry')
     app = gui.Dlg(title = 'Response Entry')
     app.addField('Number List:')
-    ok_data = app.show()
-    if app.OK:
-        print(ok_data)
-    else:
-        print('User canceled')
-    return ok_data
-
+    response = app.show()
+    print("Raw response")
+    print(response[0])
+    response = response[0]
+    # remove non numerics from the string
+    response = ''.join(c for c in response if c.isdigit())
+    print("Cleaned response")
+    print(response)
+    return response
+    
+    
 FontSize = 30
 FontSizeUnits = 'pix'
 
@@ -121,46 +125,46 @@ trialClock = core.Clock()
 # Create a list of sound files
 SoundFileList = []
 
-sound_1 = sound.Sound('NumberSounds2/1c.wav', secs=-1, stereo=-1, sampleRate=24000)
+sound_1 = sound.Sound('NumberSounds2/1c.wav', secs=1, stereo=-1, sampleRate=24000)
 sound_1.setVolume(0.8, log=False)
 
 SoundFileList.append(sound_1)
-sound_2 = sound.Sound('NumberSounds2/2c.wav', secs=-1,stereo=-1, sampleRate=24000)
+sound_2 = sound.Sound('NumberSounds2/2c.wav', secs=1,stereo=-1, sampleRate=24000)
 sound_2.setVolume(0.8, log = False)
 SoundFileList.append(sound_2)
 print("Made it here 2")
 
-sound_3 = sound.Sound('NumberSounds2/3c.wav', secs=-1,stereo=False, sampleRate=24000)
+sound_3 = sound.Sound('NumberSounds2/3c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_3.setVolume(0.8, log = False)
 SoundFileList.append(sound_3)
 
-sound_4 = sound.Sound('NumberSounds2/4c.wav', secs=-1,stereo=False, sampleRate=24000)
+sound_4 = sound.Sound('NumberSounds2/4c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_4.setVolume(0.8)
 SoundFileList.append(sound_4)
 
-sound_5 = sound.Sound('NumberSounds2/5c.wav', secs=-1,stereo=False, sampleRate=24000)
+sound_5 = sound.Sound('NumberSounds2/5c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_5.setVolume(0.8)
 SoundFileList.append(sound_5)
 
-sound_6 = sound.Sound('NumberSounds2/6c.wav', secs=-1,stereo=False, sampleRate=24000)
+sound_6 = sound.Sound('NumberSounds2/6c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_6.setVolume(0.8)
 SoundFileList.append(sound_6)
 
-sound_7 = sound.Sound('NumberSounds2/7c.wav', secs=-1,stereo=False, sampleRate=24000)
+sound_7 = sound.Sound('NumberSounds2/7c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_7.setVolume(0.8)
 SoundFileList.append(sound_7)
 
-sound_8 = sound.Sound('NumberSounds2/8c.wav', secs=-1,stereo=False, sampleRate=24000)
+sound_8 = sound.Sound('NumberSounds2/8c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_8.setVolume(0.8)
 SoundFileList.append(sound_8)
 
-sound_9 = sound.Sound('NumberSounds2/9c.wav', secs=-1,stereo=False, sampleRate=24000)
+sound_9 = sound.Sound('NumberSounds2/9c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_9.setVolume(0.8)
 SoundFileList.append(sound_9)
 
-CorrectSound = sound.Sound('NumberSounds/correct.wav', secs = -1,stereo=True)
+CorrectSound = sound.Sound('NumberSounds2/correctc.wav', secs = -1,stereo=True, sampleRate=24000)
 CorrectSound.setVolume(0.8)
-IncorrectSound = sound.Sound('NumberSounds/incorrect.wav', secs = -1,stereo=True)
+IncorrectSound = sound.Sound('NumberSounds2/incorrectc.wav', secs = -1,stereo=True, sampleRate=24000)
 IncorrectSound.setVolume(0.8)
 
 # Initialize components for Routine "ThankYou"
