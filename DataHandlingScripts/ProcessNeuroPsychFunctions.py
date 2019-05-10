@@ -42,6 +42,42 @@ def ProcessDMSBlock(Data):
         Out['RT'] = -9999
     return Out  
     
+def ProcessVSTMBlockv2(Data):
+    # This needs work to ignore time outs
+    Out = {}
+    if len(Data) > 0:
+        #cycle over load levels and save as relative load and absolute load
+        UniqueLoad = Data['Load'].unique()
+        UniqueLoad = UniqueLoad[~np.isnan(UniqueLoad)]
+        UniqueLoad.sort()
+        count = 1
+        for i in UniqueLoad:
+            temp = Data[Data['Load']==i]
+            # find acc
+            Acc = (temp['Corr'].mean())
+            RT = (temp['RT'].mean())
+            NResp = (temp['Corr'].count())
+            Tag1 = 'RelLoad%02d'%(count)
+            Tag2 = 'AbsLoad%02d'%(i)
+            Out[Tag1+'_Acc'] = Acc
+            Out[Tag2+'_Acc'] = Acc
+            Out[Tag1+'_RT'] = RT
+            Out[Tag2+'_RT'] = RT
+            Out[Tag1+'_NResp'] = NResp
+            Out[Tag2+'_NResp'] = NResp
+            count += 1
+    else:
+        for i in range(1,6):
+            Tag1 = 'RelLoad%02d'%(i)
+            Tag2 = 'AbsLoad%02d'%(i)
+            Out[Tag1+'_Acc'] = -9999
+            Out[Tag2+'_Acc'] = -9999
+            Out[Tag1+'_RT'] = -9999
+            Out[Tag2+'_RT'] = -9999
+            Out[Tag1+'_NResp'] = -9999
+            Out[Tag2+'_NResp'] = -9999
+    return Out
+    
 def ProcessDMSBlockv2(Data):
     Out = {}
     if len(Data) > 0:
@@ -345,7 +381,7 @@ def ProcessDigitSpan(Data, Dir):
         Out['Capacity'] = Capacity
         Out['NReversals'] = NReversals
         Out['NTrials'] = NTrials
-        Out['NCorrect'] = sum(Correct)
+        Out['NCorrect'] = Data['resp.corr'].fillna(0).sum()
     else:
         Out = {}
         Out['Capacity'] = -9999

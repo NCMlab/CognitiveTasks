@@ -180,7 +180,7 @@ def LoadRawData(VisitFolder, subid):
         
     # VSTM
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
-    Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlock(Data)
+    Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
     print('\tVSTM loaded')    
     
     # SRT

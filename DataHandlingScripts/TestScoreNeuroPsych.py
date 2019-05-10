@@ -10,7 +10,10 @@ Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
 FlatResults = FlattenDict(Results)
          
 
-Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
+    Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1_')
+    Dir = 'Backward'
+    Results = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
+    print('\tDS Backward loaed')
 
 
 Dir = 'Forward'
