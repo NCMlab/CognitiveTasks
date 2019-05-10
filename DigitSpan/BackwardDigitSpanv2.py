@@ -41,7 +41,6 @@ def TypeInNumbers():
     # remove non numerics from the string
     response = ''.join(c for c in response if c.isdigit())
     print("Cleaned response")
-    print(response)
     return response
     
     
