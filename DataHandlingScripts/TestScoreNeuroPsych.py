@@ -1,23 +1,19 @@
-import os 
-import importlib
-import sys
-import datetime
 
 
-BaseDir = '/home/jsteffen'
-BaseDir = '/Users/jasonsteffener'
-sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','DataHandlingScripts'))
+AllOutDataFolder = '/media/jsteffen/Data001/NCMTeamDrive/NCMLab/NCM002/Data/NeuroPsych'
+subid = '9999999'
+Visid = '2019_May_10_0918_V001'
+VisitFolder = os.path.join(AllOutDataFolder, subid, Visid)
+Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
 
 
-import ScoreNeuroPsych
-importlib.reload(ScoreNeuroPsych)
+FlatResults = FlattenDict(Results)
+         
 
-ScoreNeuroPsych.ScoreAll()
+Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
 
-#
-import ProcessNeuroPsychResults
 
-VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/99012345/2018_Dec_12_1044_V001'
-subid = '99012345'
-Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'SRT_Delayed')
+Dir = 'Forward'
+ProcessDigitSpan(Data, Dir)
+
 

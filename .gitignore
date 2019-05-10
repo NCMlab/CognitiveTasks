@@ -7,6 +7,9 @@ Antonyms/data/*.*
 data/*.*
 data/*
 WCST/data/*.*
+ConfigFiles/NeuropsychDataFolder.py
+ConfigFiles/BehavioralDataFolder.py
+
 *.bmp
 .DS_Store
 *.psydat
@@ -121,5 +124,4 @@ ENV/
 .DS_Store
 *.pyc
 .DS_Store
-ConfigFiles/NeuropsychDataFolder.py
-ConfigFiles/BehavioralDataFolder.py
+

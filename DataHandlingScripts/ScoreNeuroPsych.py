@@ -16,8 +16,10 @@ import pandas as pd
 import numpy as np
 import glob
 import datetime
+
 import ProcessNeuroPsychFunctions
 import ProcessBehavioralFunctions
+
 # What folder is this file in?
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # This will load the config file containing the location of the data folder
@@ -38,16 +40,17 @@ def ScoreAll():
     if os.path.exists(ExistingDataFileName):
         # Found the existing data file
         OldData = LoadOutDataFile(ExistingDataFileName)
+        # created an updated results datafram, respectivein the "locked down" 
+        # data rows
+        UpdatedData = CreateUpdatedDataFrameOfResults(NewData, OldData)
+        # Create an updated output file name
+        UpdatedDataFileName = CreateOutFileName()
+        # write out the updated data and move the old data file
+        WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName)
     else:
         # There is no old data file
         OldData = []
-    # created an updated results datafram, respectivein the "locked down" 
-    # data rows
-    UpdatedData = CreateUpdatedDataFrameOfResults(NewData, OldData)
-    # Create an updated output file name
-    UpdatedDataFileName = CreateOutFileName()
-    # write out the updated data and move the old data file
-    WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName)
+        NewData.to_csv(ExistingDataFileName, index = False)
 
 def CycleOverDataFolders():
     # Take as input the folder that contains folders of data
@@ -126,52 +129,69 @@ def LoadRawData(VisitFolder, subid):
     # Stroop
     Data = ReadFile(VisitFolder, subid, 'Stroop_Color_')
     Results['StrpC'] = ProcessNeuroPsychFunctions.ProcessStroopColor(Data)
+    print('\tStroop Color loaded')
     
     Data = ReadFile(VisitFolder, subid, 'Stroop_Word_')
     Results['StrpW'] = ProcessNeuroPsychFunctions.ProcessStroopWord(Data)
-    
+    print('\tStroop Word loaded')
+        
     Data = ReadFile(VisitFolder, subid, 'Stroop_ColorWord')
     Results['StrpCW'] = ProcessNeuroPsychFunctions.ProcessStroopColorWord(Data)
-    
+    print('\tStroop Color/Word loaded')
+        
     # Wisconsin Card Sort
     Data = ReadFile(VisitFolder, subid, 'WCST')
     Results['WCST'] = ProcessNeuroPsychFunctions.ProcessWCST(Data)
-    
+    print('\t WCST loaded')
+        
     # Antonyms
     Data = ReadFile(VisitFolder, subid, 'Vocab_Antonyms')
     Results['Ant'] = ProcessNeuroPsychFunctions.ProcessAntonym(Data)
+    print('\tAntonym loaded')
     
     # Digit Span
     # Forward
     Data = ReadFile(VisitFolder, subid, 'DigitSpan_Forward')
     Dir = 'Forward'
     Results['DSFor'] = ProcessNeuroPsychFunctions.ProcessDigitSpan(Data, Dir)
-    
+    print('\tDS Forwad loaded')
+        
     # Backward
     Data = ReadFile(VisitFolder, subid, 'DigitSpan_Backward')
     Dir = 'Backward'
     Results['DSBack'] = ProcessNeuroPsychFunctions.ProcessDigitSpan(Data, Dir)
-    
+    print('\tDS Backward loaed')
+        
     # Pattern Comparison
     Data = ReadFile(VisitFolder, subid, 'Speed_PatternComp')
     Results['PComp'] = ProcessNeuroPsychFunctions.ProcessPattComp(Data)
-    
+    print('\tPattern Comparison loaded')
+        
     # Matrics
     Data = ReadFile(VisitFolder, subid, 'Matrices_Main')
     Results['Matr'] = ProcessNeuroPsychFunctions.ProcessMatrices(Data)
+    print('\tMatrices loaded')
+        
     # DMS
     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
     Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
     Results['DMSBeh1'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
+    print('\tDMS loaded')
+        
     # VSTM
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
     Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlock(Data)
+    print('\tVSTM loaded')    
+    
     # SRT
     Data = ReadFile(VisitFolder, subid, 'SRT_ImmRecall')
     Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTImm(Data)
+    print('\tSRT Imm recall loaded')
+        
     Data = ReadFile(VisitFolder, subid, 'SRT_Recog')
     Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)    
-    
+    print('\tSRT Recog loaded')
+       
 #     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
 #     Data = CheckDMSDataFrameForLoad(Data)
 #     Results['DMSMRI1'] = ProcessDMSBlockv2(Data)
@@ -209,7 +229,7 @@ def ReadFile(VisitFolder, subid, TaskTag):
             SizeOfFile = np.round(os.stat(os.path.join(VisitFolder,matching[0])).st_size/1048)
             print('\t%d) %s, size = %0.0f kB'%(count, i,SizeOfFile))
             count += 1
-        sel = input('Which one should be kept?  (Press return to skip)')
+        sel = input('Which one should be kept?  (Press return to skip) ')
         if len(sel) > 0:
             SelectedFile = matching[int(sel)-1]
             # Rename the unselected files so they will hopefully not be selected the next time!
@@ -221,6 +241,12 @@ def ReadFile(VisitFolder, subid, TaskTag):
                     shutil.move(os.path.join(VisitFolder,i), os.path.join(VisitFolder, OutName))
                 count += 1    
         else:
+            # If none of teh files are selected, rename them so they are not viewed again
+            count = 1
+            for i in matching:
+                OutName = 'XXX_' + i
+                print(OutName)
+                shutil.move(os.path.join(VisitFolder,i), os.path.join(VisitFolder, OutName))
             SelectedFile = False
     elif len(matching) == 1:
         SelectedFile= matching[0]

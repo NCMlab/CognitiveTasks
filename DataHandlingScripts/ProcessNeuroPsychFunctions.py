@@ -138,7 +138,7 @@ def ProcessAntonym(Data):
         Out = {}
         Out['NResp'] = Data_Run['resp.corr'].count()
         Out['Acc'] = Data_Run['resp.corr'].mean()    
-#        Out['RT'] = Data_Run['resp.rt'].mean()
+        Out['RT'] = Data_Run['mouse.RT'].mean()
 
     else:
         Out = {}
@@ -331,13 +331,14 @@ def ProcessDigitSpan(Data, Dir):
         # cycle over each row 
         for i, CurrentRow in Data.iterrows():
 #            print(CurrentRow)
-            match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
-            StairLoad.append(Load)
-            print(match)
-            if match:
-                Correct.append(1)
-            else:
-                Correct.append(0)
+            if not np.isnan(CurrentRow['Stairs.thisTrialN']):
+                match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
+                StairLoad.append(Load)
+              #  print(match)
+                if match:
+                    Correct.append(1)
+                else:
+                    Correct.append(0)
         Capacity, NReversals = CalculateCapacity(StairLoad)
         NTrials = len(Data)
         Out = {}
@@ -351,7 +352,7 @@ def ProcessDigitSpan(Data, Dir):
         Out['NReversals'] = -9999
         Out['NTrials'] = -9999
         Out['NCorrect'] = -9999
-    print(Correct)
+#    print(Correct)
     return Out
             
 def ProcessDigitSpanOneRow(Row, Dir):
