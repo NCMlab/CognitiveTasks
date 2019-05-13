@@ -14,8 +14,14 @@ import sys  # to get file system encoding
 import wx
 import numpy as np
 import glob
+# Ensure that relative paths start from the same directory as this script
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
+os.chdir(_thisDir)
 sys.path.insert(0, '../DataHandlingScripts')
 import CheckExistingNeuroPsychData
+# import parameters from a config file
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from NeuropsychDataFolder import *
 
 Top = 20
 Left = 20
@@ -46,8 +52,9 @@ class Mywin(wx.Frame):
       super(Mywin, self).__init__(parent, title = title,size = (800,600))  
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
-      
-      self.DataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
+      self.DataFolder = NeuropsychDataFolder
+      print(self.DataFolder)
+      #self.DataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
       if not os.path.exists(self.DataFolder):
         # If my specified folder does not exist, then put the data up two folders.
             self.DataFolder = "../../data"

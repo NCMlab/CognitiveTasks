@@ -125,3 +125,4 @@ ENV/
 *.pyc
 .DS_Store
 
+ConfigFiles/NeuropsychDataFolder.py
