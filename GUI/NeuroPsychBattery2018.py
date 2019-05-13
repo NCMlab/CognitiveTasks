@@ -4,7 +4,7 @@ from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
                                 
 # Make sure that under Psychopy preferences, under audio library pygame is listed first.                     
-
+# Make sure the bottem dialog bar auto hides
                       
 # DIALOG BOX RESOURCES
 # http://www.blog.pythonlibrary.org/2010/07/10/the-dialogs-of-wxpython-part-2-of-2/

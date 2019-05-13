@@ -104,7 +104,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 countDown = core.CountdownTimer()
 # Setup the Window
 win = visual.Window(
-    size=[1200, 800], fullscr=True, screen=0,
+    size=[1440, 900], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)

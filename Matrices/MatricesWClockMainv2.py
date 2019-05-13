@@ -717,6 +717,7 @@ for thisTrial_2 in trials_2:
     # store data for trials_2 (TrialHandler)
     trials_2.addData('key_resp_2.keys',key_resp_2.keys)
     trials_2.addData('key_resp_2.corr', key_resp_2.corr)
+    trials_2.addData('ElapsedTime', AllowedTime - timeRemaining)
     if key_resp_2.keys != None:  # we had a response
         trials_2.addData('key_resp_2.rt', key_resp_2.rt)
     
