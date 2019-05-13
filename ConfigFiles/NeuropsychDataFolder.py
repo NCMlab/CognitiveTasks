@@ -1,1 +1,0 @@
-NeuropsychDataFolder = '/media/jsteffen/Data001/NCMTeamDrive/NCMLab/NCM002/Data/NeuroPsych'
