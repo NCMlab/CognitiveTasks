@@ -123,3 +123,4 @@ ENV/
 .DS_Store
 ConfigFiles/NeuropsychDataFolder.py
 ConfigFiles/BehavioralDataFolder.py
+ConfigFiles/NeuropsychDataFolder.py
