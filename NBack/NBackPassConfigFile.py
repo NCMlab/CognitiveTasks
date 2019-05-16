@@ -14,7 +14,7 @@ ThisFolder = os.path.dirname(ThisScript)
 sys.path.append(ThisFolder)
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 
@@ -257,7 +257,7 @@ for BlockNumber in range(0,NBlocks,1):
                 
     # present a block of stimuli
     count = 0
-    print CorrectLocations
+    print(CorrectLocations)
     StimulusText = visual.TextStim(win=win, ori=0, name='text',
         text='temp',    font=u'Times New Roman',
         pos=[0, 0], height = TextSize, wrapWidth=None,
@@ -312,14 +312,14 @@ for BlockNumber in range(0,NBlocks,1):
                 thisExp.addData('KeyPress',theseKeys[-1])
                 thisExp.addData('RT',CurrentRT)
                 if (count + 1) in CorrectLocations:
-                    print "TRUE"
+                    print("TRUE")
                     thisExp.addData('Correct','1')
                 else:
                     thisExp.addData('Correct','0')
                 resp.KeyPress = theseKeys[-1]
                 resp.RT = CurrentRT
                 CurrentRT = TrialClock.getTime()
-                print "%02d: %s Key press: %s in %0.4f sec"%(count,item,theseKeys[-1],CurrentRT)
+                print("%02d: %s Key press: %s in %0.4f sec"%(count,item,theseKeys[-1],CurrentRT))
 
         thisExp.addData('ElapsedTime',ElapsedTimeClock.getTime())
 

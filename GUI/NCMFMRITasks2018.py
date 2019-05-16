@@ -1,14 +1,16 @@
 from __future__ import absolute_import, division
-from psychopy import locale_setup, gui, visual, core, data, event, logging
+from psychopy import locale_setup, core, gui, data#, event#, logging#, visual
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
                                 
-                                
+# Make sure that under Psychopy preferences, under audio library pygame is listed first.                     
+# Make sure the bottem dialog bar auto hides
+                      
 # DIALOG BOX RESOURCES
 # http://www.blog.pythonlibrary.org/2010/07/10/the-dialogs-of-wxpython-part-2-of-2/
 # Clock resources: psychopy-users/tFghyXkOx5U
- 
- 
+#from psychopy.gui import wxgui
+
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import wx
@@ -16,6 +18,36 @@ import numpy as np
 import glob
 sys.path.insert(0, '../DataHandlingScripts')
 import CheckExistingNeuroPsychData
+
+# Ensure that relative paths start from the same directory as this script
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
+os.chdir(_thisDir)
+# import parameters from a config file
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from NCM_NeuroPsych_Config import *
+# Check to see if the output data folder has been identified
+try:
+    # try to load the config file
+    from NeuropsychDataFolder import *
+    # See if the variable is in it
+    print('Data being saved to: %s'%(NeuropsychDataFolder))
+    if not os.path.exists(NeuropsychDataFolder):
+        raise ValueError('Folder does not exist.')
+        
+except:
+    app = wx.App()
+    dlg = wx.DirDialog(None, "Choose data output directory", "", wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+    if dlg.ShowModal() == wx.ID_OK:
+        print(dlg.GetPath())
+    OutFolder = dlg.GetPath()
+    dlg.Destroy()    
+    # write the selected folder to the config file
+    fid = open(os.path.join(_thisDir, '..','ConfigFiles','NeuropsychDataFolder.py'),'w')
+    fid.write('NeuropsychDataFolder = \'%s\''%(OutFolder))
+    fid.close()
+    NeuropsychDataFolder = OutFolder
+    
+
 
 Top = 20
 Left = 20
@@ -43,11 +75,14 @@ class Mywin(wx.Frame):
    def __init__(self, parent, title): 
     # size = (width, height)
     # Create the GUI window
+      print('Got here 3')
       super(Mywin, self).__init__(parent, title = title,size = (800,600))  
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
       
-      self.DataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
+      
+      self.DataFolder = NeuropsychDataFolder
+      print(NeuropsychDataFolder)
       if not os.path.exists(self.DataFolder):
         # If my specified folder does not exist, then put the data up two folders.
             self.DataFolder = "../../data"
@@ -103,8 +138,8 @@ class Mywin(wx.Frame):
       # Checkboxes
  #     self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
  #     self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
-      self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))
-      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
+      self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth-3,CurrentRow))
+      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth-3,CurrentRow))
 # ###################
       CurrentRow = RowPixel[3]
 #      # #### Row 3
@@ -136,8 +171,8 @@ class Mywin(wx.Frame):
       # Checkboxes
  #     self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
  #     self.cbR5C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
-      self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))
-      self.cbR5C7 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
+      self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth-3,CurrentRow))
+      self.cbR5C7 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth-3,CurrentRow))
 
 # #### N-BACK #########
       CurrentRow = RowPixel[4]
@@ -157,8 +192,8 @@ class Mywin(wx.Frame):
       self.btnR10C4.Bind(wx.EVT_BUTTON,self.OnClickedR10C4)
       # Checkboxes
       #self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
-      self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))      
-      self.cbR10C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))      
+      self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth-3,CurrentRow))      
+      self.cbR10C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth-3,CurrentRow))      
       # Box around buttons
       Row1BoxR10 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
 
@@ -460,9 +495,11 @@ class Mywin(wx.Frame):
    def CloseGUI(self,event):
         self.Close()
 
+print('Got Here 1')
 app = wx.App() 
+print('Got Here 2')
 # Create the GUI
-MyGui = Mywin(None,  'NCM Lab FMRI') 
+MyGui = Mywin(None,  'NCM Lab') 
 # Disable all the buttons except teh Part ID entry 
 MyGui.DisableAll()
-app.MainLoop()      
+app.MainLoop()
