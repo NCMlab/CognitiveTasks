@@ -68,7 +68,6 @@ MaskLocations = np.arange(0,1+VSTM_GridCount**2)
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-CounterBalFlag = 'False'
 
 # #################
 
@@ -402,76 +401,18 @@ for thisBlock in Blocks:
                 thisResp.keys = theseKeys[-1]  # just the last key pressed
                 thisResp.rt = thisResp.clock.getTime()
                 continueRoutine = False
-                # was this 'correct'?
-                #if (thisResp.keys == str(corr)) or (thisResp.keys == corr):
-                #    print('Correct')
-                #    thisResp.corr = 1
-                #else:
-                #    print('incorrect')
-                #    thisResp.corr = 0    
-                #break
-                if CounterBalFlag == 'False':
-                    if corr == 'left':
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 1
-                        elif ((thisResp.keys == '1') or (thisResp.keys == '1')):
-                            thisResp.corr = 1
-                        else:
-                            thisResp.corr = 0
-                    if corr == 1:
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 1
-                        elif ((thisResp.keys == 'left') or (thisResp.keys == 'left')):
-                            thisResp.corr = 1
-                        else:
-                            thisResp.corr = 0
-                    if corr == 'right':
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 1
-                        elif ((thisResp.keys == '2') or (thisResp.keys == '2')):
-                            thisResp.corr = 1
-                        else:
-                            thisResp.corr = 0    
-                    if corr == 2:
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 1
-                        elif ((thisResp.keys == 'right') or (thisResp.keys == 'right')):
-                            thisResp.corr = 1
-                        else:
-                            thisResp.corr = 0
-                    break
-                elif CounterBalFlag == 'True':
-                    if corr == 'left':
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 0
-                        elif ((thisResp.keys == '1') or (thisResp.keys == '1')):
-                            thisResp.corr = 0
-                        else:
-                            thisResp.corr = 1
-                    if corr == 1:
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 0
-                        elif ((thisResp.keys == 'left') or (thisResp.keys == 'left')):
-                            thisResp.corr = 0
-                        else:
-                            thisResp.corr = 1
-                    if corr == 'right':
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 0
-                        elif ((thisResp.keys == '2') or (thisResp.keys == '2')):
-                            thisResp.corr = 0
-                        else:
-                            thisResp.corr = 1    
-                    if corr == 2:
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 0
-                        elif ((thisResp.keys == 'right') or (thisResp.keys == 'right')):
-                            thisResp.corr = 0
-                        else:
-                            thisResp.corr = 1                
-                    break
-               # This should turn off the dots if there has been a response
-                
+                if corr == '1':
+                    if ((thisResp.keys == '1') or (thisResp.keys == 'left')):
+                        thisResp.corr = 1
+                    else:
+                        thisResp.corr = 0
+                if corr == '2':
+                    if ((thisResp.keys == '2') or (thisResp.keys == 'right')):
+                        thisResp.corr = 1
+                    else:
+                        thisResp.corr = 0
+                break
+            
             if countDown.getTime() > 0:
                 pass       
             else:
@@ -484,19 +425,6 @@ for thisBlock in Blocks:
             pass
         # prepare the cross hair
 
-#        if thisResp.rt == -99:
-#            print("In the IF part")
-#            GreenCross.setAutoDraw(False)
-#            RedCross.setAutoDraw(True)
-#        else:
-#            print("In the ELSE part")
-#            GreenCross.setAutoDraw(False)
-#            RedCross.setAutoDraw(True)
-#            countDown.add(ProbeOnTime - thisResp.rt)
-#        # take the dot off the screen
-#        print("Remove dots")
-#        win.flip()
-#        print(countDown.getTime())
         countDown.add(VSTM_ITITime)
 
         RedCross.setAutoDraw(False)
