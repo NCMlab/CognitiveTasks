@@ -100,7 +100,6 @@ def CheckDMSDataFrameForLoad(Data):
     return Data
     
 def ProcessPattComp(Data):
-
     if len(Data) > 10:
         try:
             # First remove the practice rows from the data file
@@ -452,8 +451,70 @@ def ProcessSRTRecog(Data):
     else:
         Out['Recog'] = -9999
     return Out
+
+def ProcessNBack(Data):
+    Out = {}
+    Loads = np.array([0,1,2])
+    if len(Data) > 0:
+
+        InstrRows = Data[Data['Stimulus'].str.match('Instructions')]
+        NBlocks = len(InstrRows)
+        # Find out how many rows per block
+        if NBlocks > 1:
+            NRows = InstrRows.index[1] - InstrRows.index[0] - 1
+        # Create arrays for data
+        Hit = np.zeros(NBlocks)
+        Miss = np.zeros(NBlocks)
+        FalseAlarm = np.zeros(NBlocks)        
+        HitRT = np.zeros(NBlocks)
     
+        FalseAlarmRT = np.zeros(NBlocks)  
+        for i in range(NBlocks):
+            CurrentBlock = Data[InstrRows.index[i]+1:InstrRows.index[i]+1+NRows]
+            # What is the load of this block
+                # There is a problem with how load is written to the results files
+            # How many target trials
+            NTarget = CurrentBlock['Expected'].sum()
+            # WHen are there responses
+            
+            for index, row in CurrentBlock.iterrows():
+                # Was there a response
+                if not str(row.KeyPress) =='nan':
+                    # Was a response expetced?
+                    if row.Expected == 1:
+                        # Hit
+                        Hit[i] += 1
+                        HitRT[i] += row.RT
+                    else:
+                        FalseAlarm[i] += 1
+                        FalseAlarmRT[i] += row.RT
+                elif row.Expected == 1:
+                    Miss[i] += 1
     
+        # Average over blocks
+        # I am hard coding this for now
+        AverageHit = [Hit[0] + Hit[3], Hit[1] + Hit[4], Hit[2] + Hit[5]]/(NTarget*2)
+        AverageMiss = [Miss[0] + Miss[3], Miss[1] + Miss[4], Miss[2] + Miss[5]]/(NTarget*2)
+        AverageFalseAlarm = [FalseAlarm[0] + FalseAlarm[3], FalseAlarm[1] + FalseAlarm[4], FalseAlarm[2] + FalseAlarm[5]]/(NTarget*2)    
+        AverageHitRT = [HitRT[0] + HitRT[3], HitRT[1] + HitRT[4], HitRT[2] + HitRT[5]]/(AverageHit*NTarget*2)
+        AverageFalseAlarmRT = [FalseAlarmRT[0] + FalseAlarmRT[3], FalseAlarmRT[1] + FalseAlarmRT[4], FalseAlarmRT[2] + FalseAlarmRT[5]]/(AverageFalseAlarm*NTarget*2)    
+                    
+        for i in Loads:
+            Tag = 'Load%02d'%(i)
+            Out[Tag+"Hit"] = AverageHit[i]
+            Out[Tag+"Hitrt"] = AverageHitRT[i]   
+            Out[Tag+"Miss"] = AverageMiss[i]
+            Out[Tag+"FA"] = AverageFalseAlarm[i]                    
+            Out[Tag+"FArt"] = AverageFalseAlarmRT[i]
+    else:
+        for i in Loads:
+            Tag = 'Load%02d'%(i)
+            Out[Tag+"Hit"] = -99
+            Out[Tag+"Hitrt"] = -99
+            Out[Tag+"Miss"] = -99
+            Out[Tag+"FA"] = -99
+            Out[Tag+"FArt"] = -99                
+        
 def ProcessSRTDelRecall(Data):
     
     pass

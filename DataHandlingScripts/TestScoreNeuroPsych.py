@@ -15,7 +15,7 @@ importlib.reload(ScoreNeuroPsych)
 ScoreNeuroPsych.ScoreAll()
 
 #
-import ProcessNeuroPsychResults
+import ProcessNeuroPsychFunctions
 
 VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/990123454/2019_May_13_0930_V001'
 VisitFolder = '/Volumes/GoogleDrive/Team Drives/NCMLab/NCM002-MRIStudy/Data/NeuroPsych/990123454/2019_May_13_0930_V001'

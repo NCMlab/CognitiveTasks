@@ -170,7 +170,11 @@ def LoadRawData(VisitFolder, subid):
     Data = ReadFile(VisitFolder, subid, 'SRT_ImmRecall')
     Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTImm(Data)
     Data = ReadFile(VisitFolder, subid, 'SRT_Recog')
-    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)    
+    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)   
+
+    # N-Back
+    Data = ReadFile(VisitFolder, subid, 'NBack')
+    Results['NBack'] = ProcessNeuroPsychFunctions.ProcessNBack(Data)          
     
 #     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
 #     Data = CheckDMSDataFrameForLoad(Data)
