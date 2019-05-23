@@ -17,7 +17,9 @@ ScoreNeuroPsych.ScoreAll()
 #
 import ProcessNeuroPsychResults
 
-VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/99012345/2018_Dec_12_1044_V001'
-subid = '99012345'
-Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'SRT_Delayed')
+VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/990123454/2019_May_13_0930_V001'
+VisitFolder = '/Volumes/GoogleDrive/Team Drives/NCMLab/NCM002-MRIStudy/Data/NeuroPsych/990123454/2019_May_13_0930_V001'
+subid = '990123454'
+
+Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'NBack')
 
