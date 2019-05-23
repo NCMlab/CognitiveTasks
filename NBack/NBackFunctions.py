@@ -16,6 +16,18 @@ import numpy as np
 # 
 # AssignStimuliv2(CorrectLocations,TrialPerBlock,Stimuli,LoadLevel)
 
+def CreateStimFixed18_6(LoadLevel):
+    # This was created so that a fixed order ciuld be used for all participants.
+    # It also
+    if LoadLevel == 0:
+        test = np.array([3,5,9,12,14,16])
+    if LoadLevel == 1:
+        test = np.array([3,5,9,12,15,17])
+    if LoadLevel == 2:
+        test = np.array([2,5,8,10,13,17])
+    return test
+
+
 def CreateStim(LoadLevel,TrialPerBlock,NumCorrectPerBlock):
     print("Load level: %d, with %d correct in %d trials"%(LoadLevel,NumCorrectPerBlock,TrialPerBlock))
     # pick NumCorPerBlock unique numbers between 1 and TrialPerBlock
@@ -135,8 +147,6 @@ def CreateListZero(TrialPerBlock,NumCorrectPerBlock):
         if count > 5000:
             raise ValueError('Could not create trial list after 5000 attempts!')
     return List
-
-
 
 def AssignStimuliv2(CorrectLocations,TrialPerBlock,Stimuli,LoadLevel):
     # Create an empty list 

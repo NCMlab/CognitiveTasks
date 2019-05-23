@@ -35,11 +35,11 @@ NBack_Beh1_LoadLevel = '012012' # each number refers to the load level for a blo
 # Timing parameters
 NBack_Beh1_TimePerTrial = 0.5
 NBack_Beh1_InterStimulusDelay = 2
-NBack_Beh1_TrialPerBlock = 24
-NBack_Beh1_NumCorrectPerBlock = 8
+NBack_Beh1_TrialPerBlock = 18
+NBack_Beh1_NumCorrectPerBlock = 6
 NBack_Beh1_StimList = 'BCDFGHJKLMNPRSTVYZ'
 NBack_Beh1_ResponseKeys = ['left','right']
-NBack_Beh1_IntroOffDuration = 20
+NBack_Beh1_IntroOffDuration = 10
 NBack_Beh1_InterBlockTime = 15
 NBack_Beh1_InstructionTime = 15 
 NBack_Beh1_TextSize = 60 # This is in pixels

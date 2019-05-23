@@ -104,8 +104,8 @@ for BlockNumber in range(0,NBlocks,1):
 #    print(CurrentLoadLevel)
 #    print(TrialPerBlock)
 #    print(NumCorrectPerBlock)
-    
-    CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, TrialPerBlock, NumCorrectPerBlock)
+    CorrectLocations = NBackFunctions.CreateStimFixed18_6(CurrentLoadLevel)
+    #CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, TrialPerBlock, NumCorrectPerBlock)
 #    print(CorrectLocations)
     # Try to assign letters to the list of correct locations
     # If it is not possible then -99 is returned
