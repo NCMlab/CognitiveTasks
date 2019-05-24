@@ -132,11 +132,11 @@ dataFile = open(filename+'.csv', 'w')
 #filename = OutDir + '%s%s_%s_%s' % (expName, Tag, expInfo['Participant ID'], expInfo['date'])
 print(filename)
 # An ExperimentHandler isn't essential but helps with data saving
-thisExp = data.ExperimentHandler(name=expName, version='',
-    extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/home/jsteffe/Dropbox/SteffenerColumbia/Projects/MyProjects/NeuralCognitiveMapping/VSTMPsychopyFiles/VSTM_CirclesInGrid_v3.py',
-    savePickle=True, saveWideText=True,
-    dataFileName=filename)
+#thisExp = data.ExperimentHandler(name=expName, version='',
+#    extraInfo=expInfo, runtimeInfo=None,
+#    originPath=u'/home/jsteffe/Dropbox/SteffenerColumbia/Projects/MyProjects/NeuralCognitiveMapping/VSTMPsychopyFiles/VSTM_CirclesInGrid_v3.py',
+#    savePickle=False, saveWideText=False,
+#    dataFileName=filename)
 
 
 #OutDir = '..' + os.sep + '..' + os.sep + 'data' + os.sep + PartDataFolder + os.sep
@@ -149,7 +149,7 @@ dataFile.write('Trial,Load,TrialStartTime,Resp,Corr,RT,CorrectRT,ProbeType,Probe
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-    savePickle=False, saveWideText=True,
+    savePickle=False, saveWideText=False,
     dataFileName=filename)
     
 thisResp = event.BuilderKeyResponse()
@@ -619,7 +619,7 @@ while countDown.getTime() > 0:
     pass   
 win.flip()
 
-thisExp.saveAsWideText(filename+'.csv')    
+# thisExp.saveAsWideText(filename+'.csv')    
 logging.flush()
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit

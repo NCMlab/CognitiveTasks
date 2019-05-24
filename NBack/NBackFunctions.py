@@ -27,6 +27,16 @@ def CreateStimFixed18_6(LoadLevel):
         test = np.array([2,5,8,10,13,17])
     return test
 
+def CreateStimFixed12_4(LoadLevel):
+    # This was created so that a fixed order ciuld be used for all participants.
+    # It also
+    if LoadLevel == 0:
+        test = np.array([2,5,8,11])
+    if LoadLevel == 1:
+        test = np.array([2,4,8,11])
+    if LoadLevel == 2:
+        test = np.array([3,6,9,11])
+    return test
 
 def CreateStim(LoadLevel,TrialPerBlock,NumCorrectPerBlock):
     print("Load level: %d, with %d correct in %d trials"%(LoadLevel,NumCorrectPerBlock,TrialPerBlock))

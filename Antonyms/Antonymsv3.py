@@ -205,7 +205,7 @@ text_2 = visual.TextStim(win=win, name='text_2',
 # Initialize components for Routine "ShortInstr"
 ShortInstrClock = core.Clock()
 Instruct = visual.TextStim(win=win, name='Instruct',
-    text='Press the number associated with the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nPress any key to begin.',
+    text='Select the word that is most nearly the OPPOSITE in meaning as the word in capital letters.\n\nPress any key to begin.',
     font='Arial',
     units='pix', pos=(0, 0), height=40, wrapWidth=600, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
