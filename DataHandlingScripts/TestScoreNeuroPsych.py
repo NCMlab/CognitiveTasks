@@ -10,9 +10,9 @@ sys.path.append(os.path.join(BaseDir,'Documents','GitHub','CognitiveTasks','Data
 
 
 import ScoreNeuroPsych
-importlib.reload(ScoreNeuroPsych)
-
-ScoreNeuroPsych.ScoreAll()
+# importlib.reload(ScoreNeuroPsych)
+# 
+# ScoreNeuroPsych.ScoreAll()
 
 #
 import ProcessNeuroPsychFunctions
@@ -21,5 +21,5 @@ VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjec
 VisitFolder = '/Volumes/GoogleDrive/Team Drives/NCMLab/NCM002-MRIStudy/Data/NeuroPsych/990123454/2019_May_13_0930_V001'
 subid = '990123454'
 
-Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'NBack')
+Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'NBack*BehRun')
 

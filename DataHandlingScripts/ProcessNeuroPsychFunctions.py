@@ -137,7 +137,7 @@ def ProcessAntonym(Data):
         Out = {}
         Out['NResp'] = Data_Run['resp.corr'].count()
         Out['Acc'] = Data_Run['resp.corr'].mean()    
-        Out['RT'] = Data_Run['resp.rt'].mean()
+        Out['RT'] = Data_Run['mouse.RT'].mean()
 
     else:
         Out = {}
@@ -324,33 +324,38 @@ def ProcessStroopColorWord(Data):
     return Out        
 
 def ProcessDigitSpan(Data, Dir):
-    StairLoad = []
-    Correct = []
-    if len(Data) > 0:
-        # cycle over each row 
-        for i, CurrentRow in Data.iterrows():
-            match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
-            StairLoad.append(Load)
-            print(match)
-            if match:
-                Correct.append(1)
-            else:
-                Correct.append(0)
-        Capacity, NReversals = CalculateCapacity(StairLoad)
-        NTrials = len(Data)
+    try:
+        StairLoad = []
+        Correct = []
+        if len(Data) > 0:
+            # cycle over each row 
+            for i, CurrentRow in Data.iterrows():
+                match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
+                StairLoad.append(Load)
+                print(match)
+                if match:
+                    Correct.append(1)
+                else:
+                    Correct.append(0)
+            Capacity, NReversals = CalculateCapacity(StairLoad)
+            NTrials = len(Data)
+            Out = {}
+            Out['Capacity'] = Capacity
+            Out['NReversals'] = NReversals
+            Out['NTrials'] = NTrials
+            Out['NCorrect'] = sum(Correct)
+        else:
+            Out = {}
+            Out['Capacity'] = -9999
+            Out['NReversals'] = -9999
+            Out['NTrials'] = -9999
+            Out['NCorrect'] = -9999
+        print(Correct)
+    except:
+        print('\t%s, %s >> Error!!!'%('Digit Span',Dir))
         Out = {}
-        Out['Capacity'] = Capacity
-        Out['NReversals'] = NReversals
-        Out['NTrials'] = NTrials
-        Out['NCorrect'] = sum(Correct)
-    else:
-        Out = {}
-        Out['Capacity'] = -9999
-        Out['NReversals'] = -9999
-        Out['NTrials'] = -9999
-        Out['NCorrect'] = -9999
-    print(Correct)
     return Out
+    
             
 def ProcessDigitSpanOneRow(Row, Dir):
     StrTest = Row['Digits']
@@ -453,67 +458,82 @@ def ProcessSRTRecog(Data):
     return Out
 
 def ProcessNBack(Data):
-    Out = {}
-    Loads = np.array([0,1,2])
-    if len(Data) > 0:
-
-        InstrRows = Data[Data['Stimulus'].str.match('Instructions')]
-        NBlocks = len(InstrRows)
-        # Find out how many rows per block
-        if NBlocks > 1:
-            NRows = InstrRows.index[1] - InstrRows.index[0] - 1
-        # Create arrays for data
-        Hit = np.zeros(NBlocks)
-        Miss = np.zeros(NBlocks)
-        FalseAlarm = np.zeros(NBlocks)        
-        HitRT = np.zeros(NBlocks)
-    
-        FalseAlarmRT = np.zeros(NBlocks)  
-        for i in range(NBlocks):
-            CurrentBlock = Data[InstrRows.index[i]+1:InstrRows.index[i]+1+NRows]
-            # What is the load of this block
-                # There is a problem with how load is written to the results files
-            # How many target trials
-            NTarget = CurrentBlock['Expected'].sum()
-            # WHen are there responses
-            
-            for index, row in CurrentBlock.iterrows():
-                # Was there a response
-                if not str(row.KeyPress) =='nan':
-                    # Was a response expetced?
-                    if row.Expected == 1:
-                        # Hit
-                        Hit[i] += 1
-                        HitRT[i] += row.RT
-                    else:
-                        FalseAlarm[i] += 1
-                        FalseAlarmRT[i] += row.RT
-                elif row.Expected == 1:
-                    Miss[i] += 1
-    
-        # Average over blocks
-        # I am hard coding this for now
-        AverageHit = [Hit[0] + Hit[3], Hit[1] + Hit[4], Hit[2] + Hit[5]]/(NTarget*2)
-        AverageMiss = [Miss[0] + Miss[3], Miss[1] + Miss[4], Miss[2] + Miss[5]]/(NTarget*2)
-        AverageFalseAlarm = [FalseAlarm[0] + FalseAlarm[3], FalseAlarm[1] + FalseAlarm[4], FalseAlarm[2] + FalseAlarm[5]]/(NTarget*2)    
-        AverageHitRT = [HitRT[0] + HitRT[3], HitRT[1] + HitRT[4], HitRT[2] + HitRT[5]]/(AverageHit*NTarget*2)
-        AverageFalseAlarmRT = [FalseAlarmRT[0] + FalseAlarmRT[3], FalseAlarmRT[1] + FalseAlarmRT[4], FalseAlarmRT[2] + FalseAlarmRT[5]]/(AverageFalseAlarm*NTarget*2)    
-                    
-        for i in Loads:
-            Tag = 'Load%02d'%(i)
-            Out[Tag+"Hit"] = AverageHit[i]
-            Out[Tag+"Hitrt"] = AverageHitRT[i]   
-            Out[Tag+"Miss"] = AverageMiss[i]
-            Out[Tag+"FA"] = AverageFalseAlarm[i]                    
-            Out[Tag+"FArt"] = AverageFalseAlarmRT[i]
-    else:
-        for i in Loads:
-            Tag = 'Load%02d'%(i)
-            Out[Tag+"Hit"] = -99
-            Out[Tag+"Hitrt"] = -99
-            Out[Tag+"Miss"] = -99
-            Out[Tag+"FA"] = -99
-            Out[Tag+"FArt"] = -99                
+    try:
+        Out = {}
+        if len(Data) > 0:
+            # Use the presentation of instructions to differentiate the blocks
+            InstrRows = Data[Data['Stimulus'].str.match('Instructions')]
+            NBlocks = len(InstrRows)
+            AllLoads = []
+            # Find out how many rows per block
+            if NBlocks > 1:
+                NRows = InstrRows.index[1] - InstrRows.index[0] - 1
+            # Create arrays for data
+            Hit = np.zeros(NBlocks)
+            FalseAlarm = np.zeros(NBlocks)        
+            HitRT = np.zeros(NBlocks)
+            FalseAlarmRT = np.zeros(NBlocks)  
+            TargetCount = np.zeros(NBlocks)
+            for i in range(NBlocks):
+                CurrentBlock = Data[InstrRows.index[i]+1:InstrRows.index[i]+1+NRows]
+                # What is the load of this block
+                AllLoads.append(CurrentBlock.iloc[0]['LoadLevel'])
+                # How many target trials
+                NTarget = CurrentBlock['Expected'].sum()
+                TargetCount[i] += NTarget
+                # WHen are there responses
+                for index, row in CurrentBlock.iterrows():
+                    # Was there a response
+                    if not str(row.KeyPress) =='nan':
+                        # Was a response expetced?
+                        if row.Expected == 1:
+                            # Hit
+                            Hit[i] += 1
+                            HitRT[i] += row.RT
+                        else:
+                            FalseAlarm[i] += 1
+                            FalseAlarmRT[i] += row.RT                
+            # Find repeat blocks
+            UniqueLoads = set(AllLoads)
+            NLoads = len(UniqueLoads)
+            # Find average responses over blocks with repeat loads
+            AverageHit = np.zeros(NLoads)
+            AverageHitRT = np.zeros(NLoads)
+            AverageFalseAlarm = np.zeros(NLoads)
+            AverageFalseAlarmRT = np.zeros(NLoads)
+            AllTargetCount = np.zeros(NLoads)
+            count = 0
+            for i in UniqueLoads:
+                # Find the blocks that correspond to this load level
+                CurrentLoad = [j for j, x in enumerate(AllLoads) if x == i]
+                # Calculate the average responses for this load level
+                AverageHit[count] = Hit[CurrentLoad].sum()/(NTarget*2)
+                AverageHitRT[count] = HitRT[CurrentLoad].sum()/(NTarget*2)
+                AverageFalseAlarm[count] = FalseAlarm[CurrentLoad].sum()/(NTarget*2)
+                AverageFalseAlarmRT[count] = FalseAlarmRT[CurrentLoad].sum()/(NTarget*2)   
+                AllTargetCount[count] = TargetCount[CurrentLoad].sum()
+                count += 1
+            # Now prepare the results for output            
+            count = 0
+            for i in UniqueLoads:
+                Tag = 'Load%02d'%(i)
+                Out[Tag+"Hit"] = AverageHit[count]
+                Out[Tag+"Hitrt"] = AverageHitRT[count]   
+                Out[Tag+"FA"] = AverageFalseAlarm[count]                    
+                Out[Tag+"FArt"] = AverageFalseAlarmRT[count]
+                Out[Tag+"N"] = AllTargetCount[count]
+                count += 1
+        else:
+            for i in UniqueLoads:
+                Tag = 'Load%02d'%(i)
+                Out[Tag+"Hit"] = -99
+                Out[Tag+"Hitrt"] = -99
+                Out[Tag+"FA"] = -99
+                Out[Tag+"FArt"] = -99  
+                Out[Tag+"N"] = -99
+    except:
+        print('\tN-back >>> Error!!')
+    return Out                                
         
 def ProcessSRTDelRecall(Data):
     

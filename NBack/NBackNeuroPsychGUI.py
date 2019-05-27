@@ -313,7 +313,7 @@ for BlockNumber in range(0,NBlocks,1):
         thisExp.addData('count',count)
         thisExp.addData('Block',BlockNumber+1)
         thisExp.addData('Stimulus',item)
-        thisExp.addData('LoadLevel', NBack_Beh1_LoadLevel) 
+        thisExp.addData('LoadLevel', str(NBack_Beh1_LoadLevel[BlockNumber])) 
         if (count + 1) in CorrectLocations:
             thisExp.addData('Expected',1)
         else:
