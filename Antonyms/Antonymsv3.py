@@ -1059,14 +1059,16 @@ for thisTrial in trials:
     for thisComponent in trialComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    # check responses
-    if resp.keys in ['', [], None]:  # No response was made
-        resp.keys=None
-        # was no response the correct answer?!
-        if str(Corr).lower() == 'none':
-           resp.corr = 1  # correct non-response
-        else:
-           resp.corr = 0  # failed to respond (incorrectly)
+#    # check responses
+#    if resp.keys in ['', [], None]:  # No response was made
+#        resp.keys=None
+#        # was no response the correct answer?!
+#        if str(Corr).lower() == 'none':
+#           resp.corr = 1  # correct non-response
+#        else:
+#           resp.corr = 0  # failed to respond (incorrectly)
+
+
 
     # store data for trials (TrialHandler)
     if sum(buttons):
@@ -1094,7 +1096,8 @@ for thisTrial in trials:
             resp.corr = 1
         else:
             resp.corr = 0
-    
+            
+  
     # store data for trials (TrialHandler)
     trials.addData('resp.keys',resp.keys)
     trials.addData('resp.corr', resp.corr)
