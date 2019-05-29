@@ -20,22 +20,22 @@ def CreateStimFixed18_6(LoadLevel):
     # This was created so that a fixed order ciuld be used for all participants.
     # It also
     if LoadLevel == 0:
-        test = np.array([3,5,9,12,14,16])
+        test = np.array([4,6,10,13,15,17]) # These are natural number locations starting at ONE
     if LoadLevel == 1:
-        test = np.array([3,5,9,12,15,17])
+        test = np.array([4,6,10,13,16,18])
     if LoadLevel == 2:
-        test = np.array([2,5,8,10,13,17])
+        test = np.array([3,6,9,11,14,18])
     return test
 
 def CreateStimFixed12_4(LoadLevel):
     # This was created so that a fixed order ciuld be used for all participants.
     # It also
     if LoadLevel == 0:
-        test = np.array([2,5,8,11])
+        test = np.array([3,6,9,12]) # These are natural number locations starting at ONE
     if LoadLevel == 1:
-        test = np.array([2,4,8,11])
+        test = np.array([3,5,9,12])
     if LoadLevel == 2:
-        test = np.array([3,6,9,11])
+        test = np.array([4,7,10,12])
     return test
 
 def CreateStim(LoadLevel,TrialPerBlock,NumCorrectPerBlock):

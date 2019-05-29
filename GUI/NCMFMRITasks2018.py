@@ -95,6 +95,8 @@ class Mywin(wx.Frame):
       self.PartID = wx.TextCtrl(self.panel,-1,'9999999',size=(ButtonWidth,-1),pos = (ColPixel[1],RowPixel[0]))
       self.btnPartEntry = wx.Button(self.panel,-1,label = "Submit", pos = (ColPixel[2],RowPixel[0]), size = ((ButtonWidth, ButtonHeight))) 
       self.btnPartEntry.Bind(wx.EVT_BUTTON, self.OnCickPartEntry)
+      self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder:" , pos = (ColPixel[3],RowPixel[0]))
+        
       # Create Default values for the load levels for the two tasks
       self.FRTBlockLoadLevels = '0.0 0.125 0.25 0.375 0.5'
       self.DMSBlockLoadLevels = '1 3 5 6 7'
@@ -241,7 +243,7 @@ class Mywin(wx.Frame):
         # Now open and read the file
         file = open(CapacityFileName, 'r')
         self.VSTMCapacity = file.read()
-        self.txtR3C5.SetLabel(self.VSTMCapacity)
+        self.txtR3C5.SetLabelText(self.VSTMCapacity)
         # close the file
         file.close()
         self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
@@ -255,7 +257,7 @@ class Mywin(wx.Frame):
         # Now open and read the file
         file = open(CapacityFileName, 'r')
         self.DMSCapacity = file.read()
-        self.txtR5C5.SetLabel(self.DMSCapacity)
+        self.txtR5C5.SetLabelText(self.DMSCapacity)
         # close the file
         file.close()
         self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSCapacity)
@@ -284,12 +286,12 @@ class Mywin(wx.Frame):
         
    def OnClickedVSTMCapEnter(self,event):
         self.VSTMCapacity = self.ManualEntryCapacity([0.0, 36])
-        self.txtR3C5.SetLabel(self.VSTMCapacity)
+        self.txtR3C5.SetLabelText(self.VSTMCapacity)
         self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
 
    def OnClickedDMSCapEnter(self,event):
         self.DMSCapacity = self.ManualEntryCapacity([0.0, 9])
-        self.txtR5C5.SetLabel(self.DMSCapacity)
+        self.txtR5C5.SetLabelText(self.DMSCapacity)
         self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSCapacity)
 
    def CreateVSTMList5(self, VSTMCapacity):
@@ -404,8 +406,8 @@ class Mywin(wx.Frame):
         print(self.VisitFolderPath)
         
         # Add the path name to the GUI
-        self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (ColPixel[3],RowPixel[0]))
-        
+        self.PartIDLabel.SetLabelText("Output folder: %s"%(self.VisitFolderName))
+
    def OnCickPartEntry(self, event):
       btnName = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnName))

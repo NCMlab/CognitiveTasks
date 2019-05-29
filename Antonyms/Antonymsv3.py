@@ -67,8 +67,8 @@ thisExp = data.ExperimentHandler(name=expName, version='',
     savePickle=False, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
-logFile = logging.LogFile(filename+'.log', level=logging.EXP)
-logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
+#logFile = logging.LogFile(filename+'.log', level=logging.EXP)
+#logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
