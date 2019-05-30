@@ -444,7 +444,7 @@ class Mywin(wx.Frame):
       self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
       print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
       print( self.VSTMBlockLoadLevels)
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag),'VSTM_fMRI_Config'])  
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag),'VSTM_fMRI_Config',True])  
       self.cbR3C4.SetValue(True)  
    
    def OnClickedR5C1(self, event):

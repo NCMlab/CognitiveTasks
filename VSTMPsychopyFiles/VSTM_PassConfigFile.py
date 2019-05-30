@@ -1,5 +1,11 @@
-
+'''
+This version of the task takes a config file when called along with a flag based
+on whether to use a fixed dot location or not.
+The config file creates three different lists of probe pos/neg orders and dot
+locations for load levels 1 to 15.
+'''
 # https://docs.python.org/3/library/configparser.html
+
 
 from psychopy import locale_setup, gui, visual, core, data, event, logging
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -37,6 +43,7 @@ if len(sys.argv) > 1:
     LoadList = LoadList.astype(np.int)
     Tag = sys.argv[4]
     ConfigFile = sys.argv[5]
+    FixedLocations = sys.argv[6]
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
@@ -52,6 +59,7 @@ else:
     Tag = '1'
     PartDataFolder = OutDir
     ConfigFile = 'VSTM_fMRI_Config'
+    FixedLocations = 'True'
 
 # Load up the config file
 print("Loading up the config file: %s"%(ConfigFile))
@@ -290,6 +298,7 @@ for thisBlock in Blocks:
         GreenCross.setAutoDraw(True)
         TrialStartTime = RunningClock.getTime()
         theseKeys = event.getKeys()
+        
         Locations = np.random.permutation(VSTM_GridCount**2)[0:CurrentLoad]
         print(thisTrial)
         # Create the probe Locations    
