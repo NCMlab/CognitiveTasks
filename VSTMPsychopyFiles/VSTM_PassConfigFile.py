@@ -56,15 +56,29 @@ else:
     LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
     LoadList = LoadList.astype(np.int)
     
-    Tag = '1'
+    Tag = 'BehRun1'
     PartDataFolder = OutDir
     ConfigFile = 'VSTM_fMRI_Config'
-    FixedLocations = 'True'
+    FixedLocations = 'False'
+    
+if FixedLocations:    
+    # Based on the tag passed, determine which run to use from the config file
+    if Tag == 'MRIRun1':
+        CurrentRun = 0
+    elif Tag == 'MRIRun2':
+        CurrentRun = 1
+    elif Tag == 'BehRun1':
+        CurrentRun = 2    
+    else:
+        CurrentRun = 2
 
 # Load up the config file
 print("Loading up the config file: %s"%(ConfigFile))
 Str = 'from %s import *'%(ConfigFile)
 exec(Str)
+
+print("Fixed Locations:")
+print(FixedLocations)
 
 GridSize = VSTM_GridSizeScale*VSTM_GridCount + 1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/VSTM_GridCount # The circle size so that they are all just touching
@@ -88,7 +102,7 @@ filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant
 
 # Setup the Window
 win = visual.Window(
-    size=(800, 600), fullscr=True, screen=0,
+    size=(800, 600), fullscr=False, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=VSTM_BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
@@ -255,22 +269,26 @@ for thisBlock in Blocks:
             exec(paramName + '= thisBlock.' + paramName)
             
     CurrentLoad = LoadList[BlockCount]
+    print("Current load is: %d"%(CurrentLoad))
     countDown.reset()   
-    
-#   321
+#   Start the 321 count down to the start of a block of trials
+# Start the countdown timer and use this time to set up the trials
     text3.setAutoDraw(True)
     countDown.add(1)
-    
-    # Prepare the stimuli
-    # Make sure there are an equal number of probe pos and Neg
-    ProbeList = np.concatenate((np.zeros(int(VSTM_NTrialsPerBlock/2)),np.ones(int(VSTM_NTrialsPerBlock/2))))
-    # Shuffle the list
-    ProbeList = ProbeList[np.random.permutation(VSTM_NTrialsPerBlock)]
-    
-    # prepare the trials
+# prepare the trials
     trials = data.TrialHandler(nReps=VSTM_NTrialsPerBlock, method='sequential', 
     extraInfo=expInfo, originPath=-1,trialList=[None],
     seed=None, name='trials')
+# Prepare the stimuli
+    if FixedLocations:
+        ProbeList = AllProbes[CurrentLoad][CurrentRun]
+    else:
+        # Make sure there are an equal number of probe pos and Neg
+        ProbeList = np.concatenate((np.zeros(int(VSTM_NTrialsPerBlock/2)),np.ones(int(VSTM_NTrialsPerBlock/2))))
+        # Shuffle the list
+        ProbeList = ProbeList[np.random.permutation(VSTM_NTrialsPerBlock)]
+
+
     
     
     win.flip()
@@ -298,15 +316,18 @@ for thisBlock in Blocks:
         GreenCross.setAutoDraw(True)
         TrialStartTime = RunningClock.getTime()
         theseKeys = event.getKeys()
-        
-        Locations = np.random.permutation(VSTM_GridCount**2)[0:CurrentLoad]
-        print(thisTrial)
-        # Create the probe Locations    
-        PosProbeLocation = Locations[np.random.permutation(CurrentLoad)[0]]
-        NotLocations = np.arange(0,VSTM_GridCount**2)
-        NotLocations = [x for x in NotLocations if x not in Locations]
-        #NegProbeLocation = np.random.randint(0,len(NotLocations),1)[0]
-        NegProbeLocation = NotLocations[np.random.permutation(len(NotLocations))[0]]
+        if FixedLocations:
+            print("Working with fixed locations")
+            Locations = AllLocations[CurrentLoad][CurrentRun][TrialCount]
+        else:
+            Locations = np.random.permutation(VSTM_GridCount**2)[0:CurrentLoad]
+            print("This trial is %s"%(thisTrial))
+            # Create the probe Locations    
+            PosProbeLocation = Locations[np.random.permutation(CurrentLoad)[0]]
+            NotLocations = np.arange(0,VSTM_GridCount**2)
+            NotLocations = [x for x in NotLocations if x not in Locations]
+            #NegProbeLocation = np.random.randint(0,len(NotLocations),1)[0]
+            NegProbeLocation = NotLocations[np.random.permutation(len(NotLocations))[0]]
         
         if ProbeList[TrialCount] == 1:
             corr = '1'
