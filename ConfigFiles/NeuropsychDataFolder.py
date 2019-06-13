@@ -1,1 +1,1 @@
-NeuropsychDataFolder = '/Volumes/GoogleDrive/Team Drives/NCMLab/NCM002-MRIStudy/Data/NeuroPsych'
+NeuropsychDataFolder = '/Volumes/GoogleDrive/Shared drives/NCMLab/NCM002-MRIStudy/Data/NeuroPsych'

@@ -24,10 +24,10 @@ VSTM_ITITime = 1.0 #1.0
 # This is the time between blocks. Note that between each block of trials there
 # is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
 # the countdown time, which is 3 seconds.
-VSTM_InterBlockTime = 20
+VSTM_InterBlockTime = 5
 # This is a delay component for use after instructions and before the first Block and at the
 # the end before the thank you screen
-VSTM_ShortDelayTime = 16.0
+VSTM_ShortDelayTime = 5.0
 
 VSTM_ThankYouOnTime = 3
 VSTM_NumberOfBlocks = 5

@@ -43,7 +43,8 @@ if len(sys.argv) > 1:
     LoadList = LoadList.astype(np.int)
     Tag = sys.argv[4]
     ConfigFile = sys.argv[5]
-    FixedLocations = sys.argv[6]
+    # Make sure to convert this to a boolean for later decision making
+    FixedLocations = bool(sys.argv[6])
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
@@ -59,7 +60,7 @@ else:
     Tag = 'BehRun1'
     PartDataFolder = OutDir
     ConfigFile = 'VSTM_fMRI_Config'
-    FixedLocations = 'False'
+    FixedLocations = True
     
 if FixedLocations:    
     # Based on the tag passed, determine which run to use from the config file
@@ -69,6 +70,8 @@ if FixedLocations:
         CurrentRun = 1
     elif Tag == 'BehRun1':
         CurrentRun = 2    
+        # I can only see this situation occuring if there is a mistake running the 
+        # behavioral run and it needs to be repeated
     else:
         CurrentRun = 2
 
@@ -77,8 +80,7 @@ print("Loading up the config file: %s"%(ConfigFile))
 Str = 'from %s import *'%(ConfigFile)
 exec(Str)
 
-print("Fixed Locations:")
-print(FixedLocations)
+print("Fixed Locations: %r"%(FixedLocations))
 
 GridSize = VSTM_GridSizeScale*VSTM_GridCount + 1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/VSTM_GridCount # The circle size so that they are all just touching
@@ -102,7 +104,7 @@ filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant
 
 # Setup the Window
 win = visual.Window(
-    size=(800, 600), fullscr=False, screen=0,
+    size=(1200, 800), fullscr=False, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=VSTM_BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
@@ -287,10 +289,6 @@ for thisBlock in Blocks:
         ProbeList = np.concatenate((np.zeros(int(VSTM_NTrialsPerBlock/2)),np.ones(int(VSTM_NTrialsPerBlock/2))))
         # Shuffle the list
         ProbeList = ProbeList[np.random.permutation(VSTM_NTrialsPerBlock)]
-
-
-    
-    
     win.flip()
     while countDown.getTime() > 0:
         pass
@@ -317,8 +315,13 @@ for thisBlock in Blocks:
         TrialStartTime = RunningClock.getTime()
         theseKeys = event.getKeys()
         if FixedLocations:
+            print("Fixed Locations: %r"%(FixedLocations))
             print("Working with fixed locations")
-            Locations = AllLocations[CurrentLoad][CurrentRun][TrialCount]
+            print("Current load is: %d"%(CurrentLoad))
+            print("Current Run is: %d"%(CurrentRun))
+            print("Current Trial is: %d"%(TrialCount))
+            Locations = AllLocations[CurrentLoad - 1][CurrentRun][TrialCount]
+            
         else:
             Locations = np.random.permutation(VSTM_GridCount**2)[0:CurrentLoad]
             print("This trial is %s"%(thisTrial))
@@ -384,26 +387,36 @@ for thisBlock in Blocks:
         
         # Prepare the probe dot during the retention time
         ProbeLoc = -99
-        if ProbeList[TrialCount] == 0:
-            count = 0
-            ProbeLoc = NegProbeLocation
-            for y_offset in OffSet:
-                for x_offset in OffSet:
-                   for stim in [ProbeCircle]:
-                       stim.pos = [x_offset, y_offset]
-                       if (count in [NegProbeLocation]):
-                           stim.draw()
-                       count += 1
-        elif ProbeList[TrialCount] == 1:
-            count = 0
-            ProbeLoc = PosProbeLocation
-            for y_offset in OffSet:
-                for x_offset in OffSet:
-                   for stim in [ProbeCircle]:
-                       stim.pos = [x_offset, y_offset]
-                       if (count in [PosProbeLocation]):
-                           stim.draw()
-                       count += 1
+        # Is this a fixed location probe?
+        if FixedLocations:
+            # Then use the probe location from the config file
+            CurrentProbeLocation = AllProbes[CurrentLoad - 1][CurrentRun][TrialCount]
+        # If it is a random location probe then pick the POS or NEG probe location
+        else:
+            if ProbeList[TrialCount] == 0:
+                CurrentProbeLocation = NegProbeLocation
+            else:
+                CurrentProbeLocation = PosProbeLocation
+        # Use a single code chunk for displaying the probe dot regardless of whether this is a random
+        # location or fixed location or whether this is a POS or NEG probe
+        count = 0
+        for y_offset in OffSet:
+            for x_offset in OffSet:
+               for stim in [ProbeCircle]:
+                   stim.pos = [x_offset, y_offset]
+                   if (count in [CurrentProbeLocation]):
+                       stim.draw()
+                   count += 1
+#        elif ProbeList[TrialCount] == 1:
+#            count = 0
+#            ProbeLoc = PosProbeLocation
+#            for y_offset in OffSet:
+#                for x_offset in OffSet:
+#                   for stim in [ProbeCircle]:
+#                       stim.pos = [x_offset, y_offset]
+#                       if (count in [PosProbeLocation]):
+#                           stim.draw()
+#                       count += 1
                        
                    
         while countDown.getTime() > 0:
