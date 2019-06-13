@@ -71,7 +71,7 @@ if FixedLocations:
     elif Tag == 'BehRun1':
         CurrentRun = 2    
         # I can only see this situation occuring if there is a mistake running the 
-        # behavioral run and it needs to be repeated
+        # behavioral run and it needs to be repeated.
     else:
         CurrentRun = 2
 
