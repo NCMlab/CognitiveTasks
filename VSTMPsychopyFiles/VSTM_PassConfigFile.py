@@ -1,5 +1,11 @@
-
+'''
+This version of the task takes a config file when called along with a flag based
+on whether to use a fixed dot location or not.
+The config file creates three different lists of probe pos/neg orders and dot
+locations for load levels 1 to 15.
+'''
 # https://docs.python.org/3/library/configparser.html
+
 
 from psychopy import locale_setup, gui, visual, core, data, event, logging
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -37,6 +43,8 @@ if len(sys.argv) > 1:
     LoadList = LoadList.astype(np.int)
     Tag = sys.argv[4]
     ConfigFile = sys.argv[5]
+    # Make sure to convert this to a boolean for later decision making
+    FixedLocations = bool(sys.argv[6])
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
@@ -49,14 +57,30 @@ else:
     LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
     LoadList = LoadList.astype(np.int)
     
-    Tag = '1'
+    Tag = 'BehRun1'
     PartDataFolder = OutDir
     ConfigFile = 'VSTM_fMRI_Config'
+    FixedLocations = True
+    
+if FixedLocations:    
+    # Based on the tag passed, determine which run to use from the config file
+    if Tag == 'MRIRun1':
+        CurrentRun = 0
+    elif Tag == 'MRIRun2':
+        CurrentRun = 1
+    elif Tag == 'BehRun1':
+        CurrentRun = 2    
+        # I can only see this situation occuring if there is a mistake running the 
+        # behavioral run and it needs to be repeated.
+    else:
+        CurrentRun = 2
 
 # Load up the config file
 print("Loading up the config file: %s"%(ConfigFile))
 Str = 'from %s import *'%(ConfigFile)
 exec(Str)
+
+print("Fixed Locations: %r"%(FixedLocations))
 
 GridSize = VSTM_GridSizeScale*VSTM_GridCount + 1 # The size of the grid for which the circles on on
 CircleSize = (GridSize*2)/VSTM_GridCount # The circle size so that they are all just touching
@@ -68,7 +92,6 @@ MaskLocations = np.arange(0,1+VSTM_GridCount**2)
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-CounterBalFlag = 'False'
 
 # #################
 
@@ -81,7 +104,7 @@ CounterBalFlag = 'False'
 
 # Setup the Window
 win = visual.Window(
-    size=(800, 600), fullscr=True, screen=0,
+    size=(1200, 800), fullscr=False, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=VSTM_BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
@@ -248,24 +271,24 @@ for thisBlock in Blocks:
             exec(paramName + '= thisBlock.' + paramName)
             
     CurrentLoad = LoadList[BlockCount]
+    print("Current load is: %d"%(CurrentLoad))
     countDown.reset()   
-    
-#   321
+#   Start the 321 count down to the start of a block of trials
+# Start the countdown timer and use this time to set up the trials
     text3.setAutoDraw(True)
     countDown.add(1)
-    
-    # Prepare the stimuli
-    # Make sure there are an equal number of probe pos and Neg
-    ProbeList = np.concatenate((np.zeros(int(VSTM_NTrialsPerBlock/2)),np.ones(int(VSTM_NTrialsPerBlock/2))))
-    # Shuffle the list
-    ProbeList = ProbeList[np.random.permutation(VSTM_NTrialsPerBlock)]
-    
-    # prepare the trials
+# prepare the trials
     trials = data.TrialHandler(nReps=VSTM_NTrialsPerBlock, method='sequential', 
     extraInfo=expInfo, originPath=-1,trialList=[None],
     seed=None, name='trials')
-    
-    
+# Prepare the stimuli
+    if FixedLocations:
+        ProbeList = AllProbes[CurrentLoad][CurrentRun]
+    else:
+        # Make sure there are an equal number of probe pos and Neg
+        ProbeList = np.concatenate((np.zeros(int(VSTM_NTrialsPerBlock/2)),np.ones(int(VSTM_NTrialsPerBlock/2))))
+        # Shuffle the list
+        ProbeList = ProbeList[np.random.permutation(VSTM_NTrialsPerBlock)]
     win.flip()
     while countDown.getTime() > 0:
         pass
@@ -291,14 +314,23 @@ for thisBlock in Blocks:
         GreenCross.setAutoDraw(True)
         TrialStartTime = RunningClock.getTime()
         theseKeys = event.getKeys()
-        Locations = np.random.permutation(VSTM_GridCount**2)[0:CurrentLoad]
-        print(thisTrial)
-        # Create the probe Locations    
-        PosProbeLocation = Locations[np.random.permutation(CurrentLoad)[0]]
-        NotLocations = np.arange(0,VSTM_GridCount**2)
-        NotLocations = [x for x in NotLocations if x not in Locations]
-        #NegProbeLocation = np.random.randint(0,len(NotLocations),1)[0]
-        NegProbeLocation = NotLocations[np.random.permutation(len(NotLocations))[0]]
+        if FixedLocations:
+            print("Fixed Locations: %r"%(FixedLocations))
+            print("Working with fixed locations")
+            print("Current load is: %d"%(CurrentLoad))
+            print("Current Run is: %d"%(CurrentRun))
+            print("Current Trial is: %d"%(TrialCount))
+            Locations = AllLocations[CurrentLoad - 1][CurrentRun][TrialCount]
+            
+        else:
+            Locations = np.random.permutation(VSTM_GridCount**2)[0:CurrentLoad]
+            print("This trial is %s"%(thisTrial))
+            # Create the probe Locations    
+            PosProbeLocation = Locations[np.random.permutation(CurrentLoad)[0]]
+            NotLocations = np.arange(0,VSTM_GridCount**2)
+            NotLocations = [x for x in NotLocations if x not in Locations]
+            #NegProbeLocation = np.random.randint(0,len(NotLocations),1)[0]
+            NegProbeLocation = NotLocations[np.random.permutation(len(NotLocations))[0]]
         
         if ProbeList[TrialCount] == 1:
             corr = '1'
@@ -355,26 +387,36 @@ for thisBlock in Blocks:
         
         # Prepare the probe dot during the retention time
         ProbeLoc = -99
-        if ProbeList[TrialCount] == 0:
-            count = 0
-            ProbeLoc = NegProbeLocation
-            for y_offset in OffSet:
-                for x_offset in OffSet:
-                   for stim in [ProbeCircle]:
-                       stim.pos = [x_offset, y_offset]
-                       if (count in [NegProbeLocation]):
-                           stim.draw()
-                       count += 1
-        elif ProbeList[TrialCount] == 1:
-            count = 0
-            ProbeLoc = PosProbeLocation
-            for y_offset in OffSet:
-                for x_offset in OffSet:
-                   for stim in [ProbeCircle]:
-                       stim.pos = [x_offset, y_offset]
-                       if (count in [PosProbeLocation]):
-                           stim.draw()
-                       count += 1
+        # Is this a fixed location probe?
+        if FixedLocations:
+            # Then use the probe location from the config file
+            CurrentProbeLocation = AllProbes[CurrentLoad - 1][CurrentRun][TrialCount]
+        # If it is a random location probe then pick the POS or NEG probe location
+        else:
+            if ProbeList[TrialCount] == 0:
+                CurrentProbeLocation = NegProbeLocation
+            else:
+                CurrentProbeLocation = PosProbeLocation
+        # Use a single code chunk for displaying the probe dot regardless of whether this is a random
+        # location or fixed location or whether this is a POS or NEG probe
+        count = 0
+        for y_offset in OffSet:
+            for x_offset in OffSet:
+               for stim in [ProbeCircle]:
+                   stim.pos = [x_offset, y_offset]
+                   if (count in [CurrentProbeLocation]):
+                       stim.draw()
+                   count += 1
+#        elif ProbeList[TrialCount] == 1:
+#            count = 0
+#            ProbeLoc = PosProbeLocation
+#            for y_offset in OffSet:
+#                for x_offset in OffSet:
+#                   for stim in [ProbeCircle]:
+#                       stim.pos = [x_offset, y_offset]
+#                       if (count in [PosProbeLocation]):
+#                           stim.draw()
+#                       count += 1
                        
                    
         while countDown.getTime() > 0:
@@ -402,76 +444,18 @@ for thisBlock in Blocks:
                 thisResp.keys = theseKeys[-1]  # just the last key pressed
                 thisResp.rt = thisResp.clock.getTime()
                 continueRoutine = False
-                # was this 'correct'?
-                #if (thisResp.keys == str(corr)) or (thisResp.keys == corr):
-                #    print('Correct')
-                #    thisResp.corr = 1
-                #else:
-                #    print('incorrect')
-                #    thisResp.corr = 0    
-                #break
-                if CounterBalFlag == 'False':
-                    if corr == 'left':
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 1
-                        elif ((thisResp.keys == '1') or (thisResp.keys == '1')):
-                            thisResp.corr = 1
-                        else:
-                            thisResp.corr = 0
-                    if corr == 1:
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 1
-                        elif ((thisResp.keys == 'left') or (thisResp.keys == 'left')):
-                            thisResp.corr = 1
-                        else:
-                            thisResp.corr = 0
-                    if corr == 'right':
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 1
-                        elif ((thisResp.keys == '2') or (thisResp.keys == '2')):
-                            thisResp.corr = 1
-                        else:
-                            thisResp.corr = 0    
-                    if corr == 2:
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 1
-                        elif ((thisResp.keys == 'right') or (thisResp.keys == 'right')):
-                            thisResp.corr = 1
-                        else:
-                            thisResp.corr = 0
-                    break
-                elif CounterBalFlag == 'True':
-                    if corr == 'left':
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 0
-                        elif ((thisResp.keys == '1') or (thisResp.keys == '1')):
-                            thisResp.corr = 0
-                        else:
-                            thisResp.corr = 1
-                    if corr == 1:
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 0
-                        elif ((thisResp.keys == 'left') or (thisResp.keys == 'left')):
-                            thisResp.corr = 0
-                        else:
-                            thisResp.corr = 1
-                    if corr == 'right':
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 0
-                        elif ((thisResp.keys == '2') or (thisResp.keys == '2')):
-                            thisResp.corr = 0
-                        else:
-                            thisResp.corr = 1    
-                    if corr == 2:
-                        if ((thisResp.keys == corr) or (thisResp.keys == str(corr))):
-                            thisResp.corr = 0
-                        elif ((thisResp.keys == 'right') or (thisResp.keys == 'right')):
-                            thisResp.corr = 0
-                        else:
-                            thisResp.corr = 1                
-                    break
-               # This should turn off the dots if there has been a response
-                
+                if corr == '1':
+                    if ((thisResp.keys == '1') or (thisResp.keys == 'left')):
+                        thisResp.corr = 1
+                    else:
+                        thisResp.corr = 0
+                if corr == '2':
+                    if ((thisResp.keys == '2') or (thisResp.keys == 'right')):
+                        thisResp.corr = 1
+                    else:
+                        thisResp.corr = 0
+                break
+            
             if countDown.getTime() > 0:
                 pass       
             else:
@@ -484,19 +468,6 @@ for thisBlock in Blocks:
             pass
         # prepare the cross hair
 
-#        if thisResp.rt == -99:
-#            print("In the IF part")
-#            GreenCross.setAutoDraw(False)
-#            RedCross.setAutoDraw(True)
-#        else:
-#            print("In the ELSE part")
-#            GreenCross.setAutoDraw(False)
-#            RedCross.setAutoDraw(True)
-#            countDown.add(ProbeOnTime - thisResp.rt)
-#        # take the dot off the screen
-#        print("Remove dots")
-#        win.flip()
-#        print(countDown.getTime())
         countDown.add(VSTM_ITITime)
 
         RedCross.setAutoDraw(False)

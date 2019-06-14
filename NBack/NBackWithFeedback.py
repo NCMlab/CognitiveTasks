@@ -13,7 +13,7 @@ ThisFolder = os.path.dirname(ThisScript)
 sys.path.append(ThisFolder)
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NCM_NeuroPsych_Config import *
@@ -94,8 +94,8 @@ for BlockNumber in range(0,NBlocks,1):
 #    print(CurrentLoadLevel)
 #    print(NBack_Prac1_TrialPerBlock)
 #    print(NBack_Prac1_NumCorrectPerBlock)
-    
-    CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Prac1_TrialPerBlock, NBack_Prac1_NumCorrectPerBlock)
+    CorrectLocations = NBackFunctions.CreateStimFixed12_4(CurrentLoadLevel)
+#    CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, NBack_Prac1_TrialPerBlock, NBack_Prac1_NumCorrectPerBlock)
 #    print(CorrectLocations)
     # Try to assign letters to the list of correct locations
     # If it is not possible then -99 is returned
@@ -250,7 +250,7 @@ for BlockNumber in range(0,NBlocks,1):
                 
     # present a block of stimuli
     count = 0
-    print CorrectLocations
+    print(CorrectLocations)
     StimulusText = visual.TextStim(win=win, ori=0, name='text',
         text='temp',    font=u'Times New Roman',
         pos=[0, 0], height = NBack_Prac1_TextSize, wrapWidth=None,
@@ -306,7 +306,7 @@ for BlockNumber in range(0,NBlocks,1):
                 thisExp.addData('KeyPress',theseKeys[-1])
                 thisExp.addData('RT',CurrentRT)
                 if (count + 1) in CorrectLocations:
-                    print "TRUE"
+                    print("TRUE")
                     thisExp.addData('Correct','1')
                     Feedback.text = 'Correct'
                 else:
@@ -316,14 +316,14 @@ for BlockNumber in range(0,NBlocks,1):
                 resp.RT = CurrentRT
                 CurrentRT = TrialClock.getTime()
                 Feedback.setAutoDraw(True)
-                print "%02d: %s Key press: %s in %0.4f sec"%(count,item,theseKeys[-1],CurrentRT)
+                print("%02d: %s Key press: %s in %0.4f sec"%(count,item,theseKeys[-1],CurrentRT))
 
         thisExp.addData('ElapsedTime',ElapsedTimeClock.getTime())
 
         thisExp.addData('count',count)
         thisExp.addData('Block',BlockNumber+1)
         thisExp.addData('Stimulus',item)
-        thisExp.addData('LoadLevel', NBack_Prac1_LoadLevel) 
+        thisExp.addData('LoadLevel', str(NBack_Prac1_LoadLevel[BlockNumber])) 
         if (count + 1) in CorrectLocations:
             thisExp.addData('Expected',1)
         else:
@@ -331,16 +331,19 @@ for BlockNumber in range(0,NBlocks,1):
         thisExp.nextEntry()
         count += 1
     # Make sure the cross hair is not shown
-    CrossHair.setAutoDraw(False)            
+    CrossHair.setAutoDraw(False)      
+    Feedback.setAutoDraw(False)  
     CountDownClock.add(NBack_Prac1_InterBlockTime)        
     CrossHair.draw()
+    
     win.flip()
     while CountDownClock.getTime() > 0:
         theseKeys = event.getKeys()
         if "escape" in theseKeys:
             win.flip()
             core.quit() 
-
+          
+Feedback.setAutoDraw(False)
 # Thank you screen
 CountDownClock.add(NBack_Prac1_ThankYouOnTime)
 ThankYouScreen.draw()

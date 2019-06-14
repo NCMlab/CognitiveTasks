@@ -1,13 +1,16 @@
 from __future__ import absolute_import, division
-from psychopy import locale_setup, gui, visual, core, data, event, logging
+from psychopy import locale_setup, core, gui, data#, event#, logging#, visual
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
                                 
-                                
+# Make sure that under Psychopy preferences, under audio library pygame is listed first.                     
+# Make sure the bottem dialog bar auto hides
+                      
 # DIALOG BOX RESOURCES
 # http://www.blog.pythonlibrary.org/2010/07/10/the-dialogs-of-wxpython-part-2-of-2/
 # Clock resources: psychopy-users/tFghyXkOx5U
- 
+#from psychopy.gui import wxgui
+
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import wx
@@ -33,20 +36,20 @@ try:
         raise ValueError('Folder does not exist.')
         
 except:
-    DDapp = wx.PySimpleApp()
-    dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
-    if dialog.ShowModal() == wx.ID_OK:
-        print(dialog.GetPath())
-    dialog.Destroy()
+    app = wx.App()
+    dlg = wx.DirDialog(None, "Choose data output directory", "", wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+    if dlg.ShowModal() == wx.ID_OK:
+        print(dlg.GetPath())
+    OutFolder = dlg.GetPath()
+    dlg.Destroy()    
     # write the selected folder to the config file
     fid = open(os.path.join(_thisDir, '..','ConfigFiles','NeuropsychDataFolder.py'),'w')
-    fid.write('NeuropsychDataFolder = \'%s\''%(dialog.GetPath()))
+    fid.write('NeuropsychDataFolder = \'%s\''%(OutFolder))
     fid.close()
-    NeuropsychDataFolder = dialog.GetPath()
+    NeuropsychDataFolder = OutFolder
     
 #    from tkinter  
 #    ed = filedialog.askdirectory()
-
 
 Top = 20
 Left = 20
@@ -115,6 +118,8 @@ class Mywin(wx.Frame):
       self.PartID = wx.TextCtrl(self.panel,-1,'9999999',size=(ButtonWidth,-1),pos = (ColPixel[1],RowPixel[0]))
       self.btnPartEntry = wx.Button(self.panel,-1,label = "Submit", pos = (ColPixel[2],RowPixel[0]), size = ((ButtonWidth, ButtonHeight))) 
       self.btnPartEntry.Bind(wx.EVT_BUTTON, self.OnCickPartEntry)
+      self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder:", pos = (ColPixel[3], RowPixel[0]))
+        
       # Create Default values for the load levels for the two tasks
       self.FRTBlockLoadLevels = '0.0 0.125 0.25 0.375 0.5'
       self.DMSBlockLoadLevels = '1 3 5 6 7'
@@ -129,12 +134,15 @@ class Mywin(wx.Frame):
       CurrentRow = RowPixel[1]
       self.title1 = wx.StaticText(self.panel, -1, label = "Stroop", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
+
       self.btnR1C2 = wx.Button(self.panel,-1,"Color", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR1C2.Bind(wx.EVT_BUTTON,self.OnClickedR1C2) 
       self.btnR1C3 = wx.Button(self.panel,-1,"Word", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR1C3.Bind(wx.EVT_BUTTON,self.OnClickedR1C3) 
       self.btnR1C4 = wx.Button(self.panel,-1,"ColorWord", pos = (ColPixel[3],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR1C4.Bind(wx.EVT_BUTTON,self.OnClickedR1C4)
+      
+     
       # Box
       Row1Box = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
@@ -148,12 +156,34 @@ class Mywin(wx.Frame):
       # Buttons
       self.btnR2C2 = wx.Button(self.panel,-1,"WCST", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR2C2.Bind(wx.EVT_BUTTON,self.OnClickedR2C2) 
+
       # Box
       Row1BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
       self.cbR2C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+#      self.cbR2C3 = wx.CheckBox(panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,Row2))
+#      self.cbR2C4 = wx.CheckBox(panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,Row2))
 
-# ###################
+# #### Row 
+
+      CurrentRow = RowPixel[4]
+      self.titleR6 = wx.StaticText(self.panel, -1, label = "Vocabulary", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
+      # Buttons
+      self.btnR6C2 = wx.Button(self.panel,-1,"Antonyms", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR6C2.Bind(wx.EVT_BUTTON,self.OnClickedR6C2) 
+      # Box
+      Row6BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
+      # Checkboxes
+      self.cbR6C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+      
+
+      # Buttons
+      self.btnR6C3 = wx.Button(self.panel,-1,"Reading", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR6C3.Bind(wx.EVT_BUTTON,self.OnClickedR6C3) 
+      # Checkboxes
+      self.cbR6C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
+
+# #### Row 
       CurrentRow = RowPixel[3]
       self.titleRMem = wx.StaticText(self.panel, -1, label = "Memory", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
@@ -169,23 +199,10 @@ class Mywin(wx.Frame):
       self.cbRMemC2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
       self.cbRMemC5 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[4] + ButtonWidth+5,CurrentRow))
       self.cbRMemC6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))
+      
+# #### Row 
 # ###################
-      CurrentRow = RowPixel[4]
-      self.titleR6 = wx.StaticText(self.panel, -1, label = "Vocabulary", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
-      # Buttons
-      self.btnR6C2 = wx.Button(self.panel,-1,"Antonyms", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR6C2.Bind(wx.EVT_BUTTON,self.OnClickedR6C2) 
-      # Box
-      Row6BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
-      # Checkboxes
-      self.cbR6C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))      
-      # Buttons
-      self.btnR6C3 = wx.Button(self.panel,-1,"Reading", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR6C3.Bind(wx.EVT_BUTTON,self.OnClickedR6C3) 
-      # Checkboxes
-      self.cbR6C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
 
-# ###################
       CurrentRow = RowPixel[5]
       self.titleR7 = wx.StaticText(self.panel, -1, label = "Digit Span", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
@@ -205,11 +222,13 @@ class Mywin(wx.Frame):
       # Buttons
       self.btnR8C2 = wx.Button(self.panel,-1,"Patt. Comp", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR8C2.Bind(wx.EVT_BUTTON,self.OnClickedR8C2) 
+
     # Box
       Row8BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
       self.cbR8C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
-      
+      #self.cbR8C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
+# #### Row 
 # ###################
       CurrentRow = RowPixel[7]
       self.titleR9 = wx.StaticText(self.panel, -1, label = "Fluid", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
@@ -220,9 +239,18 @@ class Mywin(wx.Frame):
       self.btnR9C2.Bind(wx.EVT_BUTTON,self.OnClickedR9C2) 
       self.btnR9C3 = wx.Button(self.panel,-1,"Matrices", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR9C3.Bind(wx.EVT_BUTTON,self.OnClickedR9C3) 
+      
+      #self.btnR9C3 = wx.Button(self.panel,-1,"Letter Comp", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR9C3.Bind(wx.EVT_BUTTON,self.OnClickedR8C3) 
     # Box
       Row9BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
+      self.cbR9C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+      self.cbR9C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
+
+# ##########
+      #self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (ColPixel[3],Row10), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
       self.cbR9C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
       self.cbR9C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
 
@@ -310,6 +338,7 @@ class Mywin(wx.Frame):
       #self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (ColPixel[3],Row10), size = ((ButtonWidth, ButtonHeight))) 
       #self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
 
+
       self.btnClose = wx.Button(self.panel,-1,"Close", pos = (ColPixel[0],RowPixel[11]-5), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
       
@@ -334,8 +363,6 @@ class Mywin(wx.Frame):
             if child.Label != "Submit":
                 child.Disable()
                 
-    
-   
    def EnableAll(self): 
       for child in self.panel.GetChildren():
         # Diable all buttons except the button to enter the participant ID
@@ -362,7 +389,7 @@ class Mywin(wx.Frame):
     # Now open and read the file
     file = open(CapacityFileName, 'r')
     self.VSTMCapacity = file.read()
-    self.txtR3C5.SetLabel(self.VSTMCapacity)
+    self.txtR3C5.SetLabelText(self.VSTMCapacity)
     # close the file
     file.close()
     self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
@@ -376,7 +403,7 @@ class Mywin(wx.Frame):
     # Now open and read the file
     file = open(CapacityFileName, 'r')
     self.DMSCapacity = file.read()
-    self.txtR5C5.SetLabel(self.DMSCapacity)
+    self.txtR5C5.SetLabelText(self.DMSCapacity)
     # close the file
     file.close()
     self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSCapacity)
@@ -405,12 +432,12 @@ class Mywin(wx.Frame):
         
    def OnClickedVSTMCapEnter(self,event):
         self.VSTMCapacity = self.ManualEntryCapacity([0.0, 36])
-        self.txtR3C5.SetLabel(self.VSTMCapacity)
+        self.txtR3C5.SetLabelText(self.VSTMCapacity)
         self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
 
    def OnClickedDMSCapEnter(self,event):
         self.DMSCapacity = self.ManualEntryCapacity([0.0, 9])
-        self.txtR5C5.SetLabel(self.DMSCapacity)
+        self.txtR5C5.SetLabelText(self.DMSCapacity)
         self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSCapacity)
 
    def CreateVSTMList5(self, VSTMCapacity):
@@ -504,7 +531,7 @@ class Mywin(wx.Frame):
             dlg.Show()
             if dlg.ShowModal() == wx.ID_YES: # Note, this is how you get the yes responses
                 # If the user wants to restart a visit then have them select the visit to reuse
-                dlg = wx.SingleChoiceDialog(self, 'Select a visit','Select Visit Folder', ListOfVisitFoldersNames,wx.CHOICEDLG_STYLE)
+                dlg = wx.SingleChoiceDialog(self, 'Select a visit','Select Visit Folder', ListOfVisitFoldersNames, wx.CHOICEDLG_STYLE)
                 dlg.Show()
                 if dlg.ShowModal() == wx.ID_OK:
                     print('You selected: %s\n' % dlg.GetStringSelection())
@@ -526,7 +553,8 @@ class Mywin(wx.Frame):
         
         # Add the path name to the GUI
         # Add the new label
-        self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (ColPixel[3], RowPixel[0]))
+        self.PartIDLabel.SetLabelText("Output folder: %s"%(self.VisitFolderName))
+#        self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (ColPixel[3], RowPixel[0]))
         #self.PartIDLabel = wx.StaticText.setText(self.VisitFolderName)
         #(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (ColPixel[3],Row1))
         
@@ -607,10 +635,11 @@ class Mywin(wx.Frame):
       btnR3C4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR3C4Label))
       #VSTMCapacity = 7
-      self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
-      print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
-      print( self.VSTMBlockLoadLevels)
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v6.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'BehRun%d'%(self.VSTMTag)])  
+      # self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
+      # print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
+      print(self.VSTMBlockLoadLevels)
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'BehRun%d'%(self.VSTMTag),'VSTM_Behav_Config','True'])  
+      #core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_CirclesInGrid_v6.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'BehRun%d'%(self.VSTMTag)])  
       self.cbR3C4.SetValue(True)  
 
    # Row 5 Functions   
@@ -652,7 +681,7 @@ class Mywin(wx.Frame):
       self.NBackPracticeTag = self.NBackPracticeTag + 1
       btnR10C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR10C3Label))
-      core.shellCall([sys.executable, "../NBack/NBackWithFeedback.py", self.PartID.GetValue(), self.VisitFolderPath, 'Practice%20d'%(self.NBackPracticeTag)])  
+      core.shellCall([sys.executable, "../NBack/NBackWithFeedback.py", self.PartID.GetValue(), self.VisitFolderPath, 'Practice%d'%(self.NBackPracticeTag)])  
       self.cbR10C3.SetValue(True)  
 
    def OnClickedR10C4(self, event):
@@ -705,7 +734,7 @@ class Mywin(wx.Frame):
    def OnClickedR9C2(self, event):
       btnR9C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR9C2Label))
-      core.shellCall([sys.executable, "../Matrices/MatricesPractice_lastrun.py", self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../Matrices/MatricesPracticev1.py", self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR9C2.SetValue(True)
 
    def OnClickedR9C3(self, event):
@@ -737,8 +766,10 @@ class Mywin(wx.Frame):
 
    def CloseGUI(self,event):
         self.Close()
-      
+
+print('Got Here 1')
 app = wx.App() 
+print('Got Here 2')
 # Create the GUI
 MyGui = Mywin(None,  'NCM Lab') 
 # Disable all the buttons except teh Part ID entry 

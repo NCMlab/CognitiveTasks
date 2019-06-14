@@ -22,7 +22,7 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 # #################
 # Store info about the experiment session
@@ -67,8 +67,8 @@ thisExp = data.ExperimentHandler(name=expName, version='',
     savePickle=False, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
-logFile = logging.LogFile(filename+'.log', level=logging.EXP)
-logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
+#logFile = logging.LogFile(filename+'.log', level=logging.EXP)
+#logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
@@ -77,10 +77,10 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 # Setup the Window
 win = visual.Window(
     size=[1000, 800], fullscr=True, screen=0,
-    allowGUI=True, allowStencil=False,
-    monitor='MacBookPro', color=BGColor, colorSpace='rgb',
-    blendMode='avg', useFBO=True)
-    
+    allowGUI=False, allowStencil=False,
+    monitor='testMonitor', color=BGColor, colorSpace='rgb',
+    blendMode='avg', useFBO=True, units='height')
+
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
 if expInfo['frameRate'] != None:
@@ -135,27 +135,27 @@ Resp1Box = visual.Rect(
     width=(RespBoxWidth, RespBoxHeight)[0], height=(RespBoxWidth, RespBoxHeight)[1],
     ori=0, pos=(RespBoxX1, RespBoxY1),
     lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',
-    fillColor=[0,0,0], fillColorSpace='rgb',
+    fillColor=[0,0,0], fillColorSpace='rgb',units='pix',
     opacity=1, depth=-4.0, interpolate=True)
 Resp2Box = visual.Rect(
     win=win, name='Resp2Box',
     width=(RespBoxWidth, RespBoxHeight)[0], height=(RespBoxWidth, RespBoxHeight)[1],
     ori=0, pos=(RespBoxX2, RespBoxY1),
     lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',
-    fillColor=[0,0,0], fillColorSpace='rgb',
+    fillColor=[0,0,0], fillColorSpace='rgb',units='pix',
     opacity=1, depth=-5.0, interpolate=True)
 Resp3Box = visual.Rect(
     win=win, name='Resp3Box',
     width=(RespBoxWidth, RespBoxHeight)[0], height=(RespBoxWidth, RespBoxHeight)[1],
     ori=0, pos=(RespBoxX1, RespBoxY2),
-    lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',
+    lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',units='pix',
     fillColor=[0,0,0], fillColorSpace='rgb',
     opacity=1, depth=-6.0, interpolate=True)
 Resp4Box = visual.Rect(
     win=win, name='Resp4Box',
     width=(RespBoxWidth, RespBoxHeight)[0], height=(RespBoxWidth, RespBoxHeight)[1],
     ori=0, pos=(RespBoxX2, RespBoxY2),
-    lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',
+    lineWidth=3, lineColor=[-1,-1,-1], lineColorSpace='rgb',units='pix',
     fillColor=[0,0,0], fillColorSpace='rgb',
     opacity=1, depth=-7.0, interpolate=True)
 Resp1 = visual.TextStim(win=win, name='Resp1',
@@ -1059,14 +1059,16 @@ for thisTrial in trials:
     for thisComponent in trialComponents:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
-    # check responses
-    if resp.keys in ['', [], None]:  # No response was made
-        resp.keys=None
-        # was no response the correct answer?!
-        if str(Corr).lower() == 'none':
-           resp.corr = 1  # correct non-response
-        else:
-           resp.corr = 0  # failed to respond (incorrectly)
+#    # check responses
+#    if resp.keys in ['', [], None]:  # No response was made
+#        resp.keys=None
+#        # was no response the correct answer?!
+#        if str(Corr).lower() == 'none':
+#           resp.corr = 1  # correct non-response
+#        else:
+#           resp.corr = 0  # failed to respond (incorrectly)
+
+
 
     # store data for trials (TrialHandler)
     if sum(buttons):
@@ -1094,7 +1096,8 @@ for thisTrial in trials:
             resp.corr = 1
         else:
             resp.corr = 0
-    
+            
+  
     # store data for trials (TrialHandler)
     trials.addData('resp.keys',resp.keys)
     trials.addData('resp.corr', resp.corr)

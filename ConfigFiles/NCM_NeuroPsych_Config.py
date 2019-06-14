@@ -35,12 +35,12 @@ NBack_Beh1_LoadLevel = '012012' # each number refers to the load level for a blo
 # Timing parameters
 NBack_Beh1_TimePerTrial = 0.5
 NBack_Beh1_InterStimulusDelay = 2
-NBack_Beh1_TrialPerBlock = 24
-NBack_Beh1_NumCorrectPerBlock = 8
+NBack_Beh1_TrialPerBlock = 18
+NBack_Beh1_NumCorrectPerBlock = 6
 NBack_Beh1_StimList = 'BCDFGHJKLMNPRSTVYZ'
 NBack_Beh1_ResponseKeys = ['left','right']
-NBack_Beh1_IntroOffDuration = 20
-NBack_Beh1_InterBlockTime = 15
+NBack_Beh1_IntroOffDuration = 10
+NBack_Beh1_InterBlockTime = 5
 NBack_Beh1_InstructionTime = 15 
 NBack_Beh1_TextSize = 60 # This is in pixels
 NBack_Beh1_InstructionFigureSize = 800 # in pixels
@@ -57,9 +57,11 @@ NBack_Prac1_TrialPerBlock = 12
 NBack_Prac1_NumCorrectPerBlock = 4
 NBack_Prac1_StimList = 'BCDFGHJKLMNPRSTVYZ'
 NBack_Prac1_ResponseKeys = ['left','right']
-NBack_Prac1_IntroOffDuration = 4 #14
-NBack_Prac1_InterBlockTime = 4 #14
-NBack_Prac1_InstructionTime = 10 #
+
+NBack_Prac1_IntroOffDuration = 5 #14
+NBack_Prac1_InterBlockTime = 5 #14
+NBack_Prac1_InstructionTime = 15 #
+
 NBack_Prac1_TextSize = 60 # This is in pixels
 NBack_Prac1_InstructionFigureSize = 800 # in pixels
 NBack_Prac1_Instructions = 'Press the [left] key if the current letter is a match.\n\nPress [return] key to continue.'

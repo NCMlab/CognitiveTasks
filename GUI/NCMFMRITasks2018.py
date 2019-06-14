@@ -1,14 +1,16 @@
 from __future__ import absolute_import, division
-from psychopy import locale_setup, gui, visual, core, data, event, logging
+from psychopy import locale_setup, core, gui, data#, event#, logging#, visual
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
                                 
-                                
+# Make sure that under Psychopy preferences, under audio library pygame is listed first.                     
+# Make sure the bottem dialog bar auto hides
+                      
 # DIALOG BOX RESOURCES
 # http://www.blog.pythonlibrary.org/2010/07/10/the-dialogs-of-wxpython-part-2-of-2/
 # Clock resources: psychopy-users/tFghyXkOx5U
- 
- 
+#from psychopy.gui import wxgui
+
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import wx
@@ -22,6 +24,36 @@ import CheckExistingNeuroPsychData
 # import parameters from a config file
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NeuropsychDataFolder import *
+
+# Ensure that relative paths start from the same directory as this script
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
+os.chdir(_thisDir)
+# import parameters from a config file
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+from NCM_NeuroPsych_Config import *
+# Check to see if the output data folder has been identified
+try:
+    # try to load the config file
+    from NeuropsychDataFolder import *
+    # See if the variable is in it
+    print('Data being saved to: %s'%(NeuropsychDataFolder))
+    if not os.path.exists(NeuropsychDataFolder):
+        raise ValueError('Folder does not exist.')
+        
+except:
+    app = wx.App()
+    dlg = wx.DirDialog(None, "Choose data output directory", "", wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+    if dlg.ShowModal() == wx.ID_OK:
+        print(dlg.GetPath())
+    OutFolder = dlg.GetPath()
+    dlg.Destroy()    
+    # write the selected folder to the config file
+    fid = open(os.path.join(_thisDir, '..','ConfigFiles','NeuropsychDataFolder.py'),'w')
+    fid.write('NeuropsychDataFolder = \'%s\''%(OutFolder))
+    fid.close()
+    NeuropsychDataFolder = OutFolder
+    
+
 
 Top = 20
 Left = 20
@@ -49,12 +81,13 @@ class Mywin(wx.Frame):
    def __init__(self, parent, title): 
     # size = (width, height)
     # Create the GUI window
+      print('Got here 3')
       super(Mywin, self).__init__(parent, title = title,size = (800,600))  
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
+      
       self.DataFolder = NeuropsychDataFolder
-      print(self.DataFolder)
-      #self.DataFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData'
+      print(NeuropsychDataFolder)
       if not os.path.exists(self.DataFolder):
         # If my specified folder does not exist, then put the data up two folders.
             self.DataFolder = "../../data"
@@ -67,6 +100,8 @@ class Mywin(wx.Frame):
       self.PartID = wx.TextCtrl(self.panel,-1,'9999999',size=(ButtonWidth,-1),pos = (ColPixel[1],RowPixel[0]))
       self.btnPartEntry = wx.Button(self.panel,-1,label = "Submit", pos = (ColPixel[2],RowPixel[0]), size = ((ButtonWidth, ButtonHeight))) 
       self.btnPartEntry.Bind(wx.EVT_BUTTON, self.OnCickPartEntry)
+      self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder:" , pos = (ColPixel[3],RowPixel[0]))
+        
       # Create Default values for the load levels for the two tasks
       self.FRTBlockLoadLevels = '0.0 0.125 0.25 0.375 0.5'
       self.DMSBlockLoadLevels = '1 3 5 6 7'
@@ -110,8 +145,8 @@ class Mywin(wx.Frame):
       # Checkboxes
  #     self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
  #     self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
-      self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))
-      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
+      self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth-3,CurrentRow))
+      self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth-3,CurrentRow))
 # ###################
       CurrentRow = RowPixel[3]
 #      # #### Row 3
@@ -143,8 +178,8 @@ class Mywin(wx.Frame):
       # Checkboxes
  #     self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (Col2 + ButtonWidth+5,CurrentRow))
  #     self.cbR5C3 = wx.CheckBox(self.panel, -1, label = "", pos = (Col3 + ButtonWidth+5,CurrentRow))
-      self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))
-      self.cbR5C7 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
+      self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth-3,CurrentRow))
+      self.cbR5C7 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth-3,CurrentRow))
 
 # #### N-BACK #########
       CurrentRow = RowPixel[4]
@@ -164,8 +199,8 @@ class Mywin(wx.Frame):
       self.btnR10C4.Bind(wx.EVT_BUTTON,self.OnClickedR10C4)
       # Checkboxes
       #self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
-      self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))      
-      self.cbR10C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))      
+      self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth-3,CurrentRow))      
+      self.cbR10C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth-3,CurrentRow))      
       # Box around buttons
       Row1BoxR10 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
 
@@ -213,7 +248,7 @@ class Mywin(wx.Frame):
         # Now open and read the file
         file = open(CapacityFileName, 'r')
         self.VSTMCapacity = file.read()
-        self.txtR3C5.SetLabel(self.VSTMCapacity)
+        self.txtR3C5.SetLabelText(self.VSTMCapacity)
         # close the file
         file.close()
         self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
@@ -227,7 +262,7 @@ class Mywin(wx.Frame):
         # Now open and read the file
         file = open(CapacityFileName, 'r')
         self.DMSCapacity = file.read()
-        self.txtR5C5.SetLabel(self.DMSCapacity)
+        self.txtR5C5.SetLabelText(self.DMSCapacity)
         # close the file
         file.close()
         self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSCapacity)
@@ -256,12 +291,12 @@ class Mywin(wx.Frame):
         
    def OnClickedVSTMCapEnter(self,event):
         self.VSTMCapacity = self.ManualEntryCapacity([0.0, 36])
-        self.txtR3C5.SetLabel(self.VSTMCapacity)
+        self.txtR3C5.SetLabelText(self.VSTMCapacity)
         self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
 
    def OnClickedDMSCapEnter(self,event):
         self.DMSCapacity = self.ManualEntryCapacity([0.0, 9])
-        self.txtR5C5.SetLabel(self.DMSCapacity)
+        self.txtR5C5.SetLabelText(self.DMSCapacity)
         self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSCapacity)
 
    def CreateVSTMList5(self, VSTMCapacity):
@@ -376,8 +411,8 @@ class Mywin(wx.Frame):
         print(self.VisitFolderPath)
         
         # Add the path name to the GUI
-        self.PartIDLabel = wx.StaticText(self.panel, -1, label = "Output folder: %s"%(self.VisitFolderName), pos = (ColPixel[3],RowPixel[0]))
-        
+        self.PartIDLabel.SetLabelText("Output folder: %s"%(self.VisitFolderName))
+
    def OnCickPartEntry(self, event):
       btnName = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnName))
@@ -404,7 +439,7 @@ class Mywin(wx.Frame):
       self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
       print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
       print( self.VSTMBlockLoadLevels)
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag),'VSTM_fMRI_Config'])  
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag),'VSTM_fMRI_Config','True'])  
       self.cbR3C3.SetValue(True)  
       
    def OnClickedR3C4(self, event): 
@@ -414,7 +449,7 @@ class Mywin(wx.Frame):
       self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
       print('With a capacity of %0.1f, the load levels will be:'%(float(self.VSTMCapacity)))
       print( self.VSTMBlockLoadLevels)
-      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag),'VSTM_fMRI_Config'])  
+      core.shellCall([sys.executable, "../VSTMPsychopyFiles/VSTM_PassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, self.VSTMBlockLoadLevels, 'MRIRun%d'%(self.VSTMTag),'VSTM_fMRI_Config','True'])  
       self.cbR3C4.SetValue(True)  
    
    def OnClickedR5C1(self, event):
@@ -467,9 +502,11 @@ class Mywin(wx.Frame):
    def CloseGUI(self,event):
         self.Close()
 
+print('Got Here 1')
 app = wx.App() 
+print('Got Here 2')
 # Create the GUI
-MyGui = Mywin(None,  'NCM Lab FMRI') 
+MyGui = Mywin(None,  'NCM Lab') 
 # Disable all the buttons except teh Part ID entry 
 MyGui.DisableAll()
-app.MainLoop()      
+app.MainLoop()

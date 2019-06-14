@@ -7,16 +7,17 @@ VisitFolder = os.path.join(AllOutDataFolder, subid, Visid)
 Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
 
 
-FlatResults = FlattenDict(Results)
-         
+import ScoreNeuroPsych
+# importlib.reload(ScoreNeuroPsych)
+# 
+# ScoreNeuroPsych.ScoreAll()
 
-    Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1_')
-    Dir = 'Backward'
-    Results = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
-    print('\tDS Backward loaed')
+#
+import ProcessNeuroPsychFunctions
 
+VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/990123454/2019_May_13_0930_V001'
+VisitFolder = '/Volumes/GoogleDrive/Team Drives/NCMLab/NCM002-MRIStudy/Data/NeuroPsych/990123454/2019_May_13_0930_V001'
+subid = '990123454'
 
-Dir = 'Forward'
-ProcessDigitSpan(Data, Dir)
-
+Data = ReadFile(VisitFolder, subid, 'NBack*BehRun')
 

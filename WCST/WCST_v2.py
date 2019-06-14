@@ -112,6 +112,13 @@ class Experiment():
         #self.vp = vpInfo[0]
 
         self.win = visual.Window(size=SZ,units='height',fullscr=True, monitor='testMonitor', winType = "pyglet",allowGUI=False, waitBlanking=True)
+#        self.win = visual.Window(
+#    size=[1000, 800], fullscr=True, screen=0,
+#    allowGUI=False, allowStencil=False,
+#    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+#    blendMode='avg', useFBO=True, units='height')
+
+        
         self.mouse = event.Mouse(True, None, win=self.win)#(True,None,self.win)
 
         self.cards = []
@@ -119,25 +126,43 @@ class Experiment():
         ElementSize = 0.05
         for i in range(4):
             self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='white',
-                        pos = ((i-1.5)*(CARDX+CARDW),CARDY),lineColor='black',interpolate=False, units = 'height'))
-            self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=ElementSize,colors='black',
-                         fieldPos = ((i-1.5)*(CARDX+CARDW),CARDY),elementTex=None, units = 'height'))
+
+        #                 pos = ((i-1.5)*(CARDX+CARDW),CARDY),lineColor='black',interpolate=False, units = 'height'))
+        #     self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=ElementSize,colors='black',
+        #                  fieldPos = ((i-1.5)*(CARDX+CARDW),CARDY),elementTex=None, units = 'height'))
+        
+        # # Add the probe card to the screen
+        # self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='white',
+        #     pos = TPOS,lineColor='black',interpolate=False, units = 'height'))
+        # self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=ElementSize,colors='black',
+        #     fieldPos = TPOS,elementTex=None, units = 'height'))            
+
+                        pos = ((i-1.5)*(CARDX+CARDW),CARDY),lineColor='black',interpolate=False, units = 'deg'))
+            self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='black',
+                         fieldPos = ((i-1.5)*(CARDX+CARDW),CARDY),elementTex=None, units = 'deg'))
         
         # Add the probe card to the screen
         self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='white',
-            pos = TPOS,lineColor='black',interpolate=False, units = 'height'))
-        self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=ElementSize,colors='black',
-            fieldPos = TPOS,elementTex=None, units = 'height'))            
+            pos = TPOS,lineColor='black',interpolate=False, units = 'deg'))
+        self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='black',
+            fieldPos = TPOS,elementTex=None, units = 'deg'))            
         
         # Make the piles
         #for i in range(4):
         self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='grey',
-                        pos = DiscardPOS,lineColor='black',interpolate=False, units = 'height'))
-        self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=ElementSize,colors='grey',
-                        fieldPos = DiscardPOS,elementTex=None, units = 'height'))
+
+        #                 pos = DiscardPOS,lineColor='black',interpolate=False, units = 'height'))
+        # self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=ElementSize,colors='grey',
+        #                 fieldPos = DiscardPOS,elementTex=None, units = 'height'))
             
-        # Feedback text
-        self.text = visual.TextStim(self.win,pos=FPOS,height=0.08, units = 'height')
+        # # Feedback text
+        # self.text = visual.TextStim(self.win,pos=FPOS,height=0.08, units = 'height')
+                        pos = DiscardPOS,lineColor='black',interpolate=False, units = 'deg'))
+        self.elems.append(visual.ElementArrayStim(self.win,nElements=4,sizes=1.5,colors='grey',
+                        fieldPos = DiscardPOS,elementTex=None, units = 'deg'))
+            
+
+        self.text = visual.TextStim(self.win,pos=FPOS,height=2, units = 'deg')
         #if not os.path.exists('data'):
         #    os.makedirs('data')
         #fname = os.path.join('data', 'wcst_s%03d_%s.csv' % (self.vp, time.strftime("%Y%m%d-%H%M%S")))
@@ -313,7 +338,9 @@ class Experiment():
 
             
     def instruct(self, inst_text, go_text):
-        inst = visual.TextStim(self.win, pos=(0,0), height=0.05, units = 'height', alignHoriz='center', wrapWidth=1.4)
+        # inst = visual.TextStim(self.win, pos=(0,0), height=0.05, units = 'height', alignHoriz='center', wrapWidth=1.4)
+        inst = visual.TextStim(self.win, pos=(0,0), height=1.4, units = 'deg', alignHoriz='center', wrapWidth=38)
+
         inst.setText(inst_text)
         inst.draw()
         self.win.flip()
@@ -343,7 +370,9 @@ class Experiment():
         self.sin.flip()
         
     def CardInstruct(self):
-        inst = visual.TextStim(self.win, pos=(0,0), height=0.05, alignHoriz='center', wrapWidth=22, units = 'height')
+
+        # inst = visual.TextStim(self.win, pos=(0,0), height=0.05, alignHoriz='center', wrapWidth=22, units = 'height')
+        inst = visual.TextStim(self.win, pos=(0,0), height=1, alignHoriz='center', wrapWidth=22, units = 'deg')
         # Display the cards on the screen to allow the experimenter to provide 
         # verbal instructions
         choice = [[0,1,0],[1,2,1],[3,3,2],[2,0,3]]

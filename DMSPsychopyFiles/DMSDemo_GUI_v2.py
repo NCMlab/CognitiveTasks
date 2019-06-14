@@ -27,7 +27,7 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
 
@@ -68,6 +68,17 @@ CounterBalFlag = 'False'
 BGColor = 'grey'
 FontColor = 'white'
 AllowableKeys = ['1', '2', 'left','right']
+FontSizeUnits = 'pix'
+# This next value is based off of the units so be careful changing the units
+SpacingOfLettersRelativeToCenter = 80
+# units=FontSizeUnits
+# height=FontSize
+StimOnTime = 2.5
+RetOnTime = 3.5
+ProbeOnTime= 2.5
+# This is the intertrial interval. This experimental component is part of the trial.
+ITITime = 1.0
+
 # #################
 ProbeColor = 'blue'
 SpacingOfLettersRelativeToCenter = 80
@@ -508,119 +519,120 @@ for thisPracTrial in pracTrials:
             textITI.tStart = t
             textITI.frameNStart = frameN  # exact frame index
             textITI.setAutoDraw(True)
-        frameRemains = 0.0 + 0.5- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = 0.0 + ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
         if textITI.status == STARTED and t >= frameRemains:
             textITI.setAutoDraw(False)
         
         # *textTL* updates
-        if t >= 0.5 and textTL.status == NOT_STARTED:
+        if t >= ITITime and textTL.status == NOT_STARTED:
             # keep track of start time/frame for later
             textTL.tStart = t
             textTL.frameNStart = frameN  # exact frame index
             textTL.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime+ITITime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textTL.status == STARTED and t >= frameRemains:
             textTL.setAutoDraw(False)
         
         # *textTM* updates
-        if t >= 0.5 and textTM.status == NOT_STARTED:
+        if t >= ITITime and textTM.status == NOT_STARTED:
             # keep track of start time/frame for later
             textTM.tStart = t
             textTM.frameNStart = frameN  # exact frame index
             textTM.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime+ITITime- win.monitorFramePeriod * 0.75  # most of one frame period left
         if textTM.status == STARTED and t >= frameRemains:
             textTM.setAutoDraw(False)
         
         # *textTR* updates
-        if t >= 0.5 and textTR.status == NOT_STARTED:
+        if t >= ITITime and textTR.status == NOT_STARTED:
             # keep track of start time/frame for later
             textTR.tStart = t
             textTR.frameNStart = frameN  # exact frame index
             textTR.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime+ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
         if textTR.status == STARTED and t >= frameRemains:
             textTR.setAutoDraw(False)
         
         # *textCL* updates
-        if t >= 0.5 and textCL.status == NOT_STARTED:
+        if t >= ITITime and textCL.status == NOT_STARTED:
             # keep track of start time/frame for later
             textCL.tStart = t
             textCL.frameNStart = frameN  # exact frame index
             textCL.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime+ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
         if textCL.status == STARTED and t >= frameRemains:
             textCL.setAutoDraw(False)
         
         # *textCM* updates
-        if t >= 0.5 and textCM.status == NOT_STARTED:
+        if t >= ITITime and textCM.status == NOT_STARTED:
             # keep track of start time/frame for later
             textCM.tStart = t
             textCM.frameNStart = frameN  # exact frame index
             textCM.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime+ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
         if textCM.status == STARTED and t >= frameRemains:
             textCM.setAutoDraw(False)
         
         # *textCR* updates
-        if t >= 0.5 and textCR.status == NOT_STARTED:
+        if t >= ITITime and textCR.status == NOT_STARTED:
             # keep track of start time/frame for later
             textCR.tStart = t
             textCR.frameNStart = frameN  # exact frame index
             textCR.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime+ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
         if textCR.status == STARTED and t >= frameRemains:
             textCR.setAutoDraw(False)
         
         # *textBL* updates
-        if t >= 0.5 and textBL.status == NOT_STARTED:
+        if t >= ITITime and textBL.status == NOT_STARTED:
             # keep track of start time/frame for later
             textBL.tStart = t
             textBL.frameNStart = frameN  # exact frame index
             textBL.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime+ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
         if textBL.status == STARTED and t >= frameRemains:
             textBL.setAutoDraw(False)
         
         # *textBM* updates
-        if t >= 0.5 and textBM.status == NOT_STARTED:
+        if t >= ITITime and textBM.status == NOT_STARTED:
             # keep track of start time/frame for later
             textBM.tStart = t
             textBM.frameNStart = frameN  # exact frame index
             textBM.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime+ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
         if textBM.status == STARTED and t >= frameRemains:
             textBM.setAutoDraw(False)
         
         # *textBR* updates
-        if t >= 0.5 and textBR.status == NOT_STARTED:
+        if t >= ITITime and textBR.status == NOT_STARTED:
             # keep track of start time/frame for later
             textBR.tStart = t
             textBR.frameNStart = frameN  # exact frame index
             textBR.setAutoDraw(True)
-        frameRemains = 0.5 + 2.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime+ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
         if textBR.status == STARTED and t >= frameRemains:
             textBR.setAutoDraw(False)
         
         # *textDelay* updates
-        if t >= 2.5 and textDelay.status == NOT_STARTED:
+        if t >= StimOnTime+ITITime and textDelay.status == NOT_STARTED:
             # keep track of start time/frame for later
             textDelay.tStart = t
             textDelay.frameNStart = frameN  # exact frame index
             textDelay.setAutoDraw(True)
-        frameRemains = 2.5 + 2.5- win.monitorFramePeriod * 0.75  # most of one frame period left
+        frameRemains = StimOnTime + RetOnTime+ITITime - win.monitorFramePeriod * 0.75  # most of one frame period left
         if textDelay.status == STARTED and t >= frameRemains:
             textDelay.setAutoDraw(False)
         
         # *textProbe* updates
-        if t >= 5.0 and textProbe.status == NOT_STARTED:
+        if t >= StimOnTime + RetOnTime+ITITime and textProbe.status == NOT_STARTED:
             # keep track of start time/frame for later
             textProbe.tStart = t
             textProbe.frameNStart = frameN  # exact frame index
             textProbe.setAutoDraw(True)
         
+        
         # *resp* updates
-        if t >= 5.0 and resp.status == NOT_STARTED:
+        if t >= (StimOnTime+RetOnTime+ITITime) and resp.status == NOT_STARTED:
             # keep track of start time/frame for later
             resp.tStart = t
             resp.frameNStart = frameN  # exact frame index
@@ -644,6 +656,8 @@ for thisPracTrial in pracTrials:
                     resp.corr = 0
                 # a response ends the routine
                 continueRoutine = False
+                    # *textITI* updates
+
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -740,17 +754,21 @@ for thisPracTrial in pracTrials:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     
+#    # Present the ITI cross hair
+#    textITI.setAutoDraw(True)
+#    core.wait(ITITime)
+#    textITI.setAutoDraw(False)
+
     thisExp.nextEntry()
     
 # completed 1.0 repeats of 'pracTrials'
 
 # Thank you
-textThankyou.setAutoDraw(True)
-countDown.add(5)
+textThankyou.draw()
 win.flip()
-while countDown.getTime() > 0:
-    pass   
+core.wait(3)
 win.flip()
+
 
 # get names of stimulus parameters
 if pracTrials.trialList in ([], [None], None):

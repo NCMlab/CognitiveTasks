@@ -30,8 +30,8 @@ sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
 import NeuropsychDataFolder
 # Load up the data location as a global variable
 AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
-
-def ScoreAll():
+    
+def main():
     # Cycle over all data folders and load them up
     NewData = CycleOverDataFolders()
     # find the name of the existing results file
@@ -189,9 +189,12 @@ def LoadRawData(VisitFolder, subid):
     print('\tSRT Imm recall loaded')
         
     Data = ReadFile(VisitFolder, subid, 'SRT_Recog')
-    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)    
-    print('\tSRT Recog loaded')
-       
+    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)   
+
+    # N-Back
+    Data = ReadFile(VisitFolder, subid, 'NBack*BehRun1')
+    Results['NBack'] = ProcessNeuroPsychFunctions.ProcessNBack(Data)          
+    
 #     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
 #     Data = CheckDMSDataFrameForLoad(Data)
 #     Results['DMSMRI1'] = ProcessDMSBlockv2(Data)
@@ -252,7 +255,7 @@ def ReadFile(VisitFolder, subid, TaskTag):
         SelectedFile= matching[0]
     else:
         SelectedFile = False
-        print('Did not find any files!!!')
+        print('\t%s >> Did not find any files!!!'%(TaskTag))
     if SelectedFile != False:
         # Now open the file
         InputFile = os.path.join(VisitFolder, SelectedFile)
@@ -372,46 +375,5 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     # Now that the old data is moved, write out the updated data
     UpdatedData.to_csv(UpdatedDataFileName, index = False)    
       
-# def ListOfExpectedResults():
-#     # This list could be a structure
-#     # This list is the list of names in the structure
-#     # Then each would have a flag as to whether it was found
-#     # It can each have the results
-#     TaskList = {}
-#     TaskList['Stroop_Color'] = {}
-#     TaskList['Stroop_Color']['Completed'] = False
-#     TaskList['Stroop_Word'] = {}
-#     TaskList['Stroop_Word']['Completed'] = False  
-#     TaskList['Stroop_ColorWord'] = {}
-#     TaskList['Stroop_ColorWord']['Completed'] = False  
-#     TaskList['WCST'] = {}
-#     TaskList['WCST']['Completed'] = False  
-#     TaskList['DigitSpan_Forward'] = {}
-#     TaskList['DigitSpan_Forward']['Completed'] = False              
-#     TaskList['DigitSpan_Backward'] = {}
-#     TaskList['DigitSpan_Backward']['Completed'] = False  
-#     TaskList['Matrices_Main'] = {}
-#     TaskList['Matrices_Main']['Completed'] = False  
-#     TaskList['DMS_Stair'] = {}
-#     TaskList['DMS_Stair']['Completed'] = False  
-#     TaskList['DMS_Block'] = {}
-#     TaskList['DMS_Block']['Completed'] = False  
-#     TaskList['VSTM_Stair'] = {}
-#     TaskList['VSTM_Stair']['Completed'] = False                  
-#     TaskList['VSTM_Block'] = {}
-#     TaskList['VSTM_Block']['Completed'] = False  
-#     TaskList['Speed_PatternComp'] = {}
-#     TaskList['Speed_PatternComp']['Completed'] = False  
-#     TaskList['Vocab_Antonyms'] = {}
-#     TaskList['Vocab_Antonyms']['Completed'] = False  
-#     return TaskList
-
-
-# def FindResults(TaskList, VisitFolder, PartID):
-#     for j in TaskList:
-#         TempFile = glob.glob(os.path.join(VisitFolder,(PartID+'_'+j+'*.csv')))
-#          # Ideally the file names should be checked to pick the latest one   
-#         if len(TempFile) > 0:
-#             TaskList[j]['DataFile'] = TempFile[-1]
-#             TaskList[j]['Completed'] = True
-#     return TaskList
+if __name__ == "__main__":
+    main()

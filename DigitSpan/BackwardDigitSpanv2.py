@@ -16,8 +16,8 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import sound
-from psychopy import locale_setup, gui, visual, core, data, event, logging
+# from psychopy import sound
+from psychopy import locale_setup, sound, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -27,32 +27,40 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import re
+import wx
 def TypeInNumbers(): 
     # When [intrusion] is clicked on teh screen by the tester, this fn will
     # present a dialog box for the intusion word to be types in
     print('Entered Intrusion Entry')
-    app = gui.wx.PySimpleApp()
-    
-    frame = gui.wx.Frame(None, -1, 'win.py')
-    frame.SetDimensions(0,0,200,50)
-    
-    # Create text input
-    dlg = gui.wx.TextEntryDialog(frame, 'Type in number list','Text Entry')
-    # dlg.SetValue("Default")
-    if dlg.ShowModal() == gui.wx.ID_OK:
-        print('You entered: %s\n' % dlg.GetValue())
-    dlg.Destroy()
-
-    response = dlg.GetValue()
+    app = gui.Dlg(title = 'Response Entry')
+    app.addField('Number List:')
+    response = app.show()
+    print("Raw response")
+    print(response[0])
+    response = response[0]
     # remove non numerics from the string
     response = ''.join(c for c in response if c.isdigit())
+    print("Cleaned response")
     return response
+    
+    # # Create text input
+    # dlg = gui.wx.TextEntryDialog(frame, 'Type in number list','Text Entry')
+    # # dlg.SetValue("Default")
+    # if dlg.ShowModal() == gui.wx.ID_OK:
+    #     print('You entered: %s\n' % dlg.GetValue())
+    # dlg.Destroy()
+
+    # response = dlg.GetValue()
+    # # remove non numerics from the string
+    # response = ''.join(c for c in response if c.isdigit())
+    # return response
+
 
 FontSize = 30
 FontSizeUnits = 'pix'
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
 # #################
@@ -107,7 +115,7 @@ ITI = 1
 corr = 1
 resp = event.BuilderKeyResponse()
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
-
+print("Made it here 1")
 # Setup the Window
 win = visual.Window(
     size=[1200, 800], fullscr=False, screen=0,
@@ -127,36 +135,47 @@ countDown = core.CountdownTimer()
 trialClock = core.Clock()
 # Create a list of sound files
 SoundFileList = []
-sound_1 = sound.Sound('NumberSounds2/1b.wav', secs=-1,sampleRate=44100, bits=16)
-sound_1.setVolume(0.8)
+
+sound_1 = sound.Sound('NumberSounds2/1c.wav', secs=1, stereo=-1, sampleRate=24000)
+sound_1.setVolume(0.8, log=False)
 SoundFileList.append(sound_1)
-sound_2 = sound.Sound('NumberSounds2/2b.wav', secs=-1,sampleRate=44100, bits=16)
-sound_2.setVolume(0.8)
+
+sound_2 = sound.Sound('NumberSounds2/2c.wav', secs=1,stereo=-1, sampleRate=24000)
+sound_2.setVolume(0.8, log = False)
 SoundFileList.append(sound_2)
-sound_3 = sound.Sound('NumberSounds2/3b.wav', secs=-1,sampleRate=44100, bits=16)
-sound_3.setVolume(0.8)
+
+
+sound_3 = sound.Sound('NumberSounds2/3c.wav', secs=1,stereo=False, sampleRate=24000)
+sound_3.setVolume(0.8, log = False)
 SoundFileList.append(sound_3)
-sound_4 = sound.Sound('NumberSounds2/4b.wav', secs=-1,sampleRate=44100, bits=16)
+
+sound_4 = sound.Sound('NumberSounds2/4c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_4.setVolume(0.8)
 SoundFileList.append(sound_4)
-sound_5 = sound.Sound('NumberSounds2/5b.wav', secs=-1,sampleRate=44100, bits=16)
+
+sound_5 = sound.Sound('NumberSounds2/5c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_5.setVolume(0.8)
 SoundFileList.append(sound_5)
-sound_6 = sound.Sound('NumberSounds2/6b.wav', secs=-1,sampleRate=44100, bits=16)
+
+sound_6 = sound.Sound('NumberSounds2/6c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_6.setVolume(0.8)
 SoundFileList.append(sound_6)
-sound_7 = sound.Sound('NumberSounds2/7b.wav', secs=-1,sampleRate=44100, bits=16)
+
+sound_7 = sound.Sound('NumberSounds2/7c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_7.setVolume(0.8)
 SoundFileList.append(sound_7)
-sound_8 = sound.Sound('NumberSounds2/8b.wav', secs=-1,sampleRate=44100, bits=16)
+
+sound_8 = sound.Sound('NumberSounds2/8c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_8.setVolume(0.8)
 SoundFileList.append(sound_8)
-sound_9 = sound.Sound('NumberSounds2/9b.wav', secs=-1,sampleRate=44100, bits=16)
+
+sound_9 = sound.Sound('NumberSounds2/9c.wav', secs=1,stereo=False, sampleRate=24000)
 sound_9.setVolume(0.8)
 SoundFileList.append(sound_9)
-CorrectSound = sound.Sound('NumberSounds/correct.wav', secs = -1)
+
+CorrectSound = sound.Sound('NumberSounds2/correctc.wav', secs = 1,stereo=False, sampleRate=24000)
 CorrectSound.setVolume(0.8)
-IncorrectSound = sound.Sound('NumberSounds/incorrect.wav', secs = -1)
+IncorrectSound = sound.Sound('NumberSounds2/incorrectc.wav', secs = 1,stereo=False, sampleRate=24000)
 IncorrectSound.setVolume(0.8)
 
 # Initialize components for Routine "ThankYou"
@@ -265,6 +284,7 @@ while not CorrectPracticeFlag:
     RespList = np.array(RespList)
     print(RespList)
     # This is the BACKWARD Span Task
+    print(R[::-1])
     if np.array_equiv(R[::-1],RespList):
         print('Correct')
         CorrectSound.play()

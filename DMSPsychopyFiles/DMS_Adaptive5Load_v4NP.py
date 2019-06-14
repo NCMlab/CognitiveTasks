@@ -34,7 +34,7 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
 # #################
@@ -469,10 +469,10 @@ for thisBlock in Blocks:
         for paramName in thisBlock.keys():
             exec('{} = thisBlock[paramName]'.format(paramName))
     ## Set up which rows to select 
-    print "Block = %d"%(BlockCount)
-    print LoadList
+    print("Block = %d"%(BlockCount))
+    print(LoadList)
     CurrentLoad = LoadList[BlockCount-1]
-    print "CurrentLoad = %d"%(CurrentLoad)
+    print("CurrentLoad = %d"%(CurrentLoad))
     SelectionList = np.array(range(0,TrialsPerBlock,1)) + (CurrentLoad - 1)*TrialsPerBlock
     print(SelectionList)
     # ------Prepare to start Routine "Countdown"-------

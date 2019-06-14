@@ -22,7 +22,7 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 # #################
 # Store info about the experiment session
@@ -124,7 +124,7 @@ instructClock = core.Clock()
 instrText = visual.TextStim(win=win, name='instrText',
     text=u"Now you will do the task.\n\nIt will be exactly like the practice except you won't get feedback.\nPress the red(v) key if the ink is Red\nPress the yellow(b) key if the ink is Yellow\nPress the green(n) key if the ink is Green\nPress the blue(m) key if the ink is Blue\n\n(Esc will quit)\nPress any key to continue\n\n",
     font=u'Arial',
-    pos=[0, 0], height=0.1, wrapWidth=None, ori=0, 
+    pos=[0, 0], height=0.1, wrapWidth=1000, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 
