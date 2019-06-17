@@ -104,7 +104,7 @@ filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant
 
 # Setup the Window
 win = visual.Window(
-    size=(1200, 800), fullscr=False, screen=0,
+    size=(1200, 800), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=VSTM_BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,

@@ -95,11 +95,11 @@ win = visual.Window(
 ProbeColor = 'blue'
 
 # Timing
-StimOnTime = 2.5
-RetOnTime = 3.5
-ProbeOnTime= 2.5
-ITITime = 1.0
-MaxTime = 7 # minutes
+StimOnTime = 2.5/10
+RetOnTime = 3.5/10
+ProbeOnTime= 2.5/10
+ITITime = 1.0/10
+MaxTime = 2# 7 # minutes
 MaxTrials = expInfo['Max Trials'] # End after this many trials
 NumberOfReversals = 20
 
@@ -305,6 +305,14 @@ for thisStep in staircase:
     CurrentLoad = int(Nloads + 1 - thisStep)  
     LetterList = 'BCDFGHJKLMNPQRSTVXYZ'
     LettersToRemove = list(set(LastTrial))
+    # There is an issue with Load 1, Positive probe and the Stim of L.
+    # The letter L was included as a stimulus letter that will never be a probe.
+    # This was done to maximize the number of letters in the study set minimizing 
+    # the number of overlap of stimulus letters between trials.
+    # However, this was done on the condition that the letter L was never used as 
+    # a probe letter because it is difficult to differentiate a lowercase L from 
+    # the number 1.
+    # I need to add a check for this situation and correct for it.
     tempLetterList = list(LetterList)
     for j in LettersToRemove:
         tempLetterList[tempLetterList.index(j)] = ''
@@ -315,7 +323,8 @@ for thisStep in staircase:
     CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
     for j in CurrentStimIndex:
         CurrentStim += tempLetterList[j]
-    # Is the probe in teh set?
+    print("Current stim: %s"%(CurrentStim))
+    # Is the probe in the set?
     Probe = np.round(np.random.uniform())
     if bool(Probe):
         # Yes, the probe is in the set
@@ -340,6 +349,7 @@ for thisStep in staircase:
                 LookingForProbe = False
         corr = 'right'
     CurrentProbe = CurrentProbe.lower()    
+    print("Current Probe: %s"%(CurrentProbe))
     LastTrial = CurrentStim + CurrentProbe.upper()
     InStim = MapLettersToScreen(CurrentStim)
     
@@ -486,8 +496,11 @@ for thisStep in staircase:
         dataFile.close()
         #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
+        
 print(EndFlag)
-
+textThankyou.setAutoDraw(True)
+win.flip()
+core.wait(3)
 Capacity = 10 - np.mean(staircase.reversalIntensities)
 Capacity = Capacity
 dataFile1.write('%0.4f'%(Capacity))
