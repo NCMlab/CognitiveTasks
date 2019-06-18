@@ -1,4 +1,22 @@
 import numpy as np
+
+LetterList = 'BCDFGHJKLMNPQRSTVXYZ'
+tempLetterList = LetterList
+CurrentStim = ''
+CurrentLoad = 2
+NotOneL_StimFlag = True
+while NotOneL_StimFlag:
+    CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
+    
+    for j in CurrentStimIndex:
+        CurrentStim += tempLetterList[j]
+    if not CurrentStim == 'L':
+        NotOneL_StimFlag = False
+        
+# CHeck for the L stim situation
+
+
+CurrentStim = 'L'
 Probe = np.round(np.random.uniform())
 if bool(Probe):
     # Yes, the probe is in the set
