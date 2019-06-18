@@ -305,18 +305,45 @@ for thisStep in staircase:
     CurrentLoad = int(Nloads + 1 - thisStep)  
     LetterList = 'BCDFGHJKLMNPQRSTVXYZ'
     LettersToRemove = list(set(LastTrial))
+    # There is an issue with Load 1, Positive probe and the Stim of L.
+    # The letter L was included as a stimulus letter that will never be a probe.
+    # This was done to maximize the number of letters in the study set minimizing 
+    # the number of overlap of stimulus letters between trials.
+    # However, this was done on the condition that the letter L was never used as 
+    # a probe letter because it is difficult to differentiate a lowercase L from 
+    # the number 1.
+    # I need to add a check for this situation and correct for it.
     tempLetterList = list(LetterList)
     for j in LettersToRemove:
         tempLetterList[tempLetterList.index(j)] = ''
     # remove empty locations from the list
     tempLetterList = [x for x in tempLetterList if x] 
-    # Create the lost of curent stimulus letters
-    CurrentStim = ''
-    CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
-    for j in CurrentStimIndex:
-        CurrentStim += tempLetterList[j]
-    # Is the probe in teh set?
+    
+    # Is the probe in the set?
     Probe = np.round(np.random.uniform())
+    
+    # Create the list of curent stimulus letters
+    # Check the stimulus to make sure if it is a positive probe that the stimulus is 
+    # not a single letter L. L is not used as a probe letter.
+    if bool(Probe):
+        # This check is only for POSITIVE probe trials
+        NotOneL_StimFlag = True
+        while NotOneL_StimFlag:
+            CurrentStim = ''
+            CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
+            for j in CurrentStimIndex:
+                CurrentStim += tempLetterList[j]
+            if not CurrentStim == 'L':
+                NotOneL_StimFlag = False  
+    else:
+        # This is a negative probe trial so even if L was the stimulus, the probe would 
+        # be a different letter
+        CurrentStim = ''
+        CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
+        for j in CurrentStimIndex:
+            CurrentStim += tempLetterList[j]
+    print("Current stim: %s"%(CurrentStim))
+
     if bool(Probe):
         # Yes, the probe is in the set
         #CurrentProbe = CurrentStim[np.random.permutation(len(CurrentStim))[0]]
@@ -340,6 +367,7 @@ for thisStep in staircase:
                 LookingForProbe = False
         corr = 'right'
     CurrentProbe = CurrentProbe.lower()    
+    print("Current Probe: %s"%(CurrentProbe))
     LastTrial = CurrentStim + CurrentProbe.upper()
     InStim = MapLettersToScreen(CurrentStim)
     
@@ -486,8 +514,11 @@ for thisStep in staircase:
         dataFile.close()
         #staircase.saveAsText(StairCasefileName,delim=',')
         core.quit()
+        
 print(EndFlag)
-
+textThankyou.setAutoDraw(True)
+win.flip()
+core.wait(3)
 Capacity = 10 - np.mean(staircase.reversalIntensities)
 Capacity = Capacity
 dataFile1.write('%0.4f'%(Capacity))
