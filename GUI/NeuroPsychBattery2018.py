@@ -596,7 +596,7 @@ class Mywin(wx.Frame):
    def OnClickedR2C2(self, event): 
       btnR2C2Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR2C2Label))
-      core.shellCall([sys.executable, "../WCST/WCST_v2.py", self.PartID.GetValue(), self.VisitFolderPath])#, self.PartID.GetValue(), self.VisitFolderPath])
+      core.shellCall([sys.executable, "../WCST/WCST_v4.py", self.PartID.GetValue(), self.VisitFolderPath])#, self.PartID.GetValue(), self.VisitFolderPath])
       self.cbR2C2.SetValue(True)
       
    def OnClickedR2C3(self, event): 
