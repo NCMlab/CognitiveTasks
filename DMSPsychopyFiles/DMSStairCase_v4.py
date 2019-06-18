@@ -95,11 +95,11 @@ win = visual.Window(
 ProbeColor = 'blue'
 
 # Timing
-StimOnTime = 2.5/10
-RetOnTime = 3.5/10
-ProbeOnTime= 2.5/10
-ITITime = 1.0/10
-MaxTime = 2# 7 # minutes
+StimOnTime = 2.5
+RetOnTime = 3.5
+ProbeOnTime= 2.5
+ITITime = 1.0
+MaxTime = 7 # minutes
 MaxTrials = expInfo['Max Trials'] # End after this many trials
 NumberOfReversals = 20
 
@@ -318,14 +318,32 @@ for thisStep in staircase:
         tempLetterList[tempLetterList.index(j)] = ''
     # remove empty locations from the list
     tempLetterList = [x for x in tempLetterList if x] 
-    # Create the lost of curent stimulus letters
-    CurrentStim = ''
-    CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
-    for j in CurrentStimIndex:
-        CurrentStim += tempLetterList[j]
-    print("Current stim: %s"%(CurrentStim))
+    
     # Is the probe in the set?
     Probe = np.round(np.random.uniform())
+    
+    # Create the list of curent stimulus letters
+    # Check the stimulus to make sure if it is a positive probe that the stimulus is 
+    # not a single letter L. L is not used as a probe letter.
+    if bool(Probe):
+        # This check is only for POSITIVE probe trials
+        NotOneL_StimFlag = True
+        while NotOneL_StimFlag:
+            CurrentStim = ''
+            CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
+            for j in CurrentStimIndex:
+                CurrentStim += tempLetterList[j]
+            if not CurrentStim == 'L':
+                NotOneL_StimFlag = False  
+    else:
+        # This is a negative probe trial so even if L was the stimulus, the probe would 
+        # be a different letter
+        CurrentStim = ''
+        CurrentStimIndex = np.random.permutation(len(tempLetterList))[0:CurrentLoad]
+        for j in CurrentStimIndex:
+            CurrentStim += tempLetterList[j]
+    print("Current stim: %s"%(CurrentStim))
+
     if bool(Probe):
         # Yes, the probe is in the set
         #CurrentProbe = CurrentStim[np.random.permutation(len(CurrentStim))[0]]
