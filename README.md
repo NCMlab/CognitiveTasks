@@ -1,11 +1,14 @@
 # CognitiveTasks
 
-This is a set of code for administering a few cognitive tasks. 
-The code is all written in Psychopy http://www.psychopy.org/. Psychopy needs ot be installed first. Also note that as of right now Psychopy uses python 2.7.
+This is a set of code for administering cognitive tasks behaviorally and within the functional MRI environment. 
+
+The code is all written in Psychopy http://www.psychopy.org/; therefore, Psychopy needs to be installed first :). 
+This code was originally written to use python 2.7 and Psychopy 1.903. This version is in release [INSERT LINK]. The master branch of the code is updated to use Psychopy 3.0 and python 3.5.
+
+There are multiple GUIs, in the GUI folder, which are used for calling all of the individual tasks. However, the tasks can also be run independently. The GUI ensures that all result data files are created with the same participant ID and are stored inthe same location.
 
 When the tasks are run data files will be created. These will be placed in a top level folder called data. If this folder does not exist it will be created. Within this data folder one folder will be created for each participant ID. By default the participant ID is 9999999. Every data file is named with the format: 
 `[Task Name]_[Participant ID]_[Year]_[Month]_[Day]_[Time].csv`
-
 
 
 ## GUIs
