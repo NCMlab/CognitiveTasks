@@ -44,7 +44,7 @@ This is an event-related task presenting words. The task has 60 words and takes 
 
 ### Delayed Match to Sample, Spatial
 
-### [Stroop](Descriotions/stroop.md)
+### [Stroop](Descriptions/stroop.md)
 ### Pattern Comparison
 ### Digit Symbol
 ### American NART
