@@ -361,10 +361,25 @@ for thisStep in staircase:
         # remove empty locations from the list
         tempLetterList = [x for x in tempLetterList if x] 
         LookingForProbe = True
-        while LookingForProbe:
+        # Add a limit to the number of attempts to create a probe letter.
+        # If there are two trials with 9 letters in a row and each has a negative Probe
+        # then there is no way to avoid the probe being in the last set of letters.
+        ProbeCheckCount = 0
+        ProbeCheckCountLimit = 40
+        while LookingForProbe and (ProbeCheckCount < ProbeCheckCountLimit):
+            # If the limit is reached the CUrrentProbe will be the last letter tried
             CurrentProbe = tempLetterList[np.random.permutation(len(tempLetterList))[0]]
             if CurrentProbe != 'L':
                 LookingForProbe = False
+            ProbeCheckCount += 1
+#        print("Probe Checks: %d"%(ProbeCheckCount))
+#        print("My current probe letter is: %s"%(CurrentProbe))
+#        print("Let list: %s"%(tempLetterList)) 
+        
+        # Double check that the probe letter is not an L. If it is then pull a random letter from the last trial
+        while CurrentProbe == 'L':
+            CurrentProbe = LastTrial[np.random.permutation(len(LastTrial))[0]]
+#        print("My current probe letter is NOW: %s"%(CurrentProbe))
         corr = 'right'
     CurrentProbe = CurrentProbe.lower()    
     print("Current Probe: %s"%(CurrentProbe))

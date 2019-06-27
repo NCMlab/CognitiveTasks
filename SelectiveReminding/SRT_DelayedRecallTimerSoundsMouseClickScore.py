@@ -118,7 +118,7 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 instr = visual.TextStim(win=win, name='instr',
-    text=u'Please think back to the list of words you studied before.\nYou will need to recall as many words as you can by speaking them out loud.\n\nPress [return] to begin',
+    text=u'Please think back to the list of words you studied before.\nYou will have to recall as many of the words as you can in 1 minute by speaking them out loud.\n\nPress [return] to begin',
    # For those items that were not recalled during the current trial, the words will be repeated and you  \nare to again recall as many of the original list words as they can. \nThis procedure is repeated for 5 trials.\n \nPress [return] to begin',
     font=u'Arial',
     units='pix', pos=(0, 0), height=35, wrapWidth=900, ori=0, 

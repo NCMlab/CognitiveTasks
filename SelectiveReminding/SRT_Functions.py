@@ -52,7 +52,7 @@ def MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows):
     return ColLocsList, RowLocsList
 
 
-def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime):
+def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText):
     RecallOrder = 1
     SRT_ResponseTimeAllowed = 60
     from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
@@ -72,7 +72,8 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     countDownClock = core.CountdownTimer(SRT_ResponseTimeAllowed)            
     # Put the response timer on the screen
     ResponseTimer.setAutoDraw(True)
-    RemainingTime.setAutoDraw(True)                                                
+    RemainingTime.setAutoDraw(True)   
+    TrialCountText.setAutoDraw(True)
     # ------Prepare to start Routine "trial"-------
     t = 0
     trialClock.reset()  # clock
@@ -231,6 +232,7 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     # Remove the words from the screen
     ResponseTimer.setAutoDraw(False)
     RemainingTime.setAutoDraw(False)
+    TrialCountText.setAutoDraw(False)
     
     for word in WordListObjects:
         word.setAutoDraw(False)

@@ -86,9 +86,9 @@ SpacingOfLettersRelativeToCenter = 80
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=u'/Users/jasonsteffener/Dropbox/NeuralCognitiveMapping/DMSPsychopyFiles/DMSDemo.psyexp',
-    savePickle=True, saveWideText=True,
+    savePickle=False, saveWideText=True,
     dataFileName=filename)
-logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
+#logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
@@ -776,9 +776,9 @@ if pracTrials.trialList in ([], [None], None):
 else:
     params = pracTrials.trialList[0].keys()
 # save data for this loop
-pracTrials.saveAsExcel(filename + '.xlsx', sheetName='pracTrials',
-    stimOut=params,
-    dataOut=['n','all_mean','all_std', 'all_raw'])
+#pracTrials.saveAsExcel(filename + '.xlsx', sheetName='pracTrials',
+#    stimOut=params,
+#    dataOut=['n','all_mean','all_std', 'all_raw'])
 
 # ------Prepare to start Routine "mainInstruct"-------
 #t = 0

@@ -17,7 +17,7 @@ import numpy as np
 # AssignStimuliv2(CorrectLocations,TrialPerBlock,Stimuli,LoadLevel)
 
 def CreateStimFixed18_6(LoadLevel):
-    # This was created so that a fixed order ciuld be used for all participants.
+    # This was created so that a fixed order could be used for all participants.
     # It also
     if LoadLevel == 0:
         test = np.array([4,6,10,13,15,17]) # These are natural number locations starting at ONE
@@ -27,6 +27,31 @@ def CreateStimFixed18_6(LoadLevel):
         test = np.array([3,6,9,11,14,18])
     return test
 
+def Lists12():
+    ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM']
+    ZeroBackBlock2Run1 = ['MVDXMXFKJXTYXRXBXM']
+    ZeroBackBlock1Run2 = 
+    ZeroBackBlock2Run2
+    ZeroBackBlock1Run3
+    ZeroBackBlock2Run3
+    ZeroBackBlock1Run4
+    ZeroBackBlock2Run4
+    OneBackBlock1Run1 = ['YPHHGGVSCCBRRHFFTT']
+    OneBackBlock2Run1 = ['ZRCCRRBSDDPNNHTTZZ'] 
+    OneBackBlock1Run2 = 
+    OneBackBlock2Run2 = 
+    OneBackBlock1Run3 = 
+    OneBackBlock2Run3 = 
+    OneBackBlock1Run4 = 
+    OneBackBlock1Run4 =  
+    TwoBackBlock1Run1 = ['LMLSJSRNRTRJVJYTDT'] 
+    TwoBackBlock1Run2 = ['TNTRPRKHKJKTLTVPCP']
+    TwoBackBlock2Run1 =
+    TwoBackBlock2Run2 
+    TwoBackBlock3Run1 
+    TwoBackBlock3Run2 
+    TwoBackBlock4Run1 
+    TwoBackBlock4Run2 
 def CreateStimFixed12_4(LoadLevel):
     # This was created so that a fixed order ciuld be used for all participants.
     # It also

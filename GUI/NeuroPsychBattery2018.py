@@ -130,61 +130,8 @@ class Mywin(wx.Frame):
       self.NBackTag = 0
       self.NBackPracticeTag = 0
       
-# ###################
+# #### Row 
       CurrentRow = RowPixel[1]
-      self.title1 = wx.StaticText(self.panel, -1, label = "Stroop", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
-      # Buttons
-
-      self.btnR1C2 = wx.Button(self.panel,-1,"Color", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR1C2.Bind(wx.EVT_BUTTON,self.OnClickedR1C2) 
-      self.btnR1C3 = wx.Button(self.panel,-1,"Word", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR1C3.Bind(wx.EVT_BUTTON,self.OnClickedR1C3) 
-      self.btnR1C4 = wx.Button(self.panel,-1,"ColorWord", pos = (ColPixel[3],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR1C4.Bind(wx.EVT_BUTTON,self.OnClickedR1C4)
-      
-     
-      # Box
-      Row1Box = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
-      # Checkboxes
-      self.cbR1C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
-      self.cbR1C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
-      self.cbR1C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,CurrentRow))
-      
-      # #### Row 
-      CurrentRow = RowPixel[2]
-      self.titleR2 = wx.StaticText(self.panel, -1, label = "Card Sort", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
-      # Buttons
-      self.btnR2C2 = wx.Button(self.panel,-1,"WCST", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR2C2.Bind(wx.EVT_BUTTON,self.OnClickedR2C2) 
-
-      # Box
-      Row1BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
-      # Checkboxes
-      self.cbR2C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
-#      self.cbR2C3 = wx.CheckBox(panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,Row2))
-#      self.cbR2C4 = wx.CheckBox(panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,Row2))
-
-# #### Row 
-
-      CurrentRow = RowPixel[4]
-      self.titleR6 = wx.StaticText(self.panel, -1, label = "Vocabulary", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
-      # Buttons
-      self.btnR6C2 = wx.Button(self.panel,-1,"Antonyms", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR6C2.Bind(wx.EVT_BUTTON,self.OnClickedR6C2) 
-      # Box
-      Row6BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
-      # Checkboxes
-      self.cbR6C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
-      
-
-      # Buttons
-      self.btnR6C3 = wx.Button(self.panel,-1,"Reading", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR6C3.Bind(wx.EVT_BUTTON,self.OnClickedR6C3) 
-      # Checkboxes
-      self.cbR6C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
-
-# #### Row 
-      CurrentRow = RowPixel[3]
       self.titleRMem = wx.StaticText(self.panel, -1, label = "Memory", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
       self.btnRMemC2 = wx.Button(self.panel,-1,"Immediate", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -199,38 +146,9 @@ class Mywin(wx.Frame):
       self.cbRMemC2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
       self.cbRMemC5 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[4] + ButtonWidth+5,CurrentRow))
       self.cbRMemC6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth+5,CurrentRow))
-      
-# #### Row 
-# ###################
 
-      CurrentRow = RowPixel[5]
-      self.titleR7 = wx.StaticText(self.panel, -1, label = "Digit Span", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
-      # Buttons
-      self.btnR7C2 = wx.Button(self.panel,-1,"Forward", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR7C2.Bind(wx.EVT_BUTTON,self.OnClickedR7C2) 
-      self.btnR7C3 = wx.Button(self.panel,-1,"Backward", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR7C3.Bind(wx.EVT_BUTTON,self.OnClickedR7C3) 
-    # Box
-      Row7BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
-      # Checkboxes
-      self.cbR7C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
-      self.cbR7C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
-      
-# ###################
-      CurrentRow = RowPixel[6]
-      self.titleR8 = wx.StaticText(self.panel, -1, label = "Speed", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
-      # Buttons
-      self.btnR8C2 = wx.Button(self.panel,-1,"Patt. Comp", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      self.btnR8C2.Bind(wx.EVT_BUTTON,self.OnClickedR8C2) 
-
-    # Box
-      Row8BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
-      # Checkboxes
-      self.cbR8C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
-      #self.cbR8C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
 # #### Row 
-# ###################
-      CurrentRow = RowPixel[7]
+      CurrentRow = RowPixel[2]
       self.titleR9 = wx.StaticText(self.panel, -1, label = "Fluid", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
       #self.btnR9C2 = wx.Button(self.panel,-1,"Paper Folding", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -239,24 +157,15 @@ class Mywin(wx.Frame):
       self.btnR9C2.Bind(wx.EVT_BUTTON,self.OnClickedR9C2) 
       self.btnR9C3 = wx.Button(self.panel,-1,"Matrices", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR9C3.Bind(wx.EVT_BUTTON,self.OnClickedR9C3) 
-      
-      #self.btnR9C3 = wx.Button(self.panel,-1,"Letter Comp", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      #self.btnR9C3.Bind(wx.EVT_BUTTON,self.OnClickedR8C3) 
     # Box
       Row9BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
       self.cbR9C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
       self.cbR9C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
-
-# ##########
-      #self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (ColPixel[3],Row10), size = ((ButtonWidth, ButtonHeight))) 
-      #self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
       self.cbR9C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
       self.cbR9C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
-
-# ###################
-      CurrentRow = RowPixel[8]
-#      # #### Row 3
+# ### Row
+      CurrentRow = RowPixel[3]
       self.titleR5 = wx.StaticText(self.panel, -1, label = "DMS/Letters", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons 
       self.btnR5C1 = wx.Button(self.panel,-1,"Instructions", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -276,16 +185,44 @@ class Mywin(wx.Frame):
       self.btnR5C5b.Bind(wx.EVT_BUTTON, self.LoadDMSCapacity)
       # Make a box around the Capacity text and entry buttons
       Row5BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (ColPixel[4],CurrentRow-5))
-#      # Box
+      # Box
       Row1BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
       self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
       self.cbR5C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,CurrentRow))
       self.cbR5C6 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
 
-# ###################
-      CurrentRow = RowPixel[9]
-#      # #### Row 3
+
+# #### Row
+      CurrentRow = RowPixel[4]
+      self.title1 = wx.StaticText(self.panel, -1, label = "Stroop", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
+      # Buttons
+      self.btnR1C2 = wx.Button(self.panel,-1,"Color", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR1C2.Bind(wx.EVT_BUTTON,self.OnClickedR1C2) 
+      self.btnR1C3 = wx.Button(self.panel,-1,"Word", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR1C3.Bind(wx.EVT_BUTTON,self.OnClickedR1C3) 
+      self.btnR1C4 = wx.Button(self.panel,-1,"ColorWord", pos = (ColPixel[3],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR1C4.Bind(wx.EVT_BUTTON,self.OnClickedR1C4)
+      # Box
+      Row1Box = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
+      # Checkboxes
+      self.cbR1C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+      self.cbR1C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
+      self.cbR1C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,CurrentRow))
+      
+# #### Row 
+      CurrentRow = RowPixel[5]
+      self.titleR2 = wx.StaticText(self.panel, -1, label = "Card Sort", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
+      # Buttons
+      self.btnR2C2 = wx.Button(self.panel,-1,"WCST", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR2C2.Bind(wx.EVT_BUTTON,self.OnClickedR2C2) 
+      # Box
+      Row1BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
+      # Checkboxes
+      self.cbR2C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+
+# ### Row
+      CurrentRow = RowPixel[6]
       self.titleR3 = wx.StaticText(self.panel, -1, label = "Spatial/Dots", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
       self.btnR3C1 = wx.Button(self.panel,-1,"Instructions", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -303,21 +240,35 @@ class Mywin(wx.Frame):
       self.btnR3C5b = wx.Button(self.panel,-1,"Load", pos = (ColPixel[5]+40,CurrentRow), size = ((ButtonWidth/2+5, ButtonHeight))) 
       self.btnR3C5a.Bind(wx.EVT_BUTTON, self.OnClickedVSTMCapEnter)
       self.btnR3C5b.Bind(wx.EVT_BUTTON, self.LoadVSTMCapacity)
-      
       # Make a box around the Capacity text and entry buttons
       Row3BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (ColPixel[3],CurrentRow-5))
-#      # Box
+      # Box
       Row1BoxR3 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
       # Checkboxes
       self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
       self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,CurrentRow))
       self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth+5,CurrentRow))
+      
+# #### Row 
+      CurrentRow = RowPixel[7]
+      self.titleR6 = wx.StaticText(self.panel, -1, label = "Vocabulary", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
+      # Buttons
+      self.btnR6C2 = wx.Button(self.panel,-1,"Antonyms", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR6C2.Bind(wx.EVT_BUTTON,self.OnClickedR6C2) 
+      # Box
+      Row6BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
+      # Checkboxes
+      self.cbR6C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+      # Buttons
+      self.btnR6C3 = wx.Button(self.panel,-1,"Reading", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR6C3.Bind(wx.EVT_BUTTON,self.OnClickedR6C3) 
+      # Checkboxes
+      self.cbR6C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
 
-# ###################
-      CurrentRow = RowPixel[10]
-#      # #### Row 3
+# ### Row
+      CurrentRow = RowPixel[8]
       self.titleR5 = wx.StaticText(self.panel, -1, label = "N-Back", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
-#      # Buttons
+      # Buttons
       self.btnR10C1 = wx.Button(self.panel,-1,"Instructions", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR10C1.Bind(wx.EVT_BUTTON,self.OnClickedR10C1)             
       self.btnR10C3 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -333,12 +284,33 @@ class Mywin(wx.Frame):
       # Box around buttons
       Row1BoxR10 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
 
+# #### Row 
+      CurrentRow = RowPixel[9]
+      self.titleR7 = wx.StaticText(self.panel, -1, label = "Digit Span", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
+      # Buttons
+      self.btnR7C2 = wx.Button(self.panel,-1,"Forward", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR7C2.Bind(wx.EVT_BUTTON,self.OnClickedR7C2) 
+      self.btnR7C3 = wx.Button(self.panel,-1,"Backward", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR7C3.Bind(wx.EVT_BUTTON,self.OnClickedR7C3) 
+    # Box
+      Row7BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
+      # Checkboxes
+      self.cbR7C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+      self.cbR7C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
+      
+# ### Row
+      CurrentRow = RowPixel[10]
+      self.titleR8 = wx.StaticText(self.panel, -1, label = "Speed", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
+      # Buttons
+      self.btnR8C2 = wx.Button(self.panel,-1,"Patt. Comp", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR8C2.Bind(wx.EVT_BUTTON,self.OnClickedR8C2) 
+    # Box
+      Row8BoxR2 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
+      # Checkboxes
+      self.cbR8C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[1] + ButtonWidth+5,CurrentRow))
+      
 
-# ###################
-      #self.btnTEST = wx.Button(self.panel,-1,"TEST", pos = (ColPixel[3],Row10), size = ((ButtonWidth, ButtonHeight))) 
-      #self.btnTEST.Bind(wx.EVT_BUTTON,self.TESTGUI) 
-
-
+# ### Row
       self.btnClose = wx.Button(self.panel,-1,"Close", pos = (ColPixel[0],RowPixel[11]-5), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
       

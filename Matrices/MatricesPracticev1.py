@@ -64,11 +64,11 @@ FontSize = 60
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=u'/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/Matrices/MatricesPractice.psyexp',
-    savePickle=True, saveWideText=True,
+    savePickle=False, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
-logFile = logging.LogFile(filename+'.log', level=logging.EXP)
-logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
+#logFile = logging.LogFile(filename+'.log', level=logging.EXP)
+#logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
@@ -786,8 +786,8 @@ for thisComponent in ThankYouComponents:
         thisComponent.setAutoDraw(False)
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
-thisExp.saveAsPickle(filename)
-logging.flush()
+#thisExp.saveAsPickle(filename)
+#logging.flush()
 # make sure everything is closed down
 thisExp.abort()  # or data files will save again on exit
 win.close()
