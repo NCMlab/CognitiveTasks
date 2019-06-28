@@ -28,30 +28,30 @@ def CreateStimFixed18_6(LoadLevel):
     return test
 
 def Lists12():
-    ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM']
-    ZeroBackBlock2Run1 = ['MVDXMXFKJXTYXRXBXM']
-    ZeroBackBlock1Run2 = 
-    ZeroBackBlock2Run2
-    ZeroBackBlock1Run3
-    ZeroBackBlock2Run3
-    ZeroBackBlock1Run4
-    ZeroBackBlock2Run4
-    OneBackBlock1Run1 = ['YPHHGGVSCCBRRHFFTT']
-    OneBackBlock2Run1 = ['ZRCCRRBSDDPNNHTTZZ'] 
-    OneBackBlock1Run2 = 
-    OneBackBlock2Run2 = 
-    OneBackBlock1Run3 = 
-    OneBackBlock2Run3 = 
-    OneBackBlock1Run4 = 
-    OneBackBlock1Run4 =  
-    TwoBackBlock1Run1 = ['LMLSJSRNRTRJVJYTDT'] 
-    TwoBackBlock1Run2 = ['TNTRPRKHKJKTLTVPCP']
-    TwoBackBlock2Run1 =
-    TwoBackBlock2Run2 
-    TwoBackBlock3Run1 
-    TwoBackBlock3Run2 
-    TwoBackBlock4Run1 
-    TwoBackBlock4Run2 
+    ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM'] # THXZXDJCMXKXGXMHDX VYXZPVXLXVFXCXFTXR SKXJXPHVXSKMXFXKXN XKCMHXZJXCXRPXYZXT
+    ZeroBackBlock2Run1 = ['MVDXMXFKJXTYXRXBXM'] # GXLKMSXZXDSXRMXVXP LTXCXSYKXVNXHXPVNX FPXTFXYVXHXFXMXLPY DKNNJMMDDTTVVHHSFV
+#    ZeroBackBlock1Run2 = 
+#    ZeroBackBlock2Run2
+#    ZeroBackBlock1Run3
+#    ZeroBackBlock2Run3
+#    ZeroBackBlock1Run4
+#    ZeroBackBlock2Run4
+    OneBackBlock1Run1 = ['YPHHGGVSCCBRRHFFTT'] # FFNNMFFVCCNLFFGGHS XNXMHTNXSXYXLXYTPS FFDTTVVPPGGNNCLFTK LXTNXGXFXHNXDVXSLK
+    OneBackBlock2Run1 = ['ZRCCRRBSDDPNNHTTZZ'] # GHHVVYYNSKKZZHVPNN CTTSSYVCCTTBFFTTSD RRVVHZZGSHKKBBCNDD GSSLLYYNLVMMKKPPMT
+#    OneBackBlock1Run2 = 
+#    OneBackBlock2Run2 = 
+#    OneBackBlock1Run3 = 
+#    OneBackBlock2Run3 = 
+#    OneBackBlock1Run4 = 
+#    OneBackBlock1Run4 =  
+    TwoBackBlock1Run1 = ['LMLSJSRNRTRJVJYTDT'] # JBVHLHDHDGYGMSMSMJ JFZFZHJLBLBLBYVGSC RDVCLCLVLJLJVJVFPY GSGSGLYNYNDRCYCSGL TGLHDHVHVHYFYPTPMC
+    TwoBackBlock1Run2 = ['TNTRPRKHKJKTLTVPCP'] # MLFTKTKTFJLJLRSRPK MLMLPTFBDRDRDVGVRY FHKHRHRHYTYTPMLYNK GHGHGHCHNYMHRHTVTM FJKJSJNJNJNVDYSRLR
+#    TwoBackBlock2Run1 =
+#    TwoBackBlock2Run2 
+#    TwoBackBlock3Run1 
+#    TwoBackBlock3Run2 
+#    TwoBackBlock4Run1 
+#    TwoBackBlock4Run2 
 def CreateStimFixed12_4(LoadLevel):
     # This was created so that a fixed order ciuld be used for all participants.
     # It also
@@ -218,7 +218,7 @@ def FillinTheLettersWithNoResponses(List, Stimuli):
                 else:
                     count += 1
         Position += 1
-        print(count)
+        #print(count)
     return List
         
 def AddResponseLettersAndBackLetters(CorrectLocations, List, Stimuli, TrialPerBlock, LoadLevel):
