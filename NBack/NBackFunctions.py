@@ -27,31 +27,32 @@ def CreateStimFixed18_6(LoadLevel):
         test = np.array([3,6,9,11,14,18])
     return test
 
-def Lists12():
-    ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM'] # THXZXDJCMXKXGXMHDX VYXZPVXLXVFXCXFTXR SKXJXPHVXSKMXFXKXN XKCMHXZJXCXRPXYZXT
-    ZeroBackBlock2Run1 = ['MVDXMXFKJXTYXRXBXM'] # GXLKMSXZXDSXRMXVXP LTXCXSYKXVNXHXPVNX FPXTFXYVXHXFXMXLPY DKNNJMMDDTTVVHHSFV
-#    ZeroBackBlock1Run2 = 
-#    ZeroBackBlock2Run2
-#    ZeroBackBlock1Run3
-#    ZeroBackBlock2Run3
-#    ZeroBackBlock1Run4
-#    ZeroBackBlock2Run4
-    OneBackBlock1Run1 = ['YPHHGGVSCCBRRHFFTT'] # FFNNMFFVCCNLFFGGHS XNXMHTNXSXYXLXYTPS FFDTTVVPPGGNNCLFTK LXTNXGXFXHNXDVXSLK
-    OneBackBlock2Run1 = ['ZRCCRRBSDDPNNHTTZZ'] # GHHVVYYNSKKZZHVPNN CTTSSYVCCTTBFFTTSD RRVVHZZGSHKKBBCNDD GSSLLYYNLVMMKKPPMT
-#    OneBackBlock1Run2 = 
-#    OneBackBlock2Run2 = 
-#    OneBackBlock1Run3 = 
-#    OneBackBlock2Run3 = 
-#    OneBackBlock1Run4 = 
-#    OneBackBlock1Run4 =  
-    TwoBackBlock1Run1 = ['LMLSJSRNRTRJVJYTDT'] # JBVHLHDHDGYGMSMSMJ JFZFZHJLBLBLBYVGSC RDVCLCLVLJLJVJVFPY GSGSGLYNYNDRCYCSGL TGLHDHVHVHYFYPTPMC
-    TwoBackBlock1Run2 = ['TNTRPRKHKJKTLTVPCP'] # MLFTKTKTFJLJLRSRPK MLMLPTFBDRDRDVGVRY FHKHRHRHYTYTPMLYNK GHGHGHCHNYMHRHTVTM FJKJSJNJNJNVDYSRLR
-#    TwoBackBlock2Run1 =
-#    TwoBackBlock2Run2 
-#    TwoBackBlock3Run1 
-#    TwoBackBlock3Run2 
-#    TwoBackBlock4Run1 
-#    TwoBackBlock4Run2 
+# def Lists12():
+#     ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM'] # THXZXDJCMXKXGXMHDX VYXZPVXLXVFXCXFTXR SKXJXPHVXSKMXFXKXN XKCMHXZJXCXRPXYZXT
+#     ZeroBackBlock2Run1 = ['MVDXMXFKJXTYXRXBXM'] # GXLKMSXZXDSXRMXVXP LTXCXSYKXVNXHXPVNX FPXTFXYVXHXFXMXLPY DKNNJMMDDTTVVHHSFV
+# #    ZeroBackBlock1Run2 = 
+# #    ZeroBackBlock2Run2
+# #    ZeroBackBlock1Run3
+# #    ZeroBackBlock2Run3
+# #    ZeroBackBlock1Run4
+# #    ZeroBackBlock2Run4
+#     OneBackBlock1Run1 = ['RDDVPPRRMPFFJJYCCT'] # FFNNMFFVCCNLFFGGHS XNXMHTNXSXYXLXYTPS FFDTTVVPPGGNNCLFTK LXTNXGXFXHNXDVXSLK
+#     OneBackBlock2Run1 = ['NHDDTTYKKLZZNNLHHN'] # GHHVVYYNSKKZZHVPNN CTTSSYVCCTTBFFTTSD RRVVHZZGSHKKBBCNDD GSSLLYYNLVMMKKPPMT
+# #    OneBackBlock1Run2 = ['PSSGNNDDRPFFHHSLLZ']
+# #    OneBackBlock2Run2 = 
+# #    OneBackBlock1Run3 = ['GTTPCCHHJKFFVVPLLG']
+# #    OneBackBlock2Run3 = 
+# #    OneBackBlock1Run4 = ['KHHRCCVVJNGGYYMSSC']
+# #    OneBackBlock1Run4 =  
+#     TwoBackBlock1Run1 = ['DMJMRDRHJHTNTVTSBS'] 
+#     TwoBackBlock2Run1 = ['TMDMYLDLGLPHPKRKJK'] 
+#     TwoBackBlock1Run2 = ['MCFCTSTRZRSNSFSYVY']
+#     TwoBackBlock2Run2 = ['HCGCLTRTYTPCPLDLJL']
+#     TwoBackBlock1Run3 = ['NMPMDKDKRKCGCJCRSR']
+#     TwoBackBlock2Run3 = ['STKTRYLYHYRMRDCDZD']
+#     TwoBackBlock1Run4 = ['TDSDKTKHNHGBGFGLCL']
+#     TwoBackBlock2Run4 = ['GYLYSTLTNTJKJMVMKM']
+    
 def CreateStimFixed12_4(LoadLevel):
     # This was created so that a fixed order ciuld be used for all participants.
     # It also
@@ -192,6 +193,22 @@ def AssignStimuliv2(CorrectLocations,TrialPerBlock,Stimuli,LoadLevel):
     List = FillinTheLettersWithNoResponses(List, Stimuli)    
     return List
     
+def FillinTheLettersWithNoResponsesv2(List, Stimuli):  
+    NStim = len(Stimuli)
+    count = 0
+    for i in List:
+        if i == '-99':
+            MatchFlag = True
+            while MatchFlag == True:
+                RandomPick = int(np.round(np.random.uniform(1*NStim)))
+                # Make sure this letter is NOT in the list already
+                CurrentStim = Stimuli[RandomPick-1]
+                MatchFlag = CheckLetterAlreadyInList(List, CurrentStim)
+            print(CurrentStim)
+            List[count] = CurrentStim
+        count += 1
+    return List
+            
 def FillinTheLettersWithNoResponses(List, Stimuli):
     NStim = len(Stimuli)
     # Start at the begining of the list
@@ -220,16 +237,29 @@ def FillinTheLettersWithNoResponses(List, Stimuli):
         Position += 1
         #print(count)
     return List
-        
+
+def CheckLetterAlreadyInList(List, CurrentLetter):
+    MatchFlag = False
+    for i in List:
+        if CurrentLetter == i:
+            MatchFlag = True
+    return MatchFlag
+                
 def AddResponseLettersAndBackLetters(CorrectLocations, List, Stimuli, TrialPerBlock, LoadLevel):
     # STart with an empty list and place the letters that will require a response
     # and the appropriate "Back" letters
     NStim = len(Stimuli)
     if LoadLevel > 0:
         for i in CorrectLocations:
-        # Take a random letter from the list of stimuli
-            RandomPick = int(np.round(np.random.uniform(1*NStim)))
-            List[int(i)-1] = Stimuli[RandomPick-1]
+        # Take a random letter from the list of stimuli and make sure it is not already in the list
+            MatchFlag = True
+            while MatchFlag == True:
+                RandomPick = int(np.round(np.random.uniform(1*NStim)))
+                # Make sure this letter is NOT in the list already
+                CurrentStim = Stimuli[RandomPick-1]
+                MatchFlag = CheckLetterAlreadyInList(List, CurrentStim)
+            print(CurrentStim)
+            List[int(i)-1] = CurrentStim
         # go through and set the previous stimuli appropriately
         for i in range(0,TrialPerBlock,1):
             if List[i] != '-99':
