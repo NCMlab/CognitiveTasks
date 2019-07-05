@@ -27,32 +27,107 @@ def CreateStimFixed18_6(LoadLevel):
         test = np.array([3,6,9,11,14,18])
     return test
 
-# def Lists12():
-#     ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM'] # THXZXDJCMXKXGXMHDX VYXZPVXLXVFXCXFTXR SKXJXPHVXSKMXFXKXN XKCMHXZJXCXRPXYZXT
-#     ZeroBackBlock2Run1 = ['MVDXMXFKJXTYXRXBXM'] # GXLKMSXZXDSXRMXVXP LTXCXSYKXVNXHXPVNX FPXTFXYVXHXFXMXLPY DKNNJMMDDTTVVHHSFV
-# #    ZeroBackBlock1Run2 = 
-# #    ZeroBackBlock2Run2
-# #    ZeroBackBlock1Run3
-# #    ZeroBackBlock2Run3
-# #    ZeroBackBlock1Run4
-# #    ZeroBackBlock2Run4
-#     OneBackBlock1Run1 = ['RDDVPPRRMPFFJJYCCT'] # FFNNMFFVCCNLFFGGHS XNXMHTNXSXYXLXYTPS FFDTTVVPPGGNNCLFTK LXTNXGXFXHNXDVXSLK
-#     OneBackBlock2Run1 = ['NHDDTTYKKLZZNNLHHN'] # GHHVVYYNSKKZZHVPNN CTTSSYVCCTTBFFTTSD RRVVHZZGSHKKBBCNDD GSSLLYYNLVMMKKPPMT
-# #    OneBackBlock1Run2 = ['PSSGNNDDRPFFHHSLLZ']
-# #    OneBackBlock2Run2 = 
-# #    OneBackBlock1Run3 = ['GTTPCCHHJKFFVVPLLG']
-# #    OneBackBlock2Run3 = 
-# #    OneBackBlock1Run4 = ['KHHRCCVVJNGGYYMSSC']
-# #    OneBackBlock1Run4 =  
-#     TwoBackBlock1Run1 = ['DMJMRDRHJHTNTVTSBS'] 
-#     TwoBackBlock2Run1 = ['TMDMYLDLGLPHPKRKJK'] 
-#     TwoBackBlock1Run2 = ['MCFCTSTRZRSNSFSYVY']
-#     TwoBackBlock2Run2 = ['HCGCLTRTYTPCPLDLJL']
-#     TwoBackBlock1Run3 = ['NMPMDKDKRKCGCJCRSR']
-#     TwoBackBlock2Run3 = ['STKTRYLYHYRMRDCDZD']
-#     TwoBackBlock1Run4 = ['TDSDKTKHNHGBGFGLCL']
-#     TwoBackBlock2Run4 = ['GYLYSTLTNTJKJMVMKM']
+def MakeAllListsOfStimuli(LoadLevel, TrialPerBlock, StimList):
+    NBlocks = len(LoadLevel)
+    # Make a list of stimuli, one for each block
+    AllLists = []
+    AllCorrectLocations = []
+    for BlockNumber in range(0,NBlocks,1):
+        CurrentLoadLevel = int(LoadLevel[BlockNumber])
     
+        CorrectLocations = CreateStimFixed18_6(CurrentLoadLevel)
+    
+        List = AssignStimuliv2(CorrectLocations,TrialPerBlock,StimList,CurrentLoadLevel)
+    
+        AllLists.append(List)
+        AllCorrectLocations.append(CorrectLocations)
+    return AllLists, AllCorrectLocations
+
+def HardCodedLists_18sym_6Targets_Loads012012(RunNumber = 0):
+    ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM'] # 
+    # These are written in 1,2,3 counting
+    CorrLocZeroBlock1Run1 = np.array([4,6,10,13,15,17])
+    ZeroBackBlock2Run1 = ['MVDXMXFKJXTYXRXBXM'] # 
+    CorrLocZeroBlock2Run1 = np.array([4,6,10,13,15,17])
+    ZeroBackBlock1Run2 = ['THXZXDJCMXKXGXMHDX']
+    CorrLocZeroBlock1Run2 = np.array([3,5,10,12,14,18])
+    ZeroBackBlock2Run2 = ['GXLKMSXZXDSXRMXVXP']
+    CorrLocZeroBlock2Run2 = np.array([2,7,9,12,15,17])
+    ZeroBackBlock1Run3 = ['VYXZPVXLXVFXCXFTXR']
+    CorrLocZeroBlock1Run3 = np.array([3,7,9,12,14,17])
+    ZeroBackBlock2Run3 = ['LTXCXSYKXVNXHXPVNX']
+    CorrLocZeroBlock2Run3 = np.array([3,5,9,12,14,18])
+    ZeroBackBlock1Run4 = ['SKXJXPHVXSKMXFXKXN']
+    CorrLocZeroBlock1Run4 = np.array([3,5,9,13,15,17])
+    ZeroBackBlock2Run4 = ['FPXTFXYVXHXFXMXLPY']
+    CorrLocZeroBlock2Run4 = np.array([3,6,9,11,13,15])
+    
+    OneBackBlock1Run1 = ['RDDVPPRRMPFFJJYCCT'] # 
+    CorrLocOneBlock1Run1 = np.array([3,6,8,12,14,17])
+    OneBackBlock2Run1 = ['PHFFRRTBBPDDZZTGGF'] # 
+    CorrLocOneBlock2Run1 = np.array([4,6,9,12,14,17])
+    OneBackBlock1Run2 = ['YPPNGGDDSCMMYYHSSM']
+    CorrLocOneBlock1Run2 = np.array([3,6,8,12,14,17])
+    OneBackBlock2Run2 = ['MRTTSSDJJYHHFFDVVT']
+    CorrLocOneBlock2Run2 = np.array([4,6,9,12,14,17])
+    OneBackBlock1Run3 = ['RGGNYYCCLJZZLLRJJH']
+    CorrLocOneBlock1Run3 = np.array([3,6,8,12,14,17])
+    OneBackBlock2Run3 = ['JHKKSSGHHZFFVVKJJF']
+    CorrLocOneBlock2Run3 = np.array([4,6,9,12,14,17])
+    OneBackBlock1Run4 = ['JPPRKKHHCLRRGGVJJC']
+    CorrLocOneBlock1Run4 = np.array([3,6,8,12,14,17])
+    OneBackBlock2Run4 = ['YTFFDDMVVTMMYYDSSC']
+    CorrLocOneBlock2Run4 = np.array([4,6,9,12,14,17])  
+
+    TwoBackBlock1Run1 = ['DMJMRDRHJHTNTVTSBS'] 
+    CorrLocTwoBlock1Run1 = np.array([4,7,10,13,15,18])
+    TwoBackBlock2Run1 = ['TMDMYLDLGLPHPKRKJK'] 
+    CorrLocTwoBlock2Run1 = np.array([4,8,10,13,16,18])
+    TwoBackBlock1Run2 = ['MCFCTSTRZRSNSFSYVY']
+    CorrLocTwoBlock1Run2 = np.array([4,7,10,13,15,18])
+    TwoBackBlock2Run2 = ['HCGCLTRTYTPCPLDLJL']
+    CorrLocTwoBlock2Run2 = np.array([4,8,10,13,16,18])
+    TwoBackBlock1Run3 = ['NMPMDKDKRKCGCJCRSR']
+    CorrLocTwoBlock1Run3 = np.array([4,7,10,13,15,18])
+    TwoBackBlock2Run3 = ['STKTRYLYHYRMRDCDZD']
+    CorrLocTwoBlock2Run3 = np.array([4,8,10,13,16,18])
+    TwoBackBlock1Run4 = ['TDSDKTKHNHGBGFGLCL']
+    CorrLocTwoBlock1Run4 = np.array([4,7,10,13,15,18])
+    TwoBackBlock2Run4 = ['GYLYSTLTNTJKJMVMKM']
+    CorrLocTwoBlock2Run4 = np.array([4,8,10,13,16,18])  
+    
+    Run1 = np.array([ZeroBackBlock1Run1, OneBackBlock1Run1, TwoBackBlock1Run1, ZeroBackBlock2Run1, OneBackBlock2Run1, TwoBackBlock2Run1])
+    Run2 = np.array([ZeroBackBlock1Run2, OneBackBlock1Run2, TwoBackBlock1Run2, ZeroBackBlock2Run2, OneBackBlock2Run2, TwoBackBlock2Run2])
+    Run3 = np.array([ZeroBackBlock1Run3, OneBackBlock1Run3, TwoBackBlock1Run3, ZeroBackBlock2Run3, OneBackBlock2Run3, TwoBackBlock2Run3])
+    Run4 = np.array([ZeroBackBlock1Run4, OneBackBlock1Run4, TwoBackBlock1Run4, ZeroBackBlock2Run4, OneBackBlock2Run4, TwoBackBlock2Run4]) 
+    CorLocRun1 = np.array([CorrLocZeroBlock1Run1, CorrLocOneBlock1Run1, CorrLocTwoBlock1Run1, CorrLocZeroBlock2Run1, CorrLocOneBlock2Run1, CorrLocTwoBlock2Run1])
+    CorLocRun2 = np.array([CorrLocZeroBlock1Run2, CorrLocOneBlock1Run2, CorrLocTwoBlock1Run2, CorrLocZeroBlock2Run2, CorrLocOneBlock2Run2, CorrLocTwoBlock2Run2])
+    CorLocRun3 = np.array([CorrLocZeroBlock1Run3, CorrLocOneBlock1Run3, CorrLocTwoBlock1Run3, CorrLocZeroBlock2Run3, CorrLocOneBlock2Run3, CorrLocTwoBlock2Run3])
+    CorLocRun4 = np.array([CorrLocZeroBlock1Run4, CorrLocOneBlock1Run4, CorrLocTwoBlock1Run4, CorrLocZeroBlock2Run4, CorrLocOneBlock2Run4, CorrLocTwoBlock2Run4])
+                
+    
+    AllListsRun1 = ConvertNBackLists(Run1)
+    AllListsRun2 = ConvertNBackLists(Run2)
+    AllListsRun3 = ConvertNBackLists(Run3)
+    AllListsRun4 = ConvertNBackLists(Run4)
+    # This just makes it easier to call the list needed
+    All = np.array([AllListsRun1, AllListsRun2, AllListsRun3, AllListsRun4])
+    AllCorLoc = np.array([CorLocRun1, CorLocRun2, CorLocRun3, CorLocRun4])
+    
+    return All[RunNumber], AllCorLoc[RunNumber]
+    
+def ConvertNBackLists(Run):
+    # Put all the lists into the same format that the "on the fly" programs use
+    AllLists = []
+    for i in Run:
+        List = []
+        for j in i[0]:
+            List.append(j)
+        AllLists.append(List)
+    return AllLists
+            
+            
+            
 def CreateStimFixed12_4(LoadLevel):
     # This was created so that a fixed order ciuld be used for all participants.
     # It also
@@ -230,7 +305,7 @@ def FillinTheLettersWithNoResponses(List, Stimuli):
                 if CheckNewLetter(List, NewLetter, Position):
                     # If the letter is good, add it to the list
                     List[Position] = NewLetter
-                    # then break out of teh while loop
+                    # then break out of the while loop
                     break
                 else:
                     count += 1

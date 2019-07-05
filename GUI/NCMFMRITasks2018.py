@@ -489,14 +489,14 @@ class Mywin(wx.Frame):
       self.NBackTag = self.NBackTag + 1
       btnR10C3Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = NBack: %s"%(btnR10C3Label))
-      core.shellCall([sys.executable, "../NBack/NBackPassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, 'MRIRun%d'%(self.NBackTag), 'NBack_fMRI_Config'])  
+      core.shellCall([sys.executable, "../NBack/NBackPassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, 'MRIRun%02d'%(self.NBackTag), 'NBack_fMRI_Config', 'Fixed'])  
       self.cbR10C3.SetValue(True)  
    
    def OnClickedR10C4(self, event):
       self.NBackTag = self.NBackTag + 1
       btnR10C4Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = NBack: %s"%(btnR10C4Label))
-      core.shellCall([sys.executable, "../NBack/NBackPassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, 'MRIRun%d'%(self.NBackTag), 'NBack_fMRI_Config'])  
+      core.shellCall([sys.executable, "../NBack/NBackPassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, 'MRIRun%02d'%(self.NBackTag), 'NBack_fMRI_Config', 'Fixed'])  
       self.cbR10C4.SetValue(True)  
    
    def CloseGUI(self,event):

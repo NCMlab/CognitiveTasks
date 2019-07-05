@@ -56,6 +56,7 @@ if len(sys.argv) > 1:
     PartDataFolder = sys.argv[2]
     Tag = sys.argv[3]
     ConfigFile = sys.argv[4]
+    FixedOrRandomStimuliLists = sys.argv[5]
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
@@ -68,12 +69,13 @@ else:
     PartDataFolder = OutDir
     Tag = 'BehRun01'
     ConfigFile = 'NBack_fMRI_Config'
+    FixedOrRandomStimuliLists = 'Random'
 # Load up the config file
 print("Loading up the config file: %s"%(ConfigFile))
 Str = 'from %s import *'%(ConfigFile)
 exec(Str)
 
-
+# Check the tag and 
 
 
 NBlocks = len(LoadLevel)
@@ -97,29 +99,21 @@ thisExp = data.ExperimentHandler(name=expName, version='',
     dataFileName=filename)
 
 # Make a list of stimuli, one for each block
-AllLists = []
-AllCorrectLocations = []
-for BlockNumber in range(0,NBlocks,1):
-    CurrentLoadLevel = int(LoadLevel[BlockNumber])
-#    print(CurrentLoadLevel)
-#    print(TrialPerBlock)
-#    print(NumCorrectPerBlock)
-    CorrectLocations = NBackFunctions.CreateStimFixed18_6(CurrentLoadLevel)
-    #CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, TrialPerBlock, NumCorrectPerBlock)
-#    print(CorrectLocations)
-    # Try to assign letters to the list of correct locations
-    # If it is not possible then -99 is returned
-    print(TrialPerBlock)
-    print(StimList)
-    print(CurrentLoadLevel)
-    List = NBackFunctions.AssignStimuliv2(CorrectLocations,TrialPerBlock,StimList,CurrentLoadLevel)
-#    List = AssignStimuli(CorrectLocations, TrialPerBlock, StimList, CurrentLoadLevel)
-#    while not isinstance(List,(list,tuple,np.ndarray)):
-#        CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, TrialPerBlock, NumCorrectPerBlock)
-#        List = NBackFunctions.AssignStimuliv2(CorrectLocations, TrialPerBlock, StimList, CurrentLoadLevel)
-    AllLists.append(List)
-    AllCorrectLocations.append(CorrectLocations)
-
+if FixedOrRandomStimuliLists == 'Random':
+    AllLists, AllCorrectLocations = NBackFunctions.MakeAllListsOfStimuli(LoadLevel, TrialPerBlock, StimList)
+elif FixedOrRandomStimuliLists == 'Fixed':
+    if Tag == 'BehRun01':
+        AllLists, AllCorrectLocations = NBackFunctions.HardCodedLists_18sym_6Targets_Loads012012(0)
+    elif Tag == 'BehRun02':
+        AllLists, AllCorrectLocations = NBackFunctions.HardCodedLists_18sym_6Targets_Loads012012(1)
+    elif Tag == 'MRIRun01':
+        AllLists, AllCorrectLocations = NBackFunctions.HardCodedLists_18sym_6Targets_Loads012012(2)
+    elif Tag == 'MRIRun02':
+        AllLists, AllCorrectLocations = NBackFunctions.HardCodedLists_18sym_6Targets_Loads012012(3)
+    else:
+        raise ValueError('Unknown Tag supplied')
+else:
+        raise ValueError('Unknown Fixed/Random flag supplied')
 
 # WINDOW
 win = visual.Window(size=(1200, 900), fullscr=True, screen=0, allowGUI=False, allowStencil=False,
@@ -161,15 +155,15 @@ InstrLevel0 = visual.ImageStim(win,image=os.path.join(ThisFolder,'ZeroBackInstru
 InstrLevel1 = visual.ImageStim(win,image=os.path.join(ThisFolder,'OneBackInstructions.png'),
     mask=None,
     pos=(0.0,0.0),
-    size=(InstructionFigureSize,InstructionFigureSize))
+    size=(InstructionFigureSize, InstructionFigureSize))
 InstrLevel2 = visual.ImageStim(win,image=os.path.join(ThisFolder,'TwoBackInstructions.png'),
     mask=None,
     pos=(0.0,0.0),
-    size=(InstructionFigureSize,InstructionFigureSize))
+    size=(InstructionFigureSize, InstructionFigureSize))
 InstrLevel3 = visual.ImageStim(win,image=os.path.join(ThisFolder,'ThreeBackInstructions.png'),
     mask=None,
     pos=(0.0,0.0),
-    size=(InstructionFigureSize,InstructionFigureSize))
+    size=(InstructionFigureSize, InstructionFigureSize))
     
 ThankYouScreen = visual.TextStim(win=win, ori=0, name='text',
     text=u'Thank You',    font=u'Times New Roman',
@@ -226,6 +220,7 @@ for BlockNumber in range(0,NBlocks,1):
     #
     CurrentLoadLevel = int(LoadLevel[BlockNumber])
     CorrectLocations = AllCorrectLocations[BlockNumber]
+    
     if CurrentLoadLevel == 0:
         Instructions = InstrLevel0
     elif CurrentLoadLevel == 1:

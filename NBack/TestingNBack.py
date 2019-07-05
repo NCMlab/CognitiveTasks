@@ -33,9 +33,9 @@ while BadFlag == True:
         # Create an empty list 
     List = ['-99']*TrialPerBlock
     # Place random stimuli in the correct locations
-#    List = NBackFunctions.AddResponseLettersAndBackLetters(CorrectLocations, List, StimList, TrialPerBlock, CurrentLoadLevel) 
-    
-    List = NBackFunctions.AssignStimuliv2(CorrectLocations,TrialPerBlock,StimList,CurrentLoadLevel)
+    List = NBackFunctions.AddResponseLettersAndBackLetters(CorrectLocations, List, StimList, TrialPerBlock, CurrentLoadLevel) 
+    List = NBackFunctions.FillinTheLettersWithNoResponses(List, StimList) 
+    # List = NBackFunctions.AssignStimuliv2(CorrectLocations,TrialPerBlock,StimList,CurrentLoadLevel)
     Current = List[0]
     for j in range(3,TrialPerBlock):
         # Two consectutive are equal
@@ -50,3 +50,32 @@ Str = ''
 for i in List:
     Str = Str + i
 print(Str)
+
+
+
+
+## ######
+LoadLevel = '012012' #
+NBlocks = len(LoadLevel)
+AllLists = []
+AllCorrectLocations = []
+for BlockNumber in range(0,NBlocks,1):
+    CurrentLoadLevel = int(LoadLevel[BlockNumber])
+#    print(CurrentLoadLevel)
+#    print(TrialPerBlock)
+#    print(NumCorrectPerBlock)
+    CorrectLocations = NBackFunctions.CreateStimFixed18_6(CurrentLoadLevel)
+    #CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, TrialPerBlock, NumCorrectPerBlock)
+#    print(CorrectLocations)
+    # Try to assign letters to the list of correct locations
+    # If it is not possible then -99 is returned
+    print(TrialPerBlock)
+    print(StimList)
+    print(CurrentLoadLevel)
+    List = NBackFunctions.AssignStimuliv2(CorrectLocations,TrialPerBlock,StimList,CurrentLoadLevel)
+#    List = AssignStimuli(CorrectLocations, TrialPerBlock, StimList, CurrentLoadLevel)
+#    while not isinstance(List,(list,tuple,np.ndarray)):
+#        CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel, TrialPerBlock, NumCorrectPerBlock)
+#        List = NBackFunctions.AssignStimuliv2(CorrectLocations, TrialPerBlock, StimList, CurrentLoadLevel)
+    AllLists.append(List)
+    AllCorrectLocations.append(CorrectLocations)
