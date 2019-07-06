@@ -3,7 +3,7 @@
 This is a set of code for administering cognitive tasks behaviorally and within the functional MRI environment. 
 
 The code is all written in Psychopy http://www.psychopy.org/; therefore, Psychopy needs to be installed first :). 
-This code was originally written to use python 2.7 and Psychopy 1.903. This version is in release [INSERT LINK]. The master branch of the code is updated to use Psychopy 3.0 and python 3.5.
+This code was originally written to use python 2.7 and Psychopy 1.903. This version is in release https://github.com/NCMlab/CognitiveTasks/releases/tag/v1.1. The master branch of the code is updated to use Psychopy 3.0 and python 3.5.
 
 There are multiple GUIs, in the GUI folder, which are used for calling all of the individual tasks. However, the tasks can also be run independently. The GUI ensures that all result data files are created with the same participant ID and are stored inthe same location.
 
