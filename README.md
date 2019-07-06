@@ -15,7 +15,7 @@ When the tasks are run data files will be created. These will be placed in a top
 There are two GUIs for task delivery.
 
 ### NCM_Experiment.py
-![Neuropsych GUI]('/Descriptions/NPGUI.png')
+![Neuropsych GUI](/Descriptions/NPGUI.png)
 This is a GUI which runs the FACE task and the DMS task and was used for teh behavioral aspect of this study. There are three versions of these tasks, as represented by the different buttons. The first is the demonstration of the task and is used for training of the participant about the aspects and mechanisms of the tasks.
 
 The second is the staircase adaptive difficulty version of the two tasks. The third, is a block based version of the task using the estimated cognitive capacity from the staircase administration of the task. 
