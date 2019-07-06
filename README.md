@@ -25,18 +25,26 @@ This is a subset of the battery that is administered again when a research parti
 
 
 ## Tasks
-### Selective reminding memory task with immediate, delayed and recognition phases.
+### Selective reminding memory task 
+Immediate, delayed and recognition phases.
 ### Fluid ability task with matrix completion
 These test items are not publicly available.
-### [Delayed Match to Sample with letters](/Descriptions/DMS.md) for assessing short term verbal memory
+### [Delayed Match to Sample with letters](/Descriptions/DMS.md) 
+Short term verbal memory
 ### [Stroop](Descriptions/stroop.md)
-### Executive function using the Wisconsin card sorting task
-### Delayed Match to Sample with dots for assessing short term spatial memory
+Executive function using color, word and color/word
+### Wisconsin card sorting task
+Executive function
+### Delayed Match to Sample with dots 
+Short term spatial memory
 ### Verbal abilities with a reading task
 These test items are not publicly available.
-### N-Back task for assessing working memory
-### Digit Symbol, forward and backward for assessing working memory span
-### Pattern Comparison for assessing cognitive speed of processing
+### N-Back task 
+Working memory
+### Digit Symbol, forward and backward 
+Working memory span
+### Pattern Comparison 
+Cognitive speed of processing
 
 # Unused tasks 
 And therefore no gurantee that they work!
