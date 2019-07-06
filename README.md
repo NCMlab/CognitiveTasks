@@ -16,16 +16,34 @@ There are two GUIs for task delivery.
 
 ### NCM_Experiment.py
 ![Neuropsych GUI](/Descriptions/NPGUI.png)
-This is a GUI which runs the FACE task and the DMS task and was used for teh behavioral aspect of this study. There are three versions of these tasks, as represented by the different buttons. The first is the demonstration of the task and is used for training of the participant about the aspects and mechanisms of the tasks.
+This is a GUI which runs all neuropsychological tests that the NCM lab uses. In this repository there are other tasks that have been developed but did not make it into our final battery. The test items for some of these tasks are not in the public domain and are therefore not distributed here. The code is available but the images used as test items are not.
 
-The second is the staircase adaptive difficulty version of the two tasks. The third, is a block based version of the task using the estimated cognitive capacity from the staircase administration of the task. 
 
 ### NCM_fMRI_GUI.py
-This is a GUI which runs the DMS task and the WORD tasks and will be used for the MRI aspect of this experiment.
+![fMRI GUI](/Descriptions/FMRIGUI.png)
+This is a subset of the battery that is administered again when a research participant is in the MRI.
 
-This file looks for a file named BehavioralDataFolder.py in the folder ConfigFiles. This file contains a variable name of the location for all the behavioral data to be saved to. If this file does not exist, does not contain the expected info or contains the path of a folder that does not exist, a dialog box asks the user to select a folder. Once selected, this file is updated. Therefore, the user is only prompted once for this folder.
 
 ## Tasks
+### Selective reminding memory task with immediate, delayed and recognition phases.
+### Fluid ability task with matrix completion
+These test items are not publicly available.
+### [Delayed Match to Sample with letters](/Descriptions/DMS.md) for assessing short term verbal memory
+### [Stroop](Descriptions/stroop.md)
+### Executive function using the Wisconsin card sorting task
+### Delayed Match to Sample with dots for assessing short term spatial memory
+### Verbal abilities with a reading task
+These test items are not publicly available.
+### N-Back task for assessing working memory
+### Digit Symbol, forward and backward for assessing working memory span
+### Pattern Comparison for assessing cognitive speed of processing
+
+# Unused tasks 
+And therefore no gurantee that they work!
+### Semantic Richness
+
+This is an event-related task presenting words. The task has 60 words and takes approximately 8:30 minutes. The ITI is jittered and the ITI durations and the trial order is optimized based on thousands of simulations. The simulations identify the Gamma distribution of ITIs that minimize the BOLD response required to significantly detect task related signal change. This optimization used multiple contrasts and the optimization aimed to find the smallest average BOLD signal required across all contrasts of interest. 
+
 ### Degraded Face Matching (FACE) Task
 This experiment is  trial based where image pairs are presented and the participant determines whether the two images are of the same person. Face pairs are presented for 2500 milliseconds with a 500 ms intertrial interval in blocks of twelve trials each. Within a block of trials, all face pairs will have the same level of degradation. Blocks will be separated by 5 seconds of rest where the participant views a fixation cross-hair at the center of the screen. Successive blocks will present images with larger levels of degradation. Responses are recorded via a keyboard press.
 
@@ -33,20 +51,5 @@ Degradation of the faces is performed by adding noise to each image. This experi
 
 Faces for this study are from the Karolinska Directed Emotional Faces (KDEF), which were developed for use in psychological and medical research (Lundqvist, Flykt, & Öhman, 1998). This is a set of 4900 photographs of 70 different people displaying various emotional expressions. Images were taken from various perspectives around the person. For this experiment, only neutral expressions are used. Images on the left of the screen will be displayed with the face turned towards the center of the screen. Images on the right of the screen will also be displayed with the face turned towards the center of the screen. In this manner, even if the two images are of the same person they are not the same image. This design attempts to ensure the participant matches the images based on the person and not on other spatial aspects of the images.
 
-### [Delayed Match to Sample, Letters](/Descriptions/DMS.md)
-
-
-
-### Semantic Richness
-
-This is an event-related task presenting words. The task has 60 words and takes approximately 8:30 minutes. The ITI is jittered and the ITI durations and the trial order is optimized based on thousands of simulations. The simulations identify the Gamma distribution of ITIs that minimize the BOLD response required to significantly detect task related signal change. This optimization used multiple contrasts and the optimization aimed to find the smallest average BOLD signal required across all contrasts of interest. 
-
-### Delayed Match to Sample, Spatial
-
-### [Stroop](Descriptions/stroop.md)
-### Pattern Comparison
-### Digit Symbol
-### American NART
-### N-Back
 
 
