@@ -59,7 +59,7 @@ else:
     
     Tag = 'BehRun1'
     PartDataFolder = OutDir
-    ConfigFile = 'VSTM_fMRI_Config'
+    ConfigFile = 'VSTM_Behav_Config'
     FixedLocations = True
     
 if FixedLocations:    
@@ -179,7 +179,7 @@ GreenCross = visual.TextStim(win=win, name='RedCross',
     
 # Instructions
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Press [LEFT BUTTON] if the circle WAS in the set.\nPress [RIGHT BUTTON] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress [5] to begin.',
+    text='Press [INDEX Finger] if the circle WAS in the set.\nPress [MIDDLE Finger] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress [5] to begin.',
     font='Times New Roman',
     units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize*0.75, wrapWidth=1200, ori=0, 
     color=VSTM_FontColor, colorSpace='rgb', opacity=1,
@@ -331,11 +331,6 @@ for thisBlock in Blocks:
             NotLocations = [x for x in NotLocations if x not in Locations]
             #NegProbeLocation = np.random.randint(0,len(NotLocations),1)[0]
             NegProbeLocation = NotLocations[np.random.permutation(len(NotLocations))[0]]
-        
-        if ProbeList[TrialCount] == 1:
-            corr = '1'
-        else:
-            corr = '2'
 
         # Make sure the Locations does not include the central location because 
         # the cross hair is to remain on the screen
@@ -397,6 +392,25 @@ for thisBlock in Blocks:
                 CurrentProbeLocation = NegProbeLocation
             else:
                 CurrentProbeLocation = PosProbeLocation
+        
+        # The coding of fixed versus random locations differs
+        if FixedLocations:
+            if (Locations == CurrentProbeLocation).any():
+                # This is a positive probe
+                ProbeType = 1
+                corr = '1'
+            else:
+                ProbeType = 0
+                corr = '2'
+        else:
+            if ProbeList[TrialCount] == 1:
+                ProbeType = 1
+                corr = '1'
+            else:
+                ProbeType = 0
+                corr = '2'
+        
+        
         # Use a single code chunk for displaying the probe dot regardless of whether this is a random
         # location or fixed location or whether this is a POS or NEG probe
         count = 0
@@ -407,17 +421,6 @@ for thisBlock in Blocks:
                    if (count in [CurrentProbeLocation]):
                        stim.draw()
                    count += 1
-#        elif ProbeList[TrialCount] == 1:
-#            count = 0
-#            ProbeLoc = PosProbeLocation
-#            for y_offset in OffSet:
-#                for x_offset in OffSet:
-#                   for stim in [ProbeCircle]:
-#                       stim.pos = [x_offset, y_offset]
-#                       if (count in [PosProbeLocation]):
-#                           stim.draw()
-#                       count += 1
-                       
                    
         while countDown.getTime() > 0:
             pass
@@ -487,7 +490,7 @@ for thisBlock in Blocks:
         
         print(RT)
         print(CorrectRT)
-        dataFile.write('%i,%i,%s, %s, %i,%0.3f,%0.4f,%i, %i,' %(TrialCount,CurrentLoad, TrialStartTime, thisResp.keys, CorrectResp,RT,CorrectRT, ProbeList[TrialCount], ProbeLoc))
+        dataFile.write('%i,%i,%s, %s, %i,%0.3f,%0.4f,%i, %i,' %(TrialCount,CurrentLoad, TrialStartTime, thisResp.keys, CorrectResp,RT,CorrectRT, ProbeType, CurrentProbeLocation))
         for ii in Locations:
             dataFile.write('%i,'%(ii))
         dataFile.write('\n')

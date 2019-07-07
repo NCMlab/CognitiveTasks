@@ -82,7 +82,7 @@ class Mywin(wx.Frame):
     # size = (width, height)
     # Create the GUI window
       print('Got here 3')
-      super(Mywin, self).__init__(parent, title = title,size = (800,600))  
+      super(Mywin, self).__init__(parent, title = title,size = (800,280))  
       self.panel = wx.Panel(self) 
       vbox = wx.BoxSizer(wx.VERTICAL) 
       
@@ -148,7 +148,7 @@ class Mywin(wx.Frame):
       self.cbR3C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[5] + ButtonWidth-3,CurrentRow))
       self.cbR3C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth-3,CurrentRow))
 # ###################
-      CurrentRow = RowPixel[3]
+      CurrentRow = RowPixel[1]
 #      # #### Row 3
       self.titleR5 = wx.StaticText(self.panel, -1, label = "DMS/Letters", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
@@ -182,7 +182,7 @@ class Mywin(wx.Frame):
       self.cbR5C7 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[6] + ButtonWidth-3,CurrentRow))
 
 # #### N-BACK #########
-      CurrentRow = RowPixel[4]
+      CurrentRow = RowPixel[3]
 #      # #### Row 3
       self.titleR5 = wx.StaticText(self.panel, -1, label = "N-Back", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
 #      # Buttons
@@ -206,7 +206,7 @@ class Mywin(wx.Frame):
 
       
       
-      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (ColPixel[0],RowPixel[9]), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (ColPixel[0],RowPixel[4]), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
       
       self.Centre() 
@@ -242,7 +242,7 @@ class Mywin(wx.Frame):
    def LoadVSTMCapacity(self, event):
         expName = 'VSTM'
         Tag = '1'
-        CapacityFileName = os.path.join(self.VisitFolderPath, '%s_%s_%s_%s_%s.csv' % (self.PartID.GetValue(), expName, 'CAPACITY', Tag, '*'))
+        CapacityFileName = os.path.join(self.VisitFolderPath, '%s_%s_%s_%s_%s.txt' % (self.PartID.GetValue(), expName, 'CAPACITY', Tag, '*'))
         # Find the capacity file and only select the last one if there are more than one
         CapacityFileName = glob.glob(CapacityFileName)[-1]
         # Now open and read the file
@@ -257,6 +257,7 @@ class Mywin(wx.Frame):
         expName = 'DMS'
         Tag = '1'
         CapacityFileName = os.path.join(self.VisitFolderPath, '%s_%s_%s_%s_%s.txt' % (self.PartID.GetValue(), expName, 'CAPACITY', Tag, '*'))
+        print('Looking for:\t%s'%(CapacityFileName))
         # Find the capacity file and only select the last one if there are more than one
         CapacityFileName = glob.glob(CapacityFileName)[-1]
         # Now open and read the file
@@ -506,7 +507,7 @@ print('Got Here 1')
 app = wx.App() 
 print('Got Here 2')
 # Create the GUI
-MyGui = Mywin(None,  'NCM Lab') 
+MyGui = Mywin(None,  'NCM Lab fMRI') 
 # Disable all the buttons except teh Part ID entry 
 MyGui.DisableAll()
 app.MainLoop()

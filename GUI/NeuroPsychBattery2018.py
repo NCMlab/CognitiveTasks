@@ -667,7 +667,7 @@ class Mywin(wx.Frame):
    def OnClickedR10C5(self, event):
       self.NBackTag = self.NBackTag + 1
       btnR10C5Label = event.GetEventObject().GetLabel() 
-      print("Label of pressed button = %s"%(btnR10C4Label))
+      print("Label of pressed button = %s"%(btnR10C5Label))
       #core.shellCall([sys.executable, "../NBack/NBackNeuroPsychGUI.py", self.PartID.GetValue(), self.VisitFolderPath, 'BehRun%d'%(self.NBackTag)])  
       core.shellCall([sys.executable, "../NBack/NBackPassConfigFile.py", self.PartID.GetValue(), self.VisitFolderPath, 'BehRun%02d'%(self.NBackTag), 'NBack_Beh_Config', 'Fixed'])  
       self.cbR10C5.SetValue(True)  

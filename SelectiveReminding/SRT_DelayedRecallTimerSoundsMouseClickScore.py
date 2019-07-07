@@ -93,7 +93,7 @@ dataFile = open(filename+'.csv', 'w')#a simple text file with 'comma-separated-v
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     originPath=None,
-    savePickle=True, saveWideText=False,
+    savePickle=False, saveWideText=False,
     dataFileName=filename)
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
@@ -191,7 +191,13 @@ textThankyou = visual.TextStim(win=win, name='Thanks',
     units='pix', pos=(0, 0), height=45, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
-    
+
+TrialCountText = visual.TextStim(win=win, name='TrialCount',
+    text=u'Trial Count',
+    font=u'Arial',
+    units='pix', pos=(200, -300), height=30, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=0.0);
 # ##############################
 
 # Make lists of screen locations for the words
@@ -479,7 +485,8 @@ BlockCount = 0
 #    else:
 #        pass       
 # Put all the words on the screen and have the tester click the recalled words and enter any intrusions
-WordListObjects, mouse, RecallList, RecallOrder = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime)
+TrialCountText.text = 'Delayed Recall'
+WordListObjects, mouse, RecallList, RecallOrder = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText)
 
 print("Recall List:")
 print(RecallList)

@@ -62,7 +62,7 @@ NBack_Prac1_IntroOffDuration = 5 #14
 NBack_Prac1_InterBlockTime = 5 #14
 NBack_Prac1_InstructionTime = 15 #
 
-NBack_Prac1_TextSize = 150#60 # This is in pixels
+NBack_Prac1_TextSize = 100#60 # This is in pixels
 NBack_Prac1_InstructionFigureSize = 800 # in pixels
 NBack_Prac1_Instructions = 'Press the [left] key if the current letter is a match.\n\nPress [return] key to continue.'
 NBack_Prac1_InstructFontSize = 45 # in pixels

@@ -47,16 +47,19 @@ def HardCodedLists_18sym_6Targets_Loads012012(RunNumber = 0):
     ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM'] # 
     # These are written in 1,2,3 counting
     CorrLocZeroBlock1Run1 = np.array([4,6,10,13,15,17])
-    ZeroBackBlock2Run1 = ['MVDXMXFKJXTYXRXBXM'] # 
-    CorrLocZeroBlock2Run1 = np.array([4,6,10,13,15,17])
+    ZeroBackBlock2Run1 = ['GXLKMSXZXDSXRMXVXP']
+    CorrLocZeroBlock2Run1 = np.array([2,7,9,12,15,17])
+    
     ZeroBackBlock1Run2 = ['THXZXDJCMXKXGXMHDX']
     CorrLocZeroBlock1Run2 = np.array([3,5,10,12,14,18])
-    ZeroBackBlock2Run2 = ['GXLKMSXZXDSXRMXVXP']
-    CorrLocZeroBlock2Run2 = np.array([2,7,9,12,15,17])
+    ZeroBackBlock2Run2 = ['MVDXMXFKJXTYXRXBXM'] # 
+    CorrLocZeroBlock2Run2 = np.array([4,6,10,13,15,17])
+
     ZeroBackBlock1Run3 = ['VYXZPVXLXVFXCXFTXR']
     CorrLocZeroBlock1Run3 = np.array([3,7,9,12,14,17])
     ZeroBackBlock2Run3 = ['LTXCXSYKXVNXHXPVNX']
     CorrLocZeroBlock2Run3 = np.array([3,5,9,12,14,18])
+    
     ZeroBackBlock1Run4 = ['SKXJXPHVXSKMXFXKXN']
     CorrLocZeroBlock1Run4 = np.array([3,5,9,13,15,17])
     ZeroBackBlock2Run4 = ['FPXTFXYVXHXFXMXLPY']
@@ -66,31 +69,37 @@ def HardCodedLists_18sym_6Targets_Loads012012(RunNumber = 0):
     CorrLocOneBlock1Run1 = np.array([3,6,8,12,14,17])
     OneBackBlock2Run1 = ['PHFFRRTBBPDDZZTGGF'] # 
     CorrLocOneBlock2Run1 = np.array([4,6,9,12,14,17])
+    
     OneBackBlock1Run2 = ['YPPNGGDDSCMMYYHSSM']
     CorrLocOneBlock1Run2 = np.array([3,6,8,12,14,17])
     OneBackBlock2Run2 = ['MRTTSSDJJYHHFFDVVT']
     CorrLocOneBlock2Run2 = np.array([4,6,9,12,14,17])
+    
     OneBackBlock1Run3 = ['RGGNYYCCLJZZLLRJJH']
     CorrLocOneBlock1Run3 = np.array([3,6,8,12,14,17])
     OneBackBlock2Run3 = ['JHKKSSGHHZFFVVKJJF']
     CorrLocOneBlock2Run3 = np.array([4,6,9,12,14,17])
+    
     OneBackBlock1Run4 = ['JPPRKKHHCLRRGGVJJC']
     CorrLocOneBlock1Run4 = np.array([3,6,8,12,14,17])
     OneBackBlock2Run4 = ['YTFFDDMVVTMMYYDSSC']
     CorrLocOneBlock2Run4 = np.array([4,6,9,12,14,17])  
 
-    TwoBackBlock1Run1 = ['DMJMRDRHJHTNTVTSBS'] 
+    TwoBackBlock1Run1 = ['BMJMRDRHJHTNTVTSBS'] 
     CorrLocTwoBlock1Run1 = np.array([4,7,10,13,15,18])
     TwoBackBlock2Run1 = ['TMDMYLDLGLPHPKRKJK'] 
     CorrLocTwoBlock2Run1 = np.array([4,8,10,13,16,18])
+    
     TwoBackBlock1Run2 = ['MCFCTSTRZRSNSFSYVY']
     CorrLocTwoBlock1Run2 = np.array([4,7,10,13,15,18])
     TwoBackBlock2Run2 = ['HCGCLTRTYTPCPLDLJL']
     CorrLocTwoBlock2Run2 = np.array([4,8,10,13,16,18])
+    
     TwoBackBlock1Run3 = ['NMPMDKDKRKCGCJCRSR']
     CorrLocTwoBlock1Run3 = np.array([4,7,10,13,15,18])
     TwoBackBlock2Run3 = ['STKTRYLYHYRMRDCDZD']
     CorrLocTwoBlock2Run3 = np.array([4,8,10,13,16,18])
+    
     TwoBackBlock1Run4 = ['TDSDKTKHNHGBGFGLCL']
     CorrLocTwoBlock1Run4 = np.array([4,7,10,13,15,18])
     TwoBackBlock2Run4 = ['GYLYSTLTNTJKJMVMKM']
@@ -265,7 +274,7 @@ def AssignStimuliv2(CorrectLocations,TrialPerBlock,Stimuli,LoadLevel):
     # Place random stimuli in the correct locations
     List = AddResponseLettersAndBackLetters(CorrectLocations, List, Stimuli, TrialPerBlock, LoadLevel)
     # Fill in the rest of the letters    
-    List = FillinTheLettersWithNoResponses(List, Stimuli)    
+    List = FillinTheLettersWithNoResponsesv2(List, Stimuli)    
     return List
     
 def FillinTheLettersWithNoResponsesv2(List, Stimuli):  
