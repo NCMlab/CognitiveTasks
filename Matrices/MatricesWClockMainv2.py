@@ -76,7 +76,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1440, 900), fullscr=True, screen=0,
+    size=(1440, 900), fullscr=False, screen=0,
     allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True,
@@ -623,11 +623,15 @@ for thisTrial_2 in trials_2:
             if len(theseKeys) > 0:  # at least one key was pressed
                 key_resp_2.keys = theseKeys[-1]  # just the last key pressed
                 key_resp_2.rt = key_resp_2.clock.getTime()
+                print('=================')
+                print('Button pressed: %s'%(key_resp_2.keys))
+                print('Expected response: %s'%(Corr))
                 # was this 'correct'?
-                if (key_resp_2.keys == str(Corr)) or (key_resp_2.keys == Corr):
+                if (key_resp_2.keys == str(int(Corr))) or (key_resp_2.keys == int(Corr)):
                     key_resp_2.corr = 1
                 else:
                     key_resp_2.corr = 0
+                print('Saved response: %d'%(key_resp_2.corr))
                 # a response ends the routine
                 continueRoutine = False
         
@@ -707,13 +711,14 @@ for thisTrial_2 in trials_2:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     # check responses
-    if key_resp_2.keys in ['', [], None]:  # No response was made
-        key_resp_2.keys=None
-        # was no response the correct answer?!
-        if str(Corr).lower() == 'none':
-           key_resp_2.corr = 1  # correct non-response
-        else:
-           key_resp_2.corr = 0  # failed to respond (incorrectly)
+    
+#    if key_resp_2.keys in ['', [], None]:  # No response was made
+#        key_resp_2.keys=None
+#        # was no response the correct answer?!
+#        if str(Corr).lower() == 'none':
+#           key_resp_2.corr = 1  # correct non-response
+#        else:
+#           key_resp_2.corr = 0  # failed to respond (incorrectly)
     # store data for trials_2 (TrialHandler)
     trials_2.addData('key_resp_2.keys',key_resp_2.keys)
     trials_2.addData('key_resp_2.corr', key_resp_2.corr)
