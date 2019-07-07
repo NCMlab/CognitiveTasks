@@ -473,7 +473,9 @@ for thisPractice in Practice:
             if len(theseKeys) > 0:  # at least one key was pressed
                 # A button press has occured
                 ButtonPressFlag = True
+                print('=============')
                 resp.keys = theseKeys[-1]  # just the last key pressed
+                print('Button pressed: %s'%(resp.keys))
                 resp.rt = resp.clock.getTime()
                 # was this 'correct'?
                 if (resp.keys == str(Corr)) or (resp.keys == Corr):
@@ -500,9 +502,10 @@ for thisPractice in Practice:
                             gotValidClick = True
                             mouse.clicked_name.append(obj.name)
                             CurrentResponse = obj.name
+                            print('Mouse pressed: %s'%(CurrentResponse))
                     if gotValidClick:  # abort routine on response
                         continueRoutine = False
-        
+                
         # *Resp1Box* updates
         if t >= 0.0 and Resp1Box.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -979,6 +982,8 @@ for thisTrial in trials:
                         if obj.contains(mouse):
                             gotValidClick = True
                             mouse.clicked_name.append(obj.name)
+                            CurrentResponse = obj.name
+                            print('Mouse pressed: %s'%(CurrentResponse))
                     if gotValidClick:  # abort routine on response
                         continueRoutine = False
         
