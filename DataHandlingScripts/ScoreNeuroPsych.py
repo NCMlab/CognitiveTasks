@@ -6,6 +6,13 @@ Use this scoring program in other programs as:
     
     This could be added to the end of the GUI program, so that when the GUI is closed
     the data os scored and updated.
+    
+To do:
+        Add a sort of filter to the LoadRawData function so that it will pick only Beh files
+        or only MRI files.
+        Also add something so that it collapses across multiple runs of the DMS, VSTM and NBack tasks
+        
+        Add a scoring program for just the MRI files and save them to their own sheet
 
 """
 import os
