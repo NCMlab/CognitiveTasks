@@ -295,7 +295,7 @@ for BlockNumber in range(0,NBlocks,1):
                 win.flip()
             # Check to see if any keys have been pressed
             # This works for any key
-            theseKeys = event.getKeys()
+            theseKeys = event.getKeys(keyList=['escape','1','2','left','right'])
             if "escape" in theseKeys:
                 win.flip()
                 win.close()
