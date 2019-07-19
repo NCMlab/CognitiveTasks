@@ -131,30 +131,53 @@ def LoadRawData(VisitFolder, subid):
 
         
     # DMS
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
-    if len(Data) > 0:
-        Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
-        Results['DMSMRI1'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
+    Data1 = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
+    if len(Data1) > 0:
+        Data1 = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data1)
+        Results['DMSMRI1'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data1)
         print('\tDMS loaded')
     
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
-    if len(Data) > 0:
-        Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
-        Results['DMSMRI2'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
+    Data2 = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
+    if len(Data2) > 0:
+        Data2 = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data2)
+        Results['DMSMRI2'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data2)
         print('\tDMS loaded')
 
+    AllData = Data1.append(Data2)
+    if len(AllData) > 0:
+        AllData = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(AllData)
+        Results['DMSMRIAll'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(AllData)
+        print('\tDMS loaded')
                 
     # VSTM
-    Data = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun1')
-    if len(Data) > 0:
-        Results['VSTMMRI1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
+    Data1 = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun1')
+    if len(Data1) > 0:
+        Results['VSTMMRI1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data1)
         print('\tVSTM loaded')    
-    Data = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun2')
-    if len(Data) > 0:
-        Results['VSTMMRI2'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
+    Data2 = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun2')
+    if len(Data2) > 0:
+        Results['VSTMMRI2'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data2)
         print('\tVSTM loaded')    
-        
+    AllData = Data1.append(Data2)
+    if len(AllData) > 0:
+        Results['VSTMMRIAll'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(AllData)
+        print('\tVSTM loaded')    
 
+                
+    # N-Back
+    Data1 = ReadFile(VisitFolder, subid, 'NBack_012012_MRIRun01')
+    if len(Data1) > 0:
+        Results['NBackMRI1'] = ProcessNeuroPsychFunctions.ProcessNBack(Data1)
+        print('\tN-Back loaded')    
+    Data2 = ReadFile(VisitFolder, subid, 'NBack_012012_MRIRun02')
+    if len(Data2) > 0:
+        Results['NBackMRI2'] = ProcessNeuroPsychFunctions.ProcessNBack(Data2)
+        print('\tN-Back loaded')    
+    AllData = Data1.append(Data2)
+    if len(AllData) > 0:
+        Results['NBackMRIAll'] = ProcessNeuroPsychFunctions.ProcessNBack(AllData)
+        print('\tN-Back loaded')    
+        
        
 #     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
 #     Data = CheckDMSDataFrameForLoad(Data)

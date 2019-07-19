@@ -5,6 +5,15 @@ import numpy as np
 # This keeps the fiunctions from the separate functions for handling the file readings
 # and checking whether the data has been scored yet.
 #
+def ProcessMultipleBlocksDMS(ListData):
+    pass
+    
+def ProcessMultipleBlocksVSTM(ListData):
+    pass
+
+def ProcessMultipleBlocksNBack(ListData):
+    pass
+
 def ProcessVSTMBlock(Data):
     if len(Data) > 0:
         Out = {}
@@ -516,6 +525,7 @@ def ProcessNBack(Data):
                 AllLoads.append(CurrentBlock.iloc[0]['LoadLevel'])
                 # How many target trials
                 NTarget = CurrentBlock['Expected'].sum()
+                NNonTarget = len(CurrentBlock['Expected']) - NTarget
                 TargetCount[i] += NTarget
                 # WHen are there responses
                 for index, row in CurrentBlock.iterrows():
@@ -543,10 +553,10 @@ def ProcessNBack(Data):
                 # Find the blocks that correspond to this load level
                 CurrentLoad = [j for j, x in enumerate(AllLoads) if x == i]
                 # Calculate the average responses for this load level
-                AverageHit[count] = Hit[CurrentLoad].sum()/(NTarget*2)
-                AverageHitRT[count] = HitRT[CurrentLoad].sum()/(NTarget*2)
-                AverageFalseAlarm[count] = FalseAlarm[CurrentLoad].sum()/(NTarget*2)
-                AverageFalseAlarmRT[count] = FalseAlarmRT[CurrentLoad].sum()/(NTarget*2)   
+                AverageHit[count] = Hit[CurrentLoad].sum()/(NTarget*len(Hit[CurrentLoad]))
+                AverageHitRT[count] = HitRT[CurrentLoad].sum()/(NTarget*len(Hit[CurrentLoad]))
+                AverageFalseAlarm[count] = FalseAlarm[CurrentLoad].sum()/(NNonTarget*len(Hit[CurrentLoad]))
+                AverageFalseAlarmRT[count] = FalseAlarmRT[CurrentLoad].sum()/(NNonTarget*len(Hit[CurrentLoad]))
                 AllTargetCount[count] = TargetCount[CurrentLoad].sum()
                 count += 1
             # Now prepare the results for output            
