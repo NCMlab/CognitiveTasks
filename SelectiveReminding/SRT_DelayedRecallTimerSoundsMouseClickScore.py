@@ -215,7 +215,7 @@ FullWordList = pd.read_csv(inputFile)
 NWords = len(FullWordList)
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
-mouse = event.Mouse(win=win)
+mouse = event.Mouse(True, None, win=win)
 x, y = [None, None]
 
 # For every word in the word list do the following

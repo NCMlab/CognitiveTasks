@@ -1,6 +1,7 @@
 import numpy as np
 
 VSTM_ProbeColor = 'blue'
+VSTM_Instructions = 'Press [Left Finger] if the circle WAS in the set.\nPress [Right Finger] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress [5] to begin.'
 
 # Timings
 VSTM_FontSize = 60

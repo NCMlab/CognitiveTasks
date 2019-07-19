@@ -179,7 +179,7 @@ GreenCross = visual.TextStim(win=win, name='RedCross',
     
 # Instructions
 textInstr1 = visual.TextStim(win=win, name='textInstr1',
-    text='Press [INDEX Finger] if the circle WAS in the set.\nPress [MIDDLE Finger] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress [5] to begin.',
+    text=VSTM_Instructions, #Press [INDEX Finger] if the circle WAS in the set.\nPress [MIDDLE Finger] if the circle was NOT in the set.\n\nTry to respond as quickly and as accurately as possible.\n\nPress [5] to begin.',
     font='Times New Roman',
     units=VSTM_FontSizeUnits, pos=(0, 0), height=VSTM_FontSize*0.75, wrapWidth=1200, ori=0, 
     color=VSTM_FontColor, colorSpace='rgb', opacity=1,
