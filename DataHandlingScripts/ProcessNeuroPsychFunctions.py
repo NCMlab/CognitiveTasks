@@ -95,6 +95,7 @@ def ProcessDMSBlockv2(Data):
         UniqueLoad = UniqueLoad[~np.isnan(UniqueLoad)]
         UniqueLoad.sort()
         count = 1
+        
         for i in UniqueLoad:
             temp = Data[Data['Load']==i]
             # find acc
@@ -109,7 +110,7 @@ def ProcessDMSBlockv2(Data):
             Out[Tag2+'_RT'] = RT
             Out[Tag1+'_NResp'] = NResp
             Out[Tag2+'_NResp'] = NResp
-            count += 1
+            count += 1                    
     else:
         for i in range(1,6):
             Tag1 = 'RelLoad%02d'%(i)
@@ -121,6 +122,7 @@ def ProcessDMSBlockv2(Data):
             Out[Tag1+'_NResp'] = -9999
             Out[Tag2+'_NResp'] = -9999
     return Out
+    
     
 def CalculateDMSLoad(OneLineOfData):
     # calculate load from CSV results file

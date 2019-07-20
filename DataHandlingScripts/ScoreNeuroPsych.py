@@ -23,6 +23,7 @@ import pandas as pd
 import numpy as np
 import glob
 import datetime
+import collections
 
 import ProcessNeuroPsychFunctions
 import ProcessBehavioralFunctions
@@ -182,7 +183,8 @@ def LoadRawData(VisitFolder, subid):
     # DMS
     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
     Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
-    Results['DMSBeh1'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
+    tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
+    Results['DMSBeh1'] = ReorderDMSResults(tempResults)
     print('\tDMS loaded')
         
     # VSTM
@@ -369,7 +371,25 @@ def CreateUpdatedDataFrameOfResults(NewData, OldData):
         # Add OutDataRow to the updated out dataframe
         OutDataFrame = OutDataFrame.append(OutDataRow)
     return OutDataFrame
-   
+
+def ReorderDMSResults(Results):
+    # When the results are calculated it is easier to code the scoring based on load
+    # but this is order hard to read at the output.
+    # This code reorders results based on the measure instead of the load
+    # What measures to cycle over
+    MeasureList = ['RT', 'Acc','NResp']
+    # what type of measures to cycle over
+    TypeList = ['Rel', 'Abs']
+    # create an empty ordered dictionary
+    Res = collections.OrderedDict()
+    for Type in TypeList:
+        for Tag in MeasureList:
+            for k in range(1,11):
+                for i in Results:
+                    if (i.find(Type) >= 0) and (i.find(Tag) >= 0) and (i.find('Load'+str(k).zfill(2)) >= 0):
+                        Res[i] = Results[i]
+    return Res
+      
 def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName):
     # Move the old file 
     OldDataFolder = os.path.join(AllOutDataFolder, 'OldResultFiles')
