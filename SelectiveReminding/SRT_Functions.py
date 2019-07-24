@@ -52,7 +52,7 @@ def MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows):
     return ColLocsList, RowLocsList
 
 
-def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText):
+def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText, WordListBoxObjects):
     RecallOrder = 1
     SRT_ResponseTimeAllowed = 60
     from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
@@ -140,6 +140,11 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
                         if obj.contains(mouse):
                             gotValidClick = True
                             mouse.clicked_text.append(obj.text)
+                    for obj in WordListBoxObjects:
+                        if obj.contains(mouse):
+                            gotValidClick = True
+                            mouse.clicked_text.append(obj.name)
+                    
                     # HERE is where accuracy is assessed
                     for obj in WordListObjects:#[text3,text5,text6,text7,text14, text15, text16, text17, text18, text22, text23, text24]:
                         if obj.contains(mouse):
