@@ -249,11 +249,12 @@ for word in FullWordScoringList['Word']:
 
     polygon = visual.Rect(
         win=win, name=WordBoxCount,
-        width=50, height=FontSize,
+        width=150, height=1.5*FontSize,
         ori=0, pos=(ColLocsList[count-1][0], RowLocsList[count-1][0]),
         lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
         fillColor=[1,1,1], fillColorSpace='rgb',
-        opacity=0.1, depth=-2.0, interpolate=True)        
+        opacity=0.5, depth=-2.0, interpolate=True,
+        units='pix')        
     # Add this visual stim obkect to a list
     WordListBoxObjects.append(polygon) 
     count += 1

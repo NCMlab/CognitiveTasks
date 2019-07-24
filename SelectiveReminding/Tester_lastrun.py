@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v3.1.0),
-    on Mon Jul 22 17:35:56 2019
+    on Wed Jul 24 13:25:31 2019
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -95,6 +95,12 @@ frameN = -1
 continueRoutine = True
 # update component parameters for each repeat
 # setup some python lists for storing info about the mouse
+mouse.x = []
+mouse.y = []
+mouse.leftButton = []
+mouse.midButton = []
+mouse.rightButton = []
+mouse.time = []
 mouse.clicked_name = []
 gotValidClick = False  # until a click is received
 # keep track of which components have finished
@@ -129,8 +135,16 @@ while continueRoutine:
         win.timeOnFlip(mouse, 'tStartRefresh')  # time at next scr refresh
         mouse.status = STARTED
         mouse.mouseClock.reset()
-        prevButtonState = mouse.getPressed()  # if button is down already this ISN'T a new click
+        prevButtonState = [0, 0, 0]  # if now button is down we will treat as 'new' click
     if mouse.status == STARTED:  # only update if started and not finished!
+        x, y = mouse.getPos()
+        mouse.x.append(x)
+        mouse.y.append(y)
+        buttons = mouse.getPressed()
+        mouse.leftButton.append(buttons[0])
+        mouse.midButton.append(buttons[1])
+        mouse.rightButton.append(buttons[2])
+        mouse.time.append(mouse.mouseClock.getTime())
         buttons = mouse.getPressed()
         if buttons != prevButtonState:  # button state changed?
             prevButtonState = buttons
@@ -176,24 +190,15 @@ for thisComponent in trialComponents:
 thisExp.addData('text.started', text.tStartRefresh)
 thisExp.addData('text.stopped', text.tStopRefresh)
 # store data for thisExp (ExperimentHandler)
-x, y = mouse.getPos()
-buttons = mouse.getPressed()
-if sum(buttons):
-    # check if the mouse was inside our 'clickable' objects
-    gotValidClick = False
-    for obj in [polygon]:
-        if obj.contains(mouse):
-            gotValidClick = True
-            mouse.clicked_name.append(obj.name)
-thisExp.addData('mouse.x', x)
-thisExp.addData('mouse.y', y)
-thisExp.addData('mouse.leftButton', buttons[0])
-thisExp.addData('mouse.midButton', buttons[1])
-thisExp.addData('mouse.rightButton', buttons[2])
-if len(mouse.clicked_name):
-    thisExp.addData('mouse.clicked_name', mouse.clicked_name[0])
-thisExp.addData('mouse.started', mouse.tStart)
-thisExp.addData('mouse.stopped', mouse.tStop)
+thisExp.addData('mouse.x', mouse.x)
+thisExp.addData('mouse.y', mouse.y)
+thisExp.addData('mouse.leftButton', mouse.leftButton)
+thisExp.addData('mouse.midButton', mouse.midButton)
+thisExp.addData('mouse.rightButton', mouse.rightButton)
+thisExp.addData('mouse.time', mouse.time)
+thisExp.addData('mouse.clicked_name', mouse.clicked_name)
+thisExp.addData('mouse.started', mouse.tStartRefresh)
+thisExp.addData('mouse.stopped', mouse.tStopRefresh)
 thisExp.nextEntry()
 thisExp.addData('polygon.started', polygon.tStartRefresh)
 thisExp.addData('polygon.stopped', polygon.tStopRefresh)

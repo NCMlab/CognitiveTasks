@@ -98,8 +98,13 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     # keep track of which components have finished
     trialComponents = []
     trialComponents.append(mouse)
+    # Add words to trial components
     for word in WordListObjects:
         trialComponents.append(word)
+    # Add boxes to trial components
+    for word in WordListBoxObjects:
+        trialComponents.append(word)
+        
     trialComponents.append(key_resp_2)
     
 #    trialComponents = [mouse, WordListObjects[0], WordListObjects[1], WordListObjects[2], WordListObjects[3], WordListObjects[4], WordListObjects[5],WordListObjects[6], WordListObjects[7], WordListObjects[8], WordListObjects[9], WordListObjects[10], WordListObjects[11],WordListObjects[12],WordListObjects[13],WordListObjects[14],WordListObjects[15],WordListObjects[16],WordListObjects[17],key_resp_2]
@@ -135,11 +140,11 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
                     mouse.rightButton.append(buttons[2])
                     mouse.time.append(trialClock.getTime())
                     # check if the mouse was inside our 'clickable' objects
-                    for obj in WordListObjects:
-                                        # text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text12,text13,text14,text15,text16,text17,text18,text19,text20]:
-                        if obj.contains(mouse):
-                            gotValidClick = True
-                            mouse.clicked_text.append(obj.text)
+#                    for obj in WordListObjects:
+#                                        # text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text12,text13,text14,text15,text16,text17,text18,text19,text20]:
+#                        if obj.contains(mouse):
+#                            gotValidClick = True
+#                            mouse.clicked_text.append(obj.text)
                     for obj in WordListBoxObjects:
                         if obj.contains(mouse):
                             gotValidClick = True
@@ -156,7 +161,14 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
                 word.tStart = t
                 word.frameNStart = frameN  # exact frame index
                 word.setAutoDraw(True)
-
+        # Add boxes to screen
+        for word in WordListBoxObjects:
+            if t >= 0.0 and word.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                word.tStart = t
+                word.frameNStart = frameN  # exact frame index
+                word.setAutoDraw(True)
+        
        # This cycls over the full list and checks to see which word is selected
         count = 0
 
