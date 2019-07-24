@@ -44,6 +44,8 @@ def MakeAllListsOfStimuli(LoadLevel, TrialPerBlock, StimList):
     return AllLists, AllCorrectLocations
 
 def HardCodedLists_18sym_6Targets_Loads012012(RunNumber = 0):
+
+    # Fix this so that all zero back blocks have the same letter positions
     ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM'] # 
     # These are written in 1,2,3 counting
     CorrLocZeroBlock1Run1 = np.array([4,6,10,13,15,17])
@@ -64,6 +66,8 @@ def HardCodedLists_18sym_6Targets_Loads012012(RunNumber = 0):
     CorrLocZeroBlock1Run4 = np.array([3,5,9,13,15,17])
     ZeroBackBlock2Run4 = ['FPXTFXYVXHXFXMXLPY']
     CorrLocZeroBlock2Run4 = np.array([3,6,9,11,13,15])
+    
+    
     
     OneBackBlock1Run1 = ['RDDVPPRRMPFFJJYCCT'] # 
     CorrLocOneBlock1Run1 = np.array([3,6,8,12,14,17])
