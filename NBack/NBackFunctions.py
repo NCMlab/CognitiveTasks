@@ -48,24 +48,25 @@ def HardCodedLists_18sym_6Targets_Loads012012(RunNumber = 0):
     # Fix this so that all zero back blocks have the same letter positions
     ZeroBackBlock1Run1 = ['HKFXPXJTLXPRXZXJXM'] # 
     # These are written in 1,2,3 counting
-    CorrLocZeroBlock1Run1 = np.array([4,6,10,13,15,17])
+    CorrLocZeroBlock1Run1 = np.array([4,6,10,13,15,17])    
     ZeroBackBlock2Run1 = ['GXLKMSXZXDSXRMXVXP']
     CorrLocZeroBlock2Run1 = np.array([2,7,9,12,15,17])
     
-    ZeroBackBlock1Run2 = ['THXZXDJCMXKXGXMHDX']
-    CorrLocZeroBlock1Run2 = np.array([3,5,10,12,14,18])
-    ZeroBackBlock2Run2 = ['MVDXMXFKJXTYXRXBXM'] # 
-    CorrLocZeroBlock2Run2 = np.array([4,6,10,13,15,17])
+    ZeroBackBlock1Run2 = ['MVDXMXFKJXTYXRXBXM'] # 
+    CorrLocZeroBlock1Run2 = np.array([4,6,10,13,15,17])    
+    ZeroBackBlock2Run2 = ['LXDNPGXHXMYXLKXVXY']
+    CorrLocZeroBlock2Run2 = np.array([3,5,10,12,14,18])
 
-    ZeroBackBlock1Run3 = ['VYXZPVXLXVFXCXFTXR']
-    CorrLocZeroBlock1Run3 = np.array([3,7,9,12,14,17])
-    ZeroBackBlock2Run3 = ['LTXCXSYKXVNXHXPVNX']
+
+    ZeroBackBlock1Run3 = ['TYVXKXSPYXVHXMXTXF']
+    CorrLocZeroBlock1Run3 = np.array([4,6,10,13,15,17])
+    ZeroBackBlock2Run3 = ['DXLJYHXKXJTXHNXJXK']
     CorrLocZeroBlock2Run3 = np.array([3,5,9,12,14,18])
     
-    ZeroBackBlock1Run4 = ['SKXJXPHVXSKMXFXKXN']
-    CorrLocZeroBlock1Run4 = np.array([3,5,9,13,15,17])
-    ZeroBackBlock2Run4 = ['FPXTFXYVXHXFXMXLPY']
-    CorrLocZeroBlock2Run4 = np.array([3,6,9,11,13,15])
+    ZeroBackBlock1Run4 = ['RNSXMXPRKXSGXVXCXM']
+    CorrLocZeroBlock1Run4 = np.array([4,6,10,13,15,17])
+    ZeroBackBlock2Run4 = ['FXLHSYXZXMLXCMXNXG']
+    CorrLocZeroBlock2Run4 = np.array([3,5,9,12,14,18])
     
     
     
