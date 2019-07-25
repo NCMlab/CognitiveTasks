@@ -16,10 +16,10 @@ import pandas as pd
 import numpy as np
 import glob
 import datetime
-
+import collections
 import ProcessNeuroPsychFunctions
 import ProcessBehavioralFunctions
-
+import ScoreNeuroPsych
 # What folder is this file in?
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # This will load the config file containing the location of the data folder
@@ -31,7 +31,7 @@ import NeuropsychDataFolder
 # Load up the data location as a global variable
 AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
 
-def ScoreAll():
+def main():
     # Cycle over all data folders and load them up
     NewData = CycleOverDataFolders()
     # find the name of the existing results file
@@ -127,41 +127,49 @@ def LoadRawData(VisitFolder, subid):
     # This function looks for very specific files
     
     print('working on %s'%(subid))
-    Results = {}
-
+    Results = collections.OrderedDict()
+    
         
     # DMS
     Data1 = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
-    if len(Data1) > 0:
+    if len(Data1) > 0:             
         Data1 = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data1)
-        Results['DMSMRI1'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data1)
+        tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data1)
+        Results['DMSMRI1'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)    
         print('\tDMS loaded')
     
     Data2 = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
     if len(Data2) > 0:
         Data2 = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data2)
-        Results['DMSMRI2'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data2)
+        tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data2)
+        Results['DMSMRI2'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)    
         print('\tDMS loaded')
 
-    AllData = Data1.append(Data2)
-    if len(AllData) > 0:
-        AllData = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(AllData)
-        Results['DMSMRIAll'] = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(AllData)
-        print('\tDMS loaded')
+    if len(Data1) > 0 and len(Data2) > 0: 
+        AllData = Data1.append(Data2)
+        if len(AllData) > 0:
+            AllData = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(AllData)
+            tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(AllData)
+            Results['DMSMRIAll'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)    
+            print('\tBoth DMS loaded')
                 
     # VSTM
     Data1 = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun1')
     if len(Data1) > 0:
-        Results['VSTMMRI1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data1)
+        tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data1)
+        Results['VSTMMRI1'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)   
         print('\tVSTM loaded')    
     Data2 = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun2')
     if len(Data2) > 0:
-        Results['VSTMMRI2'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data2)
+        tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data2)
+        Results['VSTMMRI2'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)   
         print('\tVSTM loaded')    
-    AllData = Data1.append(Data2)
-    if len(AllData) > 0:
-        Results['VSTMMRIAll'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(AllData)
-        print('\tVSTM loaded')    
+    if len(Data1) > 0 and len(Data2) > 0: 
+        AllData = Data1.append(Data2)
+        if len(AllData) > 0:
+            tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(AllData)
+            Results['VSTMMRIAll'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)   
+            print('\tVBoth VSTM loaded')    
 
                 
     # N-Back
@@ -173,10 +181,11 @@ def LoadRawData(VisitFolder, subid):
     if len(Data2) > 0:
         Results['NBackMRI2'] = ProcessNeuroPsychFunctions.ProcessNBack(Data2)
         print('\tN-Back loaded')    
-    AllData = Data1.append(Data2)
-    if len(AllData) > 0:
-        Results['NBackMRIAll'] = ProcessNeuroPsychFunctions.ProcessNBack(AllData)
-        print('\tN-Back loaded')    
+    if len(Data1) > 0 and len(Data2) > 0:     
+        AllData = Data1.append(Data2)
+        if len(AllData) > 0:
+            Results['NBackMRIAll'] = ProcessNeuroPsychFunctions.ProcessNBack(AllData)
+            print('\tBoth N-Back loaded')    
         
        
 #     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
@@ -258,7 +267,8 @@ def FlattenDict(Results):
     # In order to write these results to a CSV fuile the dictionaries need to be flattened first
     #
     # cycle over tasks
-    FlatResults = {}
+    # Use an ordered dictionary
+    FlatResults = collections.OrderedDict()
     for i in Results.keys():
         for j in Results[i].keys():
             FlatResults['%s_%s'%(i,j)] = Results[i][j]
@@ -359,46 +369,6 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     # Now that the old data is moved, write out the updated data
     UpdatedData.to_csv(UpdatedDataFileName, index = False)    
       
-# def ListOfExpectedResults():
-#     # This list could be a structure
-#     # This list is the list of names in the structure
-#     # Then each would have a flag as to whether it was found
-#     # It can each have the results
-#     TaskList = {}
-#     TaskList['Stroop_Color'] = {}
-#     TaskList['Stroop_Color']['Completed'] = False
-#     TaskList['Stroop_Word'] = {}
-#     TaskList['Stroop_Word']['Completed'] = False  
-#     TaskList['Stroop_ColorWord'] = {}
-#     TaskList['Stroop_ColorWord']['Completed'] = False  
-#     TaskList['WCST'] = {}
-#     TaskList['WCST']['Completed'] = False  
-#     TaskList['DigitSpan_Forward'] = {}
-#     TaskList['DigitSpan_Forward']['Completed'] = False              
-#     TaskList['DigitSpan_Backward'] = {}
-#     TaskList['DigitSpan_Backward']['Completed'] = False  
-#     TaskList['Matrices_Main'] = {}
-#     TaskList['Matrices_Main']['Completed'] = False  
-#     TaskList['DMS_Stair'] = {}
-#     TaskList['DMS_Stair']['Completed'] = False  
-#     TaskList['DMS_Block'] = {}
-#     TaskList['DMS_Block']['Completed'] = False  
-#     TaskList['VSTM_Stair'] = {}
-#     TaskList['VSTM_Stair']['Completed'] = False                  
-#     TaskList['VSTM_Block'] = {}
-#     TaskList['VSTM_Block']['Completed'] = False  
-#     TaskList['Speed_PatternComp'] = {}
-#     TaskList['Speed_PatternComp']['Completed'] = False  
-#     TaskList['Vocab_Antonyms'] = {}
-#     TaskList['Vocab_Antonyms']['Completed'] = False  
-#     return TaskList
-
-
-# def FindResults(TaskList, VisitFolder, PartID):
-#     for j in TaskList:
-#         TempFile = glob.glob(os.path.join(VisitFolder,(PartID+'_'+j+'*.csv')))
-#          # Ideally the file names should be checked to pick the latest one   
-#         if len(TempFile) > 0:
-#             TaskList[j]['DataFile'] = TempFile[-1]
-#             TaskList[j]['Completed'] = True
-#     return TaskList
+      
+if __name__ == "__main__":
+    main()

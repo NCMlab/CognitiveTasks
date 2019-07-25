@@ -91,7 +91,8 @@ def CycleOverDataFolders():
                         Visid = CurVis
                         print('%s, %s'%(subid, Visid))
                         # Load up the raw data from the files in the visit folder
-                        Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
+                        #Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
+                        Results = LoadRawDataSHORT(os.path.join(AllOutDataFolder, subid, Visid),subid)
                         FlatResults = FlattenDict(Results)
                         # add subid and visitid
                         FlatResults['AAsubid'] = subid
@@ -181,7 +182,7 @@ def LoadRawData(VisitFolder, subid):
     print('\tMatrices loaded')
         
     # DMS
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun')
     Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
     tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
     Results['DMSBeh1'] = ReorderDMSResults(tempResults)
@@ -216,6 +217,23 @@ def LoadRawData(VisitFolder, subid):
 #     Data = CheckDMSDataFrameForLoad(Data)
 #     Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
 #     
+    return Results
+
+def LoadRawDataSHORT(VisitFolder, subid):
+    # Given a visit folder, check for the existance of specific files
+    # read the file and process teh results
+    # This function looks for very specific files
+    
+    print('working on %s'%(subid))
+    Results = {}
+
+    # DMS
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+    Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
+    tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
+    Results['DMSBeh1'] = ReorderDMSResults(tempResults)
+    print('\tDMS loaded')
+
     return Results
 
 def ReadFile(VisitFolder, subid, TaskTag):
@@ -283,7 +301,8 @@ def FlattenDict(Results):
     # In order to write these results to a CSV fuile the dictionaries need to be flattened first
     #
     # cycle over tasks
-    FlatResults = {}
+    # Use an ordered dictionary
+    FlatResults = collections.OrderedDict()
     for i in Results.keys():
         for j in Results[i].keys():
             FlatResults['%s_%s'%(i,j)] = Results[i][j]

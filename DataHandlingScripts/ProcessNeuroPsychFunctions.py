@@ -52,6 +52,7 @@ def ProcessDMSBlock(Data):
     return Out  
     
 def ProcessVSTMBlockv2(Data):
+    # FIX THIS FOR TIME OUTS!!!!
     # This needs work to ignore time outs
     Out = {}
     if len(Data) > 0:
@@ -67,24 +68,24 @@ def ProcessVSTMBlockv2(Data):
             RT = (temp['RT'].mean())
             NResp = (temp['Corr'].count())
             Tag1 = 'RelLoad%02d'%(count)
-            Tag2 = 'AbsLoad%02d'%(i)
+#            Tag2 = 'AbsLoad%02d'%(i)
             Out[Tag1+'_Acc'] = Acc
-            Out[Tag2+'_Acc'] = Acc
+ #           Out[Tag2+'_Acc'] = Acc
             Out[Tag1+'_RT'] = RT
-            Out[Tag2+'_RT'] = RT
+  #          Out[Tag2+'_RT'] = RT
             Out[Tag1+'_NResp'] = NResp
-            Out[Tag2+'_NResp'] = NResp
+   #         Out[Tag2+'_NResp'] = NResp
             count += 1
     else:
         for i in range(1,6):
             Tag1 = 'RelLoad%02d'%(i)
-            Tag2 = 'AbsLoad%02d'%(i)
+    #        Tag2 = 'AbsLoad%02d'%(i)
             Out[Tag1+'_Acc'] = -9999
-            Out[Tag2+'_Acc'] = -9999
+     #       Out[Tag2+'_Acc'] = -9999
             Out[Tag1+'_RT'] = -9999
-            Out[Tag2+'_RT'] = -9999
+      #      Out[Tag2+'_RT'] = -9999
             Out[Tag1+'_NResp'] = -9999
-            Out[Tag2+'_NResp'] = -9999
+       #     Out[Tag2+'_NResp'] = -9999
     return Out
     
 def ProcessDMSBlockv2(Data):
@@ -103,24 +104,24 @@ def ProcessDMSBlockv2(Data):
             RT = (temp['resp.rt'].mean())
             NResp = (temp['resp.corr'].count())
             Tag1 = 'RelLoad%02d'%(count)
-            Tag2 = 'AbsLoad%02d'%(i)
+#            Tag2 = 'AbsLoad%02d'%(i)
             Out[Tag1+'_Acc'] = Acc
-            Out[Tag2+'_Acc'] = Acc
+#            Out[Tag2+'_Acc'] = Acc
             Out[Tag1+'_RT'] = RT
-            Out[Tag2+'_RT'] = RT
+#            Out[Tag2+'_RT'] = RT
             Out[Tag1+'_NResp'] = NResp
-            Out[Tag2+'_NResp'] = NResp
+#            Out[Tag2+'_NResp'] = NResp
             count += 1                    
     else:
         for i in range(1,6):
             Tag1 = 'RelLoad%02d'%(i)
-            Tag2 = 'AbsLoad%02d'%(i)
+  #          Tag2 = 'AbsLoad%02d'%(i)
             Out[Tag1+'_Acc'] = -9999
-            Out[Tag2+'_Acc'] = -9999
+ #           Out[Tag2+'_Acc'] = -9999
             Out[Tag1+'_RT'] = -9999
-            Out[Tag2+'_RT'] = -9999
+   #         Out[Tag2+'_RT'] = -9999
             Out[Tag1+'_NResp'] = -9999
-            Out[Tag2+'_NResp'] = -9999
+    #        Out[Tag2+'_NResp'] = -9999
     return Out
     
     
