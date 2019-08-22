@@ -411,5 +411,5 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     # Now that the old data is moved, write out the updated data
     UpdatedData.to_csv(UpdatedDataFileName, index = False)    
       
-#if __name__ == "__main__":
-#   main()
+if __name__ == "__main__":
+   main()

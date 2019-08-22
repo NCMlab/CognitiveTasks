@@ -55,18 +55,28 @@ Visit = '2019_Jun_18_1245_V001'
 VisitFolder = os.path.join(NeuropsychDataFolder.NeuropsychDataFolder, subid, Visit)
 
 Results = {}
+
 Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
 Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
 tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
 Results['DMS1'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)
 FlatResults = MakeFlattenDict(Results)
+FlatResults['AAsubid'] = subid
+FlatResults['AAVisid'] = Visit
+FlatResults['AAChecked'] = 0
+ListOfFlat = []
+ListOfFlat.append(FlatResults)
+df = pd.DataFrame(ListOfFlat)
 
+df.to_csv('testout.csv', index = False)
 
 
 Data1 = ScoreFMRIBehavior.ReadFile(VisitFolder, subid, 'NBack_012012_MRIRun01')
 Data2 = ScoreFMRIBehavior.ReadFile(VisitFolder, subid, 'NBack_012012_MRIRun02')
 AllData = Data1.append(Data2)
 AllResults = ProcessNeuroPsychFunctions.ProcessNBack(AllData)
+
+
 
 
 def MakeFlattenDict(Results):
