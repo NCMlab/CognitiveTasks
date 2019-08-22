@@ -8,11 +8,7 @@ Use this scoring program in other programs as:
     the data os scored and updated.
     
 To do:
-        Add a sort of filter to the LoadRawData function so that it will pick only Beh files
-        or only MRI files.
-        Also add something so that it collapses across multiple runs of the DMS, VSTM and NBack tasks
-        
-        Add a scoring program for just the MRI files and save them to their own sheet
+    Also add something so that it collapses across multiple runs of the DMS, VSTM and NBack tasks
 
 """
 import os
@@ -44,6 +40,7 @@ def main():
     NewData = CycleOverDataFolders()
     # find the name of the existing results file
     ExistingDataFileName = LocateOutDataFile()
+    print(ExistingDataFileName)
     # Load the existing results file
     if os.path.exists(ExistingDataFileName):
         # Found the existing data file
@@ -58,7 +55,7 @@ def main():
     else:
         # There is no old data file
         OldData = []
-        NewData.to_csv(ExistingDataFileName, index = False)
+        NewData.to_csv(ExistingDataFileName, index = False, float_format='%.3f')
 
 def CycleOverDataFolders():
     # Take as input the folder that contains folders of data
@@ -114,6 +111,17 @@ def CycleOverDataFolders():
                 ListOfDict.append(FlatResults)
                 
     df = pd.DataFrame(ListOfDict)
+
+    # Move the last three columns to the beginning of the data frame
+    # Make list of column names
+    ColNameList = []
+    for col in df:
+        ColNameList.append(col)
+    # Now move the last three columns to the beginning
+    for j in range(0,3):
+        ColNameList.insert(0,ColNameList.pop())
+    # Now apply these rearranged columns to the dataframe
+    df = df[ColNameList]
     return df
 
 def FindVisitIDFromFileNames(subdir):
@@ -133,7 +141,7 @@ def LoadRawData(VisitFolder, subid):
     # This function looks for very specific files
     
     print('working on %s'%(subid))
-    Results = {}
+    Results = collections.OrderedDict()
     # Stroop
     Data = ReadFile(VisitFolder, subid, 'Stroop_Color_')
     Results['StrpC'] = ProcessNeuroPsychFunctions.ProcessStroopColor(Data)
@@ -283,7 +291,8 @@ def FlattenDict(Results):
     # In order to write these results to a CSV fuile the dictionaries need to be flattened first
     #
     # cycle over tasks
-    FlatResults = {}
+    # Use ordered dictionaries
+    FlatResults = collections.OrderedDict()
     for i in Results.keys():
         for j in Results[i].keys():
             FlatResults['%s_%s'%(i,j)] = Results[i][j]
@@ -402,5 +411,5 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     # Now that the old data is moved, write out the updated data
     UpdatedData.to_csv(UpdatedDataFileName, index = False)    
       
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#   main()
