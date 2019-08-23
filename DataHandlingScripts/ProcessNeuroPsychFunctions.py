@@ -15,9 +15,14 @@ def ProcessMultipleBlocksVSTM(ListData):
 def ProcessMultipleBlocksNBack(ListData):
     pass
 
-def ProcessVSTMBlockv2(Data):
+def ProcessVSTMBlockv2(Data, CapacityData):
     # This needs work to ignore time outs
     Out = collections.OrderedDict()
+    # Read the capacity data
+    Capacity = ReadCapacity(CapacityData)
+    # Add this to the dictionary
+    Out['VSTM_Cap'] = Capacity
+    
     if len(Data) > 0:
         #cycle over load levels and save as relative load and absolute load
         UniqueLoad = Data['Load'].unique()
@@ -40,6 +45,7 @@ def ProcessVSTMBlockv2(Data):
 #            Out[Tag2+'_NResp'] = NResp
             count += 1
     else:
+        Out['VSTM_Cap'] = -9999
         for i in range(1,6):
             Tag1 = 'RelLoad%02d'%(i)
 #            Tag2 = 'AbsLoad%02d'%(i)
@@ -51,8 +57,12 @@ def ProcessVSTMBlockv2(Data):
 #            Out[Tag2+'_NResp'] = -9999
     return Out
     
-def ProcessDMSBlockv2(Data):
+def ProcessDMSBlockv2(Data, CapacityData):
     Out = collections.OrderedDict()
+    # Read the capacity data
+    Capacity = ReadCapacity(CapacityData)
+    # Add this to the dictionary
+    Out['DMS_Cap'] = Capacity
     if len(Data) > 0:
         #cycle over load levels and save as relative load and absolute load
         UniqueLoad = Data['Load'].unique()
@@ -76,6 +86,7 @@ def ProcessDMSBlockv2(Data):
 #            Out[Tag2+'_NResp'] = NResp
             count += 1                    
     else:
+        Out['DMS_Cap'] = -9999
         for i in range(1,6):
             Tag1 = 'RelLoad%02d'%(i)
 #            Tag2 = 'AbsLoad%02d'%(i)
@@ -87,7 +98,14 @@ def ProcessDMSBlockv2(Data):
 #            Out[Tag2+'_NResp'] = -9999
     return Out
     
-    
+
+def ReadCapacity(Data):
+    # The capacity file contains a single number
+    # And when loaded in as a dataframe this number gets used 
+    # as a column name
+    Capacity = float(Data.columns[0])
+    return Capacity
+        
 def CalculateDMSLoad(OneLineOfData):
     # calculate load from CSV results file
     Stim = OneLineOfData['TL']+OneLineOfData['TM']+OneLineOfData['TR']

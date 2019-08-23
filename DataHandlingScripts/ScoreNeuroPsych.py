@@ -190,14 +190,16 @@ def LoadRawData(VisitFolder, subid):
         
     # DMS
     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+    CapacityData = ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
     Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
-    tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
+    tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data, CapacityData)
     Results['DMSBeh1'] = ReorderDMSResults(tempResults)
     print('\tDMS loaded')
         
     # VSTM
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
-    Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
+    CapacityData = ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')        
+    Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
     print('\tVSTM loaded')    
     
     # SRT
@@ -238,6 +240,9 @@ def ReadFile(VisitFolder, subid, TaskTag):
     # create the string you are looking for which is a combo of the subid and the task name
     SearchString = subid + '_' + TaskTag
     matching = fnmatch.filter(ll,SearchString+'*.csv')
+    if len(matching) == 0:
+        # Check to see if the file is a TXT file
+        matching = fnmatch.filter(ll,SearchString+'*.txt')        
     # It is possible that there are multipel files with similar names.
     # The following asks the user for the correct one and then renames the others
     count = 1
@@ -391,12 +396,15 @@ def ReorderDMSResults(Results):
     TypeList = ['Rel', 'Abs']
     # create an empty ordered dictionary
     Res = collections.OrderedDict()
+    Res['DMS_Cap'] = Results['DMS_Cap'] 
     for Type in TypeList:
         for Tag in MeasureList:
             for k in range(1,11):
                 for i in Results:
                     if (i.find(Type) >= 0) and (i.find(Tag) >= 0) and (i.find('Load'+str(k).zfill(2)) >= 0):
                         Res[i] = Results[i]
+    # Now add the capacity back in
+
     return Res
       
 def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName):
