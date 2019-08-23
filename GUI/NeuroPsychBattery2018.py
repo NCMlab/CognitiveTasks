@@ -425,11 +425,11 @@ class Mywin(wx.Frame):
         VSTMList['8']=[1,3,6,7,8]
         VSTMList['9']=[1,3,6,8,9]    
         VSTMList['10']=[1,3,6,9,10]    
-        VSTMList['11']=[1,3,6,11,12]    
-        VSTMList['12']=[1,3,6,12,13]    
-        VSTMList['13']=[1,3,6,13,14]    
-        VSTMList['14']=[1,3,6,14,15]    
-        VSTMList['15']=[1,3,6,15,16]    
+        VSTMList['11']=[1,3,6,10,11]    
+        VSTMList['12']=[1,3,6,11,12]    
+        VSTMList['13']=[1,3,6,12,13]    
+        VSTMList['14']=[1,3,6,13,14]    
+        VSTMList['15']=[1,3,6,14,15]    
         OutList = VSTMList[str(Limit)]
         OutList = ' '.join(str(e) for e in OutList)
         return OutList   

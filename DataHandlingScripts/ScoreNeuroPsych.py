@@ -349,16 +349,21 @@ def LocateOutDataFile():
     return FileName
 
 def CreateUpdatedDataFrameOfResults(NewData, OldData):    
+    # Extract the columns
+    ColName = []
+    for c in OldData.columns:
+        ColName.append(c)
+    
     # Create a dataframe to hold teh updated data
-    OutDataFrame = pd.DataFrame()
+    OutDataFrame = pd.DataFrame(columns = ColName)
     # Now cycle over each row and compare
     for index, NewRow in NewData.iterrows():
         # Add the new data
     
         NewDataSubId = NewRow['AAsubid']
         NewDataVisitId = NewRow['AAVisid']
-        print(NewDataSubId)
-        print(NewDataVisitId)
+#        print(NewDataSubId)
+#        print(NewDataVisitId)
         # for each subid and visit found in the new data look for it in the old data
         # If the same subid/visitid is found in both check the Old data column 
         # labeled AAChecked to see if it is 1. If so then skip this data line in the new data 
@@ -417,7 +422,7 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     MovedDataFile = os.path.join(OldDataFolder, 'X_'+os.path.basename(ExistingDataFileName))
     shutil.move(ExistingDataFileName, MovedDataFile)
     # Now that the old data is moved, write out the updated data
-    UpdatedData.to_csv(UpdatedDataFileName, index = False)    
+    UpdatedData.to_csv(UpdatedDataFileName, index = False, float_format='%.3f')    
       
 if __name__ == "__main__":
    main()

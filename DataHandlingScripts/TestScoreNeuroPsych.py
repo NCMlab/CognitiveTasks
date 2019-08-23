@@ -56,7 +56,13 @@ VisitFolder = os.path.join(NeuropsychDataFolder.NeuropsychDataFolder, subid, Vis
 
 Results = {}
 
+Data = ReadFile(VisitFolder, subid, 'DMS_CAP')
+
+
+
 Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+
+
 Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
 tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
 Results['DMS1'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)
