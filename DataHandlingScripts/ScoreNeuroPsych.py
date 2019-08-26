@@ -91,8 +91,8 @@ def CycleOverDataFolders():
                         Visid = CurVis
                         print('%s, %s'%(subid, Visid))
                         # Load up the raw data from the files in the visit folder
-                        #Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
-                        Results = LoadRawDataSHORT(os.path.join(AllOutDataFolder, subid, Visid),subid)
+                        Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
+                        # Results = LoadRawDataSHORT(os.path.join(AllOutDataFolder, subid, Visid),subid)
                         FlatResults = FlattenDict(Results)
                         # add subid and visitid
                         FlatResults['AAsubid'] = subid
@@ -190,7 +190,8 @@ def LoadRawData(VisitFolder, subid):
         
     # VSTM
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
-    Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
+    tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
+    Results['VSTMBeh1'] = ReorderDMSResults(tempResults)
     print('\tVSTM loaded')    
     
     # SRT

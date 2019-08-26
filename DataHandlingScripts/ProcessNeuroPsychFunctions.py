@@ -63,6 +63,9 @@ def ProcessVSTMBlockv2(Data):
         count = 1
         for i in UniqueLoad:
             temp = Data[Data['Load']==i]
+            # Check for Time outs which are coded as Responses equal to -99
+            # Remove time outs
+            temp = temp[temp['Resp']!=-99]
             # find acc
             Acc = (temp['Corr'].mean())
             RT = (temp['RT'].mean())
