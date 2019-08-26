@@ -8,11 +8,7 @@ Use this scoring program in other programs as:
     the data os scored and updated.
     
 To do:
-        Add a sort of filter to the LoadRawData function so that it will pick only Beh files
-        or only MRI files.
-        Also add something so that it collapses across multiple runs of the DMS, VSTM and NBack tasks
-        
-        Add a scoring program for just the MRI files and save them to their own sheet
+    Also add something so that it collapses across multiple runs of the DMS, VSTM and NBack tasks
 
 """
 import os
@@ -44,6 +40,7 @@ def main():
     NewData = CycleOverDataFolders()
     # find the name of the existing results file
     ExistingDataFileName = LocateOutDataFile()
+    print(ExistingDataFileName)
     # Load the existing results file
     if os.path.exists(ExistingDataFileName):
         # Found the existing data file
@@ -58,7 +55,7 @@ def main():
     else:
         # There is no old data file
         OldData = []
-        NewData.to_csv(ExistingDataFileName, index = False)
+        NewData.to_csv(ExistingDataFileName, index = False, float_format='%.3f')
 
 def CycleOverDataFolders():
     # Take as input the folder that contains folders of data
@@ -115,6 +112,17 @@ def CycleOverDataFolders():
                 ListOfDict.append(FlatResults)
                 
     df = pd.DataFrame(ListOfDict)
+
+    # Move the last three columns to the beginning of the data frame
+    # Make list of column names
+    ColNameList = []
+    for col in df:
+        ColNameList.append(col)
+    # Now move the last three columns to the beginning
+    for j in range(0,3):
+        ColNameList.insert(0,ColNameList.pop())
+    # Now apply these rearranged columns to the dataframe
+    df = df[ColNameList]
     return df
 
 def FindVisitIDFromFileNames(subdir):
@@ -134,7 +142,7 @@ def LoadRawData(VisitFolder, subid):
     # This function looks for very specific files
     
     print('working on %s'%(subid))
-    Results = {}
+    Results = collections.OrderedDict()
     # Stroop
     Data = ReadFile(VisitFolder, subid, 'Stroop_Color_')
     Results['StrpC'] = ProcessNeuroPsychFunctions.ProcessStroopColor(Data)
@@ -182,16 +190,17 @@ def LoadRawData(VisitFolder, subid):
     print('\tMatrices loaded')
         
     # DMS
-    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun')
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+    CapacityData = ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
     Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
-    tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
+    tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data, CapacityData)
     Results['DMSBeh1'] = ReorderDMSResults(tempResults)
     print('\tDMS loaded')
         
     # VSTM
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
-    tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
-    Results['VSTMBeh1'] = ReorderDMSResults(tempResults)
+    CapacityData = ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')        
+    Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
     print('\tVSTM loaded')    
     
     # SRT
@@ -249,6 +258,9 @@ def ReadFile(VisitFolder, subid, TaskTag):
     # create the string you are looking for which is a combo of the subid and the task name
     SearchString = subid + '_' + TaskTag
     matching = fnmatch.filter(ll,SearchString+'*.csv')
+    if len(matching) == 0:
+        # Check to see if the file is a TXT file
+        matching = fnmatch.filter(ll,SearchString+'*.txt')        
     # It is possible that there are multipel files with similar names.
     # The following asks the user for the correct one and then renames the others
     count = 1
@@ -302,7 +314,6 @@ def FlattenDict(Results):
     # In order to write these results to a CSV fuile the dictionaries need to be flattened first
     #
     # cycle over tasks
-    # Use an ordered dictionary
     FlatResults = collections.OrderedDict()
     for i in Results.keys():
         for j in Results[i].keys():
@@ -355,16 +366,21 @@ def LocateOutDataFile():
     return FileName
 
 def CreateUpdatedDataFrameOfResults(NewData, OldData):    
+    # Extract the columns
+    ColName = []
+    for c in OldData.columns:
+        ColName.append(c)
+    
     # Create a dataframe to hold teh updated data
-    OutDataFrame = pd.DataFrame()
+    OutDataFrame = pd.DataFrame(columns = ColName)
     # Now cycle over each row and compare
     for index, NewRow in NewData.iterrows():
         # Add the new data
     
         NewDataSubId = NewRow['AAsubid']
         NewDataVisitId = NewRow['AAVisid']
-        print(NewDataSubId)
-        print(NewDataVisitId)
+#        print(NewDataSubId)
+#        print(NewDataVisitId)
         # for each subid and visit found in the new data look for it in the old data
         # If the same subid/visitid is found in both check the Old data column 
         # labeled AAChecked to see if it is 1. If so then skip this data line in the new data 
@@ -402,12 +418,15 @@ def ReorderDMSResults(Results):
     TypeList = ['Rel', 'Abs']
     # create an empty ordered dictionary
     Res = collections.OrderedDict()
+    Res['DMS_Cap'] = Results['DMS_Cap'] 
     for Type in TypeList:
         for Tag in MeasureList:
             for k in range(1,11):
                 for i in Results:
                     if (i.find(Type) >= 0) and (i.find(Tag) >= 0) and (i.find('Load'+str(k).zfill(2)) >= 0):
                         Res[i] = Results[i]
+    # Now add the capacity back in
+
     return Res
       
 def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName):
@@ -420,7 +439,7 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     MovedDataFile = os.path.join(OldDataFolder, 'X_'+os.path.basename(ExistingDataFileName))
     shutil.move(ExistingDataFileName, MovedDataFile)
     # Now that the old data is moved, write out the updated data
-    UpdatedData.to_csv(UpdatedDataFileName, index = False)    
+    UpdatedData.to_csv(UpdatedDataFileName, index = False, float_format='%.3f')    
       
 if __name__ == "__main__":
-    main()
+   main()

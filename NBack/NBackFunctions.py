@@ -55,18 +55,18 @@ def HardCodedLists_18sym_6Targets_Loads012012(RunNumber = 0):
     ZeroBackBlock1Run2 = ['MVDXMXFKJXTYXRXBXM'] # 
     CorrLocZeroBlock1Run2 = np.array([4,6,10,13,15,17])    
     ZeroBackBlock2Run2 = ['LXDNPGXHXMYXLKXVXY']
-    CorrLocZeroBlock2Run2 = np.array([3,5,10,12,14,18])
+    CorrLocZeroBlock2Run2 = np.array([2,7,9,12,15,17])
 
 
     ZeroBackBlock1Run3 = ['TYVXKXSPYXVHXMXTXF']
     CorrLocZeroBlock1Run3 = np.array([4,6,10,13,15,17])
     ZeroBackBlock2Run3 = ['DXLJYHXKXJTXHNXJXK']
-    CorrLocZeroBlock2Run3 = np.array([3,5,9,12,14,18])
+    CorrLocZeroBlock2Run3 = np.array([2,7,9,12,15,17])
     
     ZeroBackBlock1Run4 = ['RNSXMXPRKXSGXVXCXM']
     CorrLocZeroBlock1Run4 = np.array([4,6,10,13,15,17])
     ZeroBackBlock2Run4 = ['FXLHSYXZXMLXCMXNXG']
-    CorrLocZeroBlock2Run4 = np.array([3,5,9,12,14,18])
+    CorrLocZeroBlock2Run4 = np.array([2,7,9,12,15,17])
     
     
     
