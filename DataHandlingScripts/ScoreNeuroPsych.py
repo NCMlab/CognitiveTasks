@@ -194,13 +194,14 @@ def LoadRawData(VisitFolder, subid):
     CapacityData = ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
     Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
     tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data, CapacityData)
-    Results['DMSBeh1'] = ReorderDMSResults(tempResults)
+    Results['DMSBeh1'] = Reorder_DMS_VSTM_Results(tempResults, 'DMS')
     print('\tDMS loaded')
         
     # VSTM
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
     CapacityData = ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')        
-    Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
+    tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
+    Results['VSTMBeh1'] = Reorder_DMS_VSTM_Results(tempResults, 'VSTM')
     print('\tVSTM loaded')    
     
     # SRT
@@ -241,7 +242,7 @@ def LoadRawDataSHORT(VisitFolder, subid):
     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
     Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
     tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
-    Results['DMSBeh1'] = ReorderDMSResults(tempResults)
+    Results['DMSBeh1'] = Reorder_DMS_VSTM_Results(tempResults, 'DMS')
     print('\tDMS loaded')
 
     return Results
@@ -408,7 +409,7 @@ def CreateUpdatedDataFrameOfResults(NewData, OldData):
         OutDataFrame = OutDataFrame.append(OutDataRow)
     return OutDataFrame
 
-def ReorderDMSResults(Results):
+def Reorder_DMS_VSTM_Results(Results, TaskTag):
     # When the results are calculated it is easier to code the scoring based on load
     # but this is order hard to read at the output.
     # This code reorders results based on the measure instead of the load
@@ -418,7 +419,8 @@ def ReorderDMSResults(Results):
     TypeList = ['Rel', 'Abs']
     # create an empty ordered dictionary
     Res = collections.OrderedDict()
-    Res['DMS_Cap'] = Results['DMS_Cap'] 
+    CapStr = TaskTag + '_Cap'
+    Res[CapStr] = Results[CapStr] 
     for Type in TypeList:
         for Tag in MeasureList:
             for k in range(1,11):

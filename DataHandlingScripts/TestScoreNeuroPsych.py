@@ -29,19 +29,26 @@ subid = '1002004'
 Visit = '2019_Jun_18_1245_V001'
 VisitFolder = os.path.join(NeuropsychDataFolder.NeuropsychDataFolder, subid, Visit)
 
-Results = {}
-
-Data = ReadFile(VisitFolder, subid, 'DMS_CAP')
-
-
+Results = collections.OrderedDict()
 
 Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
-
-
+CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
 Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
-tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
-Results['DMS1'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)
-FlatResults = MakeFlattenDict(Results)
+tempResults = ScoreNeuroPsych.ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data, CapacityData)
+Results['DMSBeh1'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'DMS')
+
+
+Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
+CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')    
+#Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
+tempResults = ScoreNeuroPsych.ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
+Results['VSTMBeh1'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'VSTM')
+
+
+
+
+
+FlatResults = ScoreNeuroPsych.FlattenDict(Results)
 FlatResults['AAsubid'] = subid
 FlatResults['AAVisid'] = Visit
 FlatResults['AAChecked'] = 0
