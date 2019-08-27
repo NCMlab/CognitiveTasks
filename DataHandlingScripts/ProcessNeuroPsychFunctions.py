@@ -543,28 +543,36 @@ def ProcessNBack(Data):
                 # Calculate the average responses for this load level
                 AverageHit[count] = Hit[CurrentLoad].sum()/(NTarget*len(Hit[CurrentLoad]))
                 AverageHitRT[count] = HitRT[CurrentLoad].sum()/(NTarget*len(Hit[CurrentLoad]))
+                # The false alarm rate is the number of false alarms made dividied by 
+                # the total number of possible false alarms.
+                # If you are using 6 targets out out 18 trials so the number of possible
+                # false alarms per block is 12.
                 AverageFalseAlarm[count] = FalseAlarm[CurrentLoad].sum()/(NNonTarget*len(Hit[CurrentLoad]))
-                AverageFalseAlarmRT[count] = FalseAlarmRT[CurrentLoad].sum()/(NNonTarget*len(Hit[CurrentLoad]))
+                # The RT for false alarms is based on the number of false alarms made
+                AverageFalseAlarmRT[count] = FalseAlarmRT[CurrentLoad].sum()/len(FalseAlarmRT[CurrentLoad])
                 AllTargetCount[count] = TargetCount[CurrentLoad].sum()
                 count += 1
             # Now prepare the results for output            
             count = 0
             for i in UniqueLoads:
                 Tag = 'Load%02d'%(i)
-                Out[Tag+"Hit"] = AverageHit[count]
-                Out[Tag+"Hitrt"] = AverageHitRT[count]   
-                Out[Tag+"FA"] = AverageFalseAlarm[count]                    
-                Out[Tag+"FArt"] = AverageFalseAlarmRT[count]
-                Out[Tag+"N"] = AllTargetCount[count]
+                # The odd capitialization helps with later reordering of the data 
+                # columns based on datatype. I am also trying to avoid writing fart 
+                # into my results file! But I cannot avoid that.
+                Out[Tag+"_HIT"] = AverageHit[count]
+                Out[Tag+"_HitRT"] = AverageHitRT[count]   
+                Out[Tag+"_FA"] = AverageFalseAlarm[count]                    
+                Out[Tag+"_FaRT"] = AverageFalseAlarmRT[count]
+                Out[Tag+"_N"] = AllTargetCount[count]
                 count += 1
         else:
             for i in UniqueLoads:
                 Tag = 'Load%02d'%(i)
-                Out[Tag+"Hit"] = -99
-                Out[Tag+"Hitrt"] = -99
-                Out[Tag+"FA"] = -99
-                Out[Tag+"FArt"] = -99  
-                Out[Tag+"N"] = -99
+                Out[Tag+"_HIT"] = -99
+                Out[Tag+"_HitRT"] = -99
+                Out[Tag+"_FA"] = -99
+                Out[Tag+"_FaRT"] = -99  
+                Out[Tag+"_N"] = -99
     except:
         print('\tN-back >>> Error!!')
     return Out                                

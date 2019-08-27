@@ -214,8 +214,8 @@ def LoadRawData(VisitFolder, subid):
 
     # N-Back
     Data = ReadFile(VisitFolder, subid, 'NBack*BehRun1')
-    Results['NBack'] = ProcessNeuroPsychFunctions.ProcessNBack(Data)          
-    
+    tempResults = ProcessNeuroPsychFunctions.ProcessNBack(Data)          
+    Results['NBack'] = Reorder_NBack_Results(tempResults)
 #     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
 #     Data = CheckDMSDataFrameForLoad(Data)
 #     Results['DMSMRI1'] = ProcessDMSBlockv2(Data)
@@ -419,6 +419,7 @@ def Reorder_DMS_VSTM_Results(Results, TaskTag):
     TypeList = ['Rel', 'Abs']
     # create an empty ordered dictionary
     Res = collections.OrderedDict()
+    # Now add the capacity back in
     CapStr = TaskTag + '_Cap'
     Res[CapStr] = Results[CapStr] 
     for Type in TypeList:
@@ -427,9 +428,23 @@ def Reorder_DMS_VSTM_Results(Results, TaskTag):
                 for i in Results:
                     if (i.find(Type) >= 0) and (i.find(Tag) >= 0) and (i.find('Load'+str(k).zfill(2)) >= 0):
                         Res[i] = Results[i]
-    # Now add the capacity back in
-
     return Res
+
+def Reorder_NBack_Results(Results):
+    # When the results are calculated it is easier to code the scoring based on load
+    # but this is order hard to read at the output.
+    # This code reorders results based on the measure instead of the load
+    # What measures to cycle over
+    MeasureList = ['HIT', 'HitRT','FA', 'FaRT','N']
+    # create an empty ordered dictionary
+    Res = collections.OrderedDict()
+    for Tag in MeasureList:
+        for k in range(0,4):
+            for i in Results:
+                if (i.find(Tag) >= 0) and (i.find('Load'+str(k).zfill(2)) >= 0):
+                    Res[i] = Results[i]
+    return Res
+    
       
 def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName):
     # Move the old file 
