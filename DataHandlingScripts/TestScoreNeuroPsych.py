@@ -44,8 +44,21 @@ CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')
 tempResults = ScoreNeuroPsych.ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
 Results['VSTMBeh1'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'VSTM')
 
-
-
+Data1 = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'NBack_012012_BehRun*1_')
+tempResults1 = ProcessNeuroPsychFunctions.ProcessNBack(Data1)   
+Data2 = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'NBack_012012_BehRun*2_XX')
+tempResults2 = ProcessNeuroPsychFunctions.ProcessNBack(Data2) 
+    # Data2 = ReadFile(VisitFolder, subid, 'NBack*BehRun2')
+    # tempResults2 = ProcessNeuroPsychFunctions.ProcessNBack(Data2)   
+    # #Results['NBack'] = Reorder_NBack_Results(tempResults)
+if len(tempResults1) > 0 and len(tempResults2) > 0: 
+    AllData = Data1.append(Data2)
+    if len(AllData) > 0:
+        tempResultsAll = ProcessNeuroPsychFunctions.ProcessNBack(AllData)
+        Results['NBack'] = ScoreNeuroPsych.Reorder_NBack_Results(tempResultsAll)
+    print('\tBoth N-Back loaded')
+elif len(tempResults1) > 0:
+    Results['NBack'] = ScoreNeuroPsych.Reorder_NBack_Results(tempResults1)
 
 
 FlatResults = ScoreNeuroPsych.FlattenDict(Results)

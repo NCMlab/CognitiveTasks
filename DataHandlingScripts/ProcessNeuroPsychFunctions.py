@@ -14,6 +14,7 @@ def ProcessMultipleBlocksVSTM(ListData):
 
 def ProcessMultipleBlocksNBack(ListData):
     pass
+    
 
 def ProcessVSTMBlockv2(Data, CapacityData):
 
@@ -64,7 +65,10 @@ def ProcessVSTMBlockv2(Data, CapacityData):
 def ProcessDMSBlockv2(Data, CapacityData):
     Out = collections.OrderedDict()
     # Read the capacity data
-    Capacity = ReadCapacity(CapacityData)
+    try:
+        Capacity = ReadCapacity(CapacityData)
+    except:
+        Capacity = -9999    
     # Add this to the dictionary
     Out['DMS_Cap'] = Capacity
     if len(Data) > 0:
@@ -107,7 +111,10 @@ def ReadCapacity(Data):
     # The capacity file contains a single number
     # And when loaded in as a dataframe this number gets used 
     # as a column name
-    Capacity = float(Data.columns[0])
+    try:
+        Capacity = float(Data.columns[0])
+    except:
+        Capacity = -9999
     return Capacity
         
 def CalculateDMSLoad(OneLineOfData):
@@ -267,7 +274,6 @@ def ProcessMatrices(Data):
         Out['NTrials'] = -9999
         Out['NCorr'] = -9999       
     return Out
-
 
 def ProcessStroopColor(Data):
     # Stroop color uses the shape color to determine the test colors which is the 
@@ -578,5 +584,4 @@ def ProcessNBack(Data):
     return Out                                
         
 def ProcessSRTDelRecall(Data):
-    
     pass

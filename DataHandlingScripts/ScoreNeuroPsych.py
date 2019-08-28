@@ -119,8 +119,13 @@ def CycleOverDataFolders():
     for col in df:
         ColNameList.append(col)
     # Now move the last three columns to the beginning
-    for j in range(0,3):
-        ColNameList.insert(0,ColNameList.pop())
+    ItemsToMove = ['AAsubid', 'AAVisid', 'AAChecked']
+    count = 0
+    for j in ItemsToMove:
+        # Find the location of the item
+        index = ColNameList.index(j)
+        ColNameList.insert(count,ColNameList.pop(index))
+        count += 1
     # Now apply these rearranged columns to the dataframe
     df = df[ColNameList]
     return df
@@ -213,23 +218,24 @@ def LoadRawData(VisitFolder, subid):
     Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)   
 
     # N-Back
-    Data = ReadFile(VisitFolder, subid, 'NBack*BehRun1')
-    tempResults = ProcessNeuroPsychFunctions.ProcessNBack(Data)          
-    Results['NBack'] = Reorder_NBack_Results(tempResults)
-#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
-#     Data = CheckDMSDataFrameForLoad(Data)
-#     Results['DMSMRI1'] = ProcessDMSBlockv2(Data)
-# 
-#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
-#     Data = CheckDMSDataFrameForLoad(Data)
-#     Results['DMSMRI2'] = ProcessDMSBlockv2(Data)
-# 
-#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
-#     Data = CheckDMSDataFrameForLoad(Data)
-#     Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
-#     
-    return Results
+    # Load data files for both N-Back runs
+    Data1 = ReadFile(VisitFolder, subid, 'NBack*BehRun*1_20')
+    Data2 = ReadFile(VisitFolder, subid, 'NBack*BehRun*2_20')    
 
+    tempResults1 = ProcessNeuroPsychFunctions.ProcessNBack(Data1)   
+    tempResults2 = ProcessNeuroPsychFunctions.ProcessNBack(Data2)   
+    #Results['NBack'] = Reorder_NBack_Results(tempResults)
+    if len(tempResults1) > 0 and len(tempResults2) > 0: 
+        AllData = Data1.append(Data2)
+        if len(AllData) > 0:
+            tempResultsAll = ProcessNeuroPsychFunctions.ProcessNBack(AllData)
+            Results['NBack'] = Reorder_NBack_Results(tempResultsAll)
+    elif len(tempResults1) > 0:
+        Results['NBack'] = Reorder_NBack_Results(tempResults1)
+    else:
+        pass
+    return Results
+        
 def LoadRawDataSHORT(VisitFolder, subid):
     # Given a visit folder, check for the existance of specific files
     # read the file and process teh results
@@ -457,6 +463,6 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     shutil.move(ExistingDataFileName, MovedDataFile)
     # Now that the old data is moved, write out the updated data
     UpdatedData.to_csv(UpdatedDataFileName, index = False, float_format='%.3f')    
-      
-if __name__ == "__main__":
-   main()
+#       
+# if __name__ == "__main__":
+#     main()
