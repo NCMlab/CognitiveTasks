@@ -29,6 +29,31 @@ subid = '1002004'
 Visit = '2019_Jun_18_1245_V001'
 VisitFolder = os.path.join(NeuropsychDataFolder.NeuropsychDataFolder, subid, Visit)
 
+# R = ScoreNeuroPsych.CycleOverDataFolders(
+AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
+ListOfDict = []
+R = ScoreNeuroPsych.LoadRawData(os.path.join(AllOutDataFolder, subid, Visit),subid)
+FlatResults = ScoreNeuroPsych.FlattenDict(R)
+# add subid and visitid
+FlatResults['AAsubid'] = subid
+FlatResults['AAVisid'] = Visit
+FlatResults['AAChecked'] = 0
+
+ListOfDict.append(FlatResults)
+df = pd.DataFrame(ListOfDict)
+
+# Move the last three columns to the beginning of the data frame
+# Make list of column names
+ColNameList = []
+for col in df:
+    ColNameList.append(col)
+# Now move the last three columns to the beginning
+for j in range(0,3):
+    ColNameList.insert(0,ColNameList.pop())
+# Now apply these rearranged columns to the dataframe
+df = df[ColNameList]
+
+
 Results = collections.OrderedDict()
 
 Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
