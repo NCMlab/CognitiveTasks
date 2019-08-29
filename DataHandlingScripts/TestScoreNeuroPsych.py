@@ -25,19 +25,32 @@ import NeuropsychDataFolder
 
 
 # VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/990123454/2019_May_13_0930_V001'
-subid = '1002004'
-Visit = '2019_Jun_18_1245_V001'
+subid = '2002010'
+Visit = '2019_Aug_23_1718_V001'
 VisitFolder = os.path.join(NeuropsychDataFolder.NeuropsychDataFolder, subid, Visit)
+
+
+Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
+Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
+tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data, CapacityData)
+
+Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
+CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')    
+tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
+
 
 # R = ScoreNeuroPsych.CycleOverDataFolders(
 AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
 ListOfDict = []
 R = ScoreNeuroPsych.LoadRawData(os.path.join(AllOutDataFolder, subid, Visit),subid)
 FlatResults = ScoreNeuroPsych.FlattenDict(R)
+
 # add subid and visitid
 FlatResults['AAsubid'] = subid
 FlatResults['AAVisid'] = Visit
 FlatResults['AAChecked'] = 0
+
 
 ListOfDict.append(FlatResults)
 df = pd.DataFrame(ListOfDict)

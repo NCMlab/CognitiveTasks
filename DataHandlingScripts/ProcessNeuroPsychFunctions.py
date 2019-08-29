@@ -17,7 +17,6 @@ def ProcessMultipleBlocksNBack(ListData):
     
 
 def ProcessVSTMBlockv2(Data, CapacityData):
-
     # This needs work to ignore time outs
     Out = collections.OrderedDict()
     # Read the capacity data
@@ -35,7 +34,10 @@ def ProcessVSTMBlockv2(Data, CapacityData):
             temp = Data[Data['Load']==i]
             # Check for Time outs which are coded as Responses equal to -99
             # Remove time outs
-            temp = temp[temp['Resp']!=-99]
+            for index, row in temp.iterrows():
+                if row['Resp'].strip() == '-99':
+                    print('Time out!')
+                    temp = temp.drop(index)
             # find acc
             Acc = (temp['Corr'].mean())
             RT = (temp['RT'].mean())
@@ -77,9 +79,16 @@ def ProcessDMSBlockv2(Data, CapacityData):
         UniqueLoad = UniqueLoad[~np.isnan(UniqueLoad)]
         UniqueLoad.sort()
         count = 1
-        
+        # Cycle over each load
         for i in UniqueLoad:
             temp = Data[Data['Load']==i]
+            # Are there any time outs?
+            # Check for Time outs which are coded as Responses equal to -99
+            # Remove time outs
+            for index, row in temp.iterrows():
+                if row['Resp'].strip() == '-99':
+                    print('Time out!')
+                    temp = temp.drop(index)            
             # find acc
             Acc = (temp['resp.corr'].mean())
             RT = (temp['resp.rt'].mean())
@@ -106,7 +115,6 @@ def ProcessDMSBlockv2(Data, CapacityData):
     #        Out[Tag2+'_NResp'] = -9999
     return Out
     
-
 def ReadCapacity(Data):
     # The capacity file contains a single number
     # And when loaded in as a dataframe this number gets used 
