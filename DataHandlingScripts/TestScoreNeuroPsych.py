@@ -68,19 +68,19 @@ df = df[ColNameList]
 
 
 Results = collections.OrderedDict()
-
+# Test DMS
 Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
 CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
 Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
 tempResults = ScoreNeuroPsych.ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data, CapacityData)
 Results['DMSBeh1'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'DMS')
-
-
+# Test VSTM
 Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
 CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')    
 #Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
 tempResults = ScoreNeuroPsych.ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
 Results['VSTMBeh1'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'VSTM')
+# Test N-Back
 
 Data1 = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'NBack_012012_BehRun*1_')
 tempResults1 = ProcessNeuroPsychFunctions.ProcessNBack(Data1)   
