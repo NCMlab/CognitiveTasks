@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
 import pandas  as pd
 import csv
 import os
 import numpy as np
+import tkinter
+from tkinter import messagebox
+import datetime
+from dateutil.parser import parse
 
 
 __file__ =  '/home/jsteffen/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
@@ -15,13 +20,38 @@ sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
 import NeuropsychDataFolder
 # Load up the data location as a global variable
 AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
-# Form the Neuropsych folder change to teh SurveyMonkey Folder
+
+# From the Neuropsych folder change to the SurveyMonkey Folder
 AllOutDataFolder = os.path.split(AllOutDataFolder)[0]
 AllOutDataFolder = os.path.join(AllOutDataFolder, 'SurveyMonkey')
-FileName = 'Royal LifestyleBehavior.csv'
-InputFile = os.path.join(AllOutDataFolder, FileName)
-os.path.exists(InputFile)
+# At home lifestyle questionnaire
+LifestyleFileName = 'Royal LifestyleBehavior.csv'
+# At the lab demographics questionnaire
+DemographicsFileName = 'Royal Participant Questionnaire.csv'
+# At the lab PANAS questionnaire
+PANASFileName = '?'
+LifestyleInputFile = os.path.join(AllOutDataFolder, LifestyleFileName)
+DemographicsInputFile = os.path.join(AllOutDataFolder, DemographicsFileName)
+PANASInputFile = os.path.join(AllOutDataFolder, PANASFileName)
+AreAllThreeFilesPresent(LifestyleInputFile, DemographicsInputFile, PANASInputFile)
+DemoH1, DemoH2, DemoData = ReadSMFileAsCSV(DemographicsInputFile)
 
+def AreAllThreeFilesPresent(File1, File2, File3):
+    # Check to see if all three datafiles are where they belong
+    root = tkinter.Tk()
+    root.withdraw()
+    AllFilesFlag = True
+    if not os.path.exists(File1):
+        AllFilesFlag = False
+        messagebox.showerror('Error', 'Missing Lifestyle questionnaire data file')
+    if not os.path.exists(File2):
+        AllFilesFlag = False
+        messagebox.showerror('Error', 'Missing demographics data file')
+    if not os.path.exists(File3):
+        AllFilesFlag = False
+        messagebox.showerror('Error', 'Missing PANAS data file')
+    return AllFilesFlag
+                
 
 def ReadSMFileAsCSV(InputFile):
     # Open the file
@@ -42,15 +72,122 @@ def ReadSMFileAsCSV(InputFile):
     # Extract the rest of the rows as the actual participant data
     PartData = LL[2:]
     return HeaderLine1, HeaderLine2, PartData
+
+
+class Participant(object):
+# Define a class for the demographic data for each participant
+    def __init__(self):
+        self.PartID = -9999
+        self.TestDate = -9999
+        self.Age = -9999
+        self.Sex = -9999
+        self.Gender = -9999
+        self.Edu = -9999
+
+    def ProcessDemographicsDataOneRow(self, DemoDataRow):
+        # Find exam date
+        self.TestDate = parse(DemoDataRow[2])
+        self.PartID = int(DemoDataRow[9])
+        # Find the birth month and year
+        BirthMonth = self.BirthMonth(DemoDataRow[10])
+        BirthYear = self.BirthYear(DemoDataRow[11])
+        # Find age
+        self.FindAge(BirthMonth, BirthYear)
+        self.Sex = DemoDataRow[12]
+        self.Gender = DemoDataRow[14]
+        # Map the education onto years
+        self.EducationMapping(DemoDataRow[64])
+  
+    def EducationMapping(self, EduData):
+        """
+        0	Less than 9th grade	8
+        1	9th grade	9
+        2	10th grade	10
+        3	11th grade	11
+        4	Graduated from high school	12
+        5	1 year of college/university	13
+        6	2 years of college/university	14
+        7	3 or more years of college/university	15
+        8	Graduated from college/university	16
+        9	Some graduate school	17
+        10	Completed graduate school	20
+        11	I don't know	-8888
+        12	Prefer not to answer	-9999
+        13	Other (please specify)	-7777
+        """
+        EduRange = [-9999, 8,9,10,11,12,13,14,15,16,17,20,-8888,-7777,-6666]
+        if len(EduData) > 0:
+            self.Edu = EduRange[int(EduData)]
+        else:
+            self.Edu = -9999
+
+    def BirthMonth(self, Data):
+        if len(Data) > 0:
+            BirthMonth = int(Data)  
+        else:
+            # Set birth month to January if it is not entered
+            BirthMonth = 1
+        return BirthMonth
+
+    def BirthYear(self, Data):
+        if len(Data) > 0:
+            BirthYear = int(Data)  
+        else:
+            # Set birth year to -9999 if it is not entered
+            BirthYear = -9999
+        return BirthYear
+
+    def FindAge(self, BirthMonth, BirthYear):
+        if BirthYear != -9999:
+            DateOfBirth = datetime.datetime(BirthYear,BirthMonth,1)
+            self.Age = self.TestDate - DateOfBirth
+            self.Age = self.Age.days/365.0
+        else:
+            self.Age = -9999
+                                
+    def to_dict(self):
+        return {
+            'PartID': self.PartID,
+            'TestDate': self.TestDate,
+            'Age': self.Age,
+            'Sex': self.Sex,
+            'Gender': self.Gender,
+            'Edu': self.Edu,
+        }
+
+AllParts = []
+for i in DemoData:
+    temp = Participant()
+    temp.ProcessDemographicsDataOneRow(i)
+    AllParts.append(temp)
+
+    
     
 def DefineDataColumns():
     # Sleep pattern 
     Sleep = arange(11,29)
+    # 11: 
+        # Very Satisfied ....................................................... 1
+        # Satisfied ................................................................ 2
+        # Neutral .................................................................. 3
+        # Dissatisfied ........................................................... 4
+        # Very Dissatisfied ................................................... 5
+        # [DO NOT READ] Don’t know/No answer ............. 8
+        # [DO NOT READ] Refused ................................... 9
+        #     • Eight questions
+        # • Overall sleep satisfaction (from Insomnia Sleep Index)
+        # • Sleep duration (Pittsburgh Sleep Quality Index [PSQI])
+        # • Sleep onset insomnia (Insomnia Sleep Index)
+        # • Sleep maintenance insomnia (Insomnia Sleep Index)
+        # • Daytime somnolence (adapted from PSQI)
+        # • Restless legs syndrome (adapted from REST questionnaire)
+        # • REM sleep behaviour disorder (from validated approach
+        # used at the Sacré-Coeur sleep disorders centre)
     # Instrucmental Activities of Daily Living 
-    IADL = arange(32, 53)
+    IADL = slice(32, 53)
     # Loneliness 
     # These questions have responses such as: Yes/More or less/No
-    Loneliness = arange(55, 60)
+    Loneliness = slice(55, 60)
   
     # Subjective Cognitive Decline
     # These questions have responses such as: Yes/No/I don't know/Prefer not to answer
@@ -128,27 +265,29 @@ def ScoreGeriatricDepressionIndex(GDSData):
         GDSscore = sum(GDSAnswerKey==GDSData)
     return GDSscore
 
-def EducationMapping(EduData):
-    """
-    0	Less than 9th grade	8
-    1	9th grade	9
-    2	10th grade	10
-    3	11th grade	11
-    4	Graduated from high school	12
-    5	1 year of college/university	13
-    6	2 years of college/university	14
-    7	3 or more years of college/university	15
-    8	Graduated from college/university	16
-    9	Some graduate school	17
-    10	Completed graduate school	20
-    11	I don't know	-8888
-    12	Prefer not to answer	-9999
-    13	Other (please specify)	-7777
-    """
-    EduRange = [-9999, 8,9,10,11,12,13,14,15,16,17,20,-8888,-7777,-6666]
-    edu = EduRange[int(EduData)]
-    return edu
 
+
+def SexMapping(Value): 
+    pass
+
+def GenderMapping():
+    pass
+    
+def SubjectCognitiveDecline(SCDdata1, SCDdata2):
+    # The responses are spreadover two sections of the data file
+    # Sum up the number of yes answers
+    # 1 - Yes
+    # 2 - No
+    # 3 - I don't know
+    # 4 - I prefer not to answer
+    NumberOfYeses = 0
+    for index in SCDdata1:
+        if index == '1':
+            NumberOfYeses += 1
+    for index in SCDdata2:
+        if index == '1':
+            NumberOfYeses += 1
+    return NumberOfYeses 
     
 #BaseDir = '/Users/jasonsteffener'
 #FileName = os.path.join(BaseDir,'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/SurveyMonkeyExports/Participant Questionnaire.csv')
