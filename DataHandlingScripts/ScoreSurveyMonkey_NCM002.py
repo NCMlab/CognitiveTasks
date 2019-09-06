@@ -44,6 +44,12 @@ PANASH1, PANASH2, PANASData = ReadSMFileAsCSV(PANASInputFile)
 # Load the data from the Lifestyle file
 LifeH1, LifeH2, LifeData = ReadSMFileAsCSV(LifestyleInputFile)
 
+# Process the PANAS Data
+AllPANAS = PANAS()
+AllPANAS.ProcessDataFile(PANASData)
+# Outfile
+PANASOutFile = os.path.join(AllOutDataFolder, 'PANASdata.csv')
+AllPANAS.AllPANAS.to_csv(PANASOutFile)
 
 def AreAllThreeFilesPresent(File1, File2, File3):
     # Check to see if all three datafiles are where they belong
@@ -93,7 +99,7 @@ class PANAS(object):
         self.PANASNeg1 = -9999
         self.PANASPos2 = -9999
         self.PANASNeg2 = -9999
-
+        
     def ProcessPANASOneRow(self, OneRowOfData):
         """ Scoring:
         Positive Affect Score: 
@@ -147,10 +153,11 @@ class PANAS(object):
             self.PANASHour2 = HourOfDay
             self.PANASPos2 = PositiveScore
             self.PANASNeg2 = NegativeScore
-    def ProcessDataFile(self):
+    
+    def ProcessDataFile(self, Data):
         # Create a list of PANAS objects for each data row
         AllPANAS = []
-        for i in PANASData:
+        for i in Data:
             temp = PANAS()
             temp.ProcessPANASOneRow(i)
             AllPANAS.append(temp)
@@ -160,7 +167,7 @@ class PANAS(object):
         # Combine sessions
         AllPANAS = self.PANASFindBothSessions(AllPANAS)
         # Set the index 
-        AllPANAS = AllPANAS.set_index('PartID')
+        self.AllPANAS = AllPANAS.set_index('PartID')
 
     def PANASFindBothSessions(self, AllPANAS):
         # For each item in the PANAS list extract the participant ID
