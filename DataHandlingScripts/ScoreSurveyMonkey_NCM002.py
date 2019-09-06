@@ -7,9 +7,10 @@ import tkinter
 from tkinter import messagebox
 import datetime
 from dateutil.parser import parse
+import sys
 
-
-__file__ =  '/home/jsteffen/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
+__file__ = '/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
+#__file__ = '/home/jsteffen/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
 # What folder is this file in?
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # This will load the config file containing the location of the data folder
@@ -29,12 +30,19 @@ LifestyleFileName = 'Royal LifestyleBehavior.csv'
 # At the lab demographics questionnaire
 DemographicsFileName = 'Royal Participant Questionnaire.csv'
 # At the lab PANAS questionnaire
-PANASFileName = '?'
+PANASFileName = 'PANAS Questionnaire.csv'
 LifestyleInputFile = os.path.join(AllOutDataFolder, LifestyleFileName)
 DemographicsInputFile = os.path.join(AllOutDataFolder, DemographicsFileName)
 PANASInputFile = os.path.join(AllOutDataFolder, PANASFileName)
+# Check to see if all three files are present
 AreAllThreeFilesPresent(LifestyleInputFile, DemographicsInputFile, PANASInputFile)
+# Load the data from all the demographics data file
 DemoH1, DemoH2, DemoData = ReadSMFileAsCSV(DemographicsInputFile)
+# Load the data from the PANAS file
+PANASH1, PANASH2, PANASData = ReadSMFileAsCSV(PANASInputFile)
+# Load the data from the Lifestyle file
+LifeH1, LifeH2, LifeData = ReadSMFileAsCSV(LifestyleInputFile)
+
 
 def AreAllThreeFilesPresent(File1, File2, File3):
     # Check to see if all three datafiles are where they belong
@@ -73,8 +81,88 @@ def ReadSMFileAsCSV(InputFile):
     PartData = LL[2:]
     return HeaderLine1, HeaderLine2, PartData
 
+class PANAS(object):
+    def __init__(self):
+        self.PartID = -9999
+        self.PANASDate1 = -9999
+        self.PANASDate2 = -9999
+        self.PANASHour1 = -9999
+        self.PANASHour2 = -9999
+        self.PANASPos1 = -9999
+        self.PANASNeg1 = -9999
+        self.PANASPos2 = -9999
+        self.PANASNeg2 = -9999
 
-class Participant(object):
+    def ProcessPANASOneRow(self, OneRowOfData):
+        """ Scoring:
+        Positive Affect Score: 
+            Add the scores on items 1, 3, 5, 9, 10, 12, 14, 16, 17, and 19. 
+            Scores can range from 10 – 50, with higher scores representing higher levels of positive affect.
+        Mean Scores: 33.3 (SD±7.2)
+        
+        Negative Affect Score: Add the scores on items 2, 4, 6, 7, 8, 11, 13, 15, 18, and 20. Scores can
+        range from 10 – 50, with lower scores representing lower levels of negative affect.
+        Mean Score: 17.4 (SD ± 6.2)
+        
+        Watson, D., Clark, L. A., & Tellegen, A. (1988). Development and validation of brief measures of positive
+        and negative affect: the PANAS scales. Journal of personality and social psychology, 54(6), 1063.
+        """
+        self.PartID = int(OneRowOfData[9])
+        TestDate = OneRowOfData[2]
+        self.Session = int(OneRowOfData[10])
+        
+        TimeOfDayIndex = int(OneRowOfData[11]) - 1
+        # TIME OF DAY MAPPING
+        TimeMapping = [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
+        HourOfDay = TimeMapping[TimeOfDayIndex]
+        
+        # POSITIVE
+        # Questions in the survey
+        PositiveQuestionsIndex = np.array([1,3,5,9,10,12,14,16,17,19])
+        # Recale the question numbers to their placement in teh SurveyMonkey file
+        PositiveQuestionsIndex += 11
+        PositiveScore = 0
+        for i in PositiveQuestionsIndex:
+            if len(OneRowOfData[i]) > 0:
+                PositiveScore += int(OneRowOfData[i])
+
+        # NEGATIVE
+        # Questions in the survey
+        NegativeQuestionsIndex = np.array([1,4,6,7,8,11,13,15,18,20])
+        # Recale the question numbers to their placement in teh SurveyMonkey file
+        NegativeQuestionsIndex += 11
+        NegativeScore = 0
+        for i in NegativeQuestionsIndex:
+            if len(OneRowOfData[i]) > 0:
+                NegativeScore += int(OneRowOfData[i])
+        # Add the values according to the test date
+        if Session == 1:
+            self.PANASDate1 = TestDate
+            self.PANASHour1 = HourOfDay
+            self.PANASPos1 = PositiveScore
+            self.PANASNeg1 = NegativeScore
+        else:
+            self.PANASDate2 = TestDate
+            self.PANASHour2 = HourOfDay
+            self.PANASPos2 = PositiveScore
+            self.PANASNeg2 = NegativeScore
+            
+    def to_dict(self):
+        return {
+            'PartID': self.PartID,
+            'Session': self.Session,
+            'PANASDate1': self.PANASDate1,
+            'PANASDate2': self.PANASDate2,
+            'PANASHour1': self.PANASHour1,
+            'PANASHour2': self.PANASHour2,
+            'PANASPos1': self.PANASPos1,
+            'PANASNeg1': self.PANASNeg1,
+            'PANASPos2': self.PANASPos2,
+            'PANASNeg2': self.PANASNeg2,
+        }
+        
+
+class Demograhics(object):
 # Define a class for the demographic data for each participant
     def __init__(self):
         self.PartID = -9999
@@ -161,8 +249,39 @@ for i in DemoData:
     temp.ProcessDemographicsDataOneRow(i)
     AllParts.append(temp)
 
-    
-    
+# Create a list of PANAS objects for each data row
+AllPANAS = []
+for i in PANASData:
+    temp = PANAS()
+    temp.ProcessPANASOneRow(i)
+    AllPANAS.append(temp)
+# Convert the list of objects to a pandas dataframe    
+AllPANAS = pd.DataFrame.from_records([s.to_dict() for s in AllPANAS])
+
+def PANASCombineRows(AllPANAS):
+    # For each item in the PANAS list extract the participant ID
+    # If it is a session 1
+    # Look to see if there is a session 2 for the same participant ID
+    # Cycle over the data
+    for index, row in AllPANAS.iterrows():
+        # for each row extract the participant ID and the session
+        CurrentPartID = row['PartID']
+        CurrentSession = row['Session']
+        # If this is a session 1, then look for session 2
+        if CurrentSession == 1:
+            # cycle over the data again
+            for index2, row2 in AllPANAS.iterrows():
+                tempPartID = row2['PartID']
+                tempSession = row2['Session']
+                # Check to see if this row is session two or not
+                if tempPartID == CurrentPartID:
+                    # Same participant ID
+                    if tempSession == 2:
+                        print('Found one')
+
+
+
+
 def DefineDataColumns():
     # Sleep pattern 
     Sleep = arange(11,29)
