@@ -13,6 +13,7 @@ import glob
 import shutil
 import Class_PANAS
 import Class_Demog
+import Class_Lifestyle
 import importlib
 # importlib.reload(Class_PANAS)
 importlib.reload(Class_Demog)
@@ -76,6 +77,11 @@ ExistingDataFileName = LocateOutDataFile('NCM002_Demog')
 # Write Demographics to file
 WriteOutNewdataMoveOldData(AllDemog.AllDemog, UpdatedDataFileName, ExistingDataFileName)
 AllDemog.AllParts.to_csv(UpdatedDataFileName)
+
+## LIFESTYLE QUESTIONNAIRE
+AllLife = Class_Lifestyle.Lifestyle()
+AllLife.ProcessDataFile(LifeData)
+
 
 def CreateOutFileName(BaseFileName, AllOutDataFolder):
     # Create a file to hold processed data using the time and date

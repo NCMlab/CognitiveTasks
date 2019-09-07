@@ -1,5 +1,5 @@
-import datetime
-from dateutil.parser import parse
+# import datetime
+# from dateutil.parser import parse
 import pandas as pd
 import collections
 
@@ -11,24 +11,57 @@ class Lifestyle(object):
         self.TestDate = -9999
         self.BDI = -9999
         self.GDS = -9999
+        self.SCD = -9999
         
-    def ProcessData():
-        for OneRow in LifeData:
-            ProcessOneRowData(OneRow)
+    def to_dict(self):
+        outDict = collections.OrderedDict()
+        outDict['PartID'] = self.PartID
+        outDict['TestDate'] = self.TestDate
+        outDict['BDI'] = self.BDI
+        outDict['GDS'] = self.GDS
+        outDict['SCD'] = self.SCD
+        return outDict            
             
-    def ProcessOneRowData(OneRow):
+    def ProcessDataFile(self, Data):
+        # Create a list of PANAS objects for each data row
+        AllLife = []
+        for i in Data:
+            temp = Lifestyle()
+            temp.ProcessOneRowData(i)
+            AllLife.append(temp)
+        # Convert the list of objects to a pandas dataframe    
+        AllLife = pd.DataFrame.from_records([s.to_dict() for s in AllLife])
+        # Set the index 
+        self.AllLife = AllLife.set_index('PartID')
+                    
+    def ProcessOneRowData(self, OneRow):
+
+        self.PartID = int(OneRow[9])
+        self.TestDate = OneRow[2]
+
+
         # Subjective Cognitive Decline
         # These questions have responses such as: Yes/No/I don't know/Prefer not to answer
         SCD1 = slice(65,69)
         SCD2 = slice(89, 107)
-        SCDscore = SubjectCognitiveDecline(OneRow[SCD1], OneRow[SCD2])
-        # Depression Scale
-        BDS = slice(201, 222)
-        
-        # ScoreBeckDepressionIndex(i[BDS])
-        GDS = slice(222, 252)
-        ScoreGeriatricDepressionIndex(OneRow[GDS])
+        try:
+            self.SCDscore = self.SubjectCognitiveDecline(OneRow[SCD1], OneRow[SCD2])
+        except:
+            print("Can't score SCD for %d"%(self.PartID))
+            pass
 
+        # Depression Scales
+        BDS = slice(201, 222)
+        try:
+            self.ScoreBeckDepressionIndex(OneRow[BDS])
+        except:
+            pass
+        
+        GDS = slice(222, 252)
+        try:
+            self.ScoreGeriatricDepressionIndex(OneRow[GDS])
+        except:
+            pass
 
     def ScoreBeckDepressionIndex(BDIData):
         """
