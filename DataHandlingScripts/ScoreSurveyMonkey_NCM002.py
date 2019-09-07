@@ -1,40 +1,52 @@
 # -*- coding: utf-8 -*-
-import pandas  as pd
+# import pandas  as pd
 import csv
 import os
 import numpy as np
 import tkinter
 from tkinter import messagebox
 import datetime
-from dateutil.parser import parse
+# from dateutil.parser import parse
 import sys
-import collections
+# import collections
+import glob
+import shutil
+import Class_PANAS
+import Class_Demog
+import importlib
+# importlib.reload(Class_PANAS)
+importlib.reload(Class_Demog)
 
 __file__ = '/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
 #__file__ = '/home/jsteffen/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
 # What folder is this file in?
 dir_path = os.path.dirname(os.path.realpath(__file__))
+# Append the data handling script folder to the system path
+sys.path.append(dir_path)
+
+
 # This will load the config file containing the location of the data folder
 # If there is an error it means that the GUI program has not been run.
 # The GUI checks to see if thie config file exists. If it does not then it is created.
-print(dir_path)
 sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
+
 import NeuropsychDataFolder
 # Load up the data location as a global variable
 AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
 
 # From the Neuropsych folder change to the SurveyMonkey Folder
-AllOutDataFolder = os.path.split(AllOutDataFolder)[0]
-AllOutDataFolder = os.path.join(AllOutDataFolder, 'SurveyMonkey')
+SurveyMonkeyDataFolder = os.path.split(AllOutDataFolder)[0]
+SurveyMonkeyDataFolder = os.path.join(SurveyMonkeyDataFolder, 'SurveyMonkey')
 # At home lifestyle questionnaire
 LifestyleFileName = 'Royal LifestyleBehavior.csv'
 # At the lab demographics questionnaire
 DemographicsFileName = 'Royal Participant Questionnaire.csv'
 # At the lab PANAS questionnaire
 PANASFileName = 'PANAS Questionnaire.csv'
-LifestyleInputFile = os.path.join(AllOutDataFolder, LifestyleFileName)
-DemographicsInputFile = os.path.join(AllOutDataFolder, DemographicsFileName)
-PANASInputFile = os.path.join(AllOutDataFolder, PANASFileName)
+LifestyleInputFile = os.path.join(SurveyMonkeyDataFolder, LifestyleFileName)
+DemographicsInputFile = os.path.join(SurveyMonkeyDataFolder, DemographicsFileName)
+PANASInputFile = os.path.join(SurveyMonkeyDataFolder, PANASFileName)
+
 # Check to see if all three files are present
 AreAllThreeFilesPresent(LifestyleInputFile, DemographicsInputFile, PANASInputFile)
 # Load the data from all the demographics data file
@@ -44,13 +56,61 @@ PANASH1, PANASH2, PANASData = ReadSMFileAsCSV(PANASInputFile)
 # Load the data from the Lifestyle file
 LifeH1, LifeH2, LifeData = ReadSMFileAsCSV(LifestyleInputFile)
 
-# Process the PANAS Data
-AllPANAS = PANAS()
+## PANAS
+AllPANAS = Class_PANAS.PANAS()
 AllPANAS.ProcessDataFile(PANASData)
-# Outfile
-PANASOutFile = os.path.join(AllOutDataFolder, 'PANASdata.csv')
-AllPANAS.AllPANAS.to_csv(PANASOutFile)
+# Create a file name for PANAS data 
+UpdatedDataFileName = CreateOutFileName('NCM002_PANAS', AllOutDataFolder)
+ExistingDataFileName = LocateOutDataFile('NCM002_PANAS')
+# Write PANAS to file
+WriteOutNewdataMoveOldData(AllPANAS.AllPANAS, UpdatedDataFileName, ExistingDataFileName)
 
+## DEMOGRAPHICS
+AllDemog = Class_Demog.Demograhics()
+AllDemog.ProcessDataFile(DemoData)
+
+# Create a file name for Demog data 
+UpdatedDataFileName = CreateOutFileName('NCM002_Demog', AllOutDataFolder)
+ExistingDataFileName = LocateOutDataFile('NCM002_Demog')
+
+# Write Demographics to file
+WriteOutNewdataMoveOldData(AllDemog.AllDemog, UpdatedDataFileName, ExistingDataFileName)
+AllDemog.AllParts.to_csv(UpdatedDataFileName)
+
+def CreateOutFileName(BaseFileName, AllOutDataFolder):
+    # Create a file to hold processed data using the time and date
+    # to indicate when it was made
+    now = datetime.datetime.now()
+    NowString = now.strftime("_updated_%b-%d-%Y_%H-%M.csv")
+    NewOutFileName = os.path.join(AllOutDataFolder, BaseFileName + NowString)
+    return NewOutFileName
+
+def LocateOutDataFile(BaseFileName):
+    # Locate an existing processed data file and if it does not exist, then make it.
+    # What files exist with this name?
+    Files = glob.glob(os.path.join(AllOutDataFolder, BaseFileName + '*.csv'))
+    now = datetime.datetime.now()
+    NowString = now.strftime("_updated_%b-%d-%Y_%H-%M.csv")
+    NewOutFileName = BaseFileName + NowString
+    if len(Files) == 0:
+        FileName = os.path.join(AllOutDataFolder, NewOutFileName)
+    else:
+        # this will open an existing file
+        FileName = Files[-1] 
+    return FileName
+
+def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName):
+    # Move the old file 
+    OldDataFolder = os.path.join(AllOutDataFolder, 'OldResultFiles')
+    # if the folder for old data does not exist, then make it
+    if not os.path.exists(OldDataFolder):
+        os.mkdir(OldDataFolder)
+    # change the name of the results file so it is not confused with current data
+    MovedDataFile = os.path.join(OldDataFolder, 'X_'+os.path.basename(ExistingDataFileName))
+    shutil.move(ExistingDataFileName, MovedDataFile)
+    # Now that the old data is moved, write out the updated data
+    UpdatedData.to_csv(UpdatedDataFileName, index = False, float_format='%.3f')    
+    
 def AreAllThreeFilesPresent(File1, File2, File3):
     # Check to see if all three datafiles are where they belong
     root = tkinter.Tk()
@@ -67,7 +127,6 @@ def AreAllThreeFilesPresent(File1, File2, File3):
         messagebox.showerror('Error', 'Missing PANAS data file')
     return AllFilesFlag
                 
-
 def ReadSMFileAsCSV(InputFile):
     # Open the file
     fid = open(InputFile,'r', encoding="ISO-8859-1")
@@ -88,226 +147,11 @@ def ReadSMFileAsCSV(InputFile):
     PartData = LL[2:]
     return HeaderLine1, HeaderLine2, PartData
 
-class PANAS(object):
-    def __init__(self):
-        self.PartID = -9999
-        self.PANASDate1 = -9999
-        self.PANASDate2 = -9999
-        self.PANASHour1 = -9999
-        self.PANASHour2 = -9999
-        self.PANASPos1 = -9999
-        self.PANASNeg1 = -9999
-        self.PANASPos2 = -9999
-        self.PANASNeg2 = -9999
-        
-    def ProcessPANASOneRow(self, OneRowOfData):
-        """ Scoring:
-        Positive Affect Score: 
-            Add the scores on items 1, 3, 5, 9, 10, 12, 14, 16, 17, and 19. 
-            Scores can range from 10 – 50, with higher scores representing higher levels of positive affect.
-        Mean Scores: 33.3 (SD±7.2)
-        
-        Negative Affect Score: Add the scores on items 2, 4, 6, 7, 8, 11, 13, 15, 18, and 20. Scores can
-        range from 10 – 50, with lower scores representing lower levels of negative affect.
-        Mean Score: 17.4 (SD ± 6.2)
-        
-        Watson, D., Clark, L. A., & Tellegen, A. (1988). Development and validation of brief measures of positive
-        and negative affect: the PANAS scales. Journal of personality and social psychology, 54(6), 1063.
-        """
-        self.PartID = int(OneRowOfData[9])
-        TestDate = OneRowOfData[2]
-        self.Session = int(OneRowOfData[10])
-        
-        TimeOfDayIndex = int(OneRowOfData[11]) - 1
-        # TIME OF DAY MAPPING
-        TimeMapping = [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
-        HourOfDay = TimeMapping[TimeOfDayIndex]
-        
-        # POSITIVE
-        # Questions in the survey
-        PositiveQuestionsIndex = np.array([1,3,5,9,10,12,14,16,17,19])
-        # Recale the question numbers to their placement in teh SurveyMonkey file
-        PositiveQuestionsIndex += 11
-        PositiveScore = 0
-        for i in PositiveQuestionsIndex:
-            if len(OneRowOfData[i]) > 0:
-                PositiveScore += int(OneRowOfData[i])
 
-        # NEGATIVE
-        # Questions in the survey
-        NegativeQuestionsIndex = np.array([1,4,6,7,8,11,13,15,18,20])
-        # Recale the question numbers to their placement in teh SurveyMonkey file
-        NegativeQuestionsIndex += 11
-        NegativeScore = 0
-        for i in NegativeQuestionsIndex:
-            if len(OneRowOfData[i]) > 0:
-                NegativeScore += int(OneRowOfData[i])
-        # Add the values according to the test date
-        if self.Session == 1:
-            self.PANASDate1 = TestDate
-            self.PANASHour1 = HourOfDay
-            self.PANASPos1 = PositiveScore
-            self.PANASNeg1 = NegativeScore
-        else:
-            self.PANASDate2 = TestDate
-            self.PANASHour2 = HourOfDay
-            self.PANASPos2 = PositiveScore
-            self.PANASNeg2 = NegativeScore
-    
-    def ProcessDataFile(self, Data):
-        # Create a list of PANAS objects for each data row
-        AllPANAS = []
-        for i in Data:
-            temp = PANAS()
-            temp.ProcessPANASOneRow(i)
-            AllPANAS.append(temp)
-        
-        # Convert the list of objects to a pandas dataframe    
-        AllPANAS = pd.DataFrame.from_records([s.to_dict() for s in AllPANAS])
-        # Combine sessions
-        AllPANAS = self.PANASFindBothSessions(AllPANAS)
-        # Set the index 
-        self.AllPANAS = AllPANAS.set_index('PartID')
-
-    def PANASFindBothSessions(self, AllPANAS):
-        # For each item in the PANAS list extract the participant ID
-        # If it is a session 1
-        # Look to see if there is a session 2 for the same participant ID
-        # Cycle over the data
-        ListIndexToDrop = []
-        for index1, row in AllPANAS.iterrows():
-            # for each row extract the participant ID and the session
-            CurrentPartID = row['PartID']
-            CurrentSession = row['Session']
-            # If this is a session 1, then look for session 2
-            if CurrentSession == 1:
-                # cycle over the data again
-                for index2, row2 in AllPANAS.iterrows():
-                    tempPartID = row2['PartID']
-                    tempSession = row2['Session']
-                    # Check to see if this row is session two or not
-                    if tempPartID == CurrentPartID:
-                        # Same participant ID
-                        if tempSession == 2:
-                            print('Found one %d and %d'%(index1, index2))
-                            AllPANAS = PANASCombineTwoRows(AllPANAS, index1, index2)
-                            # Keep track of the indices to drop
-                            ListIndexToDrop.append(index2)
-        # Drop the session 2 rows
-        AllPANAS = AllPANAS.drop(ListIndexToDrop)
-        return AllPANAS
-                        
-    def PANASCombineTwoRows(self, AllPANAS, index1, index2):
-        # Now that two rows have been identified as being two sessions from one particopant,
-        # They need to be combined.
-        AllPANAS.at[index1,'PANASPos2'] = AllPANAS.at[index2,'PANASPos2']
-        AllPANAS.at[index1,'PANASNeg2'] = AllPANAS.at[index2,'PANASNeg2']
-        AllPANAS.at[index1,'PANASHour2'] = AllPANAS.at[index2,'PANASHour2']
-        AllPANAS.at[index1,'PANASDate2'] = AllPANAS.at[index2,'PANASDate2']
-        return AllPANAS            
-                                    
-    def to_dict(self):
-        outDict = collections.OrderedDict()
-        outDict['PartID'] = self.PartID
-        outDict['Session'] = self.Session
-        outDict['PANASDate1'] = self.PANASDate1
-        outDict['PANASDate2'] = self.PANASDate2
-        outDict['PANASHour1'] = self.PANASHour1
-        outDict['PANASHour2'] = self.PANASHour2
-        outDict['PANASPos1'] = self.PANASPos1
-        outDict['PANASNeg1'] = self.PANASNeg1
-        outDict['PANASPos2'] = self.PANASPos2
-        outDict['PANASNeg2'] = self.PANASNeg2
-        return outDict
         
 
-class Demograhics(object):
-# Define a class for the demographic data for each participant
-    def __init__(self):
-        self.PartID = -9999
-        self.TestDate = -9999
-        self.Age = -9999
-        self.Sex = -9999
-        self.Gender = -9999
-        self.Edu = -9999
 
-    def ProcessDemographicsDataOneRow(self, DemoDataRow):
-        # Find exam date
-        self.TestDate = parse(DemoDataRow[2])
-        self.PartID = int(DemoDataRow[9])
-        # Find the birth month and year
-        BirthMonth = self.BirthMonth(DemoDataRow[10])
-        BirthYear = self.BirthYear(DemoDataRow[11])
-        # Find age
-        self.FindAge(BirthMonth, BirthYear)
-        self.Sex = DemoDataRow[12]
-        self.Gender = DemoDataRow[14]
-        # Map the education onto years
-        self.EducationMapping(DemoDataRow[64])
-  
-    def EducationMapping(self, EduData):
-        """
-        0	Less than 9th grade	8
-        1	9th grade	9
-        2	10th grade	10
-        3	11th grade	11
-        4	Graduated from high school	12
-        5	1 year of college/university	13
-        6	2 years of college/university	14
-        7	3 or more years of college/university	15
-        8	Graduated from college/university	16
-        9	Some graduate school	17
-        10	Completed graduate school	20
-        11	I don't know	-8888
-        12	Prefer not to answer	-9999
-        13	Other (please specify)	-7777
-        """
-        EduRange = [-9999, 8,9,10,11,12,13,14,15,16,17,20,-8888,-7777,-6666]
-        if len(EduData) > 0:
-            self.Edu = EduRange[int(EduData)]
-        else:
-            self.Edu = -9999
 
-    def BirthMonth(self, Data):
-        if len(Data) > 0:
-            BirthMonth = int(Data)  
-        else:
-            # Set birth month to January if it is not entered
-            BirthMonth = 1
-        return BirthMonth
-
-    def BirthYear(self, Data):
-        if len(Data) > 0:
-            BirthYear = int(Data)  
-        else:
-            # Set birth year to -9999 if it is not entered
-            BirthYear = -9999
-        return BirthYear
-
-    def FindAge(self, BirthMonth, BirthYear):
-        if BirthYear != -9999:
-            DateOfBirth = datetime.datetime(BirthYear,BirthMonth,1)
-            self.Age = self.TestDate - DateOfBirth
-            self.Age = self.Age.days/365.0
-        else:
-            self.Age = -9999
-                                
-    def to_dict(self):
-        outDict = collections.OrderedDict()
-        outDict['PartID'] = self.PartID
-        outDict['TestDate'] = self.TestDate
-        outDict['Age'] = self.Age
-        outDict['Sex'] = self.Sex
-        outDict['Gender'] = self.Gender
-        outDict['Edu'] = self.Edu
-        return outDict
-        
-
-AllParts = []
-for i in DemoData:
-    temp = Participant()
-    temp.ProcessDemographicsDataOneRow(i)
-    AllParts.append(temp)
 
 
     
