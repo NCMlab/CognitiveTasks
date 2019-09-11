@@ -86,9 +86,11 @@ def ProcessDMSBlockv2(Data, CapacityData):
             # Check for Time outs which are coded as Responses equal to -99
             # Remove time outs
             for index, row in temp.iterrows():
-                if row['Resp'].strip() == '-99':
-                    print('Time out!')
-                    temp = temp.drop(index)            
+                if isinstance(row['resp.corr'], str):
+                    # Check to see if a string is saved
+                    if row['resp.corr'].strip() == '-99':
+                        print('Time out!')
+                        temp = temp.drop(index)            
             # find acc
             Acc = (temp['resp.corr'].mean())
             RT = (temp['resp.rt'].mean())

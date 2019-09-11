@@ -463,6 +463,6 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     shutil.move(ExistingDataFileName, MovedDataFile)
     # Now that the old data is moved, write out the updated data
     UpdatedData.to_csv(UpdatedDataFileName, index = False, float_format='%.3f')    
-#       
-if __name__ == "__main__":
-    main()
+# #       
+# if __name__ == "__main__":
+#     main()
