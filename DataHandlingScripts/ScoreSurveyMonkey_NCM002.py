@@ -13,11 +13,16 @@ import glob
 import shutil
 import Class_PANAS
 import Class_Demog
+import Class_Lifestyle
 import importlib
-# importlib.reload(Class_PANAS)
-importlib.reload(Class_Demog)
 
-__file__ = '/Users/jasonsteffener/Documents/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
+# importlib.reload(Class_PANAS)
+importlib.reload(Class_Lifestyle)
+
+BaseDir = '/home/jsteffen/'
+#BaseDir = '/Users/jasonsteffener/Documents/'
+
+__file__ = os.path.join(BaseDir, 'GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py')
 #__file__ = '/home/jsteffen/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
 # What folder is this file in?
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -29,7 +34,6 @@ sys.path.append(dir_path)
 # If there is an error it means that the GUI program has not been run.
 # The GUI checks to see if thie config file exists. If it does not then it is created.
 sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
-
 import NeuropsychDataFolder
 # Load up the data location as a global variable
 AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
@@ -68,14 +72,24 @@ WriteOutNewdataMoveOldData(AllPANAS.AllPANAS, UpdatedDataFileName, ExistingDataF
 ## DEMOGRAPHICS
 AllDemog = Class_Demog.Demograhics()
 AllDemog.ProcessDataFile(DemoData)
-
 # Create a file name for Demog data 
 UpdatedDataFileName = CreateOutFileName('NCM002_Demog', AllOutDataFolder)
 ExistingDataFileName = LocateOutDataFile('NCM002_Demog')
-
 # Write Demographics to file
-WriteOutNewdataMoveOldData(AllDemog.AllDemog, UpdatedDataFileName, ExistingDataFileName)
+WriteOutNewdataMoveOldData(AllDemog.AllParts, UpdatedDataFileName, ExistingDataFileName)
 AllDemog.AllParts.to_csv(UpdatedDataFileName)
+
+## LIFESTYLE
+AllLife = Class_Lifestyle.Lifestyle()
+AllLife.ProcessData(LifeData)
+# Create a file name for Demog data 
+UpdatedDataFileName = CreateOutFileName('NCM002_Life', AllOutDataFolder)
+ExistingDataFileName = LocateOutDataFile('NCM002_Life')
+# Write Demographics to file
+WriteOutNewdataMoveOldData(AllLife.AllLife, UpdatedDataFileName, ExistingDataFileName)
+AllLife.AllLife.to_csv(UpdatedDataFileName)
+
+
 
 def CreateOutFileName(BaseFileName, AllOutDataFolder):
     # Create a file to hold processed data using the time and date

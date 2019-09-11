@@ -2,6 +2,7 @@ import datetime
 from dateutil.parser import parse
 import pandas as pd
 import collections
+import numpy as np
 
 
 class Lifestyle(object):
@@ -11,26 +12,47 @@ class Lifestyle(object):
         self.TestDate = -9999
         self.BDI = -9999
         self.GDS = -9999
+        self.SCD = -9999
         
-    def ProcessData():
-        for OneRow in LifeData:
-            ProcessOneRowData(OneRow)
+    def to_dict(self):
+        outDict = collections.OrderedDict()
+        outDict['PartID'] = self.PartID
+        outDict['TestDate'] = self.TestDate
+        outDict['BDI'] = self.BDI
+        outDict['GDS'] = self.GDS
+        outDict['SCD'] = self.SCD
+        return outDict
+
+    def ProcessData(self, LifeData):
+        AllLife = []
+        for i in LifeData:
+            temp = Lifestyle()
+            temp.ProcessOneRowData(i)
+            AllLife.append(temp)
+        # Convert the list of objects to a pandas dataframe    
+        AllLife = pd.DataFrame.from_records([s.to_dict() for s in AllLife])
+        # Set the index 
+        self.AllLife = AllLife.set_index('PartID')    
+        
             
-    def ProcessOneRowData(OneRow):
+    def ProcessOneRowData(self, OneRow):
+        self.TestDate = parse(OneRow[2])
+        self.PartID = int(OneRow[9])
+        
         # Subjective Cognitive Decline
         # These questions have responses such as: Yes/No/I don't know/Prefer not to answer
         SCD1 = slice(65,69)
         SCD2 = slice(89, 107)
-        SCDscore = SubjectCognitiveDecline(OneRow[SCD1], OneRow[SCD2])
-        # Depression Scale
-        BDS = slice(201, 222)
-        
-        # ScoreBeckDepressionIndex(i[BDS])
+        self.SCD = self.SubjectCognitiveDecline(OneRow[SCD1], OneRow[SCD2])
+        # Beck Depression Scale
+        BDI = slice(201, 222)
+        self.BDI = self.ScoreBeckDepressionIndex(OneRow[BDI])
+
         GDS = slice(222, 252)
-        ScoreGeriatricDepressionIndex(OneRow[GDS])
+        self.GDS = self.ScoreGeriatricDepressionIndex(OneRow[GDS])
 
 
-    def ScoreBeckDepressionIndex(BDIData):
+    def ScoreBeckDepressionIndex(self, BDIData):
         """
         INTERPRETING THE BECK DEPRESSION INVENTORY (BDI-II)
         Add up the score for each of the 21 questions by counting the number to the right of each
@@ -52,6 +74,7 @@ class Lifestyle(object):
         # The Survey has the left most answer as one and on the BDI it is zero.
         # Subtracting 21 makes this modification
     #        if BDIData
+        BDIscore = -9999
         if not '' in BDIData:
             BDIData = [int(numeric_string) for numeric_string in BDIData]
             BDIscore = sum(BDIData) - 21
@@ -59,7 +82,7 @@ class Lifestyle(object):
         return BDIscore
             
             
-    def ScoreGeriatricDepressionIndex(GDSData):
+    def ScoreGeriatricDepressionIndex(self, GDSData):
         """ Yes is saved as a ONE
         No is saved as a TWO
         Score one point if the following responses are made and zero if this 
@@ -70,6 +93,7 @@ class Lifestyle(object):
         Mild Depression = 10 - 19
         Sever Depression = 20 - 30
         """
+        GDSscore = -9999
         GDSAnswerKey = np.array([2,1,1,1,2,1,2,1,2,1,1,1,1,1,2,1,1,1,2,1,2,1,1,1,1,1,2,1,2,2])
         if not '' in GDSData:
             GDSData = [int(numeric_string) for numeric_string in GDSData]
@@ -78,15 +102,13 @@ class Lifestyle(object):
             GDSscore = sum(GDSAnswerKey==GDSData)
         return GDSscore
     
-    
-    
     def SexMapping(Value): 
         pass
     
     def GenderMapping():
         pass
         
-    def SubjectCognitiveDecline(SCDdata1, SCDdata2):
+    def SubjectCognitiveDecline(self, SCDdata1, SCDdata2):
         # The responses are spreadover two sections of the data file
         # Sum up the number of yes answers
         # 1 - Yes
@@ -125,3 +147,6 @@ class Lifestyle(object):
 #     # ScoreBeckDepressionIndex(i[BDS])
 #     GDS = slice(222, 252)
 #     ScoreGeriatricDepressionIndex(i[GDS])
+
+
+        
