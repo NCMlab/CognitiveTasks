@@ -33,7 +33,10 @@ print(dir_path)
 sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
 import NeuropsychDataFolder
 # Load up the data location as a global variable
-AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
+AllInDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
+# Where to put the summary data
+AllOutDataFolder = os.path.join(os.path.split(AllInDataFolder)[0], 'SummaryData')
+
     
 def main():
     # Cycle over all data folders and load them up
@@ -65,7 +68,7 @@ def CycleOverDataFolders():
     df = pd.DataFrame()
     ListOfDict = []
     # get all sub dirs
-    subdirs = glob.glob(os.path.join(AllOutDataFolder,'*/'))
+    subdirs = glob.glob(os.path.join(AllInDataFolder,'*/'))
     for subdir in subdirs:
         # check subdir based on some criteria
         CurDir = os.path.split(subdir)[0]
@@ -86,9 +89,10 @@ def CycleOverDataFolders():
                         # From the directory structre extract the subject ID and the visit ID
                         subid = CurDir
                         Visid = CurVis
+                        print('====================================')
                         print('%s, %s'%(subid, Visid))
                         # Load up the raw data from the files in the visit folder
-                        Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
+                        Results = LoadRawData(os.path.join(AllInDataFolder, subid, Visid),subid)
                         # Results = LoadRawDataSHORT(os.path.join(AllOutDataFolder, subid, Visid),subid)
                         FlatResults = FlattenDict(Results)
                         # add subid and visitid
@@ -103,7 +107,7 @@ def CycleOverDataFolders():
                 Visid = FindVisitIDFromFileNames(subdir)
                 
                 # Load up the raw data from the files in the visit folder
-                Results = LoadRawData(os.path.join(AllOutDataFolder, subid),subid)
+                Results = LoadRawData(os.path.join(AllInDataFolder, subid),subid)
                 FlatResults = FlattenDict(Results)
                 # add subid and visitid
                 FlatResults['AAsubid'] = subid
