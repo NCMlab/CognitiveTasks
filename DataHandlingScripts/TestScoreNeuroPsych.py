@@ -30,14 +30,17 @@ Visit = '2019_Aug_23_1718_V001'
 VisitFolder = os.path.join(NeuropsychDataFolder.NeuropsychDataFolder, subid, Visit)
 
 
-Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
-CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
-Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
-tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data, CapacityData)
+Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visit),subid)
+# Results = LoadRawDataSHORT(os.path.join(AllOutDataFolder, subid, Visid),subid)
+FlatResults = FlattenDict(Results)
 
-Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
-CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')    
-tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
+
+Data = ReadFile(VisitFolder, subid, 'Stroop_ColorWord')
+Res = ProcessNeuroPsychFunctions.ProcessStroopColorWord(Data)
+
+Data = ReadFile(VisitFolder, subid, 'DigitSpan_Backward')
+Dir = 'Backward'
+Res = ProcessNeuroPsychFunctions.ProcessDigitSpan(Data, Dir)
 
 
 # R = ScoreNeuroPsych.CycleOverDataFolders(
@@ -74,14 +77,16 @@ CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'DMS_CAPACITY')
 Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
 tempResults = ScoreNeuroPsych.ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data, CapacityData)
 Results['DMSBeh1'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'DMS')
+
+
 # Test VSTM
 Data = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
 CapacityData = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')    
 #Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
 tempResults = ScoreNeuroPsych.ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
 Results['VSTMBeh1'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'VSTM')
-# Test N-Back
 
+# Test N-Back
 Data1 = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'NBack_012012_BehRun*1_')
 tempResults1 = ProcessNeuroPsychFunctions.ProcessNBack(Data1)   
 Data2 = ScoreNeuroPsych.ReadFile(VisitFolder, subid, 'NBack_012012_BehRun*2_XX')

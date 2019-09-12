@@ -379,13 +379,16 @@ def ProcessDigitSpan(Data, Dir):
         if len(Data) > 0:
             # cycle over each row 
             for i, CurrentRow in Data.iterrows():
-                match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
-                StairLoad.append(Load)
-                print(match)
-                if match:
-                    Correct.append(1)
-                else:
-                    Correct.append(0)
+                # The last row in the data file is empty except for the stairs respone colum
+                # This row is to be ignored
+                if not np.isnan(CurrentRow['Stairs.thisTrialN']):
+                    match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
+                    StairLoad.append(Load)
+                    # print(match)
+                    if match:
+                        Correct.append(1)
+                    else:
+                        Correct.append(0)
             Capacity, NReversals = CalculateCapacity(StairLoad)
             NTrials = len(Data)
             Out = collections.OrderedDict()
@@ -399,7 +402,7 @@ def ProcessDigitSpan(Data, Dir):
             Out['NReversals'] = -9999
             Out['NTrials'] = -9999
             Out['NCorrect'] = -9999
-        print(Correct)
+        # print(Correct)
     except:
         print('\t%s, %s >> Error!!!'%('Digit Span',Dir))
         Out = collections.OrderedDict()
@@ -413,7 +416,7 @@ def ProcessDigitSpanOneRow(Row, Dir):
         if i.isdigit():
             Test.append(int(i))
     # This is stored as a string
-    StrResp = str(Row['resp.keys'])
+    StrResp = str(int(Row['resp.keys']))
     Resp = [];
     for i in StrResp:
         if i.isdigit():
