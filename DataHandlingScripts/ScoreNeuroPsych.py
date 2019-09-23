@@ -215,12 +215,17 @@ def LoadRawData(VisitFolder, subid):
     
     # SRT
     Data = ReadFile(VisitFolder, subid, 'SRT_ImmRecall')
-    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTImm(Data)
+    Results['SRTImm'] = ProcessNeuroPsychFunctions.ProcessSRTImm(Data)    
     print('\tSRT Imm recall loaded')
-        
-    Data = ReadFile(VisitFolder, subid, 'SRT_Recog')
-    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)   
 
+    Data = ReadFile(VisitFolder, subid, 'SRT_Recog')
+    Results['SRTRecog'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)   
+    print('\tSRT Recognition loaded')
+    
+    Data = ReadFile(VisitFolder, subid, 'SRT_DelRecall')
+    Results['SRTDel'] = ProcessNeuroPsychFunctions.ProcessSRTDelay(Data)    
+    print('\tSRT Delayed recall loaded')
+    
     # N-Back
     # Load data files for both N-Back runs
     Data1 = ReadFile(VisitFolder, subid, 'NBack*BehRun*1_20')

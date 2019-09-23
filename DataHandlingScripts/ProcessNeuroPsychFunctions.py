@@ -504,11 +504,15 @@ def ProcessSRTRecog(Data):
                 CR += 1
             elif (ExpectedResponse == 'right') & (Correct == 0):
                 FA += 1
-        Out['Recog'] = Hits
+        Out['Hits'] = Hits
     else:
-        Out['Recog'] = -9999
+        Out['Hits'] = -9999
     return Out
 
+def ProcessSRTDelay(Data):
+    # Use the Total Recall and number of intrusion sunctions from the SRT_Functions script
+    pass
+    
 def ProcessNBack(Data):
     try:
         Out = collections.OrderedDict()
