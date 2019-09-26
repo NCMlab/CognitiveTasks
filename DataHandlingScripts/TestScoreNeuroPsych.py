@@ -25,9 +25,24 @@ import NeuropsychDataFolder
 
 
 # VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/990123454/2019_May_13_0930_V001'
-subid = '2002010'
-Visit = '2019_Aug_23_1718_V001'
+subid = '1002005'
+Visit = '2019_Jun_22_0900_V001'
 VisitFolder = os.path.join(NeuropsychDataFolder.NeuropsychDataFolder, subid, Visit)
+
+Data = ReadFile(VisitFolder, subid, 'SRT_DelRecall')
+
+
+# N.filter(regex='^SRT',axis=1)
+DelayedRecall = sum(Data['Trial01'][0:12]!=0)
+# Find intrusions
+i1 = (Data['Index'] == 'Intrusions') &  (Data['Trial01'].notnull())
+# Count intrusions
+Nintr = len(np.where(i1))
+
+
+
+
+Res = ProcessNeuroPsychFunctions.ProcessStroopColorWord(Data)
 
 
 Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visit),subid)
