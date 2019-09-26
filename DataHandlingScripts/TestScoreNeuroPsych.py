@@ -25,11 +25,12 @@ import NeuropsychDataFolder
 
 
 # VisitFolder = '/Users/jasonsteffener/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/NeuroPsychData/990123454/2019_May_13_0930_V001'
-subid = '1002005'
-Visit = '2019_Jun_22_0900_V001'
+subid = '1002011'
+Visit = '2019_Aug_30_1015_V001'
 VisitFolder = os.path.join(NeuropsychDataFolder.NeuropsychDataFolder, subid, Visit)
 
 Data = ReadFile(VisitFolder, subid, 'SRT_DelRecall')
+ProcessNeuroPsychFunctions.ProcessSRTDelay(Data)
 
 
 # N.filter(regex='^SRT',axis=1)
