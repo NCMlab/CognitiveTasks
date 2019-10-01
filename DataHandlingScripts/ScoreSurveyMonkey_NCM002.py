@@ -20,7 +20,7 @@ import importlib
 importlib.reload(Class_Lifestyle)
 
 BaseDir = '/home/jsteffen/'
-#BaseDir = '/Users/jasonsteffener/Documents/'
+BaseDir = '/Users/jasonsteffener/Documents/'
 
 __file__ = os.path.join(BaseDir, 'GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py')
 #__file__ = '/home/jsteffen/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
@@ -83,6 +83,7 @@ AllDemog.AllParts.to_csv(UpdatedDataFileName)
 ## LIFESTYLE
 AllLife = Class_Lifestyle.Lifestyle()
 AllLife.ProcessData(LifeData)
+AllList.AllLife
 # Create a file name for Demog data 
 UpdatedDataFileName = CreateOutFileName('NCM002_Life', AllOutDataFolder)
 ExistingDataFileName = LocateOutDataFile('NCM002_Life')
