@@ -68,13 +68,13 @@ class Lifestyle(object):
         # Housework
         # Take your own medicines
         # Handle money
-        IADLNumMissing = self.IADLCountMissingValues(IADLData)
+        IADLNumMiss = self.IADLCountMissingValues(IADLData)
         IADLMeal = self.MealPlanning(IADLData, [10, 11, 12])
         IADLSomeDep = self.IADLSomeDependence(IADLData)
-        IADLClassTemp = self.IADLClassificationTemp(IADLSomeDep, IADLNumMissing)
+        IADLClassTemp = self.IADLClassificationTemp(IADLSomeDep, IADLNumMiss)
         IADLClass = self.IADLClassification(IADLClassTemp, IADLMeal)
         self.IADLClass = IADLClass
-        self.IADLNumMiss = IADLNumMissing
+        self.IADLNumMiss = IADLNumMiss
         self.IADLMeal = IADLMeal
         self.IADLSomeDep = IADLSomeDep
         
@@ -186,7 +186,7 @@ class Lifestyle(object):
         Missing = -9999
         if (Data[Columns[0]] != '1' and Data[Columns[1]] != '1' and Data[Columns[2]] != '1'):
             Missing = 1
-        elif (Data[Columns[0]] == '1' and Data[Columns[1]] == '1' and Data[Columns[2]] == '1'):
+        elif (Data[Columns[0]] == '1' or Data[Columns[1]] == '1' or Data[Columns[2]] == '1'):
             Missing = 0    
         return Missing
         
