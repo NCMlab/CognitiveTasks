@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 # import datetime
-# from dateutil.parser import parse
+from dateutil.parser import parse
 import pandas as pd
 import collections
 import numpy as np
@@ -22,6 +23,11 @@ class Lifestyle(object):
         outDict['BDI'] = self.BDI
         outDict['GDS'] = self.GDS
         outDict['SCD'] = self.SCD
+        outDict['IADLClass'] = self.IADLClass
+        outDict['IADLNumMiss'] = self.IADLNumMiss
+        outDict['IADLMeal'] = self.IADLMeal
+        outDict['IADLSomeDep'] = self.IADLSomeDep
+        
         return outDict
 
     def ProcessData(self, LifeData):
@@ -50,7 +56,140 @@ class Lifestyle(object):
 
         GDS = slice(222, 252)
         self.GDS = self.ScoreGeriatricDepressionIndex(OneRow[GDS])
+        IADL = slice(32, 54)
+        self.ScoreIADL(OneRow[IADL])
 
+    def ScoreIADL(self, IADLData):
+        # Questions about:
+        # Telephone
+        # Travel
+        # Groceries
+        # Prepare meals
+        # Housework
+        # Take your own medicines
+        # Handle money
+        IADLNumMissing = self.IADLCountMissingValues(IADLData)
+        IADLMeal = self.MealPlanning(IADLData, [10, 11, 12])
+        IADLSomeDep = self.IADLSomeDependence(IADLData)
+        IADLClassTemp = self.IADLClassificationTemp(IADLSomeDep, IADLNumMissing)
+        IADLClass = self.IADLClassification(IADLClassTemp, IADLMeal)
+        self.IADLClass = IADLClass
+        self.IADLNumMiss = IADLNumMissing
+        self.IADLMeal = IADLMeal
+        self.IADLSomeDep = IADLSomeDep
+        
+    def IADLClassification(self, IADLClassTemp, IADLMeal):
+        # 5) OARS scale: Basic and Instrumental Activities of Daily Living Classification
+        Cond3Flag1 = (IADLMeal == 1) and (IADLClassTemp == 0 or IADLClassTemp == 1)
+        Cond3Flag2 = IADLClassTemp == 2
+        if (IADLMeal == 0 and IADLClassTemp == 0):
+            # No functional impairment
+            IADLClass = 1
+        elif (IADLMeal == 0 and IADLClassTemp == 1):
+            # Mild impairment
+            IADLClass = 2
+        elif Cond3Flag1 or Cond3Flag2:
+            # Moderate Impairment
+            IADLClass = 3
+        elif IADLClassTemp == 3:
+            # Severe Impairment
+            IADLClass = 4
+        elif IADLClassTemp == 4:
+            # Severe Impairment
+            IADLClass = 5
+        else: IADLClass = 9
+        return IADLClass
+        
+    def IADLClassificationTemp(self, IADLSomeDep, IADLNumMissing):
+        # 4) OARS scale: Basic and Instrumental Activities of Daily Living Classification (Excluding Meal
+        # Preparation) – Intermediate Derived Variable
+        Cond1Flag1 = ((IADLSomeDep == 1 or IADLSomeDep == 2 or IADLSomeDep == 3) and (IADLNumMissing == 0))
+        Cond1Flag2 = ((IADLSomeDep == 1 or IADLSomeDep == 2) and (IADLNumMissing == 1))
+        Cond1Flag3 = ((IADLSomeDep == 1) and (IADLNumMissing == 2))        
+        Cond2Flag1 = ((IADLSomeDep == 4 or IADLSomeDep == 5) and (IADLNumMissing == 0))
+        Cond2Flag2 = ((IADLSomeDep == 4) and (IADLNumMissing == 1))        
+        Cond3Flag1 = ((IADLSomeDep == 6 or IADLSomeDep == 7) and (IADLNumMissing == 0))
+        Cond3Flag2 = ((IADLSomeDep == 6) and (IADLNumMissing == 1))        
+                                  
+        if (IADLSomeDep == 0 and IADLNumMissing == 0):
+            IADLClass = 0
+        elif Cond1Flag1 or Cond1Flag2 or Cond1Flag3:
+            IADLClass = 1
+        elif Cond2Flag1 or Cond2Flag2:
+            IADLClass = 2
+        elif Cond3Flag1 or Cond3Flag2:
+            IADLClass = 3
+        elif IADLSomeDep >= 8:
+            IADLClass = 4
+        else:
+            IADLClass = 9
+        return IADLClass
+        
+    def IADLSumSomeDependence(self):
+        # 6) OARS scale: Sum of Some Dependence and Complete Dependence (Excluding Meal
+        # Preparation)
+        # This is the same as the some dependence but treats missing values differently and it is skipped
+        pass
+        
+    def IADLSomeDependence(self, IADLData):
+        # 3) OARS scale: Sum of Some Dependence and Complete Dependence (Excluding Meal
+        # Preparation) – Temporary Variable
+        SomeDepTelephone = self.IADLSomeDependenceOneVariable(IADLData, [0,1,2])
+        SomeDepTravels   = self.IADLSomeDependenceOneVariable(IADLData, [3,5,6])
+        SomeDepGroceries = self.IADLSomeDependenceOneVariable(IADLData, [7,8,9])
+        SomeDepHousework = self.IADLSomeDependenceOneVariable(IADLData, [13,14,15])
+        SomeDepMoney     = self.IADLSomeDependenceOneVariable(IADLData, [0,1,2])
+        return SomeDepTelephone + SomeDepTravels + SomeDepGroceries + SomeDepHousework + SomeDepMoney
+                        
+                
+    def IADLSomeDependenceOneVariable(self, Data, Columns):
+        # Is there any dependence?
+        if Data[Columns[1]] == '1' or Data[Columns[2]] == '1':
+            SomeDep = 1
+        else:
+            SomeDep = 0
+        return SomeDep
+        
+        
+    def MealPlanning(self, Data, Columns):
+        # 2) OARS Scale: Some or Complete Dependence for Meal Preparation - Intermediate Derived
+        # Variable
+        # Meal planning
+        if (Data[Columns[0]] != '1' and Data[Columns[1]] != '1' and Data[Columns[2]] != '1'):
+            IADLMeal = -9999
+        elif (Data[Columns[1]] == '1' or Data[Columns[2]] == '1'):
+            IADLMeal = 1
+        elif Data[Columns[0]] == '1':
+            IADLMeal = 0
+        return IADLMeal
+                    
+    def IADLCountMissingValues(self, IADLData):
+        # OARS Scale: Number of Missing Items (Excluding Meal Preparation)
+        # Find the number of missing data values
+        # Telephone missing values
+        TelephoneMissing = self.IADLFindMissingValue(IADLData, [0,1,2])   
+        # Travel missing values
+        TravelsMissing = self.IADLFindMissingValue(IADLData, [3,5,6])   
+        # Groceries missing values
+        GroceriesMissing = self.IADLFindMissingValue(IADLData, [7,8,9])   
+        # Housework 
+        HouseworkMissing = self.IADLFindMissingValue(IADLData, [13,14,15])          
+        # Handle Money
+        MoneyMissing = self.IADLFindMissingValue(IADLData, [19,20,21])     
+        # How many missing values?
+        IADLNumMissing = TelephoneMissing + TravelsMissing + GroceriesMissing + HouseworkMissing + MoneyMissing
+        return IADLNumMissing
+
+    def IADLFindMissingValue(self, Data, Columns):
+        # Missing values occur when all three questions related to an activity are 
+        # not equal to yes
+        Missing = -9999
+        if (Data[Columns[0]] != '1' and Data[Columns[1]] != '1' and Data[Columns[2]] != '1'):
+            Missing = 1
+        elif (Data[Columns[0]] == '1' and Data[Columns[1]] == '1' and Data[Columns[2]] == '1'):
+            Missing = 0    
+        return Missing
+        
     def ScoreBeckDepressionIndex(self, BDIData):
         """
         INTERPRETING THE BECK DEPRESSION INVENTORY (BDI-II)
