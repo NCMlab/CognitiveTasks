@@ -27,6 +27,22 @@ class Lifestyle(object):
         outDict['IADLNumMiss'] = self.IADLNumMiss
         outDict['IADLMeal'] = self.IADLMeal
         outDict['IADLSomeDep'] = self.IADLSomeDep
+        outDict['SlpSatis'] = self.SlpSatis
+        outDict['SlpAvgHours'] = self.SlpAvgHours
+        outDict['SlpFallAslp'] = self.SlpFallAslp
+        outDict['SlpFallDurTrbl'] = self.SlpFallDurTrbl
+        outDict['SlpFallProbDay'] = self.SlpFallProbDay
+        outDict['SlpWake'] = self.SlpWake
+        outDict['SlpWakeDurTrbl'] = self.SlpWakeDurTrbl
+        outDict['SlpWakeProbDay'] = self.SlpWakeProbDay
+        outDict['SlpActDreams'] = self.SlpActDreams
+        outDict['SlpActDreamsDurTrbl'] = self.SlpActDreamsDurTrbl
+        outDict['SlpLegDiscomfort'] = self.SlpLegDiscomfort
+        outDict['SlpLegRest'] = self.SlpLegRest
+        outDict['SlpLegRestDurTrbl'] = self.SlpLegRestDurTrbl
+        outDict['SlpLegProbCount'] = self.SlpLegProbCount
+        outDict['SlpLegDisappear'] = self.SlpLegDisappear
+        outDict['SlpLegNight'] = self.SlpLegNight
         
         return outDict
 
@@ -58,7 +74,72 @@ class Lifestyle(object):
         self.GDS = self.ScoreGeriatricDepressionIndex(OneRow[GDS])
         IADL = slice(32, 54)
         self.ScoreIADL(OneRow[IADL])
+        Sleep = slice(11,30)
+        self.ScoreSleep(OneRow[Sleep])
 
+    def ScoreSleep(self, SleepData):
+        # How satisfied or dissatisfied are you with your current sleep pattern?
+        # 1 Very Satisfied
+        # 2 Satisfied
+        # 3 Neutral
+        # 4 Dissatisfied
+        # 5 Very Dissatisfied
+        # 6 I don't know
+        # 7 Prefer not to answer
+
+        self.SlpSatis = SleepData[0]
+        # During the past month, on average, how many hours of actual sleep did you get at night? (This may be different than the number of hours you spend in bed.)
+        self.SlpAvgHours = SleepData[1]
+        # Over the last month, how often did it take you more than 30 minutes to fall asleep?
+            # 1 Never
+            # 2 <1/week
+            # 3 Once or twice/week
+            # 4 3-5 times/week
+            # 5 6-7 times/week
+            # 6 I don't know
+            # 7 Prefer not to answer
+        self.SlpFallAslp = SleepData[2]
+        # For how many months have you had this trouble going to sleep?
+        self.SlpFallDurTrbl = SleepData[3]
+        # To what extent do you consider your problem falling asleep to interfere with your daily functioning (for example, from daytime fatigue, ability to function at work/daily chores, concentration, memory, mood, etc.).
+            # Not at all
+            # A little
+            # Somewhat
+            # Much
+            # Very much
+            # I don't know
+            # Prefer not to answer
+        self.SlpFallProbDay = SleepData[4]
+        # Over the last month, how often did you wake in the middle of the night or too early in the morning and found it difficult to fall asleep again?
+        self.SlpWake = SleepData[5]
+        # For how many months have you had this trouble staying asleep?
+        self.SlpWakeDurTrbl = SleepData[6]
+        # To what extent do you consider your problem staying asleep to interfere with your daily functioning (for example, from daytime fatigue, ability to function at work/daily chores, concentration, memory, mood, etc.)?
+        self.SlpWakeProbDay = SleepData[7]
+        # Over the last month, how often do you find it difficult to stay awake during your normal waking hours when you want to?
+        self.SlpDayTired = SleepData[8]
+        # For how many months have you had trouble staying awake?
+        self.SlpDayTiredDurTrbl = SleepData[9]
+        # To what extent do you consider your problem staying awake to interfere with your daily functioning?
+        self.SlpDayTiredProbDay = SleepData[10]
+        # Have you ever been told, or suspected yourself, that you seem to acted out your dreams" while asleep (for example, punching, flailing your arms in the air, making running movements, etc.)?
+        self.SlpActDreams = SleepData[11]
+        # For how many months have you had this "acting out" of your dreams?
+        self.SlpActDreamsDurTrbl = SleepData[12]
+        # Do you have, or have you sometimes experienced, recurrent, uncomfortable feelings or sensations in your legs while sitting or lying down?
+        self.SlpLegDiscomfort = SleepData[13]
+        # Do you have, or have you sometimes experienced, a recurrent need or urge to move your legs while sitting or lying down?
+        self.SlpLegRest = SleepData[14]
+        # For how many months have you had these uncomfortable feelings or urge to move?
+        self.SlpLegRestDurTrbl = SleepData[15]
+        # Over the last month, how many times (per week, on average) have you experienced these uncomfortable feelings or urge to move?
+        self.SlpLegProbCount = SleepData[16]
+        # Do these uncomfortable feelings or sensations in your legs, or the urge to move, disappear/improve when you are active or moving around?
+        self.SlpLegDisappear = SleepData[17]
+        # Are these uncomfortable feelings, or this urge to move, worse in the evening or at night compared with the morning?
+        self.SlpLegNight = SleepData[18]
+        
+        
     def ScoreIADL(self, IADLData):
         # Questions about:
         # Telephone

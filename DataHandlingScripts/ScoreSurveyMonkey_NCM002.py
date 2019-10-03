@@ -34,13 +34,15 @@ sys.path.append(dir_path)
 # If there is an error it means that the GUI program has not been run.
 # The GUI checks to see if thie config file exists. If it does not then it is created.
 sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
-import NeuropsychDataFolder
+# import NeuropsychDataFolder
 # Load up the data location as a global variable
-AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
-
+# AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
+AllInDataFolder = '/Volumes/GoogleDrive/Shared drives/NCMLab/NCM002-MRIStudy/Data/NeuroPsych'
+AllOutDataFolder = os.path.join(os.path.split(AllInDataFolder)[0], 'SummaryData')
 # From the Neuropsych folder change to the SurveyMonkey Folder
-SurveyMonkeyDataFolder = os.path.split(AllOutDataFolder)[0]
+SurveyMonkeyDataFolder = os.path.split(AllInDataFolder)[0]
 SurveyMonkeyDataFolder = os.path.join(SurveyMonkeyDataFolder, 'SurveyMonkey')
+
 # At home lifestyle questionnaire
 LifestyleFileName = 'Royal LifestyleBehavior.csv'
 # At the lab demographics questionnaire
@@ -51,46 +53,47 @@ LifestyleInputFile = os.path.join(SurveyMonkeyDataFolder, LifestyleFileName)
 DemographicsInputFile = os.path.join(SurveyMonkeyDataFolder, DemographicsFileName)
 PANASInputFile = os.path.join(SurveyMonkeyDataFolder, PANASFileName)
 
-# Check to see if all three files are present
-AreAllThreeFilesPresent(LifestyleInputFile, DemographicsInputFile, PANASInputFile)
-# Load the data from all the demographics data file
-DemoH1, DemoH2, DemoData = ReadSMFileAsCSV(DemographicsInputFile)
-# Load the data from the PANAS file
-PANASH1, PANASH2, PANASData = ReadSMFileAsCSV(PANASInputFile)
-# Load the data from the Lifestyle file
-LifeH1, LifeH2, LifeData = ReadSMFileAsCSV(LifestyleInputFile)
 
-## PANAS
-AllPANAS = Class_PANAS.PANAS()
-AllPANAS.ProcessDataFile(PANASData)
-# Create a file name for PANAS data 
-UpdatedDataFileName = CreateOutFileName('NCM002_PANAS', AllOutDataFolder)
-ExistingDataFileName = LocateOutDataFile('NCM002_PANAS')
-# Write PANAS to file
-WriteOutNewdataMoveOldData(AllPANAS.AllPANAS, UpdatedDataFileName, ExistingDataFileName)
+def main():
+    # Check to see if all three files are present
+    AreAllThreeFilesPresent(LifestyleInputFile, DemographicsInputFile, PANASInputFile)
+    # Load the data from all the demographics data file
+    DemoH1, DemoH2, DemoData = ReadSMFileAsCSV(DemographicsInputFile)
+    # Load the data from the PANAS file
+    PANASH1, PANASH2, PANASData = ReadSMFileAsCSV(PANASInputFile)
+    # Load the data from the Lifestyle file
+    LifeH1, LifeH2, LifeData = ReadSMFileAsCSV(LifestyleInputFile)
+    
+    ## PANAS
+    AllPANAS = Class_PANAS.PANAS()
+    AllPANAS.ProcessDataFile(PANASData)
+    # Create a file name for PANAS data 
+    UpdatedDataFileName = CreateOutFileName('NCM002_PANAS', AllOutDataFolder)
+    ExistingDataFileName = LocateOutDataFile(AllOutDataFolder,'NCM002_PANAS')
+    # Write PANAS to file
+    WriteOutNewdataMoveOldData(AllPANAS.AllPANAS, UpdatedDataFileName, ExistingDataFileName)
+    
+    ## DEMOGRAPHICS
+    AllDemog = Class_Demog.Demograhics()
+    AllDemog.ProcessDataFile(DemoData)
+    # Create a file name for Demog data 
+    UpdatedDataFileName = CreateOutFileName('NCM002_Demog', AllOutDataFolder)
+    ExistingDataFileName = LocateOutDataFile(AllOutDataFolder,'NCM002_Demog')
+    # Write Demographics to file
+    WriteOutNewdataMoveOldData(AllDemog.AllParts, UpdatedDataFileName, ExistingDataFileName)
+    AllDemog.AllParts.to_csv(UpdatedDataFileName)
+    
+    
+    ## LIFESTYLE
+    AllLife = Class_Lifestyle.Lifestyle()
+    AllLife.ProcessData(LifeData)
 
-## DEMOGRAPHICS
-AllDemog = Class_Demog.Demograhics()
-AllDemog.ProcessDataFile(DemoData)
-# Create a file name for Demog data 
-UpdatedDataFileName = CreateOutFileName('NCM002_Demog', AllOutDataFolder)
-ExistingDataFileName = LocateOutDataFile('NCM002_Demog')
-# Write Demographics to file
-WriteOutNewdataMoveOldData(AllDemog.AllParts, UpdatedDataFileName, ExistingDataFileName)
-AllDemog.AllParts.to_csv(UpdatedDataFileName)
-
-
-## LIFESTYLE
-AllLife = Class_Lifestyle.Lifestyle()
-AllLife.ProcessData(LifeData)
-AllList.AllLife
-# Create a file name for Demog data 
-UpdatedDataFileName = CreateOutFileName('NCM002_Life', AllOutDataFolder)
-ExistingDataFileName = LocateOutDataFile('NCM002_Life')
-# Write Demographics to file
-WriteOutNewdataMoveOldData(AllLife.AllLife, UpdatedDataFileName, ExistingDataFileName)
-AllLife.AllLife.to_csv(UpdatedDataFileName)
-
+    # Create a file name for Demog data 
+    UpdatedDataFileName = CreateOutFileName('NCM002_Life', AllOutDataFolder)
+    ExistingDataFileName = LocateOutDataFile(AllOutDataFolder,'NCM002_Life')
+    # Write Demographics to file
+    WriteOutNewdataMoveOldData(AllLife.AllLife, UpdatedDataFileName, ExistingDataFileName)
+    AllLife.AllLife.to_csv(UpdatedDataFileName)
 
 def CreateOutFileName(BaseFileName, AllOutDataFolder):
     # Create a file to hold processed data using the time and date
@@ -100,7 +103,7 @@ def CreateOutFileName(BaseFileName, AllOutDataFolder):
     NewOutFileName = os.path.join(AllOutDataFolder, BaseFileName + NowString)
     return NewOutFileName
 
-def LocateOutDataFile(BaseFileName):
+def LocateOutDataFile(AllOutDataFolder, BaseFileName):
     # Locate an existing processed data file and if it does not exist, then make it.
     # What files exist with this name?
     Files = glob.glob(os.path.join(AllOutDataFolder, BaseFileName + '*.csv'))
@@ -170,67 +173,3 @@ def ReadSMFileAsCSV(InputFile):
 
 
     
-
-
-
-def DefineDataColumns():
-    # Sleep pattern 
-    Sleep = arange(11,29)
-    # 11: 
-        # Very Satisfied ....................................................... 1
-        # Satisfied ................................................................ 2
-        # Neutral .................................................................. 3
-        # Dissatisfied ........................................................... 4
-        # Very Dissatisfied ................................................... 5
-        # [DO NOT READ] Don’t know/No answer ............. 8
-        # [DO NOT READ] Refused ................................... 9
-        #     • Eight questions
-        # • Overall sleep satisfaction (from Insomnia Sleep Index)
-        # • Sleep duration (Pittsburgh Sleep Quality Index [PSQI])
-        # • Sleep onset insomnia (Insomnia Sleep Index)
-        # • Sleep maintenance insomnia (Insomnia Sleep Index)
-        # • Daytime somnolence (adapted from PSQI)
-        # • Restless legs syndrome (adapted from REST questionnaire)
-        # • REM sleep behaviour disorder (from validated approach
-        # used at the Sacré-Coeur sleep disorders centre)
-    # Instrucmental Activities of Daily Living 
-    IADL = slice(32, 53)
-    # Loneliness 
-    # These questions have responses such as: Yes/More or less/No
-    Loneliness = slice(55, 60)
-  
-    # Subjective Cognitive Decline
-    # These questions have responses such as: Yes/No/I don't know/Prefer not to answer
-    SCD1 = slice(65,69)
-    SCD2 = slice(89, 107)
-    SCDscore = SubjectCognitiveDecline(i[SCD1], i[SCD2])
-
-    # Social Participation
-    # I am not sure how to score this
-    # (109, 147), skip 126
-    #
-    # Social Networks
-    # 149, 198, skip 195
-    # Depression Scale
-    BDS = slice(201, 222)
-    # ScoreBeckDepressionIndex(i[BDS])
-    GDS = slice(222, 252)
-    ScoreGeriatricDepressionIndex(i[GDS])
-    # Education
-    # This comes from another survey
-    # Nutrition
-    # Language 
-    # Health
-    
-    
-    
-
-
-
-
-    
-#BaseDir = '/Users/jasonsteffener'
-#FileName = os.path.join(BaseDir,'Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping/data/SurveyMonkeyExports/Participant Questionnaire.csv')
-Data = LoadSMFile(InputFile)
-
-OutData = RestructureSM(Data)
