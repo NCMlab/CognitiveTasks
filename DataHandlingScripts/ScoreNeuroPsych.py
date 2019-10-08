@@ -37,6 +37,7 @@ AllInDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
 # Where to put the summary data
 AllOutDataFolder = os.path.join(os.path.split(AllInDataFolder)[0], 'SummaryData')
 
+
     
 def main():
     # Cycle over all data folders and load them up
@@ -474,5 +475,5 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     # Now that the old data is moved, write out the updated data
     UpdatedData.to_csv(UpdatedDataFileName, index = False, float_format='%.3f')    
 # #       
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

@@ -38,6 +38,7 @@ class NCMParticipant(object):
         self.BDIscore = -9999
         self.GDSscore = -9999
         self.LoadLevels = 5;
+        self.BaseDir = '/home/jsteffen/Dropbox/steffenercolumbia/Projects/MyProjects/NeuralCognitiveMapping'
         
     def MakeParticipant(self, DataList):
         self.RawData = DataList
@@ -68,9 +69,9 @@ class NCMParticipant(object):
         self.PAWalkHikeMin = self.PAScore(DataList[284])
         self.PAFOSCMapping(DataList[294])
 #         # Now work with the Psychopy data
-#         self.SubDir = self.FindPsychoPyFolder(self.subid)
-#         self.DMSCapacity = self.ReadCapacity(self.SubDir, "CAPACITY_DMS")
-#         self.FRTCapacity = self.ReadCapacity(self.SubDir, "CAPACITY_FRT")
+        self.SubDir = self.FindPsychoPyFolder(self.subid)
+        self.DMSCapacity = self.ReadCapacity(self.SubDir, "CAPACITY_DMS")
+        self.FRTCapacity = self.ReadCapacity(self.SubDir, "CAPACITY_FRT")
 #         self.FRTLoadList = self.CreateFRTList(self.FRTCapacity).split(' ')
 #         self.DMSLoadList = self.CreateDMSList(self.DMSCapacity).split(' ')
 #         self.ReadBlockData('DMS_Block','DMS',6)
@@ -78,14 +79,14 @@ class NCMParticipant(object):
 # #        self.CalcThroughput('DMS')
 #         self.StairCaseLoadAnalysis('DMSstair', 'DMS')
 #        self.StairCaseLoadAnalysis('FRTstair', 'FRT')
-        # self.LoadNIHdata()
+        self.LoadNIHdata()
         # Load the DMS Staircase file
 #        self.ReadStairData('DMS')
 #        self.CalculateDMSCapacity()
         
                 
     def FindPsychoPyFolder(self,subid):
-        BaseDir = "../data"
+        BaseDir = os.path.join(self.BaseDir, "data")
         SubDir = -9999
         # List  folders
         ll = os.listdir(BaseDir)
@@ -551,10 +552,10 @@ class NCMParticipant(object):
 
 
     def ReadStairData(self, TaskTag):
-        ll = os. listdir(self.VisitDir)
-        matchingStair = fnmatch.filter(ll,'*'+TaskTag+'_Stair*.csv')
+        ll = os. listdir(self.SubDir)
+        matchingStair = fnmatch.filter(ll,'*'+TaskTag+'stair*.csv')
         if len(matchingStair) > 0:
-            fid = open(os.path.join(self.VisitDir,matchingStair[0]),'rU')
+            fid = open(os.path.join(self.SubDir,matchingStair[0]),'rU')
             data = csv.reader(fid)
             # Read whole file into a list
             LL = list(data)
@@ -707,12 +708,6 @@ class NCMParticipant(object):
                 '7' : 8,
                 '8' : 9,
                 }.get(SerialPos,-1)           
-                
-            
-        
-        
-            
-        
 
     def ReadBlockDataLong(self, SearchString, TaskTag, RowsPerLoad):
         # SearchString = 'DMS_Block'
@@ -786,7 +781,8 @@ class NCMParticipant(object):
                                                                     
     def LoadNIHdata(self):
         # Take the data file from the NIH export and run a pivot table on it. 
-        NIHFile = "../data/NIHToolboxExports/AssessmentDataAll.csv"
+        
+        NIHFile = os.path.join(self.BaseDir, "data","NIHToolboxExports","AssessmentDataAll.csv")
         fid = open(NIHFile,'rU')
         data = csv.reader(fid)
         # Read whole file into a list
@@ -823,14 +819,14 @@ class NCMParticipant(object):
     def WriteLongDataToFile(self, fidOut):  
 
         for i in self.LongBlockData:
-            fidOut.write("%s,%d,%0.2f,%d,%d,%0.3f,%0.3f,%d,"%(self.subid,self.sex,self.age,self.ageGroup,self.edu,self.FRTCapacity,self.DMSCapacity,1))
+            fidOut.write("%s,%d,%0.2f,%d,%d,%0.3f,%d,"%(self.subid,self.sex,self.age,self.ageGroup,self.edu, self.DMSCapacity,1))
             fidOut.write('%d,%d,%d,%0.4f,%d,%d,%d,%d,'%(i['Load'],i['Acc'],i['ProbeType'],i['RT'],i['ScreenCol'],i['ScreenRow'],i['ScreenPos'],i['SerialPos']))
             for k in self.NIHToolbox.keys():
                 fidOut.write('%0.4f,'%(self.NIHToolbox[k]))
             fidOut.write("\n")
             
         for i in self.LongStaircaseData:
-            fidOut.write("%s,%d,%0.2f,%d,%d,%0.3f,%0.3f,%d,"%(self.subid,self.sex,self.age,self.ageGroup,self.edu,self.FRTCapacity,self.DMSCapacity,2))
+            fidOut.write("%s,%d,%0.2f,%d,%d,%0.3f,%d,"%(self.subid,self.sex,self.age,self.ageGroup,self.edu,self.DMSCapacity,2))
             fidOut.write('%d,%d,%d,%0.4f,%d,%d,%d,%d,'%(i['Load'],i['Acc'],i['ProbeType'],i['RT'],i['ScreenCol'],i['ScreenRow'],i['ScreenPos'],i['SerialPos']))
             for k in self.NIHToolbox.keys():
                 fidOut.write('%0.4f,'%(self.NIHToolbox[k]))
