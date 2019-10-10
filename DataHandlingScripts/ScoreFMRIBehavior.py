@@ -29,7 +29,9 @@ print(dir_path)
 sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
 import NeuropsychDataFolder
 # Load up the data location as a global variable
-AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
+AllInDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
+# Where to put the summary data
+AllOutDataFolder = os.path.join(os.path.split(AllInDataFolder)[0], 'SummaryData')
 
 def main():
     # Cycle over all data folders and load them up
@@ -50,7 +52,7 @@ def main():
     else:
         # There is no old data file
         OldData = []
-        NewData.to_csv(ExistingDataFileName, index = False)
+        NewData.to_csv(ExistingDataFileName, index = False, float_format='%.3f')        
 
 def CycleOverDataFolders():
     # Take as input the folder that contains folders of data
@@ -60,7 +62,7 @@ def CycleOverDataFolders():
     df = pd.DataFrame()
     ListOfDict = []
     # get all sub dirs
-    subdirs = glob.glob(os.path.join(AllOutDataFolder,'*/'))
+    subdirs = glob.glob(os.path.join(AllInDataFolder,'*/'))
     for subdir in subdirs:
         # check subdir based on some criteria
         CurDir = os.path.split(subdir)[0]
@@ -83,7 +85,7 @@ def CycleOverDataFolders():
                         Visid = CurVis
                         print('%s, %s'%(subid, Visid))
                         # Load up the raw data from the files in the visit folder
-                        Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
+                        Results = LoadRawData(os.path.join(AllInDataFolder, subid, Visid),subid)
                         # Only add results if results are found to avoid a file with lots of empty rows
                         if len(Results) > 0:
                             FlatResults = FlattenDict(Results)
@@ -99,7 +101,7 @@ def CycleOverDataFolders():
                 Visid = FindVisitIDFromFileNames(subdir)
                 
                 # Load up the raw data from the files in the visit folder
-                Results = LoadRawData(os.path.join(AllOutDataFolder, subid),subid)
+                Results = LoadRawData(os.path.join(AllInDataFolder, subid),subid)
                 FlatResults = FlattenDict(Results)
                 # add subid and visitid
                 FlatResults['AAsubid'] = subid
@@ -133,45 +135,51 @@ def LoadRawData(VisitFolder, subid):
     # DMS
     Data1 = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
     if len(Data1) > 0:             
+        CapacityData = ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
         Data1 = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data1)
-        tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data1)
-        Results['DMSMRI1'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)    
+        tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data1, CapacityData)
+        Results['DMSMRI1'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'DMS')    
         print('\tDMS loaded')
-    
+          
     Data2 = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
     if len(Data2) > 0:
+        CapacityData = ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
         Data2 = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data2)
-        tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data2)
-        Results['DMSMRI2'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)    
+        tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data2, CapacityData)
+        Results['DMSMRI2'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'DMS')    
         print('\tDMS loaded')
 
     if len(Data1) > 0 and len(Data2) > 0: 
         AllData = Data1.append(Data2)
         if len(AllData) > 0:
+            CapacityData = ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
             AllData = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(AllData)
-            tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(AllData)
-            Results['DMSMRIAll'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)    
+            tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(AllData, CapacityData)
+            Results['DMSMRIAll'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'DMS')    
             print('\tBoth DMS loaded')
                 
     # VSTM
-    Data1 = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun1')
-    if len(Data1) > 0:
-        tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data1)
-        Results['VSTMMRI1'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)   
+    VSTMData1 = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun1')
+    if len(VSTMData1) > 0:
+        CapacityData = ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')            
+        tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(VSTMData1, CapacityData)
+        Results['VSTMMRI1'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'VSTM')   
         print('\tVSTM loaded')    
-    Data2 = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun2')
-    if len(Data2) > 0:
-        tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data2)
-        Results['VSTMMRI2'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)   
-        print('\tVSTM loaded')    
-    if len(Data1) > 0 and len(Data2) > 0: 
-        AllData = Data1.append(Data2)
-        if len(AllData) > 0:
-            tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(AllData)
-            Results['VSTMMRIAll'] = ScoreNeuroPsych.ReorderDMSResults(tempResults)   
-            print('\tVBoth VSTM loaded')    
 
-                
+    VSTMData2 = ReadFile(VisitFolder, subid, 'VSTM_Block_MRIRun2')
+    if len(VSTMData2) > 0:
+        CapacityData = ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')            
+        tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(VSTMData2, CapacityData)
+        Results['VSTMMRI2'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'VSTM')   
+        print('\tVSTM loaded')    
+
+    if len(VSTMData1) > 0 and len(VSTMData2) > 0: 
+        VSTMAllData = VSTMData1.append(VSTMData2)
+        if len(VSTMAllData) > 0:
+            tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(VSTMAllData, CapacityData)
+            Results['VSTMMRIAll'] = ScoreNeuroPsych.Reorder_DMS_VSTM_Results(tempResults, 'VSTM')   
+            print('\tVBoth VSTM loaded')    
+                            
     # N-Back
     Data1 = ReadFile(VisitFolder, subid, 'NBack_012012_MRIRun01')
     if len(Data1) > 0:
@@ -367,8 +375,8 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     MovedDataFile = os.path.join(OldDataFolder, 'X_'+os.path.basename(ExistingDataFileName))
     shutil.move(ExistingDataFileName, MovedDataFile)
     # Now that the old data is moved, write out the updated data
-    UpdatedData.to_csv(UpdatedDataFileName, index = False)    
+    UpdatedData.to_csv(UpdatedDataFileName, index = False, float_format='%.3f')    
       
-      
+#       
 if __name__ == "__main__":
     main()

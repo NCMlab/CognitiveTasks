@@ -35,7 +35,7 @@ def ProcessVSTMBlockv2(Data, CapacityData):
             # Check for Time outs which are coded as Responses equal to -99
             # Remove time outs
             for index, row in temp.iterrows():
-                if row['Resp'].strip() == '-99':
+                if row['Resp'] == -99:
                     print('Time out!')
                     temp = temp.drop(index)
             # find acc
