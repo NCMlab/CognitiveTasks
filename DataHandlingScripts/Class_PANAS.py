@@ -79,25 +79,26 @@ class PANAS(object):
         
         # Convert the list of objects to a pandas dataframe    
         AllPANAS = pd.DataFrame.from_records([s.to_dict() for s in AllPANAS])
+        # AllPANAS = AllPANAS.set_index('PartID')
         # Combine sessions
-        AllPANAS = self.PANASFindBothSessions(AllPANAS)
+        self.AllPANAS = self.PANASFindBothSessions(AllPANAS)
         # Set the index 
-        self.AllPANAS = AllPANAS.set_index('PartID')
+        # self.AllPANAS = AllPANAS.set_index('PartID')
 
-    def PANASFindBothSessions(self, AllPANAS):
+    def PANASFindBothSessions(self, AllPANASData):
         # For each item in the PANAS list extract the participant ID
         # If it is a session 1
         # Look to see if there is a session 2 for the same participant ID
         # Cycle over the data
         ListIndexToDrop = []
-        for index1, row in AllPANAS.iterrows():
+        for index1, row in AllPANASData.iterrows():
             # for each row extract the participant ID and the session
             CurrentPartID = row['PartID']
             CurrentSession = row['Session']
             # If this is a session 1, then look for session 2
             if CurrentSession == 1:
                 # cycle over the data again
-                for index2, row2 in AllPANAS.iterrows():
+                for index2, row2 in AllPANASData.iterrows():
                     tempPartID = row2['PartID']
                     tempSession = row2['Session']
                     # Check to see if this row is session two or not
@@ -105,12 +106,12 @@ class PANAS(object):
                         # Same participant ID
                         if tempSession == 2:
                             print('Found one %d and %d'%(index1, index2))
-                            AllPANAS = self.PANASCombineTwoRows(AllPANAS, index1, index2)
+                            AllPANASData = self.PANASCombineTwoRows(AllPANASData, index1, index2)
                             # Keep track of the indices to drop
                             ListIndexToDrop.append(index2)
         # Drop the session 2 rows
-        AllPANAS = AllPANAS.drop(ListIndexToDrop)
-        return AllPANAS
+        AllPANASData = AllPANASData.drop(ListIndexToDrop)
+        return AllPANASData
                         
     def PANASCombineTwoRows(self, AllPANAS, index1, index2):
         # Now that two rows have been identified as being two sessions from one particopant,
@@ -119,6 +120,10 @@ class PANAS(object):
         AllPANAS.at[index1,'PANASNeg2'] = AllPANAS.at[index2,'PANASNeg2']
         AllPANAS.at[index1,'PANASHour2'] = AllPANAS.at[index2,'PANASHour2']
         AllPANAS.at[index1,'PANASDate2'] = AllPANAS.at[index2,'PANASDate2']
+        # AllPANAS[index1,'PANASPos2'] = AllPANAS[index2,'PANASPos2']
+        # AllPANAS[index1,'PANASNeg2'] = AllPANAS[index2,'PANASNeg2']
+        # AllPANAS[index1,'PANASHour2'] = AllPANAS[index2,'PANASHour2']
+        # AllPANAS[index1,'PANASDate2'] = AllPANAS[index2,'PANASDate2']
         return AllPANAS            
                                     
     def to_dict(self):

@@ -22,23 +22,20 @@ importlib.reload(Class_Lifestyle)
 BaseDir = '/home/jsteffen/'
 BaseDir = '/Users/jasonsteffener/Documents/'
 
-__file__ = os.path.join(BaseDir, 'GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py')
-#__file__ = '/home/jsteffen/GitHub/CognitiveTasks/DataHandlingScripts/ScoreSurveyMonkey.py'
+
 # What folder is this file in?
 dir_path = os.path.dirname(os.path.realpath(__file__))
-# Append the data handling script folder to the system path
-sys.path.append(dir_path)
-
-
 # This will load the config file containing the location of the data folder
 # If there is an error it means that the GUI program has not been run.
 # The GUI checks to see if thie config file exists. If it does not then it is created.
+print(dir_path)
 sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
-# import NeuropsychDataFolder
+import NeuropsychDataFolder
 # Load up the data location as a global variable
-# AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
-AllInDataFolder = '/Volumes/GoogleDrive/Shared drives/NCMLab/NCM002-MRIStudy/Data/NeuroPsych'
+AllInDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
+# Where to put the summary data
 AllOutDataFolder = os.path.join(os.path.split(AllInDataFolder)[0], 'SummaryData')
+
 # From the Neuropsych folder change to the SurveyMonkey Folder
 SurveyMonkeyDataFolder = os.path.split(AllInDataFolder)[0]
 SurveyMonkeyDataFolder = os.path.join(SurveyMonkeyDataFolder, 'SurveyMonkey')
@@ -165,7 +162,8 @@ def ReadSMFileAsCSV(InputFile):
     PartData = LL[2:]
     return HeaderLine1, HeaderLine2, PartData
 
-
+if __name__ == "__main__":
+    main()
         
 
 

@@ -7,7 +7,18 @@ import pandas as pd
 import fnmatch
 import ProcessNeuroPsychFunctions
 import numpy as np
-from ScoreNeuroPsych import FlattenDict
+import collections
+
+def FlattenDict(Results):
+    # The process functions all return a dictionary of their results. 
+    # In order to write these results to a CSV fuile the dictionaries need to be flattened first
+    #
+    # cycle over tasks
+    FlatResults = collections.OrderedDict()
+    for i in Results.keys():
+        for j in Results[i].keys():
+            FlatResults['%s_%s'%(i,j)] = Results[i][j]
+    return FlatResults  
 
 def CycleOverBehDataFolders(AllOutDataFolder):
     #cycle over folders

@@ -96,7 +96,7 @@ def CycleOverDataFolders():
                         # Load up the raw data from the files in the visit folder
                         Results = LoadRawData(os.path.join(AllInDataFolder, subid, Visid),subid)
                         # Results = LoadRawDataSHORT(os.path.join(AllOutDataFolder, subid, Visid),subid)
-                        FlatResults = FlattenDict(Results)
+                        FlatResults = ProcessBehavioralFunctions.FlattenDict(Results)
                         # add subid and visitid
                         FlatResults['AAsubid'] = subid
                         FlatResults['AAVisid'] = Visid
@@ -110,7 +110,7 @@ def CycleOverDataFolders():
                 
                 # Load up the raw data from the files in the visit folder
                 Results = LoadRawData(os.path.join(AllInDataFolder, subid),subid)
-                FlatResults = FlattenDict(Results)
+                FlatResults = ProcessBehavioralFunctions.FlattenDict(Results)
                 # add subid and visitid
                 FlatResults['AAsubid'] = subid
                 FlatResults['AAVisid'] = Visid
@@ -326,17 +326,6 @@ def ReadFile(VisitFolder, subid, TaskTag):
         #    Data = csv.reader(fid)
         #    Data = list(Data)
     return Data
-
-def FlattenDict(Results):
-    # The process functions all return a dictionary of their results. 
-    # In order to write these results to a CSV fuile the dictionaries need to be flattened first
-    #
-    # cycle over tasks
-    FlatResults = collections.OrderedDict()
-    for i in Results.keys():
-        for j in Results[i].keys():
-            FlatResults['%s_%s'%(i,j)] = Results[i][j]
-    return FlatResults    
     
 def PutDataIntoOutputFile():
     # There will be a single output resultsvfile
