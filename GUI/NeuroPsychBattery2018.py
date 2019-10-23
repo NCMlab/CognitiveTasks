@@ -414,8 +414,8 @@ class Mywin(wx.Frame):
 
    def CreateVSTMList5(self, VSTMCapacity):
         Limit = int(round(float(VSTMCapacity) + 1))
-        if Limit > 15:
-            Limit = 15
+        if Limit > 25:
+            Limit = 25
         elif Limit < 5:
             Limit = 5
         VSTMList = {}
