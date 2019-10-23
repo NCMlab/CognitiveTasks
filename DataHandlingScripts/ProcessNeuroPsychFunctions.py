@@ -1,4 +1,5 @@
 import pandas as pd
+import collections
 import numpy as np
 # This script only contains the processing functions for each different 
 # neuropsych test.
@@ -13,47 +14,16 @@ def ProcessMultipleBlocksVSTM(ListData):
 
 def ProcessMultipleBlocksNBack(ListData):
     pass
+    
 
-def ProcessVSTMBlock(Data):
-    if len(Data) > 0:
-        Out = {}
-        # If there is an entry that is -99 it is a missing value and needs to be changed to NaN
-        Data = Data.replace(-99, np.nan)
-        TabNResp = pd.pivot_table(Data, values = 'Corr', index = 'Load', aggfunc = 'count')
-        TabRT = pd.pivot_table(Data, values = 'RT', index = 'Load', aggfunc = np.mean)    
-        TabAcc = pd.pivot_table(Data, values = 'Corr', index = 'Load', aggfunc = np.mean)    
-        Out['NResp'] = TabNResp
-        Out['RT'] = TabRT
-        Out['Acc'] = TabAcc
-    else:
-        Out = {}
-        Out['NResp'] = -9999
-        Out['Acc'] = -9999
-        Out['RT'] = -9999
-    return Out
-    
-def ProcessDMSBlock(Data):
-    if len(Data) > 0:
-        Out = {}
-        # This finds the number of trials for which a response was made
-        TabNResp = pd.pivot_table(Data, values = 'resp.corr', index = 'Load', aggfunc = 'count')
-        # What is the average RT broken by load
-        TabRT = pd.pivot_table(Data, values = 'resp.rt', index = 'Load', aggfunc = np.mean)    
-        # What is the average accuracy
-        TabAcc = pd.pivot_table(Data, values = 'resp.corr', index = 'Load', aggfunc = np.mean)    
-        Out['NResp'] = TabNResp
-        Out['RT'] = TabRT
-        Out['Acc'] = TabAcc
-    else:
-        Out = {}
-        Out['NResp'] = -9999
-        Out['Acc'] = -9999
-        Out['RT'] = -9999
-    return Out  
-    
-def ProcessVSTMBlockv2(Data):
+def ProcessVSTMBlockv2(Data, CapacityData):
     # This needs work to ignore time outs
-    Out = {}
+    Out = collections.OrderedDict()
+    # Read the capacity data
+    Capacity = ReadCapacity(CapacityData)
+    # Add this to the dictionary
+    Out['VSTM_Cap'] = Capacity
+    
     if len(Data) > 0:
         #cycle over load levels and save as relative load and absolute load
         UniqueLoad = Data['Load'].unique()
@@ -62,68 +32,101 @@ def ProcessVSTMBlockv2(Data):
         count = 1
         for i in UniqueLoad:
             temp = Data[Data['Load']==i]
+            # Check for Time outs which are coded as Responses equal to -99
+            # Remove time outs
+            for index, row in temp.iterrows():
+                if row['Resp'] == -99:
+                    print('Time out!')
+                    temp = temp.drop(index)
             # find acc
             Acc = (temp['Corr'].mean())
             RT = (temp['RT'].mean())
             NResp = (temp['Corr'].count())
             Tag1 = 'RelLoad%02d'%(count)
-            Tag2 = 'AbsLoad%02d'%(i)
+#            Tag2 = 'AbsLoad%02d'%(i)
             Out[Tag1+'_Acc'] = Acc
-            Out[Tag2+'_Acc'] = Acc
+#            Out[Tag2+'_Acc'] = Acc
             Out[Tag1+'_RT'] = RT
-            Out[Tag2+'_RT'] = RT
+#            Out[Tag2+'_RT'] = RT
             Out[Tag1+'_NResp'] = NResp
-            Out[Tag2+'_NResp'] = NResp
+#            Out[Tag2+'_NResp'] = NResp
             count += 1
     else:
+        Out['VSTM_Cap'] = -9999
         for i in range(1,6):
             Tag1 = 'RelLoad%02d'%(i)
-            Tag2 = 'AbsLoad%02d'%(i)
+#            Tag2 = 'AbsLoad%02d'%(i)
             Out[Tag1+'_Acc'] = -9999
-            Out[Tag2+'_Acc'] = -9999
+#            Out[Tag2+'_Acc'] = -9999
             Out[Tag1+'_RT'] = -9999
-            Out[Tag2+'_RT'] = -9999
+#            Out[Tag2+'_RT'] = -9999
             Out[Tag1+'_NResp'] = -9999
-            Out[Tag2+'_NResp'] = -9999
+#            Out[Tag2+'_NResp'] = -9999
     return Out
     
-def ProcessDMSBlockv2(Data):
-    Out = {}
+def ProcessDMSBlockv2(Data, CapacityData):
+    Out = collections.OrderedDict()
+    # Read the capacity data
+    try:
+        Capacity = ReadCapacity(CapacityData)
+    except:
+        Capacity = -9999    
+    # Add this to the dictionary
+    Out['DMS_Cap'] = Capacity
     if len(Data) > 0:
         #cycle over load levels and save as relative load and absolute load
         UniqueLoad = Data['Load'].unique()
         UniqueLoad = UniqueLoad[~np.isnan(UniqueLoad)]
         UniqueLoad.sort()
         count = 1
-        
+        # Cycle over each load
         for i in UniqueLoad:
             temp = Data[Data['Load']==i]
+            # Are there any time outs?
+            # Check for Time outs which are coded as Responses equal to -99
+            # Remove time outs
+            for index, row in temp.iterrows():
+                if isinstance(row['resp.corr'], str):
+                    # Check to see if a string is saved
+                    if row['resp.corr'].strip() == '-99':
+                        print('Time out!')
+                        temp = temp.drop(index)            
             # find acc
             Acc = (temp['resp.corr'].mean())
             RT = (temp['resp.rt'].mean())
             NResp = (temp['resp.corr'].count())
             Tag1 = 'RelLoad%02d'%(count)
-            Tag2 = 'AbsLoad%02d'%(i)
+#            Tag2 = 'AbsLoad%02d'%(i)
             Out[Tag1+'_Acc'] = Acc
-            Out[Tag2+'_Acc'] = Acc
+#            Out[Tag2+'_Acc'] = Acc
             Out[Tag1+'_RT'] = RT
-            Out[Tag2+'_RT'] = RT
+#            Out[Tag2+'_RT'] = RT
             Out[Tag1+'_NResp'] = NResp
-            Out[Tag2+'_NResp'] = NResp
+#            Out[Tag2+'_NResp'] = NResp
             count += 1                    
     else:
+        Out['DMS_Cap'] = -9999
         for i in range(1,6):
             Tag1 = 'RelLoad%02d'%(i)
-            Tag2 = 'AbsLoad%02d'%(i)
+  #          Tag2 = 'AbsLoad%02d'%(i)
             Out[Tag1+'_Acc'] = -9999
-            Out[Tag2+'_Acc'] = -9999
+ #           Out[Tag2+'_Acc'] = -9999
             Out[Tag1+'_RT'] = -9999
-            Out[Tag2+'_RT'] = -9999
+   #         Out[Tag2+'_RT'] = -9999
             Out[Tag1+'_NResp'] = -9999
-            Out[Tag2+'_NResp'] = -9999
+    #        Out[Tag2+'_NResp'] = -9999
     return Out
     
-    
+def ReadCapacity(Data):
+    # The capacity file contains a single number
+    # And when loaded in as a dataframe this number gets used 
+    # as a column name
+    try:
+        Capacity = float(Data.columns[0])
+    except:
+        Capacity = -9999
+    return Capacity
+        
 def CalculateDMSLoad(OneLineOfData):
     # calculate load from CSV results file
     Stim = OneLineOfData['TL']+OneLineOfData['TM']+OneLineOfData['TR']
@@ -151,7 +154,7 @@ def ProcessPattComp(Data):
         try:
             # First remove the practice rows from the data file
             Data_Run = Data[Data['Run.thisN'].notnull()]
-            Out = {}
+            Out = collections.OrderedDict()
             LevelsOfDiff = Data_Run['Difficulty'].unique()
             LevelsOfDiff.sort()
             for i in LevelsOfDiff:
@@ -161,14 +164,14 @@ def ProcessPattComp(Data):
                 Out[Tag + '_RT'] = temp['resp.rt'].mean()
                 Out[Tag + '_NResp'] = temp['resp.corr'].count()          
         except:
-            Out = {}
+            Out = collections.OrderedDict()
             for i in range(1,4):
                 Tag = 'Load%02d'%(i)
                 Out[Tag + '_Acc'] = -9999
                 Out[Tag + '_RT'] = -9999
                 Out[Tag + '_NResp'] = -9999  
     else:
-        Out = {}
+        Out = collections.OrderedDict()
         for i in range(1,4):
             Tag = 'Load%02d'%(i)
             Out[Tag + '_Acc'] = -9999
@@ -181,13 +184,13 @@ def ProcessAntonym(Data):
     if len(Data) > 10:
         # First remove the practice rows from the data file
         Data_Run = Data[Data['trials.thisN'].notnull()]
-        Out = {}
+        Out = collections.OrderedDict()
         Out['NResp'] = Data_Run['resp.corr'].count()
         Out['Acc'] = Data_Run['resp.corr'].mean()    
         Out['RT'] = Data_Run['mouse.RT'].mean()
 
     else:
-        Out = {}
+        Out = collections.OrderedDict()
         Out['NResp'] = -9999
         Out['Acc'] = -9999
         Out['RT'] = -9999
@@ -247,17 +250,17 @@ def ProcessWCST(Data):
                 LastTrialRule = CurrentRule
                 #print('%d, CurrentRule = %d, Probe = %d, Sel = %d, Error = %r, PerError = %r'%(i, CurrentRule, Probe, Sel, Error, PersError))    
             #print('Number of Trials: %d, Number of Errors: %d, Number Pers Errors: %d'%(NumTrials, NumErrors, NumPersErrors))
-            Out = {}
+            Out = collections.OrderedDict()
             Out['NTrials'] = NumTrials
             Out['NErrors'] = NumErrors
             Out['NPersErrors'] = NumPersErrors
         except:
-            Out = {}
+            Out = collections.OrderedDict()
             Out['NTrials'] = NumTrials
             Out['NErrors'] = NumErrors
             Out['NPersErrors'] = NumPersErrors
     else:
-        Out = {}
+        Out = collections.OrderedDict()
         Out['NTrials'] = -9999
         Out['NErrors'] = -9999
         Out['NPersErrors'] = -9999
@@ -271,17 +274,16 @@ def ProcessMatrices(Data):
         NCorr = Data['key_resp_2.corr'].sum()
         # What is the percent accuracy
         Acc = Data['key_resp_2.corr'].mean()
-        Out = {}
+        Out = collections.OrderedDict()
         Out['Acc'] = Acc
         Out['NTrials'] = NTrials
         Out['NCorr'] = NCorr 
     else:
-        Out = {}
+        Out = collections.OrderedDict()
         Out['Acc'] = -9999
         Out['NTrials'] = -9999
         Out['NCorr'] = -9999       
     return Out
-
 
 def ProcessStroopColor(Data):
     # Stroop color uses the shape color to determine the test colors which is the 
@@ -294,13 +296,13 @@ def ProcessStroopColor(Data):
     if len(Data) > 0:
         # First remove the practice rows from the data file
         Data_Run = Data[Data['trials.thisN'].notnull()]
-        Out = {}
+        Out = collections.OrderedDict()
         Out['Acc'] =   Data_Run['resp.corr'].mean()
         Out['NTrials'] = Data_Run['resp.corr'].count()
         Out['NCorr'] = Data_Run['resp.corr'].sum()
         Out['RT'] = Data_Run['resp.rt'].mean()
     else:
-        Out = {}
+        Out = collections.OrderedDict()
         Out['Acc'] = -9999
         Out['NTrials'] = -9999
         Out['NCorr'] = -9999   
@@ -318,13 +320,13 @@ def ProcessStroopWord(Data):
     if len(Data) > 0:
         # First remove the practice rows from the data file
         Data_Run = Data[Data['trials.thisN'].notnull()]
-        Out = {}
+        Out = collections.OrderedDict()
         Out['Acc'] =   Data_Run['resp.corr'].mean()
         Out['NTrials'] = Data_Run['resp.corr'].count()
         Out['NCorr'] = Data_Run['resp.corr'].sum()
         Out['RT'] = Data_Run['resp.rt'].mean()
     else:
-        Out = {}
+        Out = collections.OrderedDict()
         Out['Acc'] = -9999
         Out['NTrials'] = -9999
         Out['NCorr'] = -9999   
@@ -344,7 +346,7 @@ def ProcessStroopColorWord(Data):
         Data_Run = Data[Data['trials.thisN'].notnull()]
         Data_Run_Con = Data[Data['Congruency']=='Con']
         Data_Run_Incon = Data[Data['Congruency']=='Incon']
-        Out = {}
+        Out = collections.OrderedDict()
         Out['All_Acc'] = Data_Run['resp.corr'].mean()
         Out['All_NTrials'] = Data_Run['resp.corr'].count()
         Out['All_NCorr'] = Data_Run['resp.corr'].sum()
@@ -363,7 +365,7 @@ def ProcessStroopColorWord(Data):
         # Out['NTrials'] = pd.pivot_table(Data_Run, values = 'resp.corr', index = 'Congruency', aggfunc = 'count')
         # Out['RT'] = pd.pivot_table(Data_Run, values = 'resp.rt', index = 'Congruency', aggfunc = np.mean)
     else:
-        Out = {}
+        Out = collections.OrderedDict()
         Out['Acc'] = -9999
         Out['NTrials'] = -9999
         Out['NCorr'] = -9999   
@@ -377,30 +379,33 @@ def ProcessDigitSpan(Data, Dir):
         if len(Data) > 0:
             # cycle over each row 
             for i, CurrentRow in Data.iterrows():
-                match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
-                StairLoad.append(Load)
-                print(match)
-                if match:
-                    Correct.append(1)
-                else:
-                    Correct.append(0)
+                # The last row in the data file is empty except for the stairs respone colum
+                # This row is to be ignored
+                if not np.isnan(CurrentRow['Stairs.thisTrialN']):
+                    match, Load = ProcessDigitSpanOneRow(CurrentRow, Dir)
+                    StairLoad.append(Load)
+                    # print(match)
+                    if match:
+                        Correct.append(1)
+                    else:
+                        Correct.append(0)
             Capacity, NReversals = CalculateCapacity(StairLoad)
             NTrials = len(Data)
-            Out = {}
+            Out = collections.OrderedDict()
             Out['Capacity'] = Capacity
             Out['NReversals'] = NReversals
             Out['NTrials'] = NTrials
             Out['NCorrect'] = sum(Correct)
         else:
-            Out = {}
+            Out = collections.OrderedDict()
             Out['Capacity'] = -9999
             Out['NReversals'] = -9999
             Out['NTrials'] = -9999
             Out['NCorrect'] = -9999
-        print(Correct)
+        # print(Correct)
     except:
         print('\t%s, %s >> Error!!!'%('Digit Span',Dir))
-        Out = {}
+        Out = collections.OrderedDict()
     return Out
     
             
@@ -411,7 +416,7 @@ def ProcessDigitSpanOneRow(Row, Dir):
         if i.isdigit():
             Test.append(int(i))
     # This is stored as a string
-    StrResp = str(Row['resp.keys'])
+    StrResp = str(int(Row['resp.keys']))
     Resp = [];
     for i in StrResp:
         if i.isdigit():
@@ -454,7 +459,7 @@ def CalculateCapacity(StairLoad):
     
 def ProcessSRTImm(Data):
     # Prepare the results dictionary
-    Out = {}
+    Out = collections.OrderedDict()
     if len(Data) > 0:
         # # set the index    
         InData = Data.set_index('Index')
@@ -482,7 +487,7 @@ def ProcessSRTRecog(Data):
     # Hits
     # dL
     # dPrime
-    Out = {}
+    Out = collections.OrderedDict()
     if len(Data) > 0:
         Hits = 0
         FA = 0
@@ -499,14 +504,35 @@ def ProcessSRTRecog(Data):
                 CR += 1
             elif (ExpectedResponse == 'right') & (Correct == 0):
                 FA += 1
-        Out['Recog'] = Hits
+        Out['Hits'] = Hits
     else:
-        Out['Recog'] = -9999
+        Out['Hits'] = -9999
     return Out
 
+def ProcessSRTDelay(Data):
+    # Pull out the data and convert it to integers
+    res = map(int,Data['Trial01'][0:12])
+    # Convert this to a list
+    a = list(res)
+    # Convert to an array and count the nonzero values
+    DelayedRecall = sum(np.array(a)>0)
+    # DelayedRecall = sum(Data['Trial01'][0:12]!=0)
+    sum(np.array(a)>0)
+    
+    # Find intrusions
+    i1 = (Data['Index'] == 'Intrusions') &  (Data['Trial01'].notnull())
+    # or 
+    i2 = (Data['Index'].isnull()) &  (Data['Trial01'].notnull())
+    # Count intrusions
+    Nintr = len(np.where(i1)[0]) + len(np.where(i2)[0])
+    Out = collections.OrderedDict()
+    Out['Recall'] = DelayedRecall
+    Out['Nintr'] = Nintr
+    return Out
+    
 def ProcessNBack(Data):
     try:
-        Out = {}
+        Out = collections.OrderedDict()
         if len(Data) > 0:
             # Use the presentation of instructions to differentiate the blocks
             InstrRows = Data[Data['Stimulus'].str.match('Instructions')]
@@ -557,32 +583,37 @@ def ProcessNBack(Data):
                 # Calculate the average responses for this load level
                 AverageHit[count] = Hit[CurrentLoad].sum()/(NTarget*len(Hit[CurrentLoad]))
                 AverageHitRT[count] = HitRT[CurrentLoad].sum()/(NTarget*len(Hit[CurrentLoad]))
+                # The false alarm rate is the number of false alarms made dividied by 
+                # the total number of possible false alarms.
+                # If you are using 6 targets out out 18 trials so the number of possible
+                # false alarms per block is 12.
                 AverageFalseAlarm[count] = FalseAlarm[CurrentLoad].sum()/(NNonTarget*len(Hit[CurrentLoad]))
-                AverageFalseAlarmRT[count] = FalseAlarmRT[CurrentLoad].sum()/(NNonTarget*len(Hit[CurrentLoad]))
+                # The RT for false alarms is based on the number of false alarms made
+                AverageFalseAlarmRT[count] = FalseAlarmRT[CurrentLoad].sum()/len(FalseAlarmRT[CurrentLoad])
                 AllTargetCount[count] = TargetCount[CurrentLoad].sum()
                 count += 1
             # Now prepare the results for output            
             count = 0
             for i in UniqueLoads:
                 Tag = 'Load%02d'%(i)
-                Out[Tag+"Hit"] = AverageHit[count]
-                Out[Tag+"Hitrt"] = AverageHitRT[count]   
-                Out[Tag+"FA"] = AverageFalseAlarm[count]                    
-                Out[Tag+"FArt"] = AverageFalseAlarmRT[count]
-                Out[Tag+"N"] = AllTargetCount[count]
+                # The odd capitialization helps with later reordering of the data 
+                # columns based on datatype. I am also trying to avoid writing fart 
+                # into my results file! But I cannot avoid that.
+                Out[Tag+"_HIT"] = AverageHit[count]
+                Out[Tag+"_HitRT"] = AverageHitRT[count]   
+                Out[Tag+"_FA"] = AverageFalseAlarm[count]                    
+                Out[Tag+"_FaRT"] = AverageFalseAlarmRT[count]
+                Out[Tag+"_N"] = AllTargetCount[count]
                 count += 1
         else:
             for i in UniqueLoads:
                 Tag = 'Load%02d'%(i)
-                Out[Tag+"Hit"] = -99
-                Out[Tag+"Hitrt"] = -99
-                Out[Tag+"FA"] = -99
-                Out[Tag+"FArt"] = -99  
-                Out[Tag+"N"] = -99
+                Out[Tag+"_HIT"] = -99
+                Out[Tag+"_HitRT"] = -99
+                Out[Tag+"_FA"] = -99
+                Out[Tag+"_FaRT"] = -99  
+                Out[Tag+"_N"] = -99
     except:
         print('\tN-back >>> Error!!')
     return Out                                
         
-def ProcessSRTDelRecall(Data):
-    
-    pass

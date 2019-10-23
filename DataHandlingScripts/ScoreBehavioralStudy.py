@@ -74,8 +74,8 @@ for i in PartData:
                 # Empty rows in the survey monkey file need to be removed
                 part = NCMPartv2.NCMParticipant()
                 part.MakeParticipant(i)
-                #part.ReadBlockDataLong('DMS_Block','DMS',6)
-                #part.ReadStairData('DMS')
+                part.ReadBlockDataLong('DMS_Block','DMS',6)
+                part.ReadStairData('DMS')
                 
                 DataList.append(part)
 #                print str(RowCount)+"     "+part.subid

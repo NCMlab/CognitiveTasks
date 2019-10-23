@@ -15,20 +15,18 @@ exec(Str)
 TrialPerBlock = 18
 NumCorrectPerBlock = 6
 
-Correct1Locations1 = array([3, 6, 8, 12, 14, 17])
-Correct1Locations2 = array([4, 6, 9, 12, 14, 17])
+Correct0Locations1 = array([4,6,10,13,15,17])
+Correct0Locations2 = array([2,7,9,12,15,17])
 
-Correct2Locations1 = array([4, 7 ,10, 13, 15, 18])
-Correct2Locations2 = array([4, 8, 10, 13, 16, 18])
 
-CurrentLoadLevel = 1
+CurrentLoadLevel = 0
 BadFlag = True
 AttemptCount = 0
 while BadFlag == True:
     BadFlag = False
     CorrectLocations = NBackFunctions.CreateStim(CurrentLoadLevel,TrialPerBlock,NumCorrectPerBlock)
     
-    CorrectLocations = Correct1Locations2
+    CorrectLocations = Correct0Locations2
     
         # Create an empty list 
     List = ['-99']*TrialPerBlock
@@ -43,7 +41,7 @@ while BadFlag == True:
             BadFlag = True
         Current = List[j-2]
     AttemptCount += 1
-#print(List)
+print(List)
 print(AttemptCount)
             
 Str = ''

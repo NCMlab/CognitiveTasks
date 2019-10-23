@@ -125,7 +125,7 @@ ENV/
 *.pyc
 .DS_Store
 
-ConfigFiles/NeuropsychDataFolder.py
+/ConfigFiles/NeuropsychDataFolder.py
 ConfigFiles/BehavioralDataFolder.py
 
 

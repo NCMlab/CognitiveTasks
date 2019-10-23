@@ -8,11 +8,7 @@ Use this scoring program in other programs as:
     the data os scored and updated.
     
 To do:
-        Add a sort of filter to the LoadRawData function so that it will pick only Beh files
-        or only MRI files.
-        Also add something so that it collapses across multiple runs of the DMS, VSTM and NBack tasks
-        
-        Add a scoring program for just the MRI files and save them to their own sheet
+    Also add something so that it collapses across multiple runs of the DMS, VSTM and NBack tasks
 
 """
 import os
@@ -37,13 +33,18 @@ print(dir_path)
 sys.path.append(os.path.join(dir_path,'..','ConfigFiles'))
 import NeuropsychDataFolder
 # Load up the data location as a global variable
-AllOutDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
+AllInDataFolder = NeuropsychDataFolder.NeuropsychDataFolder
+# Where to put the summary data
+AllOutDataFolder = os.path.join(os.path.split(AllInDataFolder)[0], 'SummaryData')
+
+
     
 def main():
     # Cycle over all data folders and load them up
     NewData = CycleOverDataFolders()
     # find the name of the existing results file
     ExistingDataFileName = LocateOutDataFile()
+    print(ExistingDataFileName)
     # Load the existing results file
     if os.path.exists(ExistingDataFileName):
         # Found the existing data file
@@ -58,8 +59,9 @@ def main():
     else:
         # There is no old data file
         OldData = []
-        NewData.to_csv(ExistingDataFileName, index = False)
-
+        NewData.to_csv(ExistingDataFileName, index = False, float_format='%.3f')
+    return NewData
+    
 def CycleOverDataFolders():
     # Take as input the folder that contains folders of data
     #cycle over folders
@@ -68,7 +70,7 @@ def CycleOverDataFolders():
     df = pd.DataFrame()
     ListOfDict = []
     # get all sub dirs
-    subdirs = glob.glob(os.path.join(AllOutDataFolder,'*/'))
+    subdirs = glob.glob(os.path.join(AllInDataFolder,'*/'))
     for subdir in subdirs:
         # check subdir based on some criteria
         CurDir = os.path.split(subdir)[0]
@@ -89,10 +91,12 @@ def CycleOverDataFolders():
                         # From the directory structre extract the subject ID and the visit ID
                         subid = CurDir
                         Visid = CurVis
+                        print('====================================')
                         print('%s, %s'%(subid, Visid))
                         # Load up the raw data from the files in the visit folder
-                        Results = LoadRawData(os.path.join(AllOutDataFolder, subid, Visid),subid)
-                        FlatResults = FlattenDict(Results)
+                        Results = LoadRawData(os.path.join(AllInDataFolder, subid, Visid),subid)
+                        # Results = LoadRawDataSHORT(os.path.join(AllOutDataFolder, subid, Visid),subid)
+                        FlatResults = ProcessBehavioralFunctions.FlattenDict(Results)
                         # add subid and visitid
                         FlatResults['AAsubid'] = subid
                         FlatResults['AAVisid'] = Visid
@@ -105,8 +109,8 @@ def CycleOverDataFolders():
                 Visid = FindVisitIDFromFileNames(subdir)
                 
                 # Load up the raw data from the files in the visit folder
-                Results = LoadRawData(os.path.join(AllOutDataFolder, subid),subid)
-                FlatResults = FlattenDict(Results)
+                Results = LoadRawData(os.path.join(AllInDataFolder, subid),subid)
+                FlatResults = ProcessBehavioralFunctions.FlattenDict(Results)
                 # add subid and visitid
                 FlatResults['AAsubid'] = subid
                 FlatResults['AAVisid'] = Visid
@@ -114,6 +118,22 @@ def CycleOverDataFolders():
                 ListOfDict.append(FlatResults)
                 
     df = pd.DataFrame(ListOfDict)
+
+    # Move the last three columns to the beginning of the data frame
+    # Make list of column names
+    ColNameList = []
+    for col in df:
+        ColNameList.append(col)
+    # Now move the last three columns to the beginning
+    ItemsToMove = ['AAsubid', 'AAVisid', 'AAChecked']
+    count = 0
+    for j in ItemsToMove:
+        # Find the location of the item
+        index = ColNameList.index(j)
+        ColNameList.insert(count,ColNameList.pop(index))
+        count += 1
+    # Now apply these rearranged columns to the dataframe
+    df = df[ColNameList]
     return df
 
 def FindVisitIDFromFileNames(subdir):
@@ -133,7 +153,7 @@ def LoadRawData(VisitFolder, subid):
     # This function looks for very specific files
     
     print('working on %s'%(subid))
-    Results = {}
+    Results = collections.OrderedDict()
     # Stroop
     Data = ReadFile(VisitFolder, subid, 'Stroop_Color_')
     Results['StrpC'] = ProcessNeuroPsychFunctions.ProcessStroopColor(Data)
@@ -182,40 +202,66 @@ def LoadRawData(VisitFolder, subid):
         
     # DMS
     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+    CapacityData = ReadFile(VisitFolder, subid, 'DMS_CAPACITY')    
     Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
-    tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
-    Results['DMSBeh1'] = ReorderDMSResults(tempResults)
+    tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data, CapacityData)
+    Results['DMSBeh1'] = Reorder_DMS_VSTM_Results(tempResults, 'DMS')
     print('\tDMS loaded')
         
     # VSTM
     Data = ReadFile(VisitFolder, subid, 'VSTM_Block_BehRun1')
-    Results['VSTMBeh1'] = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data)
+    CapacityData = ReadFile(VisitFolder, subid, 'VSTM_CAPACITY')        
+    tempResults = ProcessNeuroPsychFunctions.ProcessVSTMBlockv2(Data, CapacityData)
+    Results['VSTMBeh1'] = Reorder_DMS_VSTM_Results(tempResults, 'VSTM')
     print('\tVSTM loaded')    
     
     # SRT
     Data = ReadFile(VisitFolder, subid, 'SRT_ImmRecall')
-    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTImm(Data)
+    Results['SRTImm'] = ProcessNeuroPsychFunctions.ProcessSRTImm(Data)    
     print('\tSRT Imm recall loaded')
-        
-    Data = ReadFile(VisitFolder, subid, 'SRT_Recog')
-    Results['SRT'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)   
 
-    # N-Back
-    Data = ReadFile(VisitFolder, subid, 'NBack*BehRun1')
-    Results['NBack'] = ProcessNeuroPsychFunctions.ProcessNBack(Data)          
+    Data = ReadFile(VisitFolder, subid, 'SRT_Recog')
+    Results['SRTRecog'] = ProcessNeuroPsychFunctions.ProcessSRTRecog(Data)   
+    print('\tSRT Recognition loaded')
     
-#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun1')
-#     Data = CheckDMSDataFrameForLoad(Data)
-#     Results['DMSMRI1'] = ProcessDMSBlockv2(Data)
-# 
-#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_MRIRun2')
-#     Data = CheckDMSDataFrameForLoad(Data)
-#     Results['DMSMRI2'] = ProcessDMSBlockv2(Data)
-# 
-#     Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
-#     Data = CheckDMSDataFrameForLoad(Data)
-#     Results['DMSBeh1'] = ProcessDMSBlockv2(Data)
-#     
+    Data = ReadFile(VisitFolder, subid, 'SRT_DelRecall')
+    Results['SRTDel'] = ProcessNeuroPsychFunctions.ProcessSRTDelay(Data)    
+    print('\tSRT Delayed recall loaded')
+    
+    # N-Back
+    # Load data files for both N-Back runs
+    Data1 = ReadFile(VisitFolder, subid, 'NBack*BehRun*1_20')
+    Data2 = ReadFile(VisitFolder, subid, 'NBack*BehRun*2_20')    
+
+    tempResults1 = ProcessNeuroPsychFunctions.ProcessNBack(Data1)   
+    tempResults2 = ProcessNeuroPsychFunctions.ProcessNBack(Data2)   
+    #Results['NBack'] = Reorder_NBack_Results(tempResults)
+    if len(tempResults1) > 0 and len(tempResults2) > 0: 
+        AllData = Data1.append(Data2)
+        if len(AllData) > 0:
+            tempResultsAll = ProcessNeuroPsychFunctions.ProcessNBack(AllData)
+            Results['NBack'] = Reorder_NBack_Results(tempResultsAll)
+    elif len(tempResults1) > 0:
+        Results['NBack'] = Reorder_NBack_Results(tempResults1)
+    else:
+        pass
+    return Results
+        
+def LoadRawDataSHORT(VisitFolder, subid):
+    # Given a visit folder, check for the existance of specific files
+    # read the file and process teh results
+    # This function looks for very specific files
+    
+    print('working on %s'%(subid))
+    Results = {}
+
+    # DMS
+    Data = ReadFile(VisitFolder, subid, 'DMS_Block_BehRun1')
+    Data = ProcessNeuroPsychFunctions.CheckDMSDataFrameForLoad(Data)
+    tempResults = ProcessNeuroPsychFunctions.ProcessDMSBlockv2(Data)
+    Results['DMSBeh1'] = Reorder_DMS_VSTM_Results(tempResults, 'DMS')
+    print('\tDMS loaded')
+
     return Results
 
 def ReadFile(VisitFolder, subid, TaskTag):
@@ -230,6 +276,9 @@ def ReadFile(VisitFolder, subid, TaskTag):
     # create the string you are looking for which is a combo of the subid and the task name
     SearchString = subid + '_' + TaskTag
     matching = fnmatch.filter(ll,SearchString+'*.csv')
+    if len(matching) == 0:
+        # Check to see if the file is a TXT file
+        matching = fnmatch.filter(ll,SearchString+'*.txt')        
     # It is possible that there are multipel files with similar names.
     # The following asks the user for the correct one and then renames the others
     count = 1
@@ -277,17 +326,6 @@ def ReadFile(VisitFolder, subid, TaskTag):
         #    Data = csv.reader(fid)
         #    Data = list(Data)
     return Data
-
-def FlattenDict(Results):
-    # The process functions all return a dictionary of their results. 
-    # In order to write these results to a CSV fuile the dictionaries need to be flattened first
-    #
-    # cycle over tasks
-    FlatResults = {}
-    for i in Results.keys():
-        for j in Results[i].keys():
-            FlatResults['%s_%s'%(i,j)] = Results[i][j]
-    return FlatResults    
     
 def PutDataIntoOutputFile():
     # There will be a single output resultsvfile
@@ -335,16 +373,21 @@ def LocateOutDataFile():
     return FileName
 
 def CreateUpdatedDataFrameOfResults(NewData, OldData):    
+    # Extract the columns
+    ColName = []
+    for c in OldData.columns:
+        ColName.append(c)
+    
     # Create a dataframe to hold teh updated data
-    OutDataFrame = pd.DataFrame()
+    OutDataFrame = pd.DataFrame(columns = ColName)
     # Now cycle over each row and compare
     for index, NewRow in NewData.iterrows():
         # Add the new data
     
         NewDataSubId = NewRow['AAsubid']
         NewDataVisitId = NewRow['AAVisid']
-        print(NewDataSubId)
-        print(NewDataVisitId)
+#        print(NewDataSubId)
+#        print(NewDataVisitId)
         # for each subid and visit found in the new data look for it in the old data
         # If the same subid/visitid is found in both check the Old data column 
         # labeled AAChecked to see if it is 1. If so then skip this data line in the new data 
@@ -372,7 +415,7 @@ def CreateUpdatedDataFrameOfResults(NewData, OldData):
         OutDataFrame = OutDataFrame.append(OutDataRow)
     return OutDataFrame
 
-def ReorderDMSResults(Results):
+def Reorder_DMS_VSTM_Results(Results, TaskTag):
     # When the results are calculated it is easier to code the scoring based on load
     # but this is order hard to read at the output.
     # This code reorders results based on the measure instead of the load
@@ -382,6 +425,9 @@ def ReorderDMSResults(Results):
     TypeList = ['Rel', 'Abs']
     # create an empty ordered dictionary
     Res = collections.OrderedDict()
+    # Now add the capacity back in
+    CapStr = TaskTag + '_Cap'
+    Res[CapStr] = Results[CapStr] 
     for Type in TypeList:
         for Tag in MeasureList:
             for k in range(1,11):
@@ -389,6 +435,22 @@ def ReorderDMSResults(Results):
                     if (i.find(Type) >= 0) and (i.find(Tag) >= 0) and (i.find('Load'+str(k).zfill(2)) >= 0):
                         Res[i] = Results[i]
     return Res
+
+def Reorder_NBack_Results(Results):
+    # When the results are calculated it is easier to code the scoring based on load
+    # but this is order hard to read at the output.
+    # This code reorders results based on the measure instead of the load
+    # What measures to cycle over
+    MeasureList = ['HIT', 'HitRT','FA', 'FaRT','N']
+    # create an empty ordered dictionary
+    Res = collections.OrderedDict()
+    for Tag in MeasureList:
+        for k in range(0,4):
+            for i in Results:
+                if (i.find(Tag) >= 0) and (i.find('Load'+str(k).zfill(2)) >= 0):
+                    Res[i] = Results[i]
+    return Res
+    
       
 def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFileName):
     # Move the old file 
@@ -400,7 +462,7 @@ def WriteOutNewdataMoveOldData(UpdatedData, UpdatedDataFileName, ExistingDataFil
     MovedDataFile = os.path.join(OldDataFolder, 'X_'+os.path.basename(ExistingDataFileName))
     shutil.move(ExistingDataFileName, MovedDataFile)
     # Now that the old data is moved, write out the updated data
-    UpdatedData.to_csv(UpdatedDataFileName, index = False)    
-      
+    UpdatedData.to_csv(UpdatedDataFileName, index = False, float_format='%.3f')    
+# #       
 if __name__ == "__main__":
     main()
