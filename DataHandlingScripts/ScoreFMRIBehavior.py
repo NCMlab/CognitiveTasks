@@ -53,7 +53,8 @@ def main():
         # There is no old data file
         OldData = []
         NewData.to_csv(ExistingDataFileName, index = False, float_format='%.3f')        
-
+    return NewData 
+    
 def CycleOverDataFolders():
     # Take as input the folder that contains folders of data
     #cycle over folders

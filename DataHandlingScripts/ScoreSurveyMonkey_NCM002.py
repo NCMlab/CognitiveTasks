@@ -91,6 +91,7 @@ def main():
     # Write Demographics to file
     WriteOutNewdataMoveOldData(AllLife.AllLife, UpdatedDataFileName, ExistingDataFileName)
     AllLife.AllLife.to_csv(UpdatedDataFileName)
+    return AllLife, AllDemog
 
 def CreateOutFileName(BaseFileName, AllOutDataFolder):
     # Create a file to hold processed data using the time and date
