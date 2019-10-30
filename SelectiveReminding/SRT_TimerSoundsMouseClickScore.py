@@ -9,6 +9,7 @@ If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy.
         Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
 
+TEST
 Preserve order of responses
 """
 
