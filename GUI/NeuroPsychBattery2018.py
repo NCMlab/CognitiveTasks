@@ -16,7 +16,7 @@ import sys  # to get file system encoding
 import wx
 import numpy as np
 import glob
-sys.path.insert(0, '../DataHandlingScripts')
+# sys.path.insert(0, '../DataHandlingScripts')
 import CheckExistingNeuroPsychData
 
 

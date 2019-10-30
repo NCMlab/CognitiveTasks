@@ -238,6 +238,27 @@ for word in FullWordScoringList['Word']:
     WordListObjects.append(textTemp) 
     count += 1
 
+# For every word in the word list do the following
+WordListBoxObjects = []
+count = 1
+for word in FullWordScoringList['Word']:
+    print(count)
+    # Make a unique name
+    WordBoxCount = 'text%02d'%(count)
+    # Create a text stim object for Psychopy
+
+    polygon = visual.Rect(
+        win=win, name=WordBoxCount,
+        width=150, height=1.5*FontSize,
+        ori=0, pos=(ColLocsList[count-1][0], RowLocsList[count-1][0]),
+        lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
+        fillColor=[1,1,1], fillColorSpace='rgb',
+        opacity=0.5, depth=-2.0, interpolate=True,
+        units='pix')        
+    # Add this visual stim obkect to a list
+    WordListBoxObjects.append(polygon) 
+    count += 1
+
 # ########
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
@@ -489,7 +510,7 @@ for thisBlock in range(0,NBlocks):
             pass       
     # Put all the words on the screen and have the tester click the recalled words and enter any intrusions
     TrialCountText.text = 'Trial count: %d'%(thisBlock+1)
-    WordListObjects, mouse, RecallList, RecallOrder = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText)
+    WordListObjects, mouse, RecallList, RecallOrder = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText, WordListBoxObjects)
     print("Recall List:")
     print(RecallList)
     ResponseArray[:,BlockCount - 1] = RecallList
