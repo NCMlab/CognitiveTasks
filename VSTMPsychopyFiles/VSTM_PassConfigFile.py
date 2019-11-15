@@ -271,6 +271,13 @@ for thisBlock in Blocks:
             exec(paramName + '= thisBlock.' + paramName)
             
     CurrentLoad = LoadList[BlockCount]
+    # If the current load exceeds the limits of the config file then override the fixed Locations
+    # flag
+    try: 
+        AllLocations[CurrentLoad - 1]
+    except:
+        FixedLocations = False
+    
     print("Current load is: %d"%(CurrentLoad))
     countDown.reset()   
 #   Start the 321 count down to the start of a block of trials
@@ -283,7 +290,7 @@ for thisBlock in Blocks:
     seed=None, name='trials')
 # Prepare the stimuli
     if FixedLocations:
-        ProbeList = AllProbes[CurrentLoad][CurrentRun]
+        ProbeList = AllProbes[CurrentLoad][CurrentRun]        
     else:
         # Make sure there are an equal number of probe pos and Neg
         ProbeList = np.concatenate((np.zeros(int(VSTM_NTrialsPerBlock/2)),np.ones(int(VSTM_NTrialsPerBlock/2))))
@@ -320,8 +327,8 @@ for thisBlock in Blocks:
             print("Current load is: %d"%(CurrentLoad))
             print("Current Run is: %d"%(CurrentRun))
             print("Current Trial is: %d"%(TrialCount))
-            Locations = AllLocations[CurrentLoad - 1][CurrentRun][TrialCount]
             
+            Locations = AllLocations[CurrentLoad - 1][CurrentRun][TrialCount]
         else:
             Locations = np.random.permutation(VSTM_GridCount**2)[0:CurrentLoad]
             print("This trial is %s"%(thisTrial))
@@ -386,7 +393,7 @@ for thisBlock in Blocks:
         if FixedLocations:
             # Then use the probe location from the config file
             CurrentProbeLocation = AllProbes[CurrentLoad - 1][CurrentRun][TrialCount]
-        # If it is a random location probe then pick the POS or NEG probe location
+            # If it is a random location probe then pick the POS or NEG probe location
         else:
             if ProbeList[TrialCount] == 0:
                 CurrentProbeLocation = NegProbeLocation
