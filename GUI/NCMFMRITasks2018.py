@@ -302,8 +302,8 @@ class Mywin(wx.Frame):
 
    def CreateVSTMList5(self, VSTMCapacity):
         Limit = int(round(float(VSTMCapacity) + 1))
-        if Limit > 15:
-            Limit = 15
+        if Limit > 25:
+            Limit = 25
         elif Limit < 5:
             Limit = 5
         VSTMList = {}
@@ -313,11 +313,21 @@ class Mywin(wx.Frame):
         VSTMList['8']=[1,3,6,7,8]
         VSTMList['9']=[1,3,6,8,9]    
         VSTMList['10']=[1,3,6,9,10]    
-        VSTMList['11']=[1,3,6,11,12]    
-        VSTMList['12']=[1,3,6,12,13]    
-        VSTMList['13']=[1,3,6,13,14]    
-        VSTMList['14']=[1,3,6,14,15]    
-        VSTMList['15']=[1,3,6,15,16]    
+        VSTMList['11']=[1,3,6,10,11]    
+        VSTMList['12']=[1,3,6,11,12]    
+        VSTMList['13']=[1,3,6,12,13]    
+        VSTMList['14']=[1,3,6,13,14]    
+        VSTMList['15']=[1,3,6,14,15]  
+        VSTMList['16']=[1,3,6,15,16]    
+        VSTMList['17']=[1,3,6,16,17]    
+        VSTMList['18']=[1,3,6,17,18]                            
+        VSTMList['19']=[1,3,6,18,19]    
+        VSTMList['20']=[1,3,6,19,20]    
+        VSTMList['21']=[1,3,6,20,21]    
+        VSTMList['22']=[1,3,6,21,22]    
+        VSTMList['23']=[1,3,6,22,23]    
+        VSTMList['24']=[1,3,6,23,24]            
+        VSTMList['25']=[1,3,6,24,25]                 
         OutList = VSTMList[str(Limit)]
         OutList = ' '.join(str(e) for e in OutList)
         return OutList   
