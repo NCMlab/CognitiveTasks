@@ -168,6 +168,12 @@ class Mywin(wx.Frame):
       # Make a box around the Capacity text and entry buttons
       Row5BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (ColPixel[3],CurrentRow-5))
       
+      # Add a Font size adjustment button
+      Row5BoxR4 = wx.StaticBox(self.panel, -1, size = ((ColWidth+20),RowWidth-5), pos = (ColPixel[2]-15,CurrentRow-5))
+      self.FontSizeButtonText = 'Font: 60'
+      self.btnR5C4 = wx.Button(self.panel,-1,self.FontSizeButtonText, pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth+10, ButtonHeight))) 
+      self.btnR5C4.Bind(wx.EVT_BUTTON, self.SetDMSFontSize)
+      
       self.btnR5C6 = wx.Button(self.panel,-1,"Block1", pos = (ColPixel[5],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR5C6.Bind(wx.EVT_BUTTON,self.OnClickedR5C6) 
       self.btnR5C7 = wx.Button(self.panel,-1,"Block2", pos = (ColPixel[6],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -273,16 +279,16 @@ class Mywin(wx.Frame):
 
 
     
-   def ManualEntryCapacity(self,Range):
+   def ManualEntryCapacity(self, Range, Variable):
         myDlg = gui.Dlg(title=u"NCM Lab", labelButtonOK=' OK ', labelButtonCancel=' Cancel ',)
-        myDlg.addField(u'Capacity:')
+        myDlg.addField(Variable)
         myDlg.show()  # show dialog and wait for OK or Cancel
         Capacity = -9999
         if myDlg.OK:  # then the user pressed OK
             thisInfo = myDlg.data
     
             if (float(thisInfo[0]) >= float(Range[0])) and (float(thisInfo[0]) <= float(Range[1])):
-                print("Capacity = " + str(thisInfo))
+#                print("Capacity = " + str(thisInfo))
                 Capacity = float(thisInfo[0])
             else:
                 print("Out of Range")
@@ -291,12 +297,12 @@ class Mywin(wx.Frame):
         return str(Capacity)
         
    def OnClickedVSTMCapEnter(self,event):
-        self.VSTMCapacity = self.ManualEntryCapacity([0.0, 36])
+        self.VSTMCapacity = self.ManualEntryCapacity([0.0, 36], 'Capacity:')
         self.txtR3C5.SetLabelText(self.VSTMCapacity)
         self.VSTMBlockLoadLevels = self.CreateVSTMList5(self.VSTMCapacity)
 
    def OnClickedDMSCapEnter(self,event):
-        self.DMSCapacity = self.ManualEntryCapacity([0.0, 9])
+        self.DMSCapacity = self.ManualEntryCapacity([0.0, 9], 'Capacity')
         self.txtR5C5.SetLabelText(self.DMSCapacity)
         self.DMSBlockLoadLevels = self.CreateDMSList5(self.DMSCapacity)
 
@@ -490,7 +496,13 @@ class Mywin(wx.Frame):
       print( self.DMSBlockLoadLevels)
       core.shellCall([sys.executable, "../DMSPsychopyFiles/DMS_Adaptive5Load_v4_FMRI.py", self.PartID.GetValue(), self.VisitFolderPath, self.DMSBlockLoadLevels, self.DMSFontSize, 'MRIRun%d'%(self.DMSTag)])  
       self.cbR5C7.SetValue(True)  
-      
+   
+   def SetDMSFontSize(self, event):
+        self.DMSFontSize = self.ManualEntryCapacity([10, 150], 'Font size:')
+        self.FontSizeButtonText = 'Font: %s'%(self.DMSFontSize)
+        self.btnR5C4.SetLabelText(self.FontSizeButtonText)
+        
+   
    def OnClickedR10C1(self, event):
       btnR10C1Label = event.GetEventObject().GetLabel() 
       print("Label of pressed button = %s"%(btnR10C1Label))
