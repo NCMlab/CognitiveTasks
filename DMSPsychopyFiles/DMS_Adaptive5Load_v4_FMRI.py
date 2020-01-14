@@ -72,7 +72,8 @@ else:
     Tag = 'BehRun1'
     FontSize = 60
     PartDataFolder = OutDir
- 
+print('Working with Font Size: %d'%( FontSize))
+InstructionFontSize = 60
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
 CounterBalFlag = 'False'
@@ -116,7 +117,7 @@ ProbeColor = 'blue'
 
 FontSizeUnits = 'pix'
 # This next value is based off of the units so be careful changing the units
-SpacingOfLettersRelativeToCenter = 80
+SpacingOfLettersRelativeToCenter = FontSize*1.33
 # units=FontSizeUnits
 # height=FontSize
 StimOnTime = 2.5
@@ -170,20 +171,29 @@ InstrText1 = InstrText1 + 'Remember that the letters to study will be in white a
 InstrText1 = InstrText1 + 'The test letter will be in blue and will be lowercase.\n'
 InstrText1 = InstrText1 + 'Try to respond as quickly and as accurately as possible.\n\n'
 InstrText1 = InstrText1 + 'Press the [5] key to begin.'
+# Display FontSize Test
 
+TestLetters = visual.TextStim(win=win, name='testLetters',
+    text='Can you read this?\n\nA B C\nPress [5] to continue',
+    font='Times New Roman',
+    units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=1200, ori=0, 
+    color='white', colorSpace='rgb', opacity=1,
+    depth=0.0);
+    
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
+TestFontClock = core.Clock()
 if CounterBalFlag == 'False':
     textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text=InstrText1, font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
+    units=FontSizeUnits, pos=(0, 0), height=InstructionFontSize*0.75, wrapWidth=1200, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 else:
     textInstr1 = visual.TextStim(win=win, name='textInstr1',
     text='Press [RIGHT] or [2] if the letter WAS in the set.\nPress [1] or [LEFT] if the letter WAS NOT in the set.\n\nTry to respond as quickly and as accurately as possible.',
     font='Times New Roman',
-    units=FontSizeUnits, pos=(0, 0), height=FontSize*0.75, wrapWidth=1200, ori=0, 
+    units=FontSizeUnits, pos=(0, 0), height=InstructionFontSize*0.75, wrapWidth=1200, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
     depth=0.0);
 # Initialize components for Routine "ShortDelay"
@@ -322,6 +332,79 @@ textThankyou = visual.TextStim(win=win, name='textThankyou',
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
+# ------Prepare to start Routine "Test Font"-------
+t = 0
+TestFontClock.reset()  # clock
+
+frameN = -1
+continueRoutine = True
+# update component parameters for each repeat
+OK1 = event.BuilderKeyResponse()
+# keep track of which components have finished
+TestComponents = [TestLetters, OK1]
+for thisComponent in TestComponents:
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+
+# -------Start Routine "Test Letters"-------
+while continueRoutine:
+    # get current time
+    t = TestFontClock.getTime()
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    # *textInstr1* updates
+    if t >= 0.0 and TestLetters.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        TestLetters.tStart = t
+        TestLetters.frameNStart = frameN  # exact frame index
+        TestLetters.setAutoDraw(True)
+    
+    # *OK1* updates
+    if t >= 0.0 and OK1.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        OK1.tStart = t
+        OK1.frameNStart = frameN  # exact frame index
+        OK1.status = STARTED
+        # keyboard checking is just starting
+        event.clearEvents(eventType='keyboard')
+    if OK1.status == STARTED:
+        theseKeys = event.getKeys(['escape','5'])
+        if 'escape' in theseKeys:
+            endExpNow = True
+        elif '5' in theseKeys:  # at least one key was pressed
+            # a response ends the routine
+            continueRoutine = False
+        else:
+            pass    
+
+
+            
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in TestComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # check for quit (the Esc key)
+    if endExpNow or event.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+# -------Ending Routine "Test Letters"-------
+for thisComponent in TestComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+# the Routine "Test Letters" was not non-slip safe, so reset the non-slip timer
+routineTimer.reset()
+
+
 # ------Prepare to start Routine "Instructions"-------
 t = 0
 InstructionsClock.reset()  # clock
@@ -334,7 +417,7 @@ InstructionsComponents = [textInstr1, OK1]
 for thisComponent in InstructionsComponents:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
-
+        
 # -------Start Routine "Instructions"-------
 while continueRoutine:
     # get current time
