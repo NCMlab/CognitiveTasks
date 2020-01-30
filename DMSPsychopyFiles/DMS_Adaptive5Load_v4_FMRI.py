@@ -170,11 +170,11 @@ InstrText1 = InstrText1 + 'You will NOT receive feedback after each trial.\n\n'
 InstrText1 = InstrText1 + 'Remember that the letters to study will be in white and CAPITALIZED.\n'
 InstrText1 = InstrText1 + 'The test letter will be in blue and will be lowercase.\n'
 InstrText1 = InstrText1 + 'Try to respond as quickly and as accurately as possible.\n\n'
-InstrText1 = InstrText1 + 'Press the [5] key to begin.'
+# InstrText1 = InstrText1 + 'Press the [5] key to begin.'
 # Display FontSize Test
 
 TestLetters = visual.TextStim(win=win, name='testLetters',
-    text='Can you read this?\n\nA B C\nPress [5] to continue',
+    text='Can you read this?\n\nA B C\n',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=1200, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
