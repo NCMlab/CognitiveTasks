@@ -1,0 +1,17 @@
+sudo pip3 install numpy scipy matplotlib pandas pyopengl pyglet pillow moviepy lxml openpyxl xlrd 
+sudo pip3 install configobj pyyaml gevent greenlet msgpack-python psutil tables requests[security] pyosf cffi pysoundcard pysoundfile seaborn psychopy_ext python-bidi psychopy
+
+
+sudo pip3 install pyserial pyparallel egi   # including 'iolabs' results in an error (Jan 2019)
+sudo pip3 install pytest coverage sphinx
+
+
+# installing wxpython with pip (sudo pip3 install wxpython)
+# would get a newer version but resulted in errors
+sudo apt-get install python3-wxgtk4.0
+
+# 'Webview' part of wxpython missing:
+sudo apt-get install python3-wxgtk-webview4.0
+
+# Missing 'ffmpeg' results in crash shortly after startup, thus:
+sudo apt-get install ffmpeg
