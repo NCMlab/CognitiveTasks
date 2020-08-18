@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Tue 18 Aug 2020 12:16:59 PM EDT
+    on Tue 18 Aug 2020 04:23:45 PM UTC
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -27,7 +27,7 @@ os.chdir(_thisDir)
 
 # Store info about the experiment session
 expName = u'ResponseTimeTest'  # from the Builder filename that created this script
-expInfo = {'participant':'', 'session':'001'}
+expInfo = {u'session': u'001', u'participant': u''}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False:
     core.quit()  # user pressed cancel
@@ -40,7 +40,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/home/jsteffener/Documents/GitHub/CognitiveTasks/ResponseTimetesting/ResponseTimeTest.psyexp',
+    originPath=u'/home/jason/CognitiveTasks/ResponseTimetesting/ResponseTimeTest.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -53,9 +53,9 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1920, 1080), fullscr=True, screen=0,
-    allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    size=[800, 450], fullscr=False, screen=0,
+    allowGUI=True, allowStencil=False,
+    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
@@ -69,7 +69,7 @@ blankClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
     text=u'+',
     font=u'Arial',
-    pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -78,7 +78,7 @@ trialClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
     text=u'+',
     font=u'Arial',
-    pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color=u'red', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -87,7 +87,7 @@ blankClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
     text=u'+',
     font=u'Arial',
-    pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
+    pos=(0, 0), height=0.2, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -192,9 +192,6 @@ for thisTrial in trials:
             text.tStart = t
             text.frameNStart = frameN  # exact frame index
             text.setAutoDraw(True)
-        frameRemains = 0.0 + 0.2- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if text.status == STARTED and t >= frameRemains:
-            text.setAutoDraw(False)
         
         # *key_resp_2* updates
         if t >= 0.0 and key_resp_2.status == NOT_STARTED:
