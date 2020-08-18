@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Tue 18 Aug 2020 04:23:45 PM UTC
+    on Tue 18 Aug 2020 04:42:40 PM UTC
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -148,7 +148,7 @@ for thisComponent in blankComponents:
         thisComponent.setAutoDraw(False)
 
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=20, method='sequential', 
+trials = data.TrialHandler(nReps=50, method='sequential', 
     extraInfo=expInfo, originPath=-1,
     trialList=[None],
     seed=None, name='trials')
@@ -297,7 +297,7 @@ for thisTrial in trials:
             thisComponent.setAutoDraw(False)
     thisExp.nextEntry()
     
-# completed 20 repeats of 'trials'
+# completed 50 repeats of 'trials'
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
