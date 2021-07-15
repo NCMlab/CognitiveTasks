@@ -37,12 +37,14 @@ def MakeListOfRecalledWords(FullWordList, RecallList):
     
     
 
-def MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows):
+def MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows, GridHeightOffset):
     # Make grid of locations for where to put words on the screen
+    
     # Create a list of column locations
     x = np.linspace(0, 1, NCols)*GridWidth - GridWidth/2
+    
     # Create a list of row locations
-    y = np.linspace(0, 1, NRows)*GridHeight - GridHeight/2
+    y = GridHeightOffset + np.linspace(0, 1, NRows)*GridHeight - GridHeight/2
     # Make a grid of these locations
     ColLocs, RowLocs = np.meshgrid(x, y)
     # reshape the grid to a list and flip it 
@@ -52,7 +54,7 @@ def MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows):
     return ColLocsList, RowLocsList
 
 
-def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText):
+def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText, PleaseRecallText):
     RecallOrder = 1
     SRT_ResponseTimeAllowed = 60
     from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
@@ -71,6 +73,7 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
     countDownStarted = False
     countDownClock = core.CountdownTimer(SRT_ResponseTimeAllowed)            
     # Put the response timer on the screen
+    PleaseRecallText.setAutoDraw(True)
     ResponseTimer.setAutoDraw(True)
     RemainingTime.setAutoDraw(True)   
     TrialCountText.setAutoDraw(True)
@@ -230,6 +233,7 @@ def PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, w
             win.flip()
             
     # Remove the words from the screen
+    PleaseRecallText.setAutoDraw(False)
     ResponseTimer.setAutoDraw(False)
     RemainingTime.setAutoDraw(False)
     TrialCountText.setAutoDraw(False)
@@ -260,7 +264,7 @@ def CheckForIntrusions(mouse):
     for word in ResponseList:
         if word == '[Intrusion]':      
             # Ask the tester to type in the intrusion word(s)
-            IntrusionWord = TypeInWordv2(IntrusionCount)      
+            IntrusionWord = TypeInWordv3(IntrusionCount)      
             IntrusionCount += 1
             IntrusionList.append(IntrusionWord)
             ResponseList[count] = '[' + IntrusionWord + ']'
@@ -293,6 +297,18 @@ def TypeInWordv2(count):
     print('From Dialog:')
     print(expInfo['Intrusion Word'])
     return expInfo['Intrusion Word']
+    
+    
+def TypeInWordv3(count):    
+    myDlg = gui.Dlg(title="Intrusion Word", pos=(0,800))
+    myDlg.addField('Word:') 
+    ok_data = myDlg.show()  # show dialog and wait for OK or Cancel
+    if myDlg.OK:  # or if ok_data is not None
+        print(ok_data[0])
+        return(ok_data[0])
+    else:
+        print('user cancelled')
+    
     
 def WriteOutDelayedResults(OutFile, ResponseArray, NIntrusionArray, WordList, AllIntrusionList):
     NWords = len(ResponseArray) - 1

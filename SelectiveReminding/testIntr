@@ -1,0 +1,16 @@
+from psychopy import gui
+
+def TypeInWordv3(count):    
+    myDlg = gui.Dlg(title="JWP's experiment", pos=(0,800))
+    myDlg.addField('Name:')
+    
+
+    ok_data = myDlg.show()  # show dialog and wait for OK or Cancel
+    if myDlg.OK:  # or if ok_data is not None
+        print(ok_data[0])
+        return(ok_data[0])
+    else:
+        print('user cancelled')
+        
+        
+TypeInWordv3(1)
