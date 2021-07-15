@@ -347,60 +347,60 @@ for thisComponent in TestComponents:
         thisComponent.status = NOT_STARTED
 
 # -------Start Routine "Test Letters"-------
-while continueRoutine:
-    # get current time
-    t = TestFontClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *textInstr1* updates
-    if t >= 0.0 and TestLetters.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        TestLetters.tStart = t
-        TestLetters.frameNStart = frameN  # exact frame index
-        TestLetters.setAutoDraw(True)
-    
-    # *OK1* updates
-    if t >= 0.0 and OK1.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        OK1.tStart = t
-        OK1.frameNStart = frameN  # exact frame index
-        OK1.status = STARTED
-        # keyboard checking is just starting
-        event.clearEvents(eventType='keyboard')
-    if OK1.status == STARTED:
-        theseKeys = event.getKeys(['escape','5'])
-        if 'escape' in theseKeys:
-            endExpNow = True
-        elif '5' in theseKeys:  # at least one key was pressed
-            # a response ends the routine
-            continueRoutine = False
-        else:
-            pass    
-
-
-            
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in TestComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
+#while continueRoutine:
+#    # get current time
+#    t = TestFontClock.getTime()
+#    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+#    # update/draw components on each frame
+#    
+#    # *textInstr1* updates
+#    if t >= 0.0 and TestLetters.status == NOT_STARTED:
+#        # keep track of start time/frame for later
+#        TestLetters.tStart = t
+#        TestLetters.frameNStart = frameN  # exact frame index
+#        TestLetters.setAutoDraw(True)
+#    
+#    # *OK1* updates
+#    if t >= 0.0 and OK1.status == NOT_STARTED:
+#        # keep track of start time/frame for later
+#        OK1.tStart = t
+#        OK1.frameNStart = frameN  # exact frame index
+#        OK1.status = STARTED
+#        # keyboard checking is just starting
+#        event.clearEvents(eventType='keyboard')
+#    if OK1.status == STARTED:
+#        theseKeys = event.getKeys(['escape','5'])
+#        if 'escape' in theseKeys:
+#            endExpNow = True
+#        elif '5' in theseKeys:  # at least one key was pressed
+#            # a response ends the routine
+#            continueRoutine = False
+#        else:
+#            pass    
+#
+#
+#            
+#    # check if all components have finished
+#    if not continueRoutine:  # a component has requested a forced-end of Routine
+#        break
+#    continueRoutine = False  # will revert to True if at least one component still running
+#    for thisComponent in TestComponents:
+#        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+#            continueRoutine = True
+#            break  # at least one component has not yet finished
+#    
+#    # check for quit (the Esc key)
+#    if endExpNow or event.getKeys(keyList=["escape"]):
+#        core.quit()
+#    
+#    # refresh the screen
+#    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+#        win.flip()
+#
 # -------Ending Routine "Test Letters"-------
-for thisComponent in TestComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
+#for thisComponent in TestComponents:
+#    if hasattr(thisComponent, "setAutoDraw"):
+#        thisComponent.setAutoDraw(False)
 # the Routine "Test Letters" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 

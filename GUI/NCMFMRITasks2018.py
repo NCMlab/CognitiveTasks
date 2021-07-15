@@ -106,7 +106,7 @@ class Mywin(wx.Frame):
       self.FRTBlockLoadLevels = '0.0 0.125 0.25 0.375 0.5'
       self.DMSBlockLoadLevels = '1 3 5 6 7'
       self.VSTMBlockLoadLevels = '1 2 3 4 5'     
-      self.DMSFontSize = '60'
+      self.DMSFontSize = '100'
       self.DMSTag = 0
       self.VSTMTag = 0
       self.NBackTag = 0
@@ -169,10 +169,15 @@ class Mywin(wx.Frame):
       Row5BoxR5 = wx.StaticBox(self.panel, -1, size = ((ColWidth*2),RowWidth-5), pos = (ColPixel[3],CurrentRow-5))
       
       # Add a Font size adjustment button
-      Row5BoxR4 = wx.StaticBox(self.panel, -1, size = ((ColWidth+20),RowWidth-5), pos = (ColPixel[2]-15,CurrentRow-5))
-      self.FontSizeButtonText = 'Font: 60'
-      self.btnR5C4 = wx.Button(self.panel,-1,self.FontSizeButtonText, pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth+10, ButtonHeight))) 
+      Row5BoxR4 = wx.StaticBox(self.panel, -1, size = ((ColWidth+20),RowWidth-5), pos = (ColPixel[2]-20,CurrentRow-5))
+      self.FontSizeButtonText = 'Font: 100'
+      self.btnR5C4 = wx.Button(self.panel,-1,self.FontSizeButtonText, pos = (ColPixel[2]-12,CurrentRow), size = ((ButtonWidth+10-20, ButtonHeight))) 
       self.btnR5C4.Bind(wx.EVT_BUTTON, self.SetDMSFontSize)
+
+      # Add a Font size TEST button
+      self.FontSizeButtonText = 'T'
+      self.btnR5C4b = wx.Button(self.panel,-1,self.FontSizeButtonText, pos = (ColPixel[2]+60,CurrentRow), size = ((ButtonWidth+10-60, ButtonHeight))) 
+      self.btnR5C4b.Bind(wx.EVT_BUTTON, self.ShowDMSFontSize)
       
       self.btnR5C6 = wx.Button(self.panel,-1,"Block1", pos = (ColPixel[5],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR5C6.Bind(wx.EVT_BUTTON,self.OnClickedR5C6) 
@@ -501,6 +506,11 @@ class Mywin(wx.Frame):
         self.DMSFontSize = str(int(float(self.ManualEntryCapacity([10, 150], 'Font size:'))))
         self.FontSizeButtonText = 'Font: %s'%(self.DMSFontSize)
         self.btnR5C4.SetLabelText(self.FontSizeButtonText)
+        
+   def ShowDMSFontSize(self, event):
+        btnR5C4bLabel = event.GetEventObject().GetLabel() 
+        print("Label of pressed button = %s"%(btnR5C4bLabel))
+        core.shellCall([sys.executable, "../DMSPsychopyFiles/TestFontSize.py", self.DMSFontSize])  
         
    
    def OnClickedR10C1(self, event):
