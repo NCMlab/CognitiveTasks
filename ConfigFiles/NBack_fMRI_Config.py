@@ -13,6 +13,6 @@ InterBlockTime = 15
 InstructionTime = 10 
 TextSize = 100 # This is in pixels
 InstructionFigureSize = 800 # in pixels
-Instructions = 'Press the [index finger] key if the current letter is a match.\n\nPress [return] key to continue.'
+Instructions = 'Press the [index finger] key if the current letter is a match.\n'
 InstructFontSize = 45 # in pix
 ThankYouOnTime = 3
