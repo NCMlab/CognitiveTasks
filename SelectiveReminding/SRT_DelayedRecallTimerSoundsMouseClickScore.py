@@ -60,6 +60,8 @@ else:
     PartDataFolder = 'unorganized'
     OutDir = os.path.join(DataFolder, PartDataFolder)
     if not os.path.exists(OutDir):
+        if not os.path.exists(DataFolder):
+            os.mkdir(DataFolder)
         os.mkdir(OutDir)
     Tag = '1'
     PartDataFolder = OutDir
@@ -70,10 +72,16 @@ print(filename)
 # The number of trials, or repeats
 NBlocks = 1
 # Define how the words should appear on the screen
-GridWidth = 300
-GridHeight = 300
-NRows = 6
-NCols = 3
+GridWidth = 800
+GridHeight = 80
+GridHeightOffset = -250
+GridWidthOffset = 100
+RemainingTimeTextPositionX = -300
+RemainingTimeTextPositionY = -350
+WordPositionX = 0
+WordPositionY = 100
+NRows = 3
+NCols = 6
 FontSize = 30
 WordColor = 'white'
 SelectedColor = 'blue'
@@ -169,20 +177,26 @@ countDownStarted = False
 ResponseTimer = visual.TextStim(win=win, name='ResponseTimer',
     text='default text',
     font=u'Arial',
-    units='pix', pos=(40, -300), height=30, wrapWidth=None, ori=0, 
+    units='pix', pos=(40, RemainingTimeTextPositionY), height=30, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=-4.0);
     
 RemainingTime = visual.TextStim(win=win, name='RemainingTime',
     text=u'Remaining Time:',
     font=u'Arial',
-    units='pix', pos=(-100, -300), height=30, wrapWidth=None, ori=0, 
+    units='pix', pos=(-100, RemainingTimeTextPositionY), height=30, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=-5.0);    
 # Initialize components for Routine "Wait"
 WaitClock = core.Clock()
 
-
+PleaseRecallText = visual.TextStim(win=win, name='PleaseRecallText',
+    text=u'Please Recall Words',
+    font=u'Arial',
+    units='pix', pos=(0, WordPositionY), height=30, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=-5.0);   
+    
 # Initialize components for Routine "ThankYou"
 ThankYouClock = core.Clock()
 textThankyou = visual.TextStim(win=win, name='Thanks',
@@ -195,14 +209,13 @@ textThankyou = visual.TextStim(win=win, name='Thanks',
 TrialCountText = visual.TextStim(win=win, name='TrialCount',
     text=u'Trial Count',
     font=u'Arial',
-    units='pix', pos=(200, -300), height=30, wrapWidth=None, ori=0, 
+    units='pix', pos=(200, RemainingTimeTextPositionY), height=30, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 # ##############################
 
 # Make lists of screen locations for the words
-ColLocsList, RowLocsList = SRT.MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows)
-
+ColLocsList, RowLocsList = SRT.MakeGridOfSRTWords(GridWidth, GridHeight, NCols, NRows, GridHeightOffset)
 
 # Load up the list of words used for scoring. The only difference is that this list has 
 # a bunch of [intrusion] options in it.
@@ -486,8 +499,9 @@ BlockCount = 0
 #        pass       
 # Put all the words on the screen and have the tester click the recalled words and enter any intrusions
 TrialCountText.text = 'Delayed Recall'
-WordListObjects, mouse, RecallList, RecallOrder = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText)
-
+#WordListObjects, mouse, RecallList, RecallOrder = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText)
+WordListObjects, mouse, RecallList, RecallOrder = SRT.PresentWordSelection(WordListObjects, trialClock, mouse, event, endExpNow, win, core, NWords, ResponseTimer, RemainingTime, TrialCountText, PleaseRecallText)
+  
 print("Recall List:")
 print(RecallList)
 ResponseArray = RecallList

@@ -35,7 +35,7 @@ os.chdir(_thisDir)
 sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 from NCM_NeuroPsych_Config import *
 
-SRT_WordOnTime = 0.2 # <<< Just for testing
+SRT_WordOnTime = 2# <<< Just for testing
 
 # Store info about the experiment session
 expName = u'SRT'  # from the Builder filename that created this script
@@ -61,6 +61,8 @@ else:
     PartDataFolder = 'unorganized'
     OutDir = os.path.join(DataFolder, PartDataFolder)
     if not os.path.exists(OutDir):
+        if not os.path.exists(DataFolder):
+            os.mkdir(DataFolder)
         os.mkdir(OutDir)
     Tag = '1'
     PartDataFolder = OutDir
