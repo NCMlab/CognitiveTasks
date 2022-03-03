@@ -503,7 +503,7 @@ class Mywin(wx.Frame):
       self.cbR5C7.SetValue(True)  
    
    def SetDMSFontSize(self, event):
-        self.DMSFontSize = str(int(float(self.ManualEntryCapacity([10, 150], 'Font size:'))))
+        self.DMSFontSize = str(int(float(self.ManualEntryCapacity([10, 200], 'Font size:'))))
         self.FontSizeButtonText = 'Font: %s'%(self.DMSFontSize)
         self.btnR5C4.SetLabelText(self.FontSizeButtonText)
         

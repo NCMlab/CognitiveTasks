@@ -53,7 +53,7 @@ textCM = visual.TextStim(win=win, name='textCM',
     text='default text',
     font='Times New Roman',
     units=FontSizeUnits, pos=(0, 0), height=FontSize, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='blue', colorSpace='rgb', opacity=1,
     depth=-5.0);
 textCR = visual.TextStim(win=win, name='textCR',
     text='default text',
@@ -104,7 +104,7 @@ def MapLettersToScreen(Stim):
     return(Output)
     
     
-CurrentStim = 'ABCDEFGHI'
+CurrentStim = 'BCDFgHJKM'
 
 StimOnTime = 4
 
