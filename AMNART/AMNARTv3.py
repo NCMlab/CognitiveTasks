@@ -48,8 +48,14 @@ else:
     if dlg.OK == False:
         core.quit()  # user pressed cancel
     DataFolder = "../../data"
+    DataFolder = os.getcwd().split()[0]
+    DataFolder = os.path.split(DataFolder)[0]
+    DataFolder = os.path.split(DataFolder)[0]
+    DataFolder = os.path.split(DataFolder)[0]
+    DataFolder = os.path.join(DataFolder,r"data")
     PartDataFolder = 'unorganized'
     OutDir = os.path.join(DataFolder, PartDataFolder)
+    print(OutDir)
     if not os.path.exists(OutDir):
         os.mkdir(OutDir)
     Tag = '1'
@@ -203,7 +209,7 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions(u'AMNARTv2.xls'),
+    trialList=data.importConditions(u'AMNARTv2.xlsx'),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
