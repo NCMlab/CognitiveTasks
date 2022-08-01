@@ -44,7 +44,12 @@ if len(sys.argv) > 1:
     Tag = sys.argv[4]
     ConfigFile = sys.argv[5]
     # Make sure to convert this to a boolean for later decision making
-    FixedLocations = bool(sys.argv[6])
+    # There are only fixed lists for up to twelve locations. It is challenging to make these lists
+    # Therefore, if the study needs lists greater than 12, random locations will be used.
+    if LoadList.max() > 12:
+        FixedLocations = False
+    else:
+        FixedLocations = bool(sys.argv[6])
 else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
@@ -55,12 +60,17 @@ else:
     if not os.path.exists(OutDir):
         os.mkdir(OutDir)
     LoadList = np.array(range(1,6,1)) ### <<<<<<<<<<<<<<<<<<<
+    LoadList = np.array([12, 13])
     LoadList = LoadList.astype(np.int)
     
     Tag = 'BehRun1'
     PartDataFolder = OutDir
     ConfigFile = 'VSTM_Behav_Config'
-    FixedLocations = True
+    if LoadList.max() > 12:
+        FixedLocations = False
+    else:
+        FixedLocations = True
+    
     
 if FixedLocations:    
     # Based on the tag passed, determine which run to use from the config file
@@ -290,7 +300,10 @@ for thisBlock in Blocks:
     seed=None, name='trials')
 # Prepare the stimuli
     if FixedLocations:
-        ProbeList = AllProbes[CurrentLoad][CurrentRun]        
+        print("CurrentLoad: %d"%(CurrentLoad))
+        print("CurrentRun: %d"%(CurrentRun))
+        print(AllProbes)
+        ProbeList = AllProbes[CurrentLoad-1][CurrentRun]        
     else:
         # Make sure there are an equal number of probe pos and Neg
         ProbeList = np.concatenate((np.zeros(int(VSTM_NTrialsPerBlock/2)),np.ones(int(VSTM_NTrialsPerBlock/2))))
