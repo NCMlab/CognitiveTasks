@@ -21,11 +21,14 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
 
+
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
+sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
 
+from NCM_NeuroPsych_Config import *
 # #################
 # Store info about the experiment session
 expName = u'Vocab'  # from the Builder filename that created this script
@@ -63,7 +66,7 @@ else:
  
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = os.path.join(PartDataFolder, '%s_%s_%s_%s_%s' % (expInfo['Participant ID'],expName, task, Tag, expInfo['date']))
-BGColor = 'grey'
+#BGColor = 'grey'
 FontColor = 'white'
 FontSize = 60
 InstrFontSize = 35
@@ -85,9 +88,9 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=[1440, 900], fullscr=True, screen=0,
+    size=[1440, 900], fullscr=FullScr, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor=u'testMonitor', color=BGColor, colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='pix')
 # store frame rate of monitor if we can measure it

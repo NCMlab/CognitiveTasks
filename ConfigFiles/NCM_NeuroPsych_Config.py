@@ -1,6 +1,9 @@
 import os
 # Config Parameters
 
+# Full screen mode
+FullScr = False
+
 # General 
 BGColor = 'grey'
 FontColor = 'white'
