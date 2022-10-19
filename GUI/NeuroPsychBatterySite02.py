@@ -17,17 +17,21 @@ import wx
 import numpy as np
 import glob
 # sys.path.insert(0, '../DataHandlingScripts')
-import CheckExistingNeuroPsychData
+# import CheckExistingNeuroPsychData
 
 
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
-os.chdir(_thisDir)
-# import parameters from a config file
-sys.path.append(os.path.join(_thisDir, '..','ConfigFiles'))
+#_thisDir = os.path.dirname(os.path.abspath(__file__))#.decode(sys.getfilesystemencoding())
+_thisDir = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
+path = os.path.dirname(_thisDir)
+
+sys.path.append(os.path.join(path, "ConfigFiles"))
+
 from NCM_NeuroPsych_Config import *
+
 # Check to see if the output data folder has been identified
 try:
+    print('Trying...')
     # try to load the config file
     from NeuropsychDataFolder import *
     # See if the variable is in it
@@ -36,6 +40,7 @@ try:
         raise ValueError('Folder does not exist.')
         
 except:
+    print('Exemption tossed')
     app = wx.App()
     dlg = wx.DirDialog(None, "Choose data output directory", "", wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
     if dlg.ShowModal() == wx.ID_OK:
@@ -43,8 +48,12 @@ except:
     OutFolder = dlg.GetPath()
     dlg.Destroy()    
     # write the selected folder to the config file
-    fid = open(os.path.join(_thisDir, '..','ConfigFiles','NeuropsychDataFolder.py'),'w')
-    fid.write('NeuropsychDataFolder = \'%s\''%(OutFolder))
+    print("Out Folder")
+    print(OutFolder)
+    DataFolder = os.path.join(path,'ConfigFiles','NeuropsychDataFolder.py')
+    print(DataFolder)
+    fid = open(DataFolder,'w')
+    fid.write('NeuropsychDataFolder = r\'%s\''%(OutFolder))
     fid.close()
     NeuropsychDataFolder = OutFolder
     
