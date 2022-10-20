@@ -17,7 +17,7 @@ import wx
 import numpy as np
 import glob
 # sys.path.insert(0, '../DataHandlingScripts')
-# import CheckExistingNeuroPsychData
+import CheckExistingNeuroPsychData
 
 
 # Ensure that relative paths start from the same directory as this script
