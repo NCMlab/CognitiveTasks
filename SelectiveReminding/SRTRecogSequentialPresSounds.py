@@ -52,7 +52,7 @@ else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
         core.quit()  # user pressed cancel
-    DataFolder = "../../data"
+    DataFolder = os.path.join('..','..','..','data') 
     PartDataFolder = 'unorganized'
     OutDir = os.path.join(DataFolder, PartDataFolder)
     if not os.path.exists(OutDir):

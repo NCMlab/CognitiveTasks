@@ -264,7 +264,7 @@ def CheckForIntrusions(mouse):
     for word in ResponseList:
         if word == '[Intrusion]':      
             # Ask the tester to type in the intrusion word(s)
-            IntrusionWord = TypeInWordv3(IntrusionCount)      
+            IntrusionWord = TypeInWord(IntrusionCount)      
             IntrusionCount += 1
             IntrusionList.append(IntrusionWord)
             ResponseList[count] = '[' + IntrusionWord + ']'

@@ -89,7 +89,7 @@ else:
     dlg = gui.DlgFromDict(dictionary=expInfo)
     if dlg.OK == False:
         core.quit()  # user pressed cancel
-    DataFolder = "../../data"
+    DataFolder = "../../../data"
     PartDataFolder = 'unorganized'
     OutDir = os.path.join(DataFolder, PartDataFolder)
     if not os.path.exists(OutDir):
@@ -177,10 +177,10 @@ sound_9 = sound.Sound('NumberSounds2/9c.wav', secs=1,stereo=False, sampleRate=24
 sound_9.setVolume(0.8)
 SoundFileList.append(sound_9)
 
-CorrectSound = sound.Sound('NumberSounds2/correctc.wav', secs = 1,stereo=False, sampleRate=24000)
-CorrectSound.setVolume(0.8)
-IncorrectSound = sound.Sound('NumberSounds2/incorrectc.wav', secs = 1,stereo=False, sampleRate=24000)
-IncorrectSound.setVolume(0.8)
+#CorrectSound = sound.Sound('NumberSounds2/correctc.wav', secs = 1,stereo=False, sampleRate=24000)
+#CorrectSound.setVolume(0.8)
+#IncorrectSound = sound.Sound('NumberSounds2/incorrectc.wav', secs = 1,stereo=False, sampleRate=24000)
+#IncorrectSound.setVolume(0.8)
 
 # Initialize components for Routine "ThankYou"
 ThankYouClock = core.Clock()
@@ -292,13 +292,13 @@ while not CorrectPracticeFlag:
     # This is the FORWARD Span Task
     if np.array_equiv(R,RespList):
         print('Correct')
-        CorrectSound.play()
+        #CorrectSound.play()
         thisResp = 1
         resp.corr = 1
         CorrectPracticeFlag = True
     else:
         print('Incorrect')
-        IncorrectSound.play()
+        #IncorrectSound.play()
         thisResp = -1
         resp.corr = 0
         # Present a screen asking for another practice trial.
@@ -477,13 +477,13 @@ for thisStair in Stairs:
     # This is the FORWARD Span Task
     if np.array_equiv(R,RespList):
         print('Correct')
-        CorrectSound.play()
+        #CorrectSound.play()
         thisResp = -1 # << This is reversed to get the staircase to work better without using a 
         # negative step size
         resp.corr = 1
     else:
         print('Incorrect')
-        IncorrectSound.play()
+        #IncorrectSound.play()
         thisResp = 1
         resp.corr = 0
         
