@@ -2,7 +2,16 @@ import numpy as np
 #import wx
 from psychopy import gui
 
-
+def TypeInNumbers(count): 
+    # When [intrusion] is clicked on teh screen by the tester, this fn will
+    # present a dialog box for the intusion word to be types in
+    print('Entered Intrusion Entry')
+    #app = gui.Dlg(title =  'Response Entry')
+    app = gui.Dlg(title =  'Enter Intrusion %d'%(count)) 
+    app.addField('Number List:')
+    response = app.show()
+    
+    return response
 
 def MakeListOfRecalledWords(FullWordList, RecallList):
     # Make a list of word indices in the file of words loaded up
@@ -264,7 +273,9 @@ def CheckForIntrusions(mouse):
     for word in ResponseList:
         if word == '[Intrusion]':      
             # Ask the tester to type in the intrusion word(s)
-            IntrusionWord = TypeInWord(IntrusionCount)      
+            #IntrusionWord = TypeInWord(IntrusionCount)    
+            IntrusionWord = TypeInNumbers(count)
+            IntrusionWord = "CannotCollect"
             IntrusionCount += 1
             IntrusionList.append(IntrusionWord)
             ResponseList[count] = '[' + IntrusionWord + ']'
