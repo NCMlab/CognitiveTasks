@@ -70,7 +70,7 @@ ButtonWidth = 80
 LabelOffset = 10
 StaticBoxVertOffset = -12
 # Allow flexible number of rows
-NRows =  12
+NRows =  13
 # Create a list of what pixel each row is to be set to
 RowPixel = []
 for i in range(NRows):
@@ -184,6 +184,9 @@ class Mywin(wx.Frame):
       self.btnR5C2.Bind(wx.EVT_BUTTON,self.OnClickedR5C2) 
       self.btnR5C3 = wx.Button(self.panel,-1,"Stair", pos = (ColPixel[3],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR5C3.Bind(wx.EVT_BUTTON,self.OnClickedR5C3) 
+      self.cbR5C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth-2,CurrentRow))
+      # Checkboxes
+      self.cbR5C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth-2,CurrentRow))
       # self.btnR5C6 = wx.Button(self.panel,-1,"Block", pos = (ColPixel[6],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       # self.btnR5C6.Bind(wx.EVT_BUTTON,self.OnClickedR5C6) 
       # Text box for the capacity value
@@ -241,6 +244,11 @@ class Mywin(wx.Frame):
       self.btnR3C2.Bind(wx.EVT_BUTTON,self.OnClickedR3C2)       
       self.btnR3C3 = wx.Button(self.panel,-1,"Stair", pos = (ColPixel[3],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       self.btnR3C3.Bind(wx.EVT_BUTTON,self.OnClickedR3C3) 
+      
+      # Checkboxes
+      self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth-2,CurrentRow))
+      # Checkboxes
+      self.cbR3C2 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth-2,CurrentRow))
       # self.btnR3C4 = wx.Button(self.panel,-1,"Block", pos = (ColPixel[6],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
       # self.btnR3C4.Bind(wx.EVT_BUTTON,self.OnClickedR3C4) 
       # Text box for the capacity value
@@ -277,27 +285,27 @@ class Mywin(wx.Frame):
 #      # Checkboxes
 #      self.cbR6C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
 
-# ### Row
-      # CurrentRow = RowPixel[8]
-      # self.titleR5 = wx.StaticText(self.panel, -1, label = "N-Back", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
-      # # Buttons
-      # self.btnR10C1 = wx.Button(self.panel,-1,"Instructions", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      # self.btnR10C1.Bind(wx.EVT_BUTTON,self.OnClickedR10C1)             
-      # self.btnR10C3 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      # self.btnR10C3.Bind(wx.EVT_BUTTON,self.OnClickedR10C3)
-      # self.btnR10C4 = wx.Button(self.panel,-1,"Block1", pos = (ColPixel[3],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      # self.btnR10C4.Bind(wx.EVT_BUTTON,self.OnClickedR10C4)
-      # self.btnR10C5 = wx.Button(self.panel,-1,"Block2", pos = (ColPixel[4],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
-      # self.btnR10C5.Bind(wx.EVT_BUTTON,self.OnClickedR10C4)
-      # # Checkboxes
-      # self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
-      # self.cbR10C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,CurrentRow))      
-      # self.cbR10C5 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[4] + ButtonWidth+5,CurrentRow))      
-      # # Box around buttons
-      # Row1BoxR10 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
+ ### Row
+      CurrentRow = RowPixel[8]
+      self.titleR5 = wx.StaticText(self.panel, -1, label = "N-Back", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
+         # Buttons
+      self.btnR10C1 = wx.Button(self.panel,-1,"Instructions", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR10C1.Bind(wx.EVT_BUTTON,self.OnClickedR10C1)             
+      self.btnR10C3 = wx.Button(self.panel,-1,"Practice", pos = (ColPixel[2],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR10C3.Bind(wx.EVT_BUTTON,self.OnClickedR10C3)
+      self.btnR10C4 = wx.Button(self.panel,-1,"Block1", pos = (ColPixel[3],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnR10C4.Bind(wx.EVT_BUTTON,self.OnClickedR10C4)
+      #self.btnR10C5 = wx.Button(self.panel,-1,"Block2", pos = (ColPixel[4],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
+      #self.btnR10C5.Bind(wx.EVT_BUTTON,self.OnClickedR10C4)
+    # Checkboxes
+      self.cbR10C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))      
+      self.cbR10C4 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[3] + ButtonWidth+5,CurrentRow))      
+      #self.cbR10C5 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[4] + ButtonWidth+5,CurrentRow))      
+         # Box around buttons
+      Row1BoxR10 = wx.StaticBox(self.panel, -1, size = ((ColWidth+5)*NColForBox,RowWidth-5), pos = (ColPixel[0],CurrentRow-5))
 
 # #### Row 
-      CurrentRow = RowPixel[8]
+      CurrentRow = RowPixel[9]
       self.titleR7 = wx.StaticText(self.panel, -1, label = "Digit Span", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
       self.btnR7C2 = wx.Button(self.panel,-1,"Forward", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -311,7 +319,7 @@ class Mywin(wx.Frame):
       self.cbR7C3 = wx.CheckBox(self.panel, -1, label = "", pos = (ColPixel[2] + ButtonWidth+5,CurrentRow))
       
 # ### Row
-      CurrentRow = RowPixel[9]
+      CurrentRow = RowPixel[10]
       self.titleR8 = wx.StaticText(self.panel, -1, label = "Speed", pos = (ColPixel[0]+LabelOffset/2,CurrentRow+LabelOffset))
       # Buttons
       self.btnR8C2 = wx.Button(self.panel,-1,"Patt. Comp", pos = (ColPixel[1],CurrentRow), size = ((ButtonWidth, ButtonHeight))) 
@@ -323,7 +331,7 @@ class Mywin(wx.Frame):
       
 
 # ### Row
-      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (ColPixel[0],RowPixel[10]-5), size = ((ButtonWidth, ButtonHeight))) 
+      self.btnClose = wx.Button(self.panel,-1,"Close", pos = (ColPixel[0],RowPixel[11]-5), size = ((ButtonWidth, ButtonHeight))) 
       self.btnClose.Bind(wx.EVT_BUTTON,self.CloseGUI) 
       
       self.Centre() 
