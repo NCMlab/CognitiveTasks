@@ -232,7 +232,7 @@ countdownStarted = False
 Clock = visual.TextStim(win=win, name='Clock',
     text='default text',
     font='Arial',
-    pos=(400, -400), height=30, wrapWidth=None, ori=0, 
+    pos=(400, -300), height=30, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-19.0);
 

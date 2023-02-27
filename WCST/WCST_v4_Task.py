@@ -427,18 +427,18 @@ SPOS = [[[0,0],[np.nan,np.nan],[np.nan,np.nan],[np.nan,np.nan]],
          [CARDW/4.0,-CARDH/4.0],[CARDW/4.0,CARDH/4.0]]]
 
 # #################
-E = Experiment()
-E.output = open(filename, 'w')
-E.output.write('TrialNum,Card,Rule,RespTime,Correct,') 
+#E = Experiment()
+#E.output = open(filename, 'w')
+#E.output.write('TrialNum,Card,Rule,RespTime,Correct,') 
 # Write out the header 
-E.output.write('Card01Color,Card01Shape,Card01Count,')
-E.output.write('Card02Color,Card02Shape,Card02Count,')
-E.output.write('Card03Color,Card03Shape,Card03Count,')
-E.output.write('Card04Color,Card04Shape,Card04Count,')
-E.output.write('ProbeColor,ProbeShape,ProbeCount\n')
-
-E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
-E.run(num_trials=12, rule_delta=3) 
+#E.output.write('Card01Color,Card01Shape,Card01Count,')
+#E.output.write('Card02Color,Card02Shape,Card02Count,')
+#E.output.write('Card03Color,Card03Shape,Card03Count,')
+#E.output.write('Card04Color,Card04Shape,Card04Count,')
+#E.output.write('ProbeColor,ProbeShape,ProbeCount\n')
+#
+#E.instruct(INSTRUCTIONS+' practice.', 'Starting the practice...')
+#E.run(num_trials=12, rule_delta=3) 
 
 
 E = Experiment()

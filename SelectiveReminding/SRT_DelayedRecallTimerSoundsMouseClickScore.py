@@ -74,10 +74,10 @@ NBlocks = 1
 # Define how the words should appear on the screen
 GridWidth = 800
 GridHeight = 80
-GridHeightOffset = -250
+GridHeightOffset = -150
 GridWidthOffset = 100
-RemainingTimeTextPositionX = -300
-RemainingTimeTextPositionY = -350
+RemainingTimeTextPositionX = -200
+RemainingTimeTextPositionY = -250
 WordPositionX = 0
 WordPositionY = 100
 NRows = 3
@@ -112,7 +112,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 countDown = core.CountdownTimer()
 # Setup the Window
 win = visual.Window(
-    size=[1440, 900], fullscr=False, screen=0,
+    size=[1366, 768], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
     monitor=u'testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
