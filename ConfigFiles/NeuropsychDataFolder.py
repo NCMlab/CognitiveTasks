@@ -1,1 +1,1 @@
-NeuropsychDataFolder = r'C:\Users\NCMLab\Documents\NeuropsychData'
+NeuropsychDataFolder = r'C:\Users\NCMLab\Documents\GitHub\Site02Data'
