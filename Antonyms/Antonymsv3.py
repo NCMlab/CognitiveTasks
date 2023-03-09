@@ -124,10 +124,11 @@ TestWord = visual.TextStim(win=win, name='TestWord',
 mouse = event.Mouse(win=win)
 x, y = [None, None]
 RespBoxWidth = 375
+RespBoxWidth = 450
 RespBoxHeight = 100
-RespBoxX1 = -200
+RespBoxX1 = -230
 RespBoxY1 = -50
-RespBoxX2 = 200
+RespBoxX2 = 230
 RespBoxY2 = -160
 
 Resp1Box = visual.Rect(
@@ -954,6 +955,8 @@ for thisTrial in trials:
             if "escape" in theseKeys:
                 endExpNow = True
             if len(theseKeys) > 0:  # at least one key was pressed
+                # A button press has occured
+                ButtonPressFlag = True
                 
                 resp.keys = theseKeys[-1]  # just the last key pressed
                 resp.rt = resp.clock.getTime()
