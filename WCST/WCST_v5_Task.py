@@ -95,7 +95,7 @@ def drawStar(M,pos,nv, ocr,icr):
     for i in range(phi.size):
         M=drawTriangle(M,[ips[:,i-1],ips[:,i],ops[:,i]])
     return M
-    
+
 
 class Experiment():
     def __init__(self):
@@ -116,7 +116,6 @@ class Experiment():
 
         self.cards = []
         self.elems = []
-        self.elems.append(DiscardText)
         ElementSize = 0.05
         for i in range(4):
             self.cards.append(visual.Rect(self.win,CARDW,CARDH,fillColor='white',
@@ -140,6 +139,7 @@ class Experiment():
             
         # Feedback text
         self.text = visual.TextStim(self.win,pos=FPOS,height=0.08, units = 'height')
+        self.DiscardText = visual.TextStim(self.win, text='Discard Pile', pos=DiscardTextPOS,height=0.04, units = 'height')
         #if not os.path.exists('data'):
         #    os.makedirs('data')
         #fname = os.path.join('data', 'wcst_s%03d_%s.csv' % (self.vp, time.strftime("%Y%m%d-%H%M%S")))
@@ -170,6 +170,7 @@ class Experiment():
         # display problem
         
         # Put all cards on the screen
+        self.DiscardText.draw()
         for i in range(4):
             self.cards[i].draw()
             self.elems[i].setColors(CLRS[choice[i][0]])
@@ -189,6 +190,7 @@ class Experiment():
         self.cards[5].draw()
 
         self.elems[5].draw()
+    
         self.win.flip()
 
         # wait for response
@@ -424,6 +426,7 @@ FPOS=(0, 0.15) #(0,3.8) # position of the feedback
 CARDY=0.3 # 9 # vertical position of choice cards
 PrevCARDY = 0
 DiscardPOS = (0, PrevCARDY)
+DiscardTextPOS = (-0.2, PrevCARDY)
 CARDX = 0.05# 1 # horizontal space between choice cards
 CARDW=0.15# 4 # card width
 CARDH=0.225# 6 # card height
