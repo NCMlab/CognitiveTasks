@@ -99,8 +99,8 @@ text = visual.TextStim(win=win, name='text',
 
 # Initialize components for Routine "GetReady"
 GetReadyClock = core.Clock()
-GetRead = visual.TextStim(win=win, name='GetRead',
-    text='Get Ready',
+GetReadPractice = visual.TextStim(win=win, name='GetRead',
+    text='First, there will be a few practice trials. Get Ready',
     font='Arial',
     units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
@@ -215,7 +215,7 @@ Instruct = visual.TextStim(win=win, name='Instruct',
 # Initialize components for Routine "GetReady"
 GetReadyClock = core.Clock()
 GetRead = visual.TextStim(win=win, name='GetRead',
-    text='Get Ready',
+    text='Now the real test with no feedback. Get Ready',
     font='Arial',
     units='pix', pos=(0, 0), height=40, wrapWidth=None, ori=0, 
     color=FontColor, colorSpace='rgb', opacity=1,
@@ -349,7 +349,7 @@ continueRoutine = True
 routineTimer.add(2.000000)
 # update component parameters for each repeat
 # keep track of which components have finished
-GetReadyComponents = [GetRead]
+GetReadyComponents = [GetReadPractice]
 for thisComponent in GetReadyComponents:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
@@ -364,12 +364,12 @@ while continueRoutine and routineTimer.getTime() > 0:
     # *GetRead* updates
     if t >= 0.0 and GetRead.status == NOT_STARTED:
         # keep track of start time/frame for later
-        GetRead.tStart = t
-        GetRead.frameNStart = frameN  # exact frame index
-        GetRead.setAutoDraw(True)
+        GetReadPractice.tStart = t
+        GetReadPractice.frameNStart = frameN  # exact frame index
+        GetReadPractice.setAutoDraw(True)
     frameRemains = 0.0 + 2- win.monitorFramePeriod * 0.75  # most of one frame period left
-    if GetRead.status == STARTED and t >= frameRemains:
-        GetRead.setAutoDraw(False)
+    if GetReadPractice.status == STARTED and t >= frameRemains:
+        GetReadPractice.setAutoDraw(False)
     
     # check if all components have finished
     if not continueRoutine:  # a component has requested a forced-end of Routine
