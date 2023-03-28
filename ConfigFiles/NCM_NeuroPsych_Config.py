@@ -24,7 +24,7 @@ SoundPath = os.path.join('CompanionFolderForCognitiveTasks','SRT','SoundFiles')
 # VSTM Tasks
 StimOnTime = 2.5
 RetOnTime = 3.2
-ProbeOnTime= 2.5
+ProbeOnTime= 3.5
 MaskOnTime = 0.3
 # This is the intertrial interval. This experimental component is part of the trial.
 ITITime = 1.0 #1.0
