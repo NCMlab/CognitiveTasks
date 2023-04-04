@@ -19,8 +19,8 @@ SRT_WordOnTime = 1.0 # seconds
 SRT_FudgeTime = 0.9
 SRTPath = os.path.join('CompanionFolderForCognitiveTasks','SRT')
 SoundPath = os.path.join('CompanionFolderForCognitiveTasks','SRT','SoundFiles')
-
-
+SoundPath = os.path.join('CompanionFolderForCognitiveTasks','SRT','SRTSet_en-US-Neural2-F_Speed70')
+SoundPath = os.path.join('CompanionFolderForCognitiveTasks','SRT','SRTSet_en-GB-Neural2-B_Speed70')
 # VSTM Tasks
 StimOnTime = 2.5
 RetOnTime = 3.2
